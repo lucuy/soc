@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="home" extends="json-default" namespace="/home">
+
+		<!-- 告警规则查询 -->
+		<!-- <action name="alertRuleQuery" class="alertRuleAction" method="ruleQuery"> 
+			<result name="success">/pages/alert/alert_rule_list.jsp</result> </action> -->
+
+		<!-- 告警规则添加和修改 -->
+		<!-- <action name="editRule" class="alertRuleAction" method="ruleEdit"> 
+			<result name="success">/pages/alert/alert_rule_info.jsp</result> </action> -->
+		<!-- 刷新列表 -->
+		<!-- <action name="updateRule" class="alertRuleAction" method="ruleUpdate"> 
+			<result name="success" type="redirect-action">alertRuleQuery.action</result> 
+			</action> -->
+
+		<!-- 删除规则列表 -->
+		<!-- <action name="deleteRule" class="alertRuleAction" method="deleteRule"> 
+			<result name="success" type="redirect-action">alertRuleQuery.action</result> 
+			</action> -->
+
+		<!-- 显示主页信息 -->
+		<action name="queryHome" class="home" method="showHomeInfo">
+			<result name="success">/pages/home/home_page_info.jsp</result>
+		</action>
+		<!-- 采集器 -->
+		<action name="queryCollectorList" class="home" method="queryCollectorList">
+			<result name="success" type="json">
+				<param name="root">collectorList</param>
+			</result>
+		</action>
+		
+		<!-- 最近24小时最新的10条阀值告警 -->
+		<action name="queryTenAlarmMessage" class="home" method="queryTenAlarmMessage">
+		    <result name="success" type="json">
+		        <param name="root">monitorAlarmList</param>
+		    </result>
+		</action>
+		
+		<!-- 近xxx的警告信息 -->
+		<action name="queryAlertMessageList" class="home"
+			method="queryAlertMessageList">
+			<result name="success" type="json">
+				<param name="root">alertMessageList</param>
+			</result>
+			
+			<!-- 跳转最新的10条告警 -->
+			<result name="QueryTenAlarm">
+			    /pages/alert/alertMessage/alert_message_list.jsp
+			</result>
+			
+		</action>
+			<!-- 查询首页div的显示情况的字符串-->
+		<action name="queryHomePageDiv" class="home"
+			method="queryHomePageDiv">
+			<result name="success" type="json">
+				<param name="root">divs</param>
+			</result>
+			</action>
+			<!-- 查询首页div的显示情况的字符串-->
+		<action name="saveHomePageDiv" class="home"
+			method="saveHomePageDiv">
+			<result name="success" type="json">
+				<param name="root">homePageDiv</param>
+			</result>
+			</action>
+			<!-- 保存div的位置 -->
+		<action name="savePosition" class="home"
+			method="savePosition"></action>
+		<action name="test" class="home" method="test"></action>
+	</package>
+</struts>

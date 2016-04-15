@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data>
+<data1>
+  <resource current="22" unConfirmed="19" /> 
+  </data1>
+<data2>
+  <resource label="新闻网络制播系统" businessId="EP01" value="1" severity="1" /> 
+  <resource label="新闻包装系统" businessId="EP02" value="0" severity="2" /> 
+  <resource label="新闻交换系统" businessId="EP03" value="0" severity="3" /> 
+  <resource label="新闻汇聚系统" businessId="EM03" value="1" severity="4" /> 
+  <resource label="新闻业务管理系统" businessId="EM02" value="0" severity="5" /> 
+  <resource label="非线性常规制作岛1" businessId="EP50" value="0" severity="0" /> 
+  <resource label="非线性高端制作岛1" businessId="EP60" value="0" severity="1" /> 
+  <resource label="混合制作岛" businessId="EP80" value="0" severity="1" /> 
+  <resource label="包装制作岛" businessId="EP90" value="0" severity="1" /> 
+  <resource label="新址媒资系统" businessId="ES01" value="0" severity="1" /> 
+  <resource label="音频媒资管理系统" businessId="ES02" value="0" severity="1" /> 
+  <resource label="审片系统" businessId="EP04" value="0" severity="1" /> 
+  <resource label="频道包装整备系统" businessId="EP9Z" value="0" severity="1" /> 
+  <resource label="全台企业服务管理生产总线" businessId="EF01" value="0" severity="1" /> 
+  <resource label="媒体数据交换平台" businessId="EF02" value="1" severity="3" /> 
+  <resource label="节目生产管理系统" businessId="EM11" value="2" severity="3" /> 
+  <resource label="广告备播与监控系统" businessId="EB03" value="0" severity="1" /> 
+  <resource label="广告销售管理系统" businessId="EM14" value="0" severity="1" /> 
+  <resource label="综合信息门户系统" businessId="EF03" value="0" severity="1" /> 
+  <resource label="统一存储备份系统" businessId="EF04" value="1" severity="3" /> 
+  <resource label="人事系统" businessId="EA01" value="3" severity="3" /> 
+  <resource label="办公管理系统" businessId="EA04" value="0" severity="1" /> 
+  <resource label="信息安全系统" businessId="EFA3" value="0" severity="1" /> 
+  <resource label="全台统一监控系统" businessId="EFA1" value="0" severity="1" /> 
+  <resource label="全台IT合署监管系统" businessId="EFA2" value="3" severity="3" /> 
+  </data2>
+<data3>
+  <resource label="其他" value="2" severity="4" /> 
+  <resource label="主机设备" value="21" severity="3" /> 
+  </data3>
+  </data>

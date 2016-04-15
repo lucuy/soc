@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="eventLibrary">
+	<typeAlias alias="eventLibrary" type="com.soc.model.events.EventLibrary" />
+   	<resultMap id="eventLibraryResult" class="eventLibrary">
+        <result property="eventLibraryId"         column="eventlibraryid"         jdbcType="varchar"/>
+        <result property="eventLibraryName"     column="eventlibraryname"     jdbcType="varchar"/>
+        <result property="eventLibraryType"       column="eventlibrarytype"       jdbcType="bigint"/>
+        <result property="discription"     column="discription"     jdbcType="varchar"/>
+        <result property="deviceType"     column="deviceType"     jdbcType="varchar"/>
+        <result property="cause"     column="cause"     jdbcType="varchar"/>
+    </resultMap>
+    <insert id="pgAdmininsert.eventLibrary" parameterClass="eventLibrary">
+		INSERT INTO "tbl_event_library"("eventlibrarytype", "eventlibraryname", "discription", "devicetype", "cause", "eventlibraryid")
+    VALUES (#eventLibraryType#, #eventLibraryName#, #discription#, #deviceType#, #cause#, #eventLibraryId#);
+	</insert>
+   	
+   	<!-- 查询条数 -->
+	<select id="pgAdmineventLibrary.count" resultClass="int" parameterClass="java.util.HashMap">
+		SELECT COUNT(*) FROM "tbl_event_library" WHERE 1=1 
+		<isNotEmpty prepend= "AND"  property="eventLibraryType">
+			<![CDATA[
+				"eventlibrarytype" = '$eventLibraryType$'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="eventLibraryId">
+			<![CDATA[
+				"eventlibraryid" LIKE '$eventLibraryId$'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				"eventlibraryname" LIKE '%$keyword$%' 
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="deviceType">
+			<![CDATA[
+				"devicetype" LIKE '%$deviceType$%' 
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="discription">
+			<![CDATA[
+				"discription" LIKE '%$discription$%' 
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="eventLibraryName"> 
+		    <![CDATA[
+		         "eventlibraryname" LIKE '%$eventLibraryName$%'
+		    ]]>
+		</isNotEmpty>
+	</select>
+	<!-- 查询 (默认不显示系统内置用户)-->
+	<select id="pgAdmineventLibrary.query"  parameterClass="java.util.HashMap" resultMap="eventLibraryResult" >
+		SELECT *FROM "tbl_event_library" where 1=1
+		<isNotEmpty prepend= "AND"  property="eventLibraryType">
+			<![CDATA[
+				"eventlibrarytype" = '$eventLibraryType$'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="eventLibraryId">
+			<![CDATA[
+				"eventlibraryid" LIKE '$eventLibraryId$'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				"eventlibraryname" LIKE '%$keyword$%' 
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="deviceType">
+			<![CDATA[
+				"devicetype" LIKE '%$deviceType$%' 
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="discription">
+			<![CDATA[
+				"discription" LIKE '%$discription$%' 
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="eventLibraryName"> 
+		    <![CDATA[
+		         "eventlibraryname" LIKE '%$eventLibraryName$%'
+		    ]]>
+		</isNotEmpty>
+		
+		 ORDER BY "eventlibraryid" desc 
+	</select>
+
+	<update id="pgAdminupdate.eventLibrary" parameterClass="eventLibrary">
+		UPDATE "tbl_event_library" SET 
+		"eventlibrarytype"=#eventLibraryType#,
+    	"eventlibraryname"=#eventLibraryName#,
+    	"discription"=#discription#, 
+    	"devicetype"=#deviceType#, 
+    	"cause"=#cause#	WHERE 1=1
+ 		<isNotEmpty prepend= "AND"  property="eventLibraryId">
+			<![CDATA[
+				"eventlibraryid" = #eventLibraryId#
+			]]>
+		</isNotEmpty>
+		AND "cantupdate" != '1'
+	</update>
+	
+	<delete id="pgAdmindelete.eventLibrary" parameterClass="java.util.HashMap" >
+		DELETE FROM "tbl_event_library" WHERE "eventlibraryid" in($eventLibraryId$);
+	</delete>
+   	<!-- sqlserver -->
+   	<insert id="sqlServerinsert.eventLibrary" parameterClass="eventLibrary">
+		INSERT INTO "tbl_event_library"("eventlibrarytype", "eventlibraryname", "discription", "devicetype", "cause", "eventlibraryid")
+    VALUES (#eventLibraryType#, #eventLibraryName#, #discription#, #deviceType#, #cause#, #eventLibraryId#);
+	</insert>
+   	
+   	<!-- 查询条数 -->
+	<select id="sqlServereventLibrary.count" resultClass="int" parameterClass="java.util.HashMap">
+		SELECT COUNT(*) FROM "tbl_event_library" WHERE 1=1 
+		<isNotEmpty prepend= "AND"  property="eventLibraryType">
+			<![CDATA[
+				"eventlibrarytype" = '$eventLibraryType$'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="eventLibraryId">
+			<![CDATA[
+				"eventlibraryid" LIKE '$eventLibraryId$'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				"eventlibraryname" LIKE '%$keyword$%' 
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="deviceType">
+			<![CDATA[
+				"devicetype" LIKE '%$deviceType$%' 
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="discription">
+			<![CDATA[
+				"discription" LIKE '%$discription$%' 
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="eventLibraryName"> 
+		    <![CDATA[
+		         "eventlibraryname" LIKE '%$eventLibraryName$%'
+		    ]]>
+		</isNotEmpty>
+	</select>
+	<!-- 查询 (默认不显示系统内置用户)-->
+	<select id="sqlServereventLibrary.query"  parameterClass="java.util.HashMap" resultMap="eventLibraryResult" >
+		SELECT *FROM "tbl_event_library" where 1=1
+		<isNotEmpty prepend= "AND"  property="eventLibraryType">
+			<![CDATA[
+				"eventlibrarytype" = '$eventLibraryType$'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="eventLibraryId">
+			<![CDATA[
+				"eventlibraryid" LIKE '$eventLibraryId$'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				"eventlibraryname" LIKE '%$keyword$%' 
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="deviceType">
+			<![CDATA[
+				"devicetype" LIKE '%$deviceType$%' 
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="discription">
+			<![CDATA[
+				"discription" LIKE '%$discription$%' 
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="eventLibraryName"> 
+		    <![CDATA[
+		         "eventlibraryname" LIKE '%$eventLibraryName$%'
+		    ]]>
+		</isNotEmpty>
+		
+		 ORDER BY "eventlibraryid" desc 
+	</select>
+
+	<update id="sqlServerupdate.eventLibrary" parameterClass="eventLibrary">
+		UPDATE "tbl_event_library" SET 
+		"eventlibrarytype"=#eventLibraryType#,
+    	"eventlibraryname"=#eventLibraryName#,
+    	"discription"=#discription#, 
+    	"devicetype"=#deviceType#, 
+    	"cause"=#cause#	WHERE 1=1
+ 		<isNotEmpty prepend= "AND"  property="eventLibraryId">
+			<![CDATA[
+				"eventlibraryid" = #eventLibraryId#
+			]]>
+		</isNotEmpty>
+		AND "cantupdate" != '1'
+	</update>
+	
+	<delete id="sqlServerdelete.eventLibrary" parameterClass="java.util.HashMap" >
+		DELETE FROM "tbl_event_library" WHERE "eventlibraryid" in($eventLibraryId$);
+	</delete>
+    
+</sqlMap>

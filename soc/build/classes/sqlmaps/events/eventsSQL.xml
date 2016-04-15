@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="queryEventsSQL">
+	<resultMap id="queryEventsResult" class="queryEvents">
+   		<result property="queryEventsId" 			column="QUERY_EVENTS_ID" 		    jdbcType="bigint"/>
+   		<result property="queryEventsName"           column="QUERY_EVENTS_NAME"           jdbcType="varchar"/>
+   		<result property="queryEventsGroupId"        column="QUERY_EVENTS_GROUP_ID"             jdbcType="bigint"/>
+   		<result property="queryEventsConditions"     column="QUERY_EVENTS_CONDITIONS"     jdbcType="text"/>
+   		<result property="queryEventsType"           column="QUERY_EVENTS_TYPE"     jdbcType="int"/>
+   	</resultMap>
+   	
+       <resultMap id="queryEventsGroupResult" class="queryEventsGroup">
+        <result property="queryEventsGroupId"            column="QUERY_EVENTS_GROUP_ID"            jdbcType="bigint"/>
+        <result property="queryEventsGroupName"          column="QUERY_EVENTS_GROUP_NAME"           jdbcType="varchar"/>
+        <result property="queryEventsGroupParentId"      column="QUERY_EVENTS_GROUP_PARENT_ID"             jdbcType="bigint"/>
+        <result property="queryEventsGroupType"          column="QUERY_EVENTS_GROUP_TYPE"     jdbcType="int"/>
+    </resultMap>
+      	        <!-- 查询服务器事件查询条件 -->
+    <select id="pgAdminquery.server" resultMap="queryEventsResult" parameterClass="long" fetchSize="200">
+        SELECT "QUERY_EVENTS_ID", "QUERY_EVENTS_NAME", "QUERY_EVENTS_GROUP_ID", "QUERY_EVENTS_CONDITIONS", 
+       "QUERY_EVENTS_TYPE" FROM "tbl_queryEvents_serverEvents" WHERE  "QUERY_EVENTS_ID" = #queryEventsId#;
+    </select>
+    
+   	    <!-- 查询认证事件条件SQL -->
+    <select id="pgAdminquery.attestation" resultMap="queryEventsResult" parameterClass="long" fetchSize="200">
+        SELECT "QUERY_EVENTS_ID", "QUERY_EVENTS_NAME", "QUERY_EVENTS_GROUP_ID", "QUERY_EVENTS_CONDITIONS", 
+       "QUERY_EVENTS_TYPE" FROM "tbl_queryEvents_attestation" WHERE  "QUERY_EVENTS_ID" = #queryEventsId#;
+    </select>
+    
+            <!-- 查询配置变更事件条件SQLL -->
+    <select id="pgAdminquery.config" resultMap="queryEventsResult" parameterClass="long" fetchSize="200">
+        SELECT "QUERY_EVENTS_ID", "QUERY_EVENTS_NAME", "QUERY_EVENTS_GROUP_ID", "QUERY_EVENTS_CONDITIONS", 
+       "QUERY_EVENTS_TYPE" FROM "tbl_queryEvents_config" WHERE   "QUERY_EVENTS_ID" = #queryEventsId#;
+    </select>
+    
+            <!-- 查询操作事件条件SQL -->
+    <select id="pgAdminquery.operatioin" resultMap="queryEventsResult" parameterClass="long" fetchSize="200">
+        SELECT "QUERY_EVENTS_ID", "QUERY_EVENTS_NAME", "QUERY_EVENTS_GROUP_ID", "QUERY_EVENTS_CONDITIONS", 
+       "QUERY_EVENTS_TYPE" FROM "tbl_queryEvents_operation"  WHERE "QUERY_EVENTS_ID" = #queryEventsId#;
+    </select>
+    
+            <!-- 查询系统资源事件条件SQL -->
+    <select id="pgAdminquery.resources" resultMap="queryEventsResult" parameterClass="long" fetchSize="200">
+        SELECT "QUERY_EVENTS_ID", "QUERY_EVENTS_NAME", "QUERY_EVENTS_GROUP_ID", "QUERY_EVENTS_CONDITIONS", 
+       "QUERY_EVENTS_TYPE" FROM "tbl_queryEvents_resources" WHERE "QUERY_EVENTS_ID" = #queryEventsId#;
+    </select>
+    
+             <!-- 查询自定义事件查询规则-->
+    <select id="pgAdminquery.custom" resultMap="queryEventsResult" parameterClass="long" fetchSize="200">
+        SELECT "QUERY_EVENTS_ID", "QUERY_EVENTS_NAME", "QUERY_EVENTS_GROUP_ID", "QUERY_EVENTS_CONDITIONS", "QUERY_EVENTS_TYPE"
+        FROM "tbl_queryEvents_custom" WHERE "QUERY_EVENTS_ID" = #queryEventsId#;
+    </select>
+   	
+   	    <!-- 插入自定义事件查询规则 -->
+    <insert id="pgAdmininsert.queryEventsRule" parameterClass="queryEvents" >
+        <![CDATA[ 
+           INSERT INTO "tbl_queryEvents_group"(
+            "QUERY_EVENTS_GROUP_NAME", 
+            "QUERY_EVENTS_GROUP_PARENT_ID", 
+            "QUERY_EVENTS_GROUP_TYPE", 
+            "QUERY_EVENTS_CONDITIONS")
+            VALUES 
+                (#queryEventsName#,
+                 #queryEventsGroupId#,
+                 #queryEventsType#,
+                 #queryEventsConditions#);
+        ]]>
+        <selectKey resultClass="java.lang.Long" keyProperty="queryEventsId" >
+            SELECT currval('tbl_queryevents_group_seq'::regclass) AS "queryEventsId"
+        </selectKey>
+        </insert>
+        <!-- 更新查询规则 -->
+        <update id="pgAdminupdate.queryEventsRule">
+          <![CDATA[ 
+           update "tbl_queryEvents_group" set 
+            "QUERY_EVENTS_CONDITIONS" =  #queryEventsConditions# ,"QUERY_EVENTS_GROUP_NAME" = #queryEventsName# where  "QUERY_EVENTS_GROUP_ID" = #queryEventsId#
+         
+        ]]>
+        
+        </update>
+            <!-- 删除一条数据 -->
+    <delete id="pgAdmindel.custom" parameterClass="long" >
+       <![CDATA[
+           DELETE FROM "tbl_queryEvents_group" WHERE "QUERY_EVENTS_GROUP_ID" = #queryEventsId#;
+       ]]>
+    </delete>
+  <!-- sqlserver -->
+   	        <!-- 查询服务器事件查询条件 -->
+    <select id="sqlServerquery.server" resultMap="queryEventsResult" parameterClass="long" fetchSize="200">
+        SELECT "QUERY_EVENTS_ID", "QUERY_EVENTS_NAME", "QUERY_EVENTS_GROUP_ID", "QUERY_EVENTS_CONDITIONS", 
+       "QUERY_EVENTS_TYPE" FROM "tbl_queryEvents_serverEvents" WHERE  "QUERY_EVENTS_ID" = #queryEventsId#;
+    </select>
+    
+   	    <!-- 查询认证事件条件SQL -->
+    <select id="sqlServerquery.attestation" resultMap="queryEventsResult" parameterClass="long" fetchSize="200">
+        SELECT "QUERY_EVENTS_ID", "QUERY_EVENTS_NAME", "QUERY_EVENTS_GROUP_ID", "QUERY_EVENTS_CONDITIONS", 
+       "QUERY_EVENTS_TYPE" FROM "tbl_queryEvents_attestation" WHERE  "QUERY_EVENTS_ID" = #queryEventsId#;
+    </select>
+    
+            <!-- 查询配置变更事件条件SQLL -->
+    <select id="sqlServerquery.config" resultMap="queryEventsResult" parameterClass="long" fetchSize="200">
+        SELECT "QUERY_EVENTS_ID", "QUERY_EVENTS_NAME", "QUERY_EVENTS_GROUP_ID", "QUERY_EVENTS_CONDITIONS", 
+       "QUERY_EVENTS_TYPE" FROM "tbl_queryEvents_config" WHERE   "QUERY_EVENTS_ID" = #queryEventsId#;
+    </select>
+    
+            <!-- 查询操作事件条件SQL -->
+    <select id="sqlServerquery.operatioin" resultMap="queryEventsResult" parameterClass="long" fetchSize="200">
+        SELECT "QUERY_EVENTS_ID", "QUERY_EVENTS_NAME", "QUERY_EVENTS_GROUP_ID", "QUERY_EVENTS_CONDITIONS", 
+       "QUERY_EVENTS_TYPE" FROM "tbl_queryEvents_operation"  WHERE "QUERY_EVENTS_ID" = #queryEventsId#;
+    </select>
+    
+            <!-- 查询系统资源事件条件SQL -->
+    <select id="sqlServerquery.resources" resultMap="queryEventsResult" parameterClass="long" fetchSize="200">
+        SELECT "QUERY_EVENTS_ID", "QUERY_EVENTS_NAME", "QUERY_EVENTS_GROUP_ID", "QUERY_EVENTS_CONDITIONS", 
+       "QUERY_EVENTS_TYPE" FROM "tbl_queryEvents_resources" WHERE "QUERY_EVENTS_ID" = #queryEventsId#;
+    </select>
+    
+             <!-- 查询自定义事件查询规则-->
+    <select id="sqlServerquery.custom" resultMap="queryEventsResult" parameterClass="long" fetchSize="200">
+        SELECT "QUERY_EVENTS_ID", "QUERY_EVENTS_NAME", "QUERY_EVENTS_GROUP_ID", "QUERY_EVENTS_CONDITIONS", "QUERY_EVENTS_TYPE"
+        FROM "tbl_queryEvents_custom" WHERE "QUERY_EVENTS_ID" = #queryEventsId#;
+    </select>
+   	
+   	    <!-- 插入自定义事件查询规则 -->
+    <insert id="sqlServerinsert.queryEventsRule" parameterClass="queryEvents" >
+        <![CDATA[ 
+           INSERT INTO "tbl_queryEvents_group"(
+            "QUERY_EVENTS_GROUP_NAME", 
+            "QUERY_EVENTS_GROUP_PARENT_ID", 
+            "QUERY_EVENTS_GROUP_TYPE", 
+            "QUERY_EVENTS_CONDITIONS")
+            VALUES 
+                (#queryEventsName#,
+                 #queryEventsGroupId#,
+                 #queryEventsType#,
+                 #queryEventsConditions#);
+        ]]>
+        <selectKey resultClass="java.lang.Long" keyProperty="queryEventsId" >
+            select MAX("QUERY_EVENTS_GROUP_ID") from "tbl_queryEvents_group" AS "queryEventsId"
+        </selectKey>
+        
+        </insert>
+        <!-- 更新查询规则 -->
+        <update id="sqlServerupdate.queryEventsRule">
+          <![CDATA[ 
+           update "tbl_queryEvents_group" set 
+            "QUERY_EVENTS_CONDITIONS" =  #queryEventsConditions# ,"QUERY_EVENTS_GROUP_NAME" = #queryEventsName# where  "QUERY_EVENTS_GROUP_ID" = #queryEventsId#
+         
+        ]]>
+        
+        </update>
+            <!-- 删除一条数据 -->
+    <delete id="sqlServerdel.custom" parameterClass="long" >
+       <![CDATA[
+           DELETE FROM "tbl_queryEvents_group" WHERE "QUERY_EVENTS_GROUP_ID" = #queryEventsId#;
+       ]]>
+    </delete>
+</sqlMap>

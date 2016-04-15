@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="sanTaskSQL">
+	<resultMap id="scanTaskResult" class="scanTask">
+		<result property="id" column="ID" jdbcType="bigint" />
+		<result property="taskName" column="TASK_NAME" jdbcType="varchar" />
+		<result property="ipBunch" column="IP_BUNCH"
+			jdbcType="varchar" />
+		<result property="startIP" column="START_IP"
+			jdbcType="varchar" />
+		<result property="endIP" column="END_IP" jdbcType="varchar" />
+		<result property="description" column="DESCRIPTION" jdbcType="varchar" />
+		<result property="createDate" column="CREATE_DATE"
+			jdbcType="datetime" />
+		<result property="falgFileName" column="FALG_FILE_NAME" jdbcType="varchar" />
+		<result property="state" column="STATE" jdbcType="int" />
+		<result property="userName" column="CREATE_USER_NAME" jdbcType="varchar"/>
+	</resultMap>
+	<!-- 新增 -->
+	<insert id="pgAdminscanTask.insert" parameterClass="scanTask">
+		 INSERT INTO "tbl_scan_task" 
+	               ("TASK_NAME",
+	                "IP_BUNCH",
+	                "START_IP",
+	                "END_IP",
+	                "DESCRIPTION",
+	                "FALG_FILE_NAME",
+	                "CREATE_DATE",
+	                "CREATE_USER_NAME",
+	                "STATE" )
+	        VALUES
+	               (#taskName#,
+	                #ipBunch#,
+	                #startIP#,
+	                #endIP#,
+	                #description#,
+	                #falgFileName#,
+	                #createDate#,
+	                #userName#,
+	                0 )   
+	</insert>	
+	<!-- 查询数量 -->
+	<select id="pgAdminscanTask.count" resultClass="int"
+	parameterClass="java.util.HashMap">
+		SELECT COUNT(*) FROM "tbl_scan_task" WHERE 1 = 1
+		<isNotEmpty prepend="AND" property="keyword">
+			<![CDATA[
+				("TASK_NAME" LIKE '%$keyword$%' OR "IP_BUNCH" LIKE '%$keyword$%'OR "START_IP" LIKE '%$keyword$%'
+				OR "END_IP" LIKE '%$keyword$%'OR "DESCRIPTION" LIKE '%$keyword$%')
+			]]>
+		</isNotEmpty>
+		<!-- 高级查询 -->
+		<isNotEmpty prepend="AND" property="taskName">
+		   <![CDATA[
+		     "TASK_NAME" LIKE '%$taskName$%'
+		   ]]>
+		</isNotEmpty>
+
+		<isNotEmpty prepend="AND" property="state">
+		   <![CDATA[
+		     "STATE" =#state#
+		   ]]>
+		</isNotEmpty>
+	</select>
+	<!-- 查询列表 -->
+	<select id="pgAdminscanTask.queryAll"  resultMap="scanTaskResult"
+	parameterClass="java.util.HashMap">
+		SELECT * FROM "tbl_scan_task" WHERE 1 = 1
+		<isNotEmpty prepend="AND" property="keyword">
+			<![CDATA[
+				("TASK_NAME" LIKE '%$keyword$%' OR "IP_BUNCH" LIKE '%$keyword$%'OR "START_IP" LIKE '%$keyword$%'
+				OR "END_IP" LIKE '%$keyword$%'OR "DESCRIPTION" LIKE '%$keyword$%')
+			]]>
+		</isNotEmpty>
+		<!-- 高级查询 -->
+		<isNotEmpty prepend="AND" property="taskName">
+		   <![CDATA[
+		     "TASK_NAME" LIKE '%$taskName$%'
+		   ]]>
+		</isNotEmpty>
+
+		<isNotEmpty prepend="AND" property="state">
+		   <![CDATA[
+		     "STATE" =#state#
+		   ]]>
+		</isNotEmpty>
+		order by "STATE"  asc , "CREATE_DATE" DESC
+	</select>
+	<!-- 根据ID查询 -->
+	<select id="pgAdminscanTask.queryById" resultMap="scanTaskResult" parameterClass="long">
+		SELECT * FROM "tbl_scan_task" where "ID"=#value#
+	</select>
+	<!-- 根据任务名查询 -->
+	<select id="pgAdminscanTask.queryByName" resultMap="scanTaskResult" parameterClass="String">
+		SELECT * FROM "tbl_scan_task" where "TASK_NAME"='$value$'
+	</select>
+	<!-- 根据文件名查询 -->
+	<select id="pgAdminscanTask.queryByFileName" resultClass="String" parameterClass="String">
+		SELECT "FALG_FILE_NAME" FROM "tbl_scan_task" where "FALG_FILE_NAME"='$value$' and "STATE" != 2
+	</select>
+	<!-- 根据id修改状态漏扫 -->
+	<update id="pgAdminscanTask.update" parameterClass="scanTask">
+		  UPDATE "tbl_scan_task" 
+	         SET
+			        
+			         "IP_BUNCH" = #ipBunch#,
+			         "START_IP" = #startIP#,
+			         "END_IP" = #endIP#,
+			         "DESCRIPTION" = #description#
+	         WHERE  "ID" = #id# and "STATE"=0
+	</update>
+	<!-- 根据文件名修改状态漏扫 -->
+	<update id="pgAdminscanTask.updateByFileName" parameterClass="String">
+		  UPDATE "tbl_scan_task" 
+	         SET
+			   "STATE" = 2
+	         WHERE  "FALG_FILE_NAME" = '$value$'
+	</update>
+	<!-- 根据ID修改状态漏扫 -->
+	<update id="pgAdminscanTask.updateStateById" parameterClass="long">
+		  UPDATE "tbl_scan_task" 
+	         SET
+			   "STATE" = 1
+	         WHERE  "ID" = #value#
+	</update>
+	<!-- 删除 -->
+	<delete id="pgAdminscanTask.deleteById" parameterClass="long">
+	delete from "tbl_scan_task" where "ID" = #value# and "STATE"=0
+	
+	</delete>	
+	
+</sqlMap>

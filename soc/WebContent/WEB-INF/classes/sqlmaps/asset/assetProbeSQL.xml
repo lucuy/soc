@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="assetProbeSQL">
+	<resultMap id="assetProbeResult" class="assetProbe">
+		<result property="collectorMac" column="ASSET_COLLECTOR_MAC"
+			jdbcType="varchar" />
+		<result property="deviceType" column="ASSET_DEVICE_TYPE"
+			jdbcType="varchar" />
+		<result property="deviceMemo" column="ASSET_DEVICE_MEMO"
+			jdbcType="varchar" />
+
+		<result property="deviceIp" column="ASSET_DEVICE_IP" jdbcType="varchar" />
+		<result property="deviceMac" column="ASSET_DEVICE_MAC"
+			jdbcType="varchar" />
+		<result property="taskId" column="ASSET_TASK_ID" jdbcType="bigint" />
+	</resultMap>
+<!-- 根据MAC查询 -->
+	<select id="pgAdminassetProbe.query" parameterClass="String"
+		resultMap="assetProbeResult">
+		SELECT * FROM "tbl_asset_probe" WHERE "ASSET_COLLECTOR_MAC"=#collectorMac#
+	</select>
+	
+	<!-- 根据资产探测任务的id查询 -->
+	<select id="pgAdminassetProbe.queryByTaskId" parameterClass="int" resultMap="assetProbeResult">
+	     SELECT * FROM "tbl_asset_probe" WHERE "ASSET_TASK_ID"=$taskId$
+	</select>
+	
+	<delete id="pgAdminassetProbe.deleteAssetProbe" parameterClass="int">
+	      DELETE FROM "tbl_asset_probe" WHERE "ASSET_TASK_ID" = $taskId$
+	</delete>
+	
+	<!--  -->
+	<insert id="pgAdminassetPorbe.insert" parameterClass="assetProbe">
+		INSERT INTO
+		"tbl_asset_probe"
+		("ASSET_COLLECTOR_MAC",
+		"ASSET_DEVICE_TYPE",
+		"ASSET_DEVICE_MEMO",
+		"ASSET_DEVICE_IP",
+		"ASSET_DEVICE_MAC"
+		)
+		VALUES
+		(#collectorMac#,
+		#deviceType#,
+		#deviceMemo#,
+		#deviceIp#,
+		#deviceMac#
+		)
+	</insert>
+<!-- sqlserver -->
+	<!-- 根据MAC查询 -->
+	<select id="sqlServerassetProbe.query" parameterClass="String"
+		resultMap="assetProbeResult">
+		SELECT * FROM "tbl_asset_probe" WHERE "ASSET_COLLECTOR_MAC"=#collectorMac#
+	</select>
+	
+	<!-- 根据资产探测任务的id查询 -->
+	<select id="sqlServerassetProbe.queryByTaskId" parameterClass="int" resultMap="assetProbeResult">
+	     SELECT * FROM "tbl_asset_probe" WHERE "ASSET_TASK_ID"=$taskId$
+	</select>
+	
+	<delete id="sqlServerassetProbe.deleteAssetProbe" parameterClass="int">
+	      DELETE FROM "tbl_asset_probe" WHERE "ASSET_TASK_ID" = $taskId$
+	</delete>
+	
+	<!--  -->
+	<insert id="sqlServerassetPorbe.insert" parameterClass="assetProbe">
+		INSERT INTO
+		"tbl_asset_probe"
+		("ASSET_COLLECTOR_MAC",
+		"ASSET_DEVICE_TYPE",
+		"ASSET_DEVICE_MEMO",
+		"ASSET_DEVICE_IP",
+		"ASSET_DEVICE_MAC"
+		)
+		VALUES
+		(#collectorMac#,
+		#deviceType#,
+		#deviceMemo#,
+		#deviceIp#,
+		#deviceMac#
+		)
+	</insert>
+</sqlMap>

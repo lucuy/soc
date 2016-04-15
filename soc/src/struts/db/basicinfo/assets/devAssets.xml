@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+    <struts>
+  <!--   安全设备管理 -->
+    	<package name="devAssets" extends="struts-default" namespace="/devAssets">
+		<action name="query" class="devAssetsAction" method="query">
+			<result name="success">/pages/dbPage/basic/assets/devassets.jsp</result>
+		</action>	
+		<action name="kquery" class="devAssetsAction" method="queryDevAssets">
+			<result name="success">/pages/dbPage/basic/assets/devassets.jsp</result>
+		</action>
+		<!-- 修改安全设备信息 -->
+		<action name="edit" class="devAssetsAction" method="edit">
+			<result name="success" >/pages/dbPage/basic/assets/adddevassets.jsp</result>
+		</action>
+		<!-- 添加安全设备信息 -->
+		<action name="add" class="devAssetsAction" method="addDevAssets">
+			<result name="success" type="redirect">/pages/dbPage/basic/assets/devassets.jsp</result>
+			
+		</action>
+		<!-- 删除安全设备 -->
+		<action name="delete" class="devAssetsAction" method="delete">
+			<result name="success" type="redirect">/pages/dbPage/basic/assets/devassets.jsp</result>
+		</action> 
+		 
+		<!--查询json分页-->
+		<action name="queryAjaxDevAssets"   class="devAssetsAction" method="queryAjaxDevAssets"></action>
+		<!--高级搜索安全设备信息-->
+		<action name="extQuery"   class="devAssetsAction" method="queryExtDevAssets"></action>
+		
+    	</package>
+    </struts>

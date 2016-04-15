@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+         xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    
+	<!-- 定义注入的类和参数 -->
+	<bean name="archiveAutoTrigger" class="com.soc.webapp.action.systemsetting.SettingArchiveAutoAction">
+		<property name="archiveManager" ref="archiveManager"></property>
+		<property name="settingManager" ref="settingManager"></property>
+		
+	</bean>
+	
+    <!-- 定义定时器，指定执行的类和方法 -->
+    <bean name="archiveAutoTriggerDetailBean" 
+    		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="archiveAutoTrigger" />
+		<property name="targetMethod" value="archiveAuto"/>
+	</bean>
+
+    <bean id="archiveTime"
+        class="org.springframework.scheduling.quartz.CronTriggerBean">  
+        <property name="jobDetail">  
+            <ref bean="archiveAutoTriggerDetailBean" />  
+        </property>  
+        <property name="cronExpression">  
+            <value> 0 0 0 1 * ?</value>
+        </property>
+    </bean>
+	
+	<bean name="archiveAuto" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		 <property name="triggers">
+			<list>
+				<ref bean="archiveTime"/>
+			</list>
+		</property>
+	</bean> 
+</beans>

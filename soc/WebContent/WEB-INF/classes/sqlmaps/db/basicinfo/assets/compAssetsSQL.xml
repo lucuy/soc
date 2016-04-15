@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="compAssetsSQL">
+	<resultMap class="compAssets" id="compAssetsResult">
+		<result property="id" column="PK_HMD" jdbcType="bigint" />
+		<result property="devName" column="HMD_DeviceName" jdbcType="varchar" />
+		<result property="devType" column="HMD_AssetType" jdbcType="varchar" />
+		<result property="devDescription" column="HMD_SysDescription" jdbcType="varchar" />
+		<result property="devRemarks" column="HMD_Remark" jdbcType="varchar" />
+		<result property="relsysName" column="PK_HMD" select="pgAdmincompAssets.getSysName" />
+		<result property="relresName" column="PK_HMD" select="pgAdmincompAssets.getResName" />
+	</resultMap>
+	<!-- postrgreSql -->
+	<!-- 从信息系统名称关联表查找指定记录的所属系统名称集合 -->
+	<select id="pgAdmincompAssets.getSysName" parameterClass="int" resultClass="string">
+		select "SYSINFO_Name" from "tb_sysref" where "PK_HMD" = #value# and "SYSINFO_Name" is NOT NULL
+	</select>
+	<!-- 从信息系统名称关联表查找指定记录的所属业务应用软件名称集合 -->
+	<select id="pgAdmincompAssets.getResName" parameterClass="int" resultClass="string">
+		select "BUSINESSSoft_SoftName" from "tb_sysref" where "PK_HMD" = #value# and "BUSINESSSoft_SoftName" is NOT NULL
+	</select>
+	<!-- 从信息系统名称关联表插入信息系统名称关联 -->
+	<insert id="pgAdmincompAssets.addSysName">
+		insert into "tb_sysref" ("SYSINFO_Name", "PK_HMD")
+		values(#relsysName#, #id#)
+	</insert>
+	<!-- 从信息系统名称关联表插入业务应用软件 -->
+	<insert id="pgAdmincompAssets.addResName">
+		insert into "tb_sysref" ("BUSINESSSoft_SoftName", "PK_HMD")
+		values(#relresName#, #id#)
+	</insert>
+	<!-- 从信息系统名称关联表更新业务应用软件与信息系统名称关联 -->
+	<delete id="pgAdmincompAssets.delSysName" parameterClass="int">
+		delete from "tb_sysref" where "PK_HMD" = #id#
+	</delete>
+	<!-- sqlServer -->
+	<!-- 从信息系统名称关联表查找指定记录的所属系统名称集合 -->
+	<select id="sqlServercompAssets.getSysName" parameterClass="int" resultClass="string">
+		select "SYSINFO_Name" from "tb_sysref" where "PK_HMD" = #value# and "SYSINFO_Name" is NOT NULL
+	</select>
+	<!-- 从信息系统名称关联表查找指定记录的所属业务应用软件名称集合 -->
+	<select id="sqlServercompAssets.getResName" parameterClass="int" resultClass="string">
+		select "BUSINESSSoft_SoftName" from "tb_sysref" where "PK_HMD" = #value# and "BUSINESSSoft_SoftName" is NOT NULL
+	</select>
+	<!-- 从信息系统名称关联表插入信息系统名称关联 -->
+	<insert id="sqlServercompAssets.addSysName">
+		insert into "tb_sysref" ("SYSINFO_Name", "PK_HMD")
+		values(#relsysName#, #id#)
+	</insert>
+	<!-- 从信息系统名称关联表插入业务应用软件 -->
+	<insert id="sqlServercompAssets.addResName">
+		insert into "tb_sysref" ("BUSINESSSoft_SoftName", "PK_HMD")
+		values(#relresName#, #id#)
+	</insert>
+	<!-- 从信息系统名称关联表更新业务应用软件与信息系统名称关联 -->
+	<delete id="sqlServercompAssets.delSysName" parameterClass="int">
+		delete from "tb_sysref" where "PK_HMD" = #id#
+	</delete>
+	<!-- 根据信息系统名称查询业务应用软件总记录数 -->
+	<sql id="count6BySysName">
+		SELECT count(*) FROM "tb_hmd"
+		WHERE
+			"PK_HMD" IN (
+				SELECT
+					A ."PK_HMD"
+				FROM
+					tb_hmd A
+				RIGHT JOIN tb_sysref b ON A ."PK_HMD" = b."PK_HMD"
+				WHERE
+					b."SYSINFO_Name" = #keyword2#
+			)
+	</sql>
+	<!-- 根据信息系统名称查询业务应用软件 -->
+	<sql id="query6BySysName">
+		SELECT * FROM "tb_hmd"
+		WHERE
+			"PK_HMD" IN (
+				SELECT
+					A ."PK_HMD"
+				FROM
+					tb_hmd A
+				RIGHT JOIN tb_sysref b ON A ."PK_HMD" = b."PK_HMD"
+				WHERE
+					b."SYSINFO_Name" = #keyword2#
+			)
+	</sql>
+	<!-- 根据信息系统名称查询业务应用软件总记录数 -->
+	<sql id="count1ByResName">
+		SELECT count(*) FROM "tb_hmd"
+		WHERE
+			"PK_HMD" IN (
+				SELECT
+					A ."PK_HMD"
+				FROM
+					tb_hmd A
+				RIGHT JOIN tb_sysref b ON A ."PK_HMD" = b."PK_HMD"
+				WHERE
+					b."BUSINESSSoft_SoftName" = #keyword3#
+			)
+	</sql>
+	<!-- 根据信息系统名称查询业务应用软件 -->
+	<sql id="query1ByResName">
+		SELECT * FROM "tb_hmd"
+		WHERE
+			"PK_HMD" IN (
+				SELECT
+					A ."PK_HMD"
+				FROM
+					tb_hmd A
+				RIGHT JOIN tb_sysref b ON A ."PK_HMD" = b."PK_HMD"
+				WHERE
+					b."BUSINESSSoft_SoftName" = #keyword3#
+			)
+	</sql>
+	<!-- 设备名称、所属系统名称、设备描述、业务应用软件进行模糊查询查询条数 -->
+	<select id="pgAdmincompAssets.count" resultClass="int">
+		SELECT COUNT(*) FROM "tb_hmd"  where 1=1
+		<isNotEmpty prepend="AND" property="keyword">
+			<![CDATA[
+				(
+					"HMD_DeviceName" LIKE '%$keyword$%' 
+					or "HMD_SysDescription" LIKE '%$keyword$%'
+				)
+			]]>
+		</isNotEmpty>
+	</select>
+	<!-- 添加主机存储设备 -->
+	<insert id="pgAdmincompAssets.insert" parameterClass="compAssets">
+		<selectKey resultClass="int" type="pre" keyProperty="id">
+			SELECT nextval('tb_hmd_seq'::regclass)
+		</selectKey>
+		insert into "tb_hmd" ("PK_HMD", "HMD_DeviceName",
+		"HMD_AssetType","HMD_SysDescription","HMD_Remark")
+		values(#id#,#devName#,#devType#,#devDescription#,#devRemarks#)
+	</insert>
+	<!-- 删除 -->
+	<delete id="pgAdmincompAssets.delete" parameterClass="int">
+		delete from "tb_hmd" WHERE "PK_HMD"=#id#
+	</delete>
+	<!-- 根据id查询 -->
+	<select id="pgAdmincompAssets.queryById" parameterClass="Integer" resultMap="compAssetsResult">
+
+		select * from "tb_hmd" c where "PK_HMD" = #id#
+
+	</select>
+	<!-- 修改主机存储设备信息 -->
+	<update id="pgAdmincompAssets.update" parameterClass="compAssets">
+		update "tb_hmd" 
+		SET
+		"HMD_DeviceName" = #devName#,
+		"HMD_AssetType" = #devType#,
+		"HMD_SysDescription" = #devDescription#,
+		"HMD_Remark" = #devRemarks#
+
+		where
+		 "PK_HMD" = #id#
+	</update>
+
+	<!--按照设备名称、所属系统名称、设备描述、业务应用软件进行模糊查询 -->
+
+	<select id="pgAdmincompAssets.query" resultMap="compAssetsResult" parameterClass="java.util.HashMap">
+		SELECT * FROM "tb_hmd"   where 1=1
+		<isNotEmpty prepend="AND" property="keyword">
+			<![CDATA[
+				(
+					"HMD_DeviceName" LIKE '%$keyword$%' 
+					or "HMD_SysDescription" LIKE '%$keyword$%'
+				)
+			]]>
+		</isNotEmpty>
+		order by "PK_HMD" desc
+	</select>
+	<!-- 按照设备名称、所属系统名称、业务应用软件进行精确查找 -->
+	<select id="pgAdmincompAssets.queryprecise" resultMap="compAssetsResult" parameterClass="java.util.HashMap">
+		<isNotEmpty property="keyword2">
+			<include refid="query6BySysName"/>
+		</isNotEmpty>
+		<isNotEmpty property="keyword3">
+			<include refid="query1ByResName"/>
+		</isNotEmpty>
+		<isEmpty property="keyword2">
+			<isEmpty property="keyword3">
+			SELECT * FROM "tb_hmd"   where 1=1
+			<isNotEmpty prepend="AND" property="keyword1">
+				<![CDATA[
+						"HMD_DeviceName" =#keyword1# 
+				]]>
+			</isNotEmpty>
+			</isEmpty>
+		</isEmpty>
+		order by "PK_HMD" desc
+	</select>
+	<!-- 按照设备名称、所属系统名称、业务应用软件进行精确查找查询条数 -->
+	<select id="pgAdmincompAssets.countprecise" resultClass="int">
+		<isNotEmpty property="keyword2">
+			<include refid="count6BySysName"/>
+		</isNotEmpty>
+		<isNotEmpty property="keyword3">
+			<include refid="count1ByResName"/>
+		</isNotEmpty>
+		<isEmpty property="keyword2">
+			<isEmpty property="keyword3">
+				SELECT COUNT(*) FROM "tb_hmd" c where 1=1
+				<isNotEmpty prepend="AND" property="keyword1">
+					<![CDATA[
+							"HMD_DeviceName" =#keyword1# 
+					]]>
+				</isNotEmpty>
+			</isEmpty>
+		</isEmpty>
+	</select>
+
+	<!-- 评估导出报表。查询所有 -->
+	<select id="pgAdmincompAssets.queryAll" resultMap="compAssetsResult">
+		SELECT * FROM "tb_hmd"
+	</select>
+	
+	<!-- sqlServer -->
+	<!-- 设备名称、所属系统名称、设备描述、业务应用软件进行模糊查询查询条数 -->
+	<select id="sqlServercompAssets.count" resultClass="int">
+		SELECT COUNT(*) FROM "tb_hmd"  where 1=1
+		<isNotEmpty prepend="AND" property="keyword">
+			<![CDATA[
+				(
+					"HMD_DeviceName" LIKE '%$keyword$%' 
+					or "HMD_SysDescription" LIKE '%$keyword$%'
+					or "BUSINESSSoft_SoftName" LIKE '%$keyword$%' 
+				)
+			]]>
+		</isNotEmpty>
+	</select>
+	<!-- 添加主机存储设备 -->
+	<insert id="sqlServercompAssets.insert" parameterClass="compAssets">
+		insert into "tb_hmd" ("HMD_DeviceName",
+		"HMD_AssetType","HMD_SysDescription","HMD_Remark")
+		               values(#devName#,#devType#,#devDescription#,#devRemarks#)
+		<selectKey resultClass="int" type="post" keyProperty="id" >
+           SELECT @@IDENTITY AS id
+      	</selectKey>
+	</insert>
+	<!-- 删除 -->
+	<delete id="sqlServercompAssets.delete" parameterClass="int">
+		delete from "tb_hmd" WHERE "PK_HMD"=#id#
+	</delete>
+	<!-- 根据id查询 -->
+	<select id="sqlServercompAssets.queryById" parameterClass="Integer" resultMap="compAssetsResult">
+
+		select * from "tb_hmd" c where "PK_HMD" = #id#
+
+	</select>
+	<!-- 修改主机存储设备信息 -->
+	<update id="sqlServercompAssets.update" parameterClass="compAssets">
+		update "tb_hmd" 
+		SET
+		"HMD_DeviceName" = #devName#,
+		"HMD_AssetType" = #devType#,
+		"HMD_SysDescription" = #devDescription#,
+		"HMD_Remark" = #devRemarks#
+
+		where
+		 "PK_HMD" = #id#
+	</update>
+
+	<!--按照设备名称、所属系统名称、设备描述、业务应用软件进行模糊查询 -->
+
+	<select id="sqlServercompAssets.query" resultMap="compAssetsResult" parameterClass="java.util.HashMap">
+		SELECT * FROM "tb_hmd"   where 1=1
+		<isNotEmpty prepend="AND" property="keyword">
+			<![CDATA[
+				(
+					"HMD_DeviceName" LIKE '%$keyword$%' 
+					or "HMD_SysDescription" LIKE '%$keyword$%'
+				)
+			]]>
+		</isNotEmpty>
+		order by "PK_HMD" desc
+	</select>
+	<!-- 按照设备名称、所属系统名称、业务应用软件进行精确查找 -->
+	<select id="sqlServercompAssets.queryprecise" resultMap="compAssetsResult" parameterClass="java.util.HashMap">
+		<isNotEmpty property="keyword2">
+			<include refid="query6BySysName"/>
+		</isNotEmpty>
+		<isNotEmpty property="keyword3">
+			<include refid="query1ByResName"/>
+		</isNotEmpty>
+		<isEmpty property="keyword2">
+			<isEmpty property="keyword3">
+				SELECT * FROM "tb_hmd"   where 1=1
+				<isNotEmpty prepend="AND" property="keyword1">
+					<![CDATA[
+							"HMD_DeviceName" =#keyword1# 
+					]]>
+				</isNotEmpty>
+				<isNotEmpty prepend="AND" property="keyword2">
+					<![CDATA[
+							"SYSINFO_Names"=#keyword2# 
+					]]>
+				</isNotEmpty>
+				<isNotEmpty prepend="AND" property="keyword3">
+					<![CDATA[
+							"BUSINESSSoft_SoftName"=#keyword3#
+					]]>
+				</isNotEmpty>
+			</isEmpty>
+		</isEmpty>
+		order by "PK_HMD" desc
+	</select>
+	<!-- 按照设备名称、所属系统名称、业务应用软件进行精确查找查询条数 -->
+	<select id="sqlServercompAssets.countprecise" resultClass="int">
+		<isNotEmpty property="keyword2">
+			<include refid="count6BySysName"/>
+		</isNotEmpty>
+		<isNotEmpty property="keyword3">
+			<include refid="count1ByResName"/>
+		</isNotEmpty>
+		<isEmpty property="keyword2">
+			<isEmpty property="keyword3">
+				SELECT COUNT(*) FROM "tb_hmd" c where 1=1
+				<isNotEmpty prepend="AND" property="keyword1">
+					<![CDATA[
+							"HMD_DeviceName" =#keyword1# 
+					]]>
+				</isNotEmpty>
+				<isNotEmpty prepend="AND" property="keyword2">
+					<![CDATA[
+							"SYSINFO_Names"=#keyword2# 
+					]]>
+				</isNotEmpty>
+				<isNotEmpty prepend="AND" property="keyword3">
+					<![CDATA[
+							"BUSINESSSoft_SoftName"=#keyword3#
+					]]>
+				</isNotEmpty>
+			</isEmpty>
+		</isEmpty>
+	</select>
+
+	<!-- 评估导出报表。查询所有 -->
+	<select id="sqlServercompAssets.queryAll" resultMap="compAssetsResult">
+		SELECT * FROM "tb_hmd"
+	</select>
+</sqlMap>

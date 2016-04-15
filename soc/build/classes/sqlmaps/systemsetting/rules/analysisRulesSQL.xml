@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="analysisRulesSQL">
+
+	<resultMap id="analysis" class="analysisRules">
+   		<result property="analysisId" 			column="ANALYSIS_ID" 		    	jdbcType="varchar"/>
+   		<result property="analysisName"           column="ANALYSIS_NAME"           	jdbcType="varchar"/>
+   		<result property="analysisCondition"      column="ANALYSIS_CONDITION"       jdbcType="varchar"/>
+   		<result property="analysisDescription"    column="ANALYSIS_DESCRIPTION"     jdbcType="text"/>
+   		<result property="analysisCreateTime"     column="ANALYSIS_CREATE_TIME"     jdbcType="datetime"/>
+   		<result property="analysisCreator"     	column="ANALYSIS_CREATOR"     		jdbcType="varchar"/>
+   		<result property="analysisUpdateTime"     column="ANALYSIS_UPDATE_TIME"     jdbcType="datetime"/>
+   		<result property="analysisType"     		column="ANALYSIS_TYPE"     		jdbcType="int"/>
+   	</resultMap>
+   	
+   	<select id="pgAdminquery.analysis" resultMap="analysis">
+	   SELECT * FROM "tbl_analysis" order by "ANALYSIS_UPDATE_TIME" DESC
+	</select>
+	
+	<select id="pgAdminquery.analysisById" parameterClass="java.lang.String" resultMap="analysis">
+	   SELECT * FROM "tbl_analysis" WHERE "ANALYSIS_ID" in (#value#) order by "ANALYSIS_UPDATE_TIME" DESC
+	</select>
+	
+	<select id="pgAdminquery.tableNameByanalysisId" parameterClass="java.lang.String" resultClass="java.lang.String">
+	   SELECT "TABLE_NAME" AS tbleName FROM "tbl_mapping" WHERE "ANALYSIS_ID" = #value# order by "ANALYSIS_UPDATE_TIME" DESC
+	</select>
+	
+	<!-- 更新账户状态 -->
+	<update id="pgAdminanalysisRules.updateUserStatus" parameterClass="java.util.HashMap" >
+		<![CDATA[
+			UPDATE "tbl_analysis" 
+			SET 
+			       "ANALYSIS_UPDATE_TIME" = #analysisUpdateTime#,
+			       "ANALYSIS_TYPE" = #analysisType# 
+			WHERE 
+			       "ANALYSIS_ID" = #analysisId#
+		]]>
+	</update>
+	
+	<select id="pgAdmincountPage.analysis"  parameterClass="java.util.HashMap" resultClass="int">
+		SELECT COUNT(*) FROM "tbl_analysis" where 1=1
+		
+		<isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				"ANALYSIS_NAME" LIKE '%$keyword$%'
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend= "AND"  property="analysisName">
+			<![CDATA[
+				"ANALYSIS_NAME" LIKE '%$analysisName$%'
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend= "AND"  property="analysisType">
+			<![CDATA[
+				"ANALYSIS_TYPE"=#analysisType#
+			]]>
+		</isNotEmpty>
+	</select>
+	
+	<select id="pgAdminanalysis.query"  parameterClass="java.util.HashMap" resultMap="analysis">
+		SELECT * FROM "tbl_analysis" where 1=1
+		
+		<isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				"ANALYSIS_NAME" LIKE '%$keyword$%'
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend= "AND"  property="analysisName">
+			<![CDATA[
+				"ANALYSIS_NAME" LIKE '%$analysisName$%'
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend= "AND"  property="analysisType">
+			<![CDATA[
+				"ANALYSIS_TYPE"=#analysisType#
+			]]>
+		</isNotEmpty>
+		order by "ANALYSIS_UPDATE_TIME" DESC
+	</select>
+	
+	<select id="pgAdminanalysisRules.sort" resultMap="analysis" parameterClass="java.lang.String">
+   	    SELECT * FROM "tbl_analysis" ORDER BY $str$ 
+   	</select>
+   	<!-- sqlServer -->
+   		<select id="sqlServerquery.analysis" resultMap="analysis">
+	   SELECT * FROM "tbl_analysis" order by "ANALYSIS_UPDATE_TIME" DESC
+	</select>
+	
+	<select id="sqlServerquery.analysisById" parameterClass="java.lang.String" resultMap="analysis">
+	   SELECT * FROM "tbl_analysis" WHERE "ANALYSIS_ID" in (#value#) order by "ANALYSIS_UPDATE_TIME" DESC
+	</select>
+	
+	<select id="sqlServerquery.tableNameByanalysisId" parameterClass="java.lang.String" resultClass="java.lang.String">
+	   SELECT "TABLE_NAME" AS tbleName FROM "tbl_mapping" WHERE "ANALYSIS_ID" = #value# order by "ANALYSIS_UPDATE_TIME" DESC
+	</select>
+	
+	<!-- 更新账户状态 -->
+	<update id="sqlServeranalysisRules.updateUserStatus" parameterClass="java.util.HashMap" >
+		<![CDATA[
+			UPDATE "tbl_analysis" 
+			SET 
+			       "ANALYSIS_UPDATE_TIME" = #analysisUpdateTime#,
+			       "ANALYSIS_TYPE" = #analysisType# 
+			WHERE 
+			       "ANALYSIS_ID" = #analysisId#
+		]]>
+	</update>
+	
+	<select id="sqlServercountPage.analysis"  parameterClass="java.util.HashMap" resultClass="int">
+		SELECT COUNT(*) FROM "tbl_analysis" where 1=1
+		
+		<isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				"ANALYSIS_NAME" LIKE '%$keyword$%'
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend= "AND"  property="analysisName">
+			<![CDATA[
+				"ANALYSIS_NAME" LIKE '%$analysisName$%'
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend= "AND"  property="analysisType">
+			<![CDATA[
+				"ANALYSIS_TYPE"=#analysisType#
+			]]>
+		</isNotEmpty>
+	</select>
+	
+	<select id="sqlServeranalysis.query"  parameterClass="java.util.HashMap" resultMap="analysis">
+		SELECT * FROM "tbl_analysis" where 1=1
+		
+		<isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				"ANALYSIS_NAME" LIKE '%$keyword$%'
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend= "AND"  property="analysisName">
+			<![CDATA[
+				"ANALYSIS_NAME" LIKE '%$analysisName$%'
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend= "AND"  property="analysisType">
+			<![CDATA[
+				"ANALYSIS_TYPE"=#analysisType#
+			]]>
+		</isNotEmpty>
+		order by "ANALYSIS_UPDATE_TIME" DESC
+	</select>
+	
+	<select id="sqlServeranalysisRules.sort" resultMap="analysis" parameterClass="java.lang.String">
+   	    SELECT * FROM "tbl_analysis" ORDER BY $str$ 
+   	</select>
+</sqlMap>

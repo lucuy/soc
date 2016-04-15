@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="softUseSQL">
+
+	<resultMap class="businesssoft" id="businessassets">
+		<result property="id" column="PK_BUSINESSSoft" jdbcType="int" />
+		<result property="resType" column="BUSINESSSoft_AssetType" jdbcType="varchar" />
+		<result property="resName" column="BUSINESSSoft_SoftName" jdbcType="varchar" />
+		<result property="impDegree" column="BUSINESSSoft_Importance" jdbcType="varchar" />
+		<result property="mianFun" column="BUSINESSSoft_MainFunction" jdbcType="varchar" />
+		<result property="remarks" column="BUSINESSSoft_Remark" jdbcType="varchar" />
+		<result property="relsysName" column="PK_BUSINESSSoft" select="pgAdminsoftUse.getSysName" />
+	</resultMap>
+	<!-- postrgreSql -->
+	<!-- 从信息系统名称关联表查找指定记录的所属系统名称集合 -->
+	<select id="pgAdminsoftUse.getSysName" parameterClass="int" resultClass="string">
+		select "SYSINFO_Name" from "tb_sysref" where "PK_BUSINESSSoft" = #value#
+	</select>
+	<!-- 从信息系统名称关联表插入业务应用软件与信息系统名称关联 -->
+	<insert id="pgAdminsoftUse.addSysName">
+		insert into "tb_sysref" ("SYSINFO_Name", "PK_BUSINESSSoft")
+		values(#relsysName#, #id#)
+	</insert>
+	<!-- 从信息系统名称关联表更新业务应用软件与信息系统名称关联 -->
+	<delete id="pgAdminsoftUse.delSysName" parameterClass="int">
+		delete from "tb_sysref" where "PK_BUSINESSSoft" = #id#
+	</delete>
+	<!-- sqlServer -->
+	<!-- 从信息系统名称关联表查找指定记录的所属系统名称集合 -->
+	<select id="sqlServersoftUse.getSysName" parameterClass="int" resultClass="string">
+		select "SYSINFO_Name" from "tb_sysref" where "PK_BUSINESSSoft" = #value#
+	</select>
+	<!-- 从信息系统名称关联表插入业务应用软件与信息系统名称关联 -->
+	<insert id="sqlServersoftUse.addSysName">
+		insert into "tb_sysref" ("SYSINFO_Name", "PK_BUSINESSSoft")
+		values(#relsysName#, #id#)
+	</insert>
+	<!-- 从信息系统名称关联表更新业务应用软件与信息系统名称关联 -->
+	<delete id="sqlServersoftUse.delSysName" parameterClass="int">
+		delete from "tb_sysref" where "PK_BUSINESSSoft" = #id#
+	</delete>
+	<!-- 根据信息系统名称查询业务应用软件总记录数 -->
+	<sql id="count1BySysName">
+		SELECT count(*) FROM "tb_businesssoft"
+		WHERE
+			"PK_BUSINESSSoft" IN (
+				SELECT
+					A ."PK_BUSINESSSoft"
+				FROM
+					tb_businesssoft A
+				RIGHT JOIN tb_sysref b ON A ."PK_BUSINESSSoft" = b."PK_BUSINESSSoft"
+				WHERE
+					b."SYSINFO_Name" = #keyword2#
+			)
+	</sql>
+	<!-- 根据信息系统名称查询业务应用软件 -->
+	<sql id="query1BySysName">
+		SELECT * FROM "tb_businesssoft"
+		WHERE
+			"PK_BUSINESSSoft" IN (
+				SELECT
+					A ."PK_BUSINESSSoft"
+				FROM
+					tb_businesssoft A
+				RIGHT JOIN tb_sysref b ON A ."PK_BUSINESSSoft" = b."PK_BUSINESSSoft"
+				WHERE
+					b."SYSINFO_Name" = #keyword2#
+			)
+	</sql>
+	
+<!-- 查询条数 -->
+	<select id="pgAdminsoftUse.count" resultClass="int">
+		SELECT COUNT(*) FROM "tb_businesssoft"  where 1=1
+		<isNotEmpty prepend="AND" property="keyword">
+			<![CDATA[
+				(
+					"BUSINESSSoft_SoftName" LIKE '%$keyword$%' 
+					or "BUSINESSSoft_Importance" LIKE '%$keyword$%'
+					or "BUSINESSSoft_MainFunction" LIKE '%$keyword$%' 
+					or "BUSINESSSoft_Remark" LIKE '%$keyword$%'
+					
+				)
+			]]>
+		</isNotEmpty>
+
+	</select>
+	<!-- 添加 -->
+	<insert id="pgAdminsoftUse.insert" parameterClass="businesssoft">
+		<selectKey resultClass="int" type="pre" keyProperty="id">
+			SELECT nextval('tb_businesssoft_seq'::regclass)
+		</selectKey>
+		insert into "tb_businesssoft" ("PK_BUSINESSSoft", "BUSINESSSoft_AssetType", "BUSINESSSoft_SoftName",
+		"BUSINESSSoft_Importance" ,"BUSINESSSoft_MainFunction"
+		,"BUSINESSSoft_Remark")
+		values(#id#, #resType#,#resName#,#impDegree#,#mianFun#,#remarks#)
+	</insert>
+	<!-- 根据id查询 -->
+	<select id="pgAdminsoftUse.queryById" parameterClass="Integer" resultMap="businessassets">
+		select * from "tb_businesssoft"   where "PK_BUSINESSSoft" = #id#
+	</select>
+	<!--快速搜索 -->
+
+	<select id="pgAdminsoftUse.query" resultMap="businessassets" parameterClass="java.util.HashMap">
+		SELECT * FROM "tb_businesssoft"   where 1=1
+		<isNotEmpty prepend="AND" property="keyword">
+			<![CDATA[
+				(
+					"BUSINESSSoft_SoftName" LIKE '%$keyword$%' 
+					or "BUSINESSSoft_Importance" LIKE '%$keyword$%'
+					or "BUSINESSSoft_MainFunction" LIKE '%$keyword$%' 
+					or "BUSINESSSoft_Remark" LIKE '%$keyword$%'
+				)
+			]]>
+		</isNotEmpty>
+		order by "PK_BUSINESSSoft" desc
+	</select>
+	<!-- 修改业务应用软件 -->
+	<update id="pgAdminsoftUse.update" parameterClass="businesssoft">
+		update "tb_businesssoft"  
+		SET
+		"BUSINESSSoft_AssetType" = #resType#,
+		"BUSINESSSoft_SoftName" = #resName#,
+		"BUSINESSSoft_Importance" = #impDegree#,
+		"BUSINESSSoft_MainFunction" = #mianFun#,
+		"BUSINESSSoft_Remark" = #remarks#
+		where
+		"PK_BUSINESSSoft" = #id#
+	</update>
+	<!-- 删除业务应用软件 -->
+	<delete id="pgAdminsoftUse.deleteref" parameterClass="int">
+		delete from "tb_sysref" WHERE "BUSINESSSoft_SoftName"=(select "BUSINESSSoft_SoftName" from "tb_businesssoft" WHERE "PK_BUSINESSSoft"=#id#)
+	</delete>
+	<delete id="pgAdminsoftUse.delete" parameterClass="int">
+		delete from "tb_businesssoft" WHERE "PK_BUSINESSSoft"=#id#
+	</delete>
+	<!-- 按照软件名称、所属系统名称、软件功能描述、重要程度进行精确查找 -->
+	<select id="pgAdminsoftUse.prisicequery" parameterClass="java.util.HashMap" resultMap="businessassets">
+		<isNotEmpty property="keyword2">
+			<include refid="query1BySysName"/>
+		</isNotEmpty>
+		<isEmpty property="keyword2">
+			SELECT * FROM "tb_businesssoft"   where 1=1
+			<isNotEmpty prepend="AND" property="keyword1">
+				<![CDATA[
+						"BUSINESSSoft_SoftName" =#keyword1# 
+				
+				]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="keyword2">
+				<![CDATA[
+						"SYSINFO_Names" = #keyword2#
+					
+				]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="keyword3">
+				<![CDATA[
+					 "BUSINESSSoft_MainFunction"= #keyword3# 
+					
+				]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="keyword4">
+				<![CDATA[
+						 "BUSINESSSoft_Importance" = #keyword4#
+				
+				]]>
+			</isNotEmpty>
+			order by "PK_BUSINESSSoft" desc
+		</isEmpty>
+	</select>
+	<!-- 按照软件名称、所属系统名称、软件功能描述、重要程度进行精确查找 ,数据总行数 -->
+	<select id="pgAdminsoftUse.prisicequerycount" parameterClass="java.util.HashMap" resultClass="int">
+		<isNotEmpty property="keyword2">
+			<include refid="count1BySysName"/>
+		</isNotEmpty>
+		<isEmpty property="keyword2">
+			SELECT COUNT(*) FROM "tb_businesssoft"  where 1=1
+			<isNotEmpty prepend="AND" property="keyword1">
+				<![CDATA[
+						"BUSINESSSoft_SoftName" =#keyword1# 
+				]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="keyword3">
+				<![CDATA[
+					 "BUSINESSSoft_MainFunction"= #keyword3# 
+					
+				]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="keyword4">
+				<![CDATA[
+						 "BUSINESSSoft_Importance" = #keyword4#
+				
+				]]>
+			</isNotEmpty>
+		</isEmpty>
+	</select>
+
+	<!-- 评估导出报表。查询所有 -->
+	<select id="pgAdminsoftUse.queryAll" resultMap="businessassets">
+		SELECT * FROM "tb_businesssoft" 
+	</select>
+<!-- sqlserver -->
+	<!-- 查询条数 -->
+	<select id="sqlServersoftUse.count" resultClass="int">
+		SELECT COUNT(*) FROM "tb_businesssoft"  where 1=1
+		<isNotEmpty prepend="AND" property="keyword">
+			<![CDATA[
+				(
+					"BUSINESSSoft_SoftName" LIKE '%$keyword$%' 
+					or "BUSINESSSoft_Importance" LIKE '%$keyword$%'
+					or "BUSINESSSoft_MainFunction" LIKE '%$keyword$%' 
+					or "BUSINESSSoft_Remark" LIKE '%$keyword$%'
+					
+				)
+			]]>
+		</isNotEmpty>
+
+	</select>
+	<!-- 添加 -->
+	<insert id="sqlServersoftUse.insert" parameterClass="businesssoft">
+		insert into "tb_businesssoft" ( "BUSINESSSoft_AssetType", "BUSINESSSoft_SoftName",
+		"BUSINESSSoft_Importance" ,"BUSINESSSoft_MainFunction"
+		,"BUSINESSSoft_Remark")
+		values(#resType#,#resName#,#impDegree#,#mianFun#,#remarks#)
+		<selectKey resultClass="int" type="post" keyProperty="id" >
+           SELECT @@IDENTITY AS id
+      	</selectKey>			
+	</insert>
+	<!-- 根据id查询 -->
+	<select id="sqlServersoftUse.queryById" parameterClass="Integer" resultMap="businessassets">
+		select * from "tb_businesssoft"   where "PK_BUSINESSSoft" = #id#
+	</select>
+	<!--快速搜索 -->
+
+	<select id="sqlServersoftUse.query" resultMap="businessassets" parameterClass="java.util.HashMap">
+		SELECT * FROM "tb_businesssoft"   where 1=1
+		<isNotEmpty prepend="AND" property="keyword">
+			<![CDATA[
+				(
+					"BUSINESSSoft_Importance" LIKE '%$keyword$%'
+					or "BUSINESSSoft_MainFunction" LIKE '%$keyword$%' 
+					or "BUSINESSSoft_Remark" LIKE '%$keyword$%'
+				)
+			]]>
+		</isNotEmpty>
+		order by "PK_BUSINESSSoft" desc
+	</select>
+	<!-- 修改业务应用软件 -->
+	<update id="sqlServersoftUse.update" parameterClass="businesssoft">
+		update "tb_businesssoft"  
+		SET
+		"BUSINESSSoft_AssetType" = #resType#,
+		"BUSINESSSoft_Importance" = #impDegree#,
+		"BUSINESSSoft_MainFunction" = #mianFun#,
+		"BUSINESSSoft_Remark" = #remarks#
+		where
+		"PK_BUSINESSSoft" = #id#
+	</update>
+	<!-- 删除业务应用软件 -->
+	<delete id="sqlServersoftUse.deleteref" parameterClass="int">
+		delete from "tb_sysref" WHERE "BUSINESSSoft_SoftName"=(select "BUSINESSSoft_SoftName" from "tb_businesssoft" WHERE "PK_BUSINESSSoft"=#id#)
+	</delete>
+	<delete id="sqlServersoftUse.delete" parameterClass="int">
+		delete from "tb_businesssoft" WHERE "PK_BUSINESSSoft"=#id#
+	</delete>
+	<!-- 按照软件名称、所属系统名称、软件功能描述、重要程度进行精确查找 -->
+	 <select id="sqlServersoftUse.prisicequery" parameterClass="java.util.HashMap" resultMap="businessassets">
+		<isNotEmpty property="keyword2">
+			<include refid="query1BySysName"/>
+		</isNotEmpty>
+		<isEmpty property="keyword2">
+			SELECT * FROM "tb_businesssoft"   where 1=1
+			<isNotEmpty prepend="AND" property="keyword1">
+				<![CDATA[
+						"BUSINESSSoft_SoftName" =#keyword1# 
+				
+				]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="keyword3">
+				<![CDATA[
+					 "BUSINESSSoft_MainFunction"= #keyword3# 
+					
+				]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="keyword4">
+				<![CDATA[
+						 "BUSINESSSoft_Importance" = #keyword4#
+				
+				]]>
+			</isNotEmpty>
+			order by "PK_BUSINESSSoft" desc
+		</isEmpty>
+	</select> 
+	<!-- 按照软件名称、所属系统名称、软件功能描述、重要程度进行精确查找 ,数据总行数 -->
+	<select id="sqlServersoftUse.prisicequerycount" parameterClass="java.util.HashMap" resultClass="int">
+		<isNotEmpty property="keyword2">
+			<include refid="count1BySysName"/>
+		</isNotEmpty>
+		<isEmpty property="keyword2">
+			SELECT COUNT(*) FROM "tb_businesssoft"  where 1=1
+			<isNotEmpty prepend="AND" property="keyword1">
+				<![CDATA[
+						"BUSINESSSoft_SoftName" =#keyword1# 
+				]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="keyword3">
+				<![CDATA[
+					 "BUSINESSSoft_MainFunction"= #keyword3# 
+					
+				]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="keyword4">
+				<![CDATA[
+						 "BUSINESSSoft_Importance" = #keyword4#
+				
+				]]>
+			</isNotEmpty>
+		</isEmpty>
+	</select>
+
+	<!-- 评估导出报表。查询所有 -->
+	<select id="sqlServersoftUse.queryAll" resultMap="businessassets">
+		SELECT * FROM "tb_businesssoft" 
+	</select>
+</sqlMap>

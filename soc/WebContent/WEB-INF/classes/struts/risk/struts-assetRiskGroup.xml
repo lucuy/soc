@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="assetRiskGroup" extends="json-default" namespace="/assetRiskGroup">
+	<global-results>
+	 <!--  <result name="errorMessage" type="chain">
+		     <param name="namespace">/assetRiskGroup</param>
+		     <param name="actionName">queryAssetRiskEvaluation</param>
+		     <param name="errorMessageflg">1</param>
+		   </result>  -->
+		   <result name="errorMessage" type="redirectAction">queryAssetRiskEvaluation?errorMessageflg=1
+		   </result> 
+	</global-results>
+	   <!-- 查询资产 -->
+	   <action name="query" class="assetRiskGroupAction"  method="query">
+	      <result name="success">/pages/risk/risk_assetRiskGroupInfo.jsp</result>
+	   </action> 
+	   <action name="queryByName" class="assetRiskGroupAction"  method="queryByName">
+	      <result name="success">/pages/risk/risk_assetRiskInfo.jsp</result>
+	   </action> 
+	   <!-- 资产组导出 -->
+	   <action name="export" class="assetRiskGroupAction" method="export">
+	   </action>
+	   
+	   <action name="queryEvaluation" class="assetRiskGroupAction"  method="queryEvaluation">
+	      <result name="success">/pages/risk/risk_assetRiskGroupEvaluationInfo.jsp</result>
+	   </action> 
+	<action name="queryEvaluationByName" class="assetRiskGroupAction"  method="queryEvaluationByName">
+	      <result name="success">/pages/risk/asset_riskEvaluaInfo.jsp</result>
+	</action> 
+	<action name="queryAllAssets" class="assetRiskGroupAction"  method="queryAssets">
+	      <result name="success">/pages/risk/risk_report.jsp</result>
+	      <result name="histogram">/pages/risk/risk_report_histogram.jsp</result>
+	</action> 
+	
+	<action name="queryAssetRiskEvaluation" class="assetRiskEvaluationAction"  method="query">
+		      <result name="success">/pages/risk/risk_assetRiskEvaluation.jsp</result>
+		</action>
+		<action name="queryAssetRiskEvaluationInfo" class="assetRiskEvaluationAction"  method="queryInfoById">
+		      <result name="success">/pages/risk/risk_assetRiskEvaluation_Info.jsp</result>
+		</action>
+		<action name="chartsReport" class="assetRiskEvaluationAction" method="chartsReport">
+		<result name="report">/pages/risk/riskEvalua_report_histogram.jsp</result>
+		<result name="report1">/pages/risk/riskEvalua_report.jsp</result>
+		</action>
+		<action name="exportReportARE" class="assetRiskEvaluationAction" method="ExportReportARE"></action>
+		<!-- <action name="insert" class="assetRiskEvaluationAction" method="editAssetValue">
+		    <result name="success">/pages/risk/risk_assetRiskEvaluation_Info.jsp</result>
+		</action> -->
+		<action name="completeAssetValue" class="assetRiskEvaluationAction" method="completeAssetValue">
+		
+		</action>
+		
+		<action name="updateRiskValue" class="assetRiskEvaluationAction" method="updateRiskValue">
+		   <result name="success" type="chain">
+		     <param name="namespace">/assetRiskGroup</param>
+		     <param name="actionName">queryAssetRiskEvaluation</param>
+		   </result>
+		</action>
+		<action name="AssetChart" class="assetRiskGroupAction" method="RiskAssetChart">
+		<result name="AssetChart1">/pages/risk/risk_asset_report_histogram.jsp</result>
+		<result name="AssetChart">/pages/risk/risk_asset_report.jsp</result>
+		</action>
+		<action name="exportReport" class="assetRiskGroupAction" method="ExportReport">
+		</action>
+	</package>
+</struts>	

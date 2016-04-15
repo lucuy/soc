@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+	<package name="indexscreen" extends="json-default" namespace="/indexscreen">
+     
+        <!-- 查询用 -->
+        <action name="queryAll" class="indexAction" method="queryAll">
+              <result name="success">/pages/screen/comprehensive_monitor_info.jsp</result>
+        </action>
+        
+         <!--事件统计定时刷新接口  -->
+	      <action name="queryEventStatistics" class="indexAction" method="queryEventStatistics">
+	         <result name="success" type="json">
+				<param name="root">eventNumJson</param>
+		     </result>
+	      </action>
+	      <!-- 刷新全局域风险 -->
+        <action name="upCountChart" class="indexAction" method="upCountChart">
+
+	      </action>
+          <!-- 资产分布 -->
+         <action name="queryAssets" class="indexAction" method="queryAssets">
+	         <result name="success" type="json">
+				<param name="root">assetNumJson</param>
+		     </result>
+	     </action>
+	      <!-- 全局域风险 -->
+         <action name="quertCountEvents" class="indexAction" method="quertCountEvents">
+	         <result name="success" type="json">
+				<param name="root">assetNumJson</param>
+		     </result>
+	     </action>
+	</package>
+	
+	
+</struts>	

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="associationRulesSQL">
+
+	<resultMap id="association" class="associationRules">
+   		<result property="filterId" 			column="FILTER_ID" 		    	jdbcType="varchar"/>
+   		<result property="filterName"           column="FILTER_NAME"           	jdbcType="varchar"/>
+   		<result property="filterCondition"      column="FILTER_CONDITION"       jdbcType="varchar"/>
+   		<result property="filterDescription"    column="FILTER_DESCRIPTION"     jdbcType="text"/>
+   		<result property="filterCreateTime"     column="FILTER_CREATE_TIME"     jdbcType="datetime"/>
+   		<result property="filterCreator"     	column="FILTER_CREATOR"     	jdbcType="varchar"/>
+   		<result property="filterUpdateTime"     column="FILTER_UPDATE_TIME"     jdbcType="datetime"/>
+   		<result property="filterType"     		column="FILTER_TYPE"     		jdbcType="int"/>
+   	</resultMap>
+   	
+   	<select id="pgAdminquery.association" resultMap="association">
+	   SELECT * FROM "tbl_filter" order by "FILTER_UPDATE_TIME" DESC
+	</select>
+	
+	<select id="pgAdminquery.associationById" parameterClass="java.lang.String" resultMap="association">
+	   SELECT * FROM "tbl_filter" WHERE "FILTER_ID" = #value# order by "FILTER_UPDATE_TIME" DESC
+	</select>
+	
+	<select id="pgAdminquery.tableNameByassociationId" parameterClass="java.lang.String" resultClass="java.lang.String">
+	   SELECT "TABLE_NAME" AS tbleName FROM "tbl_mapping" WHERE "FILTER_ID" = #value# order by "FILTER_UPDATE_TIME" DESC
+	</select>
+	
+	<!-- 更新账户状态 -->
+	<update id="pgAdminassociationRules.updateUserStatus" parameterClass="java.util.HashMap" >
+		<![CDATA[
+			UPDATE "tbl_filter" 
+			SET 
+			       "FILTER_UPDATE_TIME" = #filterUpdateTime#,
+			       "FILTER_TYPE" = #filterType# 
+			WHERE 
+			       "FILTER_ID" = #filterId#
+		]]>
+		
+	</update>
+	
+	<select id="pgAdmincountPage.association"  parameterClass="java.util.HashMap" resultClass="int">
+		SELECT COUNT(*) FROM "tbl_filter" where 1=1 
+		
+		<isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				"FILTER_NAME" LIKE '%$keyword$%'
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend= "AND"  property="filterName">
+			<![CDATA[
+				"FILTER_NAME" LIKE '%$filterName$%'
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend= "AND"  property="filterType">
+			<![CDATA[
+				"FILTER_TYPE" = #filterType#
+			]]>
+		</isNotEmpty>
+	</select>
+	
+	<select id="pgAdminassociation.query"  parameterClass="java.util.HashMap" resultMap="association">
+		SELECT * FROM "tbl_filter" where 1=1
+		<isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				"FILTER_NAME" LIKE '%$keyword$%'
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend= "AND"  property="filterName">
+			<![CDATA[
+				"FILTER_NAME" LIKE '%$filterName$%'
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend= "AND"  property="filterType">
+			<![CDATA[
+				"FILTER_TYPE" = #filterType#
+			]]>
+		</isNotEmpty>
+		order by "FILTER_UPDATE_TIME" DESC
+	</select>
+   	
+   	<select id="pgAdminassociation.sort" resultMap="association" parameterClass="java.lang.String">
+   	    SELECT * FROM "tbl_filter" ORDER BY $str$
+   	</select>
+   	<!-- sqlServer -->
+   	
+   		<select id="sqlServerquery.association" resultMap="association">
+	   SELECT * FROM "tbl_filter" order by "FILTER_UPDATE_TIME" DESC
+	</select>
+	
+	<select id="sqlServerquery.associationById" parameterClass="java.lang.String" resultMap="association">
+	   SELECT * FROM "tbl_filter" WHERE "FILTER_ID" = #value# order by "FILTER_UPDATE_TIME" DESC
+	</select>
+	
+	<select id="sqlServerquery.tableNameByassociationId" parameterClass="java.lang.String" resultClass="java.lang.String">
+	   SELECT "TABLE_NAME" AS tbleName FROM "tbl_mapping" WHERE "FILTER_ID" = #value# order by "FILTER_UPDATE_TIME" DESC
+	</select>
+	
+	<!-- 更新账户状态 -->
+	<update id="sqlServerassociationRules.updateUserStatus" parameterClass="java.util.HashMap" >
+		<![CDATA[
+			UPDATE "tbl_filter" 
+			SET 
+			       "FILTER_UPDATE_TIME" = #filterUpdateTime#,
+			       "FILTER_TYPE" = #filterType# 
+			WHERE 
+			       "FILTER_ID" = #filterId#
+		]]>
+		
+	</update>
+	
+	<select id="sqlServercountPage.association"  parameterClass="java.util.HashMap" resultClass="int">
+		SELECT COUNT(*) FROM "tbl_filter" where 1=1 
+		
+		<isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				"FILTER_NAME" LIKE '%$keyword$%'
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend= "AND"  property="filterName">
+			<![CDATA[
+				"FILTER_NAME" LIKE '%$filterName$%'
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend= "AND"  property="filterType">
+			<![CDATA[
+				"FILTER_TYPE" = #filterType#
+			]]>
+		</isNotEmpty>
+	</select>
+	
+	<select id="sqlServerassociation.query"  parameterClass="java.util.HashMap" resultMap="association">
+		SELECT * FROM "tbl_filter" where 1=1
+		<isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				"FILTER_NAME" LIKE '%$keyword$%'
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend= "AND"  property="filterName">
+			<![CDATA[
+				"FILTER_NAME" LIKE '%$filterName$%'
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend= "AND"  property="filterType">
+			<![CDATA[
+				"FILTER_TYPE" = #filterType#
+			]]>
+		</isNotEmpty>
+		order by "FILTER_UPDATE_TIME" DESC
+	</select>
+   	
+   	<select id="sqlServerassociation.sort" resultMap="association" parameterClass="java.lang.String">
+   	    SELECT * FROM "tbl_filter" ORDER BY $str$
+   	</select>
+</sqlMap>

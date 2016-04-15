@@ -1,0 +1,309 @@
+ 
+body {
+    color: #000000;
+    font-family: "宋体";
+    font-size: 12px;
+    margin:0px; padding:0;
+}
+input, textarea, select, button,img, file {
+	/* border:none;  */
+    font-size: 12px;
+    vertical-align: middle
+}
+ 
+/* #goToSearch{
+	 border-style: inherit;
+	  border-width: 1px ; 
+	  filter:progid:DXImageTransform.Microsoft.Shadow
+(Color=#333333,Direction=120,strength=1) 
+	
+} */
+/* #keyword{
+	  border-style: outset;
+	  border-color:#D1D2CE;
+	  border-width: 1px ; 
+	  filter:progid:DXImageTransform.Microsoft.Shadow
+(Color=#D1D2CE,Direction=120,strength=2) 
+	
+} */
+/* .showBorder{
+	 border-style: solid ; 
+	 border-style: outset;
+	  border-width: 1px ; 
+	  filter:progid:DXImageTransform.Microsoft.Shadow
+(Color=#333333,Direction=120,strength=1) 
+} */
+.caozuobox{
+	overflow:hidden;
+	border:1px solid #c1ddf1;
+	background: url(/soc/images/rightDh.jpg) repeat-x 0 0; 
+	height:33px; 
+	line-height:30px;
+}
+
+/*保存按钮背景*/
+.btnyh{
+	 background:url(/soc/images/btnOK.png) no-repeat; 
+	 border:none; 
+	 width:100px; 
+	 height:27px;
+	 cursor:pointer;
+	 font-family:微软雅黑;
+}
+
+/*功能按钮背景*/
+.btnyh2{
+	 background:url(/soc/images/btnSmall.png) no-repeat; 
+	 border:none; 
+	 width:56px; 
+	 height:22px;
+	 cursor:pointer;
+}
+/*功能按钮背景*/
+.btnyh3{
+	 background:url(/soc/images/btnSmallGray.png) no-repeat; 
+	 border:none; 
+	 width:56px; 
+	 height:22px;
+	 cursor:pointer;
+}
+/*功能按钮背景*/
+.btnyh4{
+	 background:url(/soc/images/btnSelect.png) no-repeat; 
+	 border:none; 
+	 width:60px; 
+	 height:27px;
+	 cursor:pointer;
+}
+.btnsave{/*保存按钮背景*/
+	background:url(/soc/images/btnSave.jpg) no-repeat; 
+	border:none;
+    width:66px; 
+    height:27px; 
+    border:none;
+    overflow:hidden;
+    cursor:pointer;
+    text-align: right;
+    color:#265D86;
+	vertical-align: middle;
+}
+.btncancel{/*取消*/
+    background:url(/soc/images/btnbgcancel.jpg) no-repeat; 
+   border:none;
+    width:66px; 
+    height:27px; 
+    border:none;
+    overflow:hidden;
+    cursor:pointer;
+    text-align: right;
+    color:#265D86;
+	vertical-align: middle;
+}
+
+.btnlock{
+	background:url(/soc/images/btnLocked.jpg) no-repeat; 
+	border:none; 
+	width:58px; 
+	height:21px;
+	cursor:pointer;
+	
+}
+/**/
+.btnactive{
+	background:url(/soc/images/btnLock.jpg) no-repeat; 
+	border:none; 
+	width:58px; 
+	height:21px;
+	cursor:pointer;
+}
+/*添加按钮背景*/
+.btnadd{
+	 background:url(/soc/images/btn1.jpg) no-repeat; 
+	 border:none; 
+	 width:58px; 
+	 height:21px;
+	 cursor:pointer;
+}
+/*修改按钮背景*/
+.btnedit{
+	 background:url(/soc/images/btnEdit.jpg) no-repeat; 
+	 border:none; 
+	 width:58px; 
+	 height:21px;
+	 cursor:pointer;
+}
+/*删除按钮背景*/
+.btndel{
+	 background:url(/soc/images/btnDel.jpg) no-repeat; 
+	 border:none; 
+	 width:58px; 
+	 height:21px;
+	 cursor:pointer;
+}
+
+
+.btnchang{
+	background:url(/soc/images/chance.jpg) no-repeat; 
+	width:26px; 
+	height:19px; 
+	border:none;
+	cursor:pointer;	
+}
+.btnstyle {
+	 background:url(/soc/images/btnbg.jpg) no-repeat; 
+	 border:none; 
+	 width:66px; 
+	 height:21px;
+	 cursor:pointer;
+	 color:#265D86;
+	 align:center;
+} 
+
+
+
+.btnstyle1 {
+	 background:url(/soc/images/btn_tjyh2.jpg) no-repeat; 
+	 border:none; 
+	 width:84px; 
+	 height:21px;
+	 cursor:pointer;
+	 color:#265D86;
+	 align:center;
+}
+/*保存，取消按钮上字体样式*/
+.btnValue{
+    color:#265D86;
+    position: relative;
+    left: -43px;
+    cursor: pointer;
+    top: 1px;
+}
+/*添加用户，角色等按钮上的字体样式*/
+.btnValueAdd1{
+	color:#265D86;	
+    position: relative;
+    cursor: pointer;
+    left: -62px;
+    top: 1px;
+}
+/*添加策略，计划等按钮上的字体样式*/
+.btnValueAdd2{
+	color:#265D86;	
+    position: relative;
+    cursor: pointer;
+    left: -82px;
+    top: 1px;
+}
+/*添加时间，地址对象等字体样式*/
+.btnValueAdd3{
+	color:#265D86;	
+    position: relative;
+    cursor: pointer;
+    left: -87px;
+    top: 1px;
+}
+
+/*关闭按钮样式*/
+.closeButton{
+	 margin-top:-5px;
+}
+.tab2 {
+    background: none repeat scroll 0 0 #D2E8FA;font-size: 12px;font-family: 宋体;
+}
+.tab2 .caozuobox{
+	overflow:hidden;
+	border:1px solid #c1ddf1;
+	background: url(/soc/images/rightDh.jpg) repeat-x 0 0; 
+	
+	height:33px; 
+	line-height:30px;
+}
+.tab2 td {
+    background: none repeat scroll 0 0  #FFFFFF;
+    line-height: 28px;
+   /*  text-align: center; */
+}
+.tab2 .td_t {
+    background: none repeat scroll 0 0  #ffffff;
+    line-height: 28px;
+    text-align: left;
+    padding-left: 20px;
+}
+.tab2 .tdhead{
+background: #DDF3FF;repeat-x scroll 0 0 transparent;
+background-color:#E9F3FE;
+    height:28px;
+    color: black;
+    font-size:12px;
+     font-family:黑体;
+    text-align: right;
+}
+.tab2 .biaoti {
+    background: url(/soc/images/tdBg.jpg) repeat-x scroll 0 0 transparent;
+    height:28px;
+    color: black;
+     font-size:14px;
+    font-weight: bold;
+    text-align: center;
+}
+
+
+ .head{
+     background:  url(/soc/images/kuaisu.jpg) repeat-x scroll 0 0 transparent;
+    height:28px;
+    color: black;
+    font-weight: bold;
+    text-align: center;
+ }
+.table1{ width:100% ;border-color:#D2E8FA;  background: none repeat scroll 0 0 #D2E8FA;font-size: 12px;font-family: 宋体;}
+
+.table1 tr td{solid 1px; background-color:#ffffff;border-color:#D2E8FA; text-align:lift; line-height:34px;}
+.table1 .td_t {
+    background: none repeat scroll 0 0 #ffffff;
+    line-height: 28px;
+    text-align: left;
+    padding-left: 20px;
+}
+.table1 .tdhead{
+background: #D2E8FA ;repeat-x scroll 0 0 transparent;
+     height:34px;
+     color: black;
+     font-size:12px;
+     font-family:黑体;
+    text-align: right;
+}
+.table1 .biaoti {
+    background: url(/soc/images/tdBg.jpg) repeat-x scroll 0 0 transparent;
+    height:34px;
+    color: black;
+     font-size:14px;
+    font-weight: bold;
+    text-align: center;
+}
+
+ 
+.table3{  border-color:#D2E8FA;  width:100%; background: none repeat scroll 0 0 #D2E8FA;font-size: 12px;font-family: 宋体;}
+ .table3 tr td{solid 1px;border-color:#D2E8FA; text-align:lift; line-height:38px;}
+.table3 .td_t {
+    background: none repeat scroll 0 0 #ffffff;
+    line-height: 28px;
+    text-align: left;
+    padding-left: 20px;
+}
+.table3 .tdhead{
+background: #C5F5E2 ;repeat-x scroll 0 0 transparent;
+     height:20px;
+    color: black;
+     font-size:14px;
+    font-weight: bold;
+    text-align: left;
+}
+.table3 .biaoti {
+    background: url(/soc/images/tdBg.jpg) repeat-x scroll 0 0 transparent;
+    height:34px;
+    color: black;
+     font-size:14px;
+    font-weight: bold;
+    text-align: center;
+}
+ 

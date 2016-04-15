@@ -1,0 +1,14 @@
+/* CSS file */
+@namespace s "library://ns.adobe.com/flex/spark";
+@namespace mx "library://ns.adobe.com/flex/mx";
+
+font-size:12; 
+font-family:Verdana; 
+fontWeight: normal; 
+cornerRadius: 5; 
+borderThickness:1; 
+rollOverColor: #4D89EB; 
+selectionColor: #4D89EB; 
+textRollOverColor: #FFFFFF; 
+textSelectedColor: #FFFFFF; 
+borderThickness: 1; 

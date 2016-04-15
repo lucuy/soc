@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<node name="Unix主机" level="1">
+	<node name="CPU" level="1">
+		<node name="系统CPU使用率" kpiName="SYSTEM_CPU_PCT_KUX" />
+		<node name="用户CPU使用率" kpiName="USER_CPU_PCT_KUX"/>
+		<node name="I/O等待" kpiName="IO_WAIT_CPU_PCT_KUX"/>
+	</node>
+	<node name="内存" level="1">
+		<node name="内存使用率" kpiName="MEM_PCT_KUX"/>
+	</node>
+	<node name="文件系统" level="1">
+		<node name="文件系统使用率" kpiName="fs_used_pct_KUX"/>
+	</node>
+	<node name="进程" level="1">
+		<node name="进程CPU使用率" kpiName="ps_cpu_pct_KUX"/>
+		<node name="进程内存使用率" kpiName="ps_mem_pct_KUX"/> 
+	</node>
+	<node name="磁盘" level="1">
+		<node name="磁盘读速率" kpiName="disk_read_rate_KUX"/>
+		<node name="磁盘写速率" kpiName="disk_write_rate_KUX"/>
+	</node>
+	<node name="网络" level="1">
+		<node name="网络入流量" kpiName="net_flow_in_KUX"/>
+		<node name="网络出流量" kpiName="net_flow_out_KUX"/>
+	</node>
+</node>

@@ -1,0 +1,501 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="RelevanceRule">
+
+	<resultMap class="relevanceRule" id="relevanceRuleDetial">
+		<result property="relevanceRuleId" column="RELEVANCE_RULE_ID"
+			jdbcType="bigint" />
+		<result property="relevanceRuleName" column="RELEVANCE_RULE_NAME"
+			jdbcType="varchar" />
+		<result property="relevanceRuleCreater" column="RELEVANCE_RULE_CREATER"
+			jdbcType="varchar" />
+		<result property="relevanceRuleCreateDate" column="RELEVANCE_RULE_CREATE_DATE"
+			jdbcType="datetime" />
+		<result property="relevanceRuleMender" column="RELEVANCE_RULE_MENDER"
+			jdbcType="varchar" />
+		<result property="relevanceRuleMenderDate" column="RELEVANCE_RULE_MENDER_DATE"
+			jdbcType="datetime" />
+		<result property="relevanceRuleDes" column="RELEVANCE_RULE_DES"
+			jdbcType="varchar" />
+		<result property="relevanceRuleCondition" column="RELEVANCE_RULE_CONDITION"
+			jdbcType="text" />
+		<result property="relevanceRuleType" column="RELEVANCE_RULE_TYPE"
+			jdbcType="int" />
+			
+	<result property="assetIds" column="RELEVANCE_RULE_ASSET"
+			jdbcType="text" />
+		<result property="eventsTypeIds" column="RELEVANCE_RULE_EVENTSTYPE"
+			jdbcType="text" />
+		<result property="eventsCategoryIds" column="RELEVANCE_RULE_EVENTSCATEGORY"
+			jdbcType="varchar" />
+		<result property="priorityIds" column="RELEVANCE_RULE_PRIORITY"
+			jdbcType="varchar" />
+		<result property="targetAddr" column="RELEVANCE_RULE_TARGETADDR"
+			jdbcType="varchar" />
+		<result property="sourceAddr" column="RELEVANCE_RULE_SOURCEADDR"
+			jdbcType="varchar" />
+		<result property="targetPort" column="RELEVANCE_RULE_TARGETPORT"
+			jdbcType="varchar" />
+		<result property="sourcePort" column="RELEVANCE_RULE_SOURCEPORT"
+			jdbcType="varchar" />
+			
+<result property="count" column="RELEVANCE_RULE_COUNT"
+			jdbcType="int" />
+<result property="time" column="RELEVANCE_RULE_TIME"
+			jdbcType="int" />
+	<result property="level" column="RELEVANCE_RULE_LEVEL"
+			jdbcType="int" />
+			<result property="eventsName" column="RELEVANCE_RULE_EVENTS_NAME"
+			jdbcType="varchar" />
+	<result property="groupId" column="RELEVANCE_RULE_GROUP_ID"
+			jdbcType="int" />
+			
+	<result property="eventsTypeIdsRe" column="RELEVANCE_RULE_EVENTSTYPE_RE"
+			jdbcType="int" />
+	<result property="eventsCategoryIdsRe" column="RELEVANCE_RULE_EVENTSCATEGORY_RE"
+			jdbcType="int" />
+	
+	<result property="initState" column="RELEVANCE_RULE_INIT_STATE"
+			jdbcType="int" />
+			
+			
+	</resultMap>
+
+
+
+
+
+	<!-- queryRelevanceRule -->
+	<select id="pgAdminRelevanceRule.queryRelevanceRuleList"
+		parameterClass="java.util.HashMap" resultClass="relevanceRule"
+		resultMap="relevanceRuleDetial">
+		select
+		*
+		from
+		"tbl_relevance_rule"
+
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="keyword">
+			<![CDATA[
+		  ("RELEVANCE_RULE_NAME") like '%$keyword$%'
+			  ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="relevanceRuleName">
+			<![CDATA[
+				"RELEVANCE_RULE_NAME" LIKE '%$relevanceRuleName$%'
+			]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="relevanceRuleType">
+			<![CDATA[
+				"RELEVANCE_RULE_TYPE" = #relevanceRuleType#
+			]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="groupId">
+			<![CDATA[
+				"RELEVANCE_RULE_GROUP_ID" = #groupId#
+			]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="init">
+			<![CDATA[
+				"RELEVANCE_RULE_INIT_STATE" = #init#
+			]]>
+			</isNotEmpty>
+		</dynamic>
+		order by "RELEVANCE_RULE_ID" ASC
+	</select>
+	<!-- deleteRelevanceRule -->
+	<delete id="pgAdminRelevanceRule.deleteRelevanceRule" parameterClass="long">
+		delete
+		from "tbl_relevance_rule" where "RELEVANCE_RULE_ID" =
+		#relevanceRuleId#
+	</delete>
+	<!-- addRelevanceRule -->
+	<insert id="pgAdminRelevanceRule.addRelevanceRule" parameterClass="relevanceRule">
+
+		insert into
+		"tbl_relevance_rule"
+		("RELEVANCE_RULE_NAME",
+		"RELEVANCE_RULE_CREATER",
+		"RELEVANCE_RULE_CREATE_DATE",
+		"RELEVANCE_RULE_MENDER",
+		"RELEVANCE_RULE_MENDER_DATE",
+		"RELEVANCE_RULE_DES",
+		"RELEVANCE_RULE_CONDITION",
+		"RELEVANCE_RULE_TYPE",
+		"RELEVANCE_RULE_ASSET",
+		"RELEVANCE_RULE_EVENTSTYPE",
+		"RELEVANCE_RULE_EVENTSCATEGORY",
+		"RELEVANCE_RULE_PRIORITY",
+		"RELEVANCE_RULE_TARGETADDR",
+		"RELEVANCE_RULE_SOURCEADDR",
+		"RELEVANCE_RULE_TARGETPORT",
+		"RELEVANCE_RULE_SOURCEPORT",
+		"RELEVANCE_RULE_COUNT",
+		"RELEVANCE_RULE_TIME",
+		"RELEVANCE_RULE_LEVEL",
+		"RELEVANCE_RULE_EVENTS_NAME",
+		"RELEVANCE_RULE_GROUP_ID",
+		"RELEVANCE_RULE_EVENTSTYPE_RE",
+		"RELEVANCE_RULE_EVENTSCATEGORY_RE",
+		
+		"RELEVANCE_RULE_INIT_STATE"
+		)
+		values
+		(#relevanceRuleName#,
+		#relevanceRuleCreater#,
+		#relevanceRuleCreateDate#,
+		#relevanceRuleMender#,
+		#relevanceRuleMenderDate#,
+		#relevanceRuleDes#,
+		#relevanceRuleCondition#,
+		#relevanceRuleType#,
+		#assetIds#,
+		#eventsTypeIds#,
+		#eventsCategoryIds#,
+		#priorityIds#,
+		#targetAddr#,
+		#sourceAddr#,
+		#targetPort#,
+		#sourcePort#,
+		#count#,
+		#time#,
+		#level#,
+		#eventsName#,
+		#groupId#,
+		#eventsTypeIdsRe#,
+		#eventsCategoryIdsRe#,
+	
+		#initState#
+		)
+		<selectKey resultClass="long" keyProperty="relevanceRuleId">
+			SELECT
+			currval('tbl_relevance_rule_seq'::regclass) AS RELEVANCE_RULE_ID
+		</selectKey>
+	</insert>
+	<!-- count -->
+	<select id="pgAdminRelevanceRule.count" parameterClass="java.util.HashMap"
+		resultClass="int">
+		select count(*) from "tbl_relevance_rule"
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="keyword">
+			<![CDATA[
+		  ("RELEVANCE_RULE_NAME") like '%$keyword$%'
+			  ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="relevanceRuleName">
+			<![CDATA[
+				"RELEVANCE_RULE_NAME" LIKE '%$relevanceRuleName$%'
+			]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="relevanceRuleType">
+			<![CDATA[
+				"RELEVANCE_RULE_TYPE" = #relevanceRuleType#
+			]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="groupId">
+			<![CDATA[
+				"RELEVANCE_RULE_GROUP_ID" = #groupId#
+			]]>
+			</isNotEmpty>
+		</dynamic>
+
+
+	</select>
+	<!-- updateRelevanceRule -->
+	<update id="pgAdminRelevanceRule.updateRelevanceRule" parameterClass="relevanceRule">
+		update
+		"tbl_relevance_rule"
+		set
+		"RELEVANCE_RULE_NAME" =#relevanceRuleName#,
+		"RELEVANCE_RULE_MENDER"
+		=#relevanceRuleMender#,
+		"RELEVANCE_RULE_MENDER_DATE"
+		=#relevanceRuleMenderDate#,
+		"RELEVANCE_RULE_DES"
+		=#relevanceRuleDes#,
+		"RELEVANCE_RULE_CONDITION"
+		=#relevanceRuleCondition#,
+		"RELEVANCE_RULE_TYPE"
+		=#relevanceRuleType#,
+		
+		"RELEVANCE_RULE_ASSET" =#assetIds# ,
+		"RELEVANCE_RULE_EVENTSTYPE" = #eventsTypeIds#,
+		"RELEVANCE_RULE_EVENTSCATEGORY" = #eventsCategoryIds#,
+		"RELEVANCE_RULE_PRIORITY" = #priorityIds#,
+		"RELEVANCE_RULE_TARGETADDR" = #targetAddr#,
+		"RELEVANCE_RULE_SOURCEADDR" = #sourceAddr#,
+		"RELEVANCE_RULE_TARGETPORT" = #targetPort#,
+		"RELEVANCE_RULE_SOURCEPORT" = #sourcePort#,
+		"RELEVANCE_RULE_LEVEL" = #level#,
+		"RELEVANCE_RULE_COUNT"=#count#,	
+		"RELEVANCE_RULE_TIME" = #time#,
+		"RELEVANCE_RULE_EVENTS_NAME" = #eventsName#,
+		"RELEVANCE_RULE_EVENTSTYPE_RE" = #eventsTypeIdsRe#,
+		"RELEVANCE_RULE_EVENTSCATEGORY_RE" = #eventsCategoryIdsRe#
+		
+	
+		where "RELEVANCE_RULE_ID" =
+		#relevanceRuleId#
+	</update>
+	<!-- queryRelevanceRuleById -->
+	<select id="pgAdminRelevanceRule.queryRelevanceRuleById"
+		parameterClass="long" resultClass="relevanceRule" resultMap="relevanceRuleDetial">
+		select *
+		from "tbl_relevance_rule" where
+		"RELEVANCE_RULE_ID" = #relevanceRuleId#
+	</select>
+	<!-- 更新启用状态 -->
+	<update id="pgAdminRelevanceRule.updateStatus" parameterClass="relevanceRule">
+		update
+		"tbl_relevance_rule"
+		set
+		"RELEVANCE_RULE_TYPE"
+		=#relevanceRuleType#
+		where
+		"RELEVANCE_RULE_ID" =
+		#relevanceRuleId#
+	</update>
+
+
+	<!-- queryRelevanceRule -->
+	<select id="pgAdminRelevanceRule.queryResultRuleByConRuleId"
+		parameterClass="java.lang.String" resultClass="relevanceRule"
+		resultMap="relevanceRuleDetial">
+		select
+		*
+		from
+		"tbl_relevance_rule" where 
+
+		
+		  "RELEVANCE_RULE_RESULT_IDS" = #value#
+			
+	</select>
+	
+	<select id="pgAdminRelevanceRule.countRelevanceRuleByGroupId" parameterClass="int"
+		resultClass="int">
+		select count(*) from "tbl_relevance_rule" where "RELEVANCE_RULE_GROUP_ID" = #groupId#
+	</select>
+<select id="pgAdminRelevanceRule.queryRuleBuGroupId" parameterClass="int"
+		resultMap="relevanceRuleDetial">
+		select * from "tbl_relevance_rule" where "RELEVANCE_RULE_GROUP_ID" = #groupId# order by "RELEVANCE_RULE_ID" asc
+	</select>
+	
+	<!-- sqlServer 用的sql -->
+	<!-- queryRelevanceRule -->
+	<select id="sqlServerRelevanceRule.queryRelevanceRuleList"
+		parameterClass="java.util.HashMap" resultClass="relevanceRule"
+		resultMap="relevanceRuleDetial">
+		select
+		*
+		from
+		"tbl_relevance_rule"
+
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="keyword">
+			<![CDATA[
+		  ("RELEVANCE_RULE_NAME") like '%$keyword$%'
+			  ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="relevanceRuleName">
+			<![CDATA[
+				"RELEVANCE_RULE_NAME" LIKE '%$relevanceRuleName$%'
+			]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="relevanceRuleType">
+			<![CDATA[
+				"RELEVANCE_RULE_TYPE" = #relevanceRuleType#
+			]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="groupId">
+			<![CDATA[
+				"RELEVANCE_RULE_GROUP_ID" = #groupId#
+			]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="init">
+			<![CDATA[
+				"RELEVANCE_RULE_INIT_STATE" = #init#
+			]]>
+			</isNotEmpty>
+		</dynamic>
+		order by "RELEVANCE_RULE_ID" ASC
+	</select>
+	<!-- deleteRelevanceRule -->
+	<delete id="sqlServerRelevanceRule.deleteRelevanceRule" parameterClass="long">
+		delete
+		from "tbl_relevance_rule" where "RELEVANCE_RULE_ID" =
+		#relevanceRuleId#
+	</delete>
+	<!-- addRelevanceRule -->
+	<insert id="sqlServerRelevanceRule.addRelevanceRule" parameterClass="relevanceRule">
+
+		insert into
+		"tbl_relevance_rule"
+		("RELEVANCE_RULE_NAME",
+		"RELEVANCE_RULE_CREATER",
+		"RELEVANCE_RULE_CREATE_DATE",
+		"RELEVANCE_RULE_MENDER",
+		"RELEVANCE_RULE_MENDER_DATE",
+		"RELEVANCE_RULE_DES",
+		"RELEVANCE_RULE_CONDITION",
+		"RELEVANCE_RULE_TYPE",
+		"RELEVANCE_RULE_ASSET",
+		"RELEVANCE_RULE_EVENTSTYPE",
+		"RELEVANCE_RULE_EVENTSCATEGORY",
+		"RELEVANCE_RULE_PRIORITY",
+		"RELEVANCE_RULE_TARGETADDR",
+		"RELEVANCE_RULE_SOURCEADDR",
+		"RELEVANCE_RULE_TARGETPORT",
+		"RELEVANCE_RULE_SOURCEPORT",
+		"RELEVANCE_RULE_COUNT",
+		"RELEVANCE_RULE_TIME",
+		"RELEVANCE_RULE_LEVEL",
+		"RELEVANCE_RULE_EVENTS_NAME",
+		"RELEVANCE_RULE_GROUP_ID",
+		"RELEVANCE_RULE_EVENTSTYPE_RE",
+		"RELEVANCE_RULE_EVENTSCATEGORY_RE",
+		
+		"RELEVANCE_RULE_INIT_STATE"
+		)
+		values
+		(#relevanceRuleName#,
+		#relevanceRuleCreater#,
+		#relevanceRuleCreateDate#,
+		#relevanceRuleMender#,
+		#relevanceRuleMenderDate#,
+		#relevanceRuleDes#,
+		#relevanceRuleCondition#,
+		#relevanceRuleType#,
+		#assetIds#,
+		#eventsTypeIds#,
+		#eventsCategoryIds#,
+		#priorityIds#,
+		#targetAddr#,
+		#sourceAddr#,
+		#targetPort#,
+		#sourcePort#,
+		#count#,
+		#time#,
+		#level#,
+		#eventsName#,
+		#groupId#,
+		#eventsTypeIdsRe#,
+		#eventsCategoryIdsRe#,
+	
+		#initState#
+		)<selectKey resultClass="long" keyProperty="relevanceRuleId">
+			SELECT @@IDENTITY AS relevanceRuleId
+
+		</selectKey>
+	</insert>
+	
+	<!-- count -->
+	<select id="sqlServerRelevanceRule.count" parameterClass="java.util.HashMap"
+		resultClass="int">
+		select count(*) from "tbl_relevance_rule"
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="keyword">
+			<![CDATA[
+		  ("RELEVANCE_RULE_NAME") like '%$keyword$%'
+			  ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="relevanceRuleName">
+			<![CDATA[
+				"RELEVANCE_RULE_NAME" LIKE '%$relevanceRuleName$%'
+			]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="relevanceRuleType">
+			<![CDATA[
+				"RELEVANCE_RULE_TYPE" = #relevanceRuleType#
+			]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="groupId">
+			<![CDATA[
+				"RELEVANCE_RULE_GROUP_ID" = #groupId#
+			]]>
+			</isNotEmpty>
+		</dynamic>
+
+
+	</select>
+	<!-- updateRelevanceRule -->
+	<update id="sqlServerRelevanceRule.updateRelevanceRule" parameterClass="relevanceRule">
+		update
+		"tbl_relevance_rule"
+		set
+		"RELEVANCE_RULE_NAME" =#relevanceRuleName#,
+		"RELEVANCE_RULE_MENDER"
+		=#relevanceRuleMender#,
+		"RELEVANCE_RULE_MENDER_DATE"
+		=#relevanceRuleMenderDate#,
+		"RELEVANCE_RULE_DES"
+		=#relevanceRuleDes#,
+		"RELEVANCE_RULE_CONDITION"
+		=#relevanceRuleCondition#,
+		"RELEVANCE_RULE_TYPE"
+		=#relevanceRuleType#,
+		
+		"RELEVANCE_RULE_ASSET" =#assetIds# ,
+		"RELEVANCE_RULE_EVENTSTYPE" = #eventsTypeIds#,
+		"RELEVANCE_RULE_EVENTSCATEGORY" = #eventsCategoryIds#,
+		"RELEVANCE_RULE_PRIORITY" = #priorityIds#,
+		"RELEVANCE_RULE_TARGETADDR" = #targetAddr#,
+		"RELEVANCE_RULE_SOURCEADDR" = #sourceAddr#,
+		"RELEVANCE_RULE_TARGETPORT" = #targetPort#,
+		"RELEVANCE_RULE_SOURCEPORT" = #sourcePort#,
+		"RELEVANCE_RULE_LEVEL" = #level#,
+		"RELEVANCE_RULE_COUNT"=#count#,	
+		"RELEVANCE_RULE_TIME" = #time#,
+		"RELEVANCE_RULE_EVENTS_NAME" = #eventsName#,
+		"RELEVANCE_RULE_EVENTSTYPE_RE" = #eventsTypeIdsRe#,
+		"RELEVANCE_RULE_EVENTSCATEGORY_RE" = #eventsCategoryIdsRe#
+		
+	
+		where "RELEVANCE_RULE_ID" =
+		#relevanceRuleId#
+	</update>
+	<!-- queryRelevanceRuleById -->
+	<select id="sqlServerRelevanceRule.queryRelevanceRuleById"
+		parameterClass="long" resultClass="relevanceRule" resultMap="relevanceRuleDetial">
+		select *
+		from "tbl_relevance_rule" where
+		"RELEVANCE_RULE_ID" = #relevanceRuleId#
+	</select>
+	<!-- 更新启用状态 -->
+	<update id="sqlServerRelevanceRule.updateStatus" parameterClass="relevanceRule">
+		update
+		"tbl_relevance_rule"
+		set
+		"RELEVANCE_RULE_TYPE"
+		=#relevanceRuleType#
+		where
+		"RELEVANCE_RULE_ID" =
+		#relevanceRuleId#
+	</update>
+
+
+	<!-- queryRelevanceRule -->
+	<select id="sqlServerRelevanceRule.queryResultRuleByConRuleId"
+		parameterClass="java.lang.String" resultClass="relevanceRule"
+		resultMap="relevanceRuleDetial">
+		select
+		*
+		from
+		"tbl_relevance_rule" where 
+
+		
+		  "RELEVANCE_RULE_RESULT_IDS" = #value#
+			
+	</select>
+	
+	<select id="sqlServerRelevanceRule.countRelevanceRuleByGroupId" parameterClass="int"
+		resultClass="int">
+		select count(*) from "tbl_relevance_rule" where "RELEVANCE_RULE_GROUP_ID" = #groupId#
+	</select>
+<select id="sqlServerRelevanceRule.queryRuleBuGroupId" parameterClass="int"
+		resultMap="relevanceRuleDetial">
+		select * from "tbl_relevance_rule" where "RELEVANCE_RULE_GROUP_ID" = #groupId# order by "RELEVANCE_RULE_ID" asc
+	</select>
+
+
+</sqlMap>

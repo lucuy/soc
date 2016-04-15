@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="relevanceGroup" extends="struts-default" namespace="/relevanceGroup">
+		<action name="displayLeftTree" class="relevanceRuleGroupAction"
+			method="displayLeftTree">
+		<result name="success">/pages/systemsetting/rules/rules_menu.jsp</result>
+		</action>
+		<action name="showGroupList" class="relevanceRuleGroupAction"
+			method="showRuleGroup">
+			<result name="success">/pages/systemsetting/rules/rule_group_list.jsp</result>
+		</action>
+	<action name="addGroup" class="relevanceRuleGroupAction"
+			method="addGroup" >
+			
+		</action>
+			<action name="deleteGroup" class="relevanceRuleGroupAction"
+			method="deleteRuleGroup" >
+			<result name="success" type = "redirectAction">showGroupList</result>
+		</action>
+	<action name="updateStatus" class="relevanceRuleGroupAction"
+			method="updateStatus" >
+			<result name="success" type = "redirectAction">showGroupList</result>
+		</action>
+<!-- 		<action name="queryReportByAuditReportId" class="auditReportAction"
+			method="queryReportByAuditReportId">
+			<result name="success">/pages/audit/audit_report.jsp</result>
+		</action>
+		<action name="ExportReport" class="auditReportAction" method="ExportReport">
+		</action>
+		<action name="reportFileIsExist" class="auditReportAction"
+			method="reportFileIsExist">
+			<result name="success" type="json">
+				<param name="root">exist</param>
+			</result>
+		</action> -->
+	</package>
+</struts>

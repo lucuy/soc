@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+	<package name="securityPolicy" extends="json-default" namespace="/securityPolicy">
+
+		<action name="query" class="securityPolicyAction" method="query">
+			<result name="success">/pages/securityPolicy/security_policy_list.jsp
+			</result>
+		</action>
+
+	
+
+		<action name="deleteSecurityPolicy" class="securityPolicyAction"
+			method="deleteSecurityPolicy">
+			<result name="success" type="chain">
+				<param name="namespace">/securityPolicy</param>
+				<param name="actionName">query</param>
+			</result>
+		</action>
+		<action name="edit" class="securityPolicyAction" method="edit">
+			<result name="success">/pages/securityPolicy/security_policy_info.jsp
+			</result>
+		</action>
+
+		<action name="updateSecurityPolicy" class="securityPolicyAction"
+			method="updateSecurityPolicy">
+			<interceptor-ref name="defaultStack"/><!-- 需要注意拦截器栈的配置顺序-->  
+            <interceptor-ref name="token"/><!-- 这就是用来防止表单重复提交的拦截器-->  
+            <result name="invalid.token" type="redirectAction">
+            <param name="namespace">/securityPolicy</param>
+		       <param name="actionName">query</param>
+            
+            </result><!-- 需要注意的是名字必须为invalid.token-->  
+			<result name="success" type="chain">
+				<param name="namespace">/securityPolicy</param>
+				<param name="actionName">query</param>
+			</result>
+		</action>
+		<!-- 下发  -->
+		<action name="issuedPolicy" class="securityPolicyAction"
+			method="issuedPolicy" >
+			 <result name="success" type="json">
+				<param name="root">policyMemo</param>
+			</result>
+</action>
+			<!-- 判断重名 -->
+	<action name="checkName" class="securityPolicyAction"
+			method="checkName" />
+					<!-- 脚本执行结果对话框   -->
+		<action name="policyResult" class="securityPolicyAction"
+			method="policyResult" >
+			 <result name="success" type="json">
+				<param name="root">policyResultArray</param>
+			</result>
+</action>
+					<!-- 根据资产查询脚本执行结果   -->
+		<action name="policyScriptResult" class="securityPolicyAction"
+			method="policyScriptResult" >
+			 <result name="success" type="json">
+				<param name="root">policyResultArray</param>
+			</result>
+</action>
+	</package>
+
+</struts>	

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	
+	<package name="role" extends="struts-default" namespace="/role">
+	
+		<action name="queryRole" class="roleAction" method="queryRole">
+			<result name="success">/pages/role/role_list.jsp</result>     	
+		</action>
+		
+		<action name="editRole" class="roleAction" method="editRole">
+			<result name="success">/pages/role/role_info.jsp</result>  
+		</action>
+		
+		<action name="updateRole" class="roleAction" method="updateRole">
+		<interceptor-ref name="defaultStack"/><!-- 需要注意拦截器栈的配置顺序-->  
+            <interceptor-ref name="token"/><!-- 这就是用来防止表单重复提交的拦截器-->  
+            <result name="invalid.token" type="redirectAction">
+            <param name="namespace">/role</param>
+		       <param name="actionName">queryRole</param>
+            
+            </result><!-- 需要注意的是名字必须为invalid.token--> 
+		    <result name="success" type="chain">
+		       queryRole
+		    </result> 
+		    <result name="error">/pages/role/role_info.jsp</result>	
+		</action>
+		
+		<action name="deleteRole" class="roleAction" method="deleteRole">
+		    <result name="success" type="chain">
+		        queryRole
+		    </result> 	
+		</action>
+		
+		<action name="checkRoleName" class="roleAction" method="checkRoleName" />
+			
+		<action name="copyRole" class="roleAction" method="copyRole">
+		    <result name="success" type="chain">
+                      queryRole
+		    </result>   	
+		</action>
+		
+		<action name="sort" class="roleAction" method="sort">
+			<result name="success">/pages/role/role_list.jsp</result>     	
+		</action>
+		
+	</package>
+	
+</struts>	

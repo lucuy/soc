@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="monitor" extends="json-default" namespace="/monitor">
+		<action name="queryMonitor" class="Monitor" method="queryMonitor">
+			<result name="success">/pages/monitor/monitor_list.jsp</result>
+		</action>
+
+		<action name="editMonitor" class="Monitor" method="editMonitor">
+			<result name="success">/pages/monitor/monitor_info.jsp</result>
+		</action>
+
+		<action name="queryOneMonitor" class="Monitor" method="queryOneMonitor">
+		</action>
+
+		<action name="addOneMonitor" class="Monitor" method="addOneMonitor">
+		</action>
+
+		<action name="saveMonitor" class="Monitor" method="saveMonitor">
+			
+			<result type="chain">
+			<param name="actionName">queryMonitor</param>
+			<param name="monitorGroupId">${monitorGroupId}</param>
+			</result>
+			
+			<result name="savesort" type="json" >
+			  <param name="root"></param>
+			</result>
+			
+		</action>
+
+		<action name="queryMonitorAjax" class="Monitor" method="queryMonitorAjax">
+		</action>
+		<!-- 插入自定义监控图表的方法 -->
+		<action name="insertChar" class="Monitor" method="insertChar">
+		<interceptor-ref name="defaultStack"/><!-- 需要注意拦截器栈的配置顺序-->  
+            <interceptor-ref name="token"/><!-- 这就是用来防止表单重复提交的拦截器-->  
+            <result name="invalid.token" type="redirectAction">
+            <param name="namespace">/monitor</param>
+		       <param name="actionName">customMonitorList</param>
+            
+            </result><!-- 需要注意的是名字必须为invalid.token-->  
+		    <result name="success" type="chain">
+		       <param name="namespace">/monitor</param>
+		       <param name="actionName">customMonitorList</param>
+		    </result>
+		</action>
+		<!-- 查询自定义监控图表list的方法 -->
+		<action name="customMonitorList" class="Monitor" method="customMonitorList">
+			<result name="success">/pages/monitor/monitor_cumtom_list.jsp</result>
+		</action>
+		<!-- 查询自定义监控图表list的方法 -->
+		<action name="deleteCustom" class="Monitor" method="deleteCustom">
+				<result name="success" type ="redirectAction">customMonitorList</result>
+		</action>
+		<!--查询出自定义监控图表的详情-->
+		<action name="selectMonitorById" class="Monitor" method="selectMonitorById">
+				<result name="success">/pages/monitor/monitor_value_chart.jsp</result>
+		</action>
+	</package>
+</struts>

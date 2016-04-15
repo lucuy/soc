@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+	<resultMap class="demandCollet" id="demandColletResult">
+		<result property="PK_CAD" column="PK_CAD" />
+		<result property="unitDomainName" column="CAD_Sort" />
+		<result property="unitName" column="CAD_Name" />
+		<result property="unitCon" column="CAD_Content" />
+		<result property="CAD_FatherSort" column="CAD_FatherSort" />
+		<result property="CAD_ListGrade" column="CAD_ListGrade" />
+		<result property="CAD_Grade" column="CAD_Grade" />
+	</resultMap>
+	<!--根据业务层得到的控制域排序查找排序名成-->
+	<select id="pgAdmindemandColletSql.queryDemainName" parameterClass="java.lang.String" resultClass="java.lang.String">
+		select "CAD_Name" FROM "tb_cad" WHERE "CAD_Sort" =#value#
+	</select>
+ 
+	<!--根据评估项排序名查询评估项内容 -->
+	<select id="pgAdmindemandColletSql.queryCriteria" parameterClass="java.lang.String" resultClass="java.lang.String">
+		select "CAD_Content" FROM "tb_cad" WHERE "CAD_Sort" =#value#
+	</select>
+	
+	<!-- 根据排序查找该对象 -->
+	<select id="pgAdmindemandColletSql.querydemandColletBySort" parameterClass="java.lang.String" resultMap="demandColletResult">
+		select * FROM "tb_cad" WHERE "CAD_Sort" =#value#
+	</select>
+	
+	<!--根据评估项排序名查询评估项内容树形结构 -->
+	<select id="pgAdmindemandColletSql.queryForTree" parameterClass="java.util.HashMap" resultMap="demandColletResult">
+		select * from "tb_cad"  
+		<![CDATA[
+			where length(trim("CAD_Sort"))<=6
+		]]>
+		<isNotEmpty prepend="AND" property="sort">
+			<![CDATA[
+				"CAD_Sort" LIKE '$sort$%'
+			]]>
+		</isNotEmpty>
+		order by "CAD_Sort";
+	</select>
+	
+	<!--根据排序查询评估项是否还有下一级 -->
+	<select id="pgAdmindemandColletSql.queryNextSortInfo" parameterClass="java.util.HashMap" resultClass="int">
+		select COUNT(*) from "tb_cad"  
+		<![CDATA[
+			where length(trim("CAD_Sort"))=5
+		]]>
+		<isNotEmpty prepend="AND" property="sort">
+			<![CDATA[
+				"CAD_Sort" LIKE '$sort$%'
+			]]>
+		</isNotEmpty>
+	</select>
+	
+	<!--根据排序查询评估项是否还有下一级 -->
+	<select id="pgAdmindemandColletSql.queryNextSort" parameterClass="java.util.HashMap" resultMap="demandColletResult">
+		select * from "tb_cad"  
+		<![CDATA[
+			where length(trim("CAD_Sort"))=5
+		]]>
+		<isNotEmpty prepend="AND" property="sort">
+			<![CDATA[
+				"CAD_Sort" LIKE '$sort$%'
+			]]>
+		</isNotEmpty>
+		order by "CAD_Sort";
+	</select>
+	
+	<!--根据排序查询评估项 -->
+	<select id="pgAdmindemandColletSql.querySortInfo" parameterClass="java.util.HashMap" resultMap="demandColletResult">
+		select * from "tb_cad"  
+		<![CDATA[
+			where length(trim("CAD_Sort"))=9
+		]]>
+		<isNotEmpty prepend="AND" property="sort">
+			<![CDATA[
+				"CAD_Sort" LIKE '$sort$%'
+			]]>
+		</isNotEmpty>
+		order by "CAD_Sort";
+	</select>
+	
+	<!-- 查询还有哪些项未评估 -->
+	<select id="pgAdmindemandColletSql.queryAssessInfo" parameterClass="java.util.HashMap" resultMap="demandColletResult">
+		select * from "tb_cad" 
+		<![CDATA[
+			where length(trim("CAD_Sort"))=5
+		]]>
+		<isNotEmpty prepend="AND" property="sort">
+			<![CDATA[
+				"CAD_Sort" LIKE '$sort$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="acId">
+			<![CDATA[
+		  "CAD_Sort" NOT IN 
+		  (select DISTINCT "CIA_Sort" from "tb_cia" where "FK_CA" = #acId#) 
+			]]>
+		</isNotEmpty>
+		ORDER BY "CAD_Sort"
+	</select>
+	
+	<!-- 差距分布图查询 -->
+	<select id="pgAdmindemandColletSql.queryAssessInfoImage" parameterClass="java.util.HashMap" resultMap="demandColletResult">
+		select * from "tb_cad" where 1 =1
+		<isNotEmpty prepend="AND" property="length">
+			<![CDATA[
+				length(trim("CAD_Sort"))=#length#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="sort">
+			<![CDATA[
+				"CAD_Sort" LIKE '$sort$%'
+			]]>
+		</isNotEmpty>
+		ORDER BY "CAD_Sort"
+	</select>
+	<!-- sqlserver -->
+	<!--根据业务层得到的控制域排序查找排序名成-->
+	<select id="sqlServerdemandColletSql.queryDemainName" parameterClass="java.lang.String" resultClass="java.lang.String">
+		select "CAD_Name" FROM "tb_cad" WHERE "CAD_Sort" =#value#
+	</select>
+ 
+	<!--根据评估项排序名查询评估项内容 -->
+	<select id="sqlServerdemandColletSql.queryCriteria" parameterClass="java.lang.String" resultClass="java.lang.String">
+		select "CAD_Content" FROM "tb_cad" WHERE "CAD_Sort" =#value#
+	</select>
+	
+	<!-- 根据排序查找该对象 -->
+	<select id="sqlServerdemandColletSql.querydemandColletBySort" parameterClass="java.lang.String" resultMap="demandColletResult">
+		select * FROM "tb_cad" WHERE "CAD_Sort" =#value#
+	</select>
+	
+	<!--根据评估项排序名查询评估项内容树形结构 -->
+	<select id="sqlServerdemandColletSql.queryForTree" parameterClass="java.util.HashMap" resultMap="demandColletResult">
+		select * from "tb_cad"  
+		<![CDATA[
+			where len(LTRIM(RTRIM("CAD_Sort")))<=6
+		]]>
+		<isNotEmpty prepend="AND" property="sort">
+			<![CDATA[
+				"CAD_Sort" LIKE '$sort$%'
+			]]>
+		</isNotEmpty>
+		order by "CAD_Sort";
+	</select>
+	
+	<!--根据排序查询评估项是否还有下一级 -->
+	<select id="sqlServerdemandColletSql.queryNextSortInfo" parameterClass="java.util.HashMap" resultClass="int">
+		select COUNT(*) from "tb_cad"  
+		<![CDATA[
+			where len(LTRIM(RTRIM("CAD_Sort")))=5
+		]]>
+		<isNotEmpty prepend="AND" property="sort">
+			<![CDATA[
+				"CAD_Sort" LIKE '$sort$%'
+			]]>
+		</isNotEmpty>
+	</select>
+	
+	<!--根据排序查询评估项是否还有下一级 -->
+	<select id="sqlServerdemandColletSql.queryNextSort" parameterClass="java.util.HashMap" resultMap="demandColletResult">
+		select * from "tb_cad"  
+		<![CDATA[
+			where len(LTRIM(RTRIM("CAD_Sort")))=5
+		]]>
+		<isNotEmpty prepend="AND" property="sort">
+			<![CDATA[
+				"CAD_Sort" LIKE '$sort$%'
+			]]>
+		</isNotEmpty>
+		order by "CAD_Sort";
+	</select>
+	
+	<!--根据排序查询评估项 -->
+	<select id="sqlServerdemandColletSql.querySortInfo" parameterClass="java.util.HashMap" resultMap="demandColletResult">
+		select * from "tb_cad"  
+		<![CDATA[
+			where len(LTRIM(RTRIM("CAD_Sort")))=9
+		]]>
+		<isNotEmpty prepend="AND" property="sort">
+			<![CDATA[
+				"CAD_Sort" LIKE '$sort$%'
+			]]>
+		</isNotEmpty>
+		order by "CAD_Sort";
+	</select>
+	
+	<!-- 查询还有哪些项未评估 -->
+	<select id="sqlServerdemandColletSql.queryAssessInfo" parameterClass="java.util.HashMap" resultMap="demandColletResult">
+		select * from "tb_cad" 
+		<![CDATA[
+			where len(LTRIM(RTRIM("CAD_Sort")))=5
+		]]>
+		<isNotEmpty prepend="AND" property="sort">
+			<![CDATA[
+				"CAD_Sort" LIKE '$sort$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="acId">
+			<![CDATA[
+		  "CAD_Sort" NOT IN 
+		  (select DISTINCT "CIA_Sort" from "tb_cia" where "FK_CA" = #acId#) 
+			]]>
+		</isNotEmpty>
+		ORDER BY "CAD_Sort"
+	</select>
+	
+	<!-- 差距分布图查询 -->
+	<select id="sqlServerdemandColletSql.queryAssessInfoImage" parameterClass="java.util.HashMap" resultMap="demandColletResult">
+		select * from "tb_cad" where 1 =1
+		<isNotEmpty prepend="AND" property="length">
+			<![CDATA[
+				len(LTRIM(RTRIM("CAD_Sort")))=#length#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="sort">
+			<![CDATA[
+				"CAD_Sort" LIKE '$sort$%'
+			]]>
+		</isNotEmpty>
+		ORDER BY "CAD_Sort"
+	</select>
+</sqlMap>

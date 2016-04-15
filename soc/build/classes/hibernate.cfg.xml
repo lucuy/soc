@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+          "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	<session-factory>
+
+		<!-- pgAdmin  -->
+		<property name="connection.driver_class">
+			org.postgresql.Driver
+		</property>
+		<property name="dialect">
+			org.hibernate.dialect.PostgreSQLDialect
+		</property>
+ 
+
+		<property name="connection.url">jdbc:postgresql://10.8.3.18:5432/soc</property>
+
+
+
+		<property name="connection.username">soc</property>
+		<property name="connection.password">soc</property>
+
+		<property name="c3p0.timeout">120</property>
+		<property name="c3p0.max_size">100</property>
+		<property name="c3p0.max_statement">50</property>
+		<property name="connection.autocommit">true</property>
+		<property name="show_sql">true</property>
+		
+		<mapping
+			resource="com/util/reportForm/datadeal/model/hbm/Reportformstype.hbm.xml" />
+		<mapping
+			resource="com/util/reportForm/datadeal/model/hbm/Alltablefieldname.hbm.xml" />
+		<mapping resource="com/util/reportForm/datadeal/model/hbm/Alltablename.hbm.xml" />
+		<mapping resource="com/util/reportForm/datadeal/model/hbm/Reportforms.hbm.xml" />
+		<mapping
+			resource="com/util/reportForm/datadeal/model/hbm/Reportformsinfo.hbm.xml" />
+		<mapping resource="com/util/reportForm/datadeal/model/hbm/Tableorder.hbm.xml" />
+		<mapping resource="com/util/reportForm/datadeal/model/hbm/ReportCustom.hbm.xml" />
+		<mapping resource="com/util/reportForm/datadeal/model/hbm/ReportTimer.hbm.xml" />
+		
+		
+		<!-- 支持sqlserver
+		<property name="connection.driver_class">
+			com.microsoft.sqlserver.jdbc.SQLServerDriver
+		</property>
+		<property name="dialect">
+			org.hibernate.dialect.SQLServerDialect
+		</property>
+		<property name="connection.url">jdbc:sqlserver://192.168.1.223:1433;databaseName=soc_new</property>
+
+
+		<property name="connection.username">sa</property>
+		<property name="connection.password">1qaz@WSX</property>
+
+		<property name="c3p0.timeout">120</property>
+		<property name="c3p0.max_size">100</property>
+		<property name="c3p0.max_statement">50</property>
+		<property name="connection.autocommit">true</property>
+		<property name="show_sql">true</property>
+		
+		<mapping
+			resource="com/util/reportForm/datadeal/model/hbm/Reportformstype_sqlServer.hbm.xml" />
+		<mapping
+			resource="com/util/reportForm/datadeal/model/hbm/Alltablefieldname_sqlServer.hbm.xml" />
+		<mapping resource="com/util/reportForm/datadeal/model/hbm/Alltablename_sqlServer.hbm.xml" />
+		<mapping resource="com/util/reportForm/datadeal/model/hbm/Reportforms_sqlServer.hbm.xml" />
+		<mapping
+			resource="com/util/reportForm/datadeal/model/hbm/Reportformsinfo_sqlServer.hbm.xml" />
+		<mapping resource="com/util/reportForm/datadeal/model/hbm/Tableorder_sqlServer.hbm.xml" />
+		<mapping resource="com/util/reportForm/datadeal/model/hbm/ReportCustom_sqlServer.hbm.xml" />
+		<mapping resource="com/util/reportForm/datadeal/model/hbm/ReportTimer_sqlServer.hbm.xml" />
+		 -->
+	</session-factory>
+
+
+</hibernate-configuration>

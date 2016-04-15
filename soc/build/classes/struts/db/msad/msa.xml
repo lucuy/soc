@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+    
+   <struts>
+	<package name="msaInfo" extends="struts-default" namespace="/msaInfo">
+		<action name="msaAction" class="com.compliance.webapp.action.msad.MsaAction" method="insert">
+			<result name="success">/pages/dbPage/msad/skip.jsp</result>
+		</action>
+	</package>
+</struts> 

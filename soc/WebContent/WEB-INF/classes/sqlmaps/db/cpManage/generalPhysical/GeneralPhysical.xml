@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<!-- -//差距分析报告导出word文档 //表：信息系统总体符合度 -->
+<sqlMap>
+<select id="pgAdmingetGeneralPhysical.Count0" resultClass="int">
+		select COUNT("PK_PSA") from "tb_psa" WHERE "PSA_AssessResult"='0' AND
+		"PSA_Sort"
+		LIKE '10%'
+		AND "PSA_Date"=(SELECT MAX("PSA_Date") FROM "tb_psa" )
+	</select>
+
+	<select id="pgAdmingetGeneralPhysical.Count1" resultClass="int">
+		select COUNT("PK_PSA") from "tb_psa" WHERE "PSA_AssessResult"='1' AND
+		"PSA_Sort"
+		LIKE '10%'
+		AND "PSA_Date"=(SELECT MAX("PSA_Date") FROM "tb_psa" )
+	</select>
+
+	<select id="pgAdmingetGeneralPhysical.Count1and0" resultClass="int">
+		select COUNT("PK_PSA") from "tb_psa" WHERE "PSA_AssessResult" in ('0','1') AND
+		"PSA_Sort" LIKE '10%'
+		AND "PSA_Date"=(SELECT MAX("PSA_Date" ) FROM "tb_psa" )
+	</select>
+
+	<select id="pgAdmingetGeneralPhysical.Count2" resultClass="int">
+		select COUNT("PK_PSA") from "tb_psa" WHERE "PSA_AssessResult"='2' AND
+		"PSA_Sort"
+		LIKE '10%'
+		AND "PSA_Date"=(SELECT MAX("PSA_Date" ) FROM "tb_psa" )
+	</select>
+	<!--3.1 通用管理 差距项统计表 -->
+
+
+	<select id="pgAdmingetManagementCount.Count0" resultClass="int">
+		select COUNT("PK_MSA") from "tb_msa" WHERE "MSA_AssessResult"='0' AND
+		"MSA_Sort"
+		LIKE '11%' AND "MSA_Date"=(SELECT
+		MAX("MSA_Date") FROM "tb_msa" )
+	</select>
+
+
+	<select id="pgAdmingetManagementCount.Count1" resultClass="int">
+		select COUNT("PK_MSA") from "tb_msa" WHERE "MSA_AssessResult"='1' AND
+		"MSA_Sort"
+		LIKE '11%' AND "MSA_Date"=(SELECT
+		MAX("MSA_Date") FROM "tb_msa" )
+	</select>
+
+
+	<select id="pgAdmingetManagementCount.Count0and1" resultClass="int">
+		select COUNT("PK_MSA") from "tb_msa" WHERE "MSA_AssessResult" in ('0','1') AND
+		"MSA_Sort" LIKE '11%' AND "MSA_Date"=(SELECT
+		MAX("MSA_Date") FROM "tb_msa" )
+	</select>
+
+	<select id="pgAdmingetManagementCount.Count2" resultClass="int">
+		select
+		COUNT("PK_MSA") from "tb_msa" WHERE "MSA_AssessResult"='2' AND
+		"MSA_Sort" LIKE
+		'11%' AND "MSA_Date"=(SELECT
+		MAX("MSA_Date") FROM "tb_msa" )
+	</select>
+
+
+	<!-- end- -->
+
+	<select id="pgAdmingetGeneralPhysical.Count" resultClass="String"
+		parameterClass="String">
+		select "PK_PSA" from "tb_psa" WHERE "PSA_AssessResult"='0' AND
+		"PSA_Sort" LIKE #sort#
+		AND "PSA_Date"=(SELECT MAX("PSA_Date" ) FROM "tb_psa" )
+	</select>
+ 
+	<select id="pgAdmingetManagementCount.Count" resultClass="int"
+		parameterClass="String">
+		select count("PK_MSA") from "tb_msa" WHERE "MSA_AssessResult"='0' AND
+		"MSA_Sort" LIKE #sort# AND "MSA_Date"=(SELECT
+		MAX("MSA_Date") FROM "tb_msa" )
+	</select>
+	<select id="pgAdmingetTechnologyCount.Count" resultClass="int"
+		parameterClass="int">
+		SELECT COUNT("PK_CIA") from "tb_cia" WHERE "FK_CA" =#pca# AND
+		"CIA_AssessResult"='0'
+	</select>
+
+	<!-- 通用物理 -->
+	<select id="pgAdmingetTongYongWuLi.CountA" resultClass="int"
+		parameterClass="String">
+		select COUNT("PK_PSA") from "tb_psa" WHERE "PSA_A"= #sort#
+		AND "PSA_Date"=(SELECT MAX("PSA_Date") FROM "tb_psa")
+	</select>
+
+	<select id="pgAdmingetTongYongWuLi.CountB" resultClass="int"
+		parameterClass="String">
+		select COUNT("PK_PSA") from "tb_psa" WHERE "PSA_B"= #sort#
+		AND "PSA_Date"=(SELECT MAX("PSA_Date") FROM "tb_psa")
+	</select>
+
+	<select id="pgAdmingetTongYongWuLi.CountC" resultClass="int"
+		parameterClass="String">
+		select COUNT("PK_PSA") from "tb_psa" WHERE "PSA_C"= #sort#
+		AND "PSA_Date"=(SELECT MAX("PSA_Date") FROM "tb_psa")
+	</select>
+
+	<select id="pgAdmingetTongYongWuLi.CountD" resultClass="int"
+		parameterClass="String">
+		select COUNT("PK_PSA") from "tb_psa" WHERE "PSA_D"= #sort#
+		AND "PSA_Date"=(SELECT MAX("PSA_Date") FROM "tb_psa")
+	</select>
+
+	<select id="pgAdmingetTongYongWuLi.CountE" resultClass="int"
+		parameterClass="String">
+		select COUNT("PK_PSA") from "tb_psa" WHERE "PSA_E"= #sort#
+		AND "PSA_Date"=(SELECT MAX("PSA_Date") FROM "tb_psa")
+	</select>
+
+	<select id="pgAdmingetTongYongWuLi.CountF" resultClass="int"
+		parameterClass="String">
+		select COUNT("PK_PSA") from "tb_psa" WHERE "PSA_F"= #sort#
+		AND "PSA_Date"=(SELECT MAX("PSA_Date") FROM "tb_psa")
+	</select>
+
+
+	<select id="pgAdmingetTongYongWuLi.CountG" resultClass="int"
+		parameterClass="String">
+		select COUNT("PK_PSA") from "tb_psa" WHERE "PSA_G"= #sort#
+		AND "PSA_Date"=(SELECT MAX("PSA_Date") FROM "tb_psa")
+	</select>
+
+	<select id="pgAdmingetTongYongWuLi.CountH" resultClass="int"
+		parameterClass="String">
+		select COUNT("PK_PSA") from "tb_psa" WHERE "PSA_H"= #sort#
+		AND "PSA_Date"=(SELECT MAX("PSA_Date") FROM "tb_psa")
+	</select>
+
+	<select id="pgAdmingetTongYongWuLi.CountI" resultClass="int"
+		parameterClass="String">
+		select COUNT("PK_PSA") from "tb_psa" WHERE "PSA_I"= #sort#
+		AND "PSA_Date"=(SELECT MAX("PSA_Date") FROM "tb_psa")
+	</select>
+	<select id="pgAdmingetTongYongWuLi.CountJ" resultClass="int"
+		parameterClass="String">
+		select COUNT("PK_PSA") from "tb_psa" WHERE "PSA_J"= #sort#
+		AND "PSA_Date"=(SELECT MAX("PSA_Date") FROM "tb_psa")
+	</select>
+
+
+	<!-- 通用管理 -->
+
+	<select id="pgAdmingetTongYongGuanLi.CountA" resultClass="int"
+		parameterClass="String">
+		SELECT COUNT("PK_MSA") FROM "tb_msa" WHERE "MSA_A" =#sort#
+		AND "MSA_Date"=(SELECT
+		MAX("MSA_Date") FROM "tb_msa" )
+	</select>
+
+
+	<select id="pgAdmingetTongYongGuanLi.CountB" resultClass="int"
+		parameterClass="String">
+		SELECT COUNT("PK_MSA") FROM "tb_msa" WHERE "MSA_B" =#sort#
+		AND "MSA_Date"=(SELECT
+		MAX("MSA_Date") FROM "tb_msa" )
+	</select>
+
+
+	<select id="pgAdmingetTongYongGuanLi.CountC" resultClass="int"
+		parameterClass="String">
+		SELECT COUNT("PK_MSA") FROM "tb_msa" WHERE "MSA_C" =#sort#
+		AND "MSA_Date"=(SELECT
+		MAX("MSA_Date") FROM "tb_msa" )
+	</select>
+
+
+	<select id="pgAdmingetTongYongGuanLi.CountD" resultClass="int"
+		parameterClass="String">
+		SELECT COUNT("PK_MSA") FROM "tb_msa" WHERE "MSA_D" =#sort#
+		AND "MSA_Date"=(SELECT
+		MAX("MSA_Date") FROM "tb_msa" )
+	</select>
+
+
+	<select id="pgAdmingetTongYongGuanLi.CountE" resultClass="int"
+		parameterClass="String">
+		SELECT COUNT("PK_MSA") FROM "tb_msa" WHERE "MSA_E" =#sort#
+		AND "MSA_Date"=(SELECT MAX("MSA_Date") FROM "tb_msa")
+	</select>
+
+
+	<select id="pgAdmingetTongYongGuanLi.CountF" resultClass="int"
+		parameterClass="String">
+		SELECT COUNT("PK_MSA") FROM "tb_msa" WHERE "MSA_F" =#sort#
+		AND "MSA_Date"=(SELECT
+		MAX("MSA_Date") FROM "tb_msa" )
+	</select>
+
+
+	<select id="pgAdmingetTongYongGuanLi.CountG" resultClass="int"
+		parameterClass="String">
+		SELECT COUNT("PK_MSA") FROM "tb_msa" WHERE "MSA_G" =#sort#
+		AND "MSA_Date"=(SELECT
+		MAX("MSA_Date") FROM "tb_msa" )
+	</select>
+
+
+	<select id="pgAdmingetTongYongGuanLi.CountH" resultClass="int"
+		parameterClass="String">
+		SELECT COUNT("PK_MSA") FROM "tb_msa" WHERE "MSA_H" =#sort#
+		AND "MSA_Date"=(SELECT
+		MAX("MSA_Date") FROM "tb_msa" )
+	</select>
+
+
+	<select id="pgAdmingetTongYongGuanLi.CountI" resultClass="int"
+		parameterClass="String">
+		SELECT COUNT("PK_MSA") FROM "tb_msa" WHERE "MSA_I" =#sort#
+		AND "MSA_Date"=(SELECT
+		MAX("MSA_Date") FROM "tb_msa" )
+	</select>
+
+
+	<select id="pgAdmingetTongYongGuanLi.CountJ" resultClass="int"
+		parameterClass="String">
+		SELECT COUNT("PK_MSA") FROM "tb_msa" WHERE "MSA_J" =#sort#
+		AND "MSA_Date"=(SELECT
+		MAX("MSA_Date") FROM "tb_msa" )
+	</select>
+
+
+<!--sqlserver  -->
+	<!-- 3.1 通用物理 差距项统计表 -->
+
+	<select id="sqlServergetGeneralPhysical.Count0" resultClass="int">
+		select COUNT("PK_PSA") from "tb_psa" WHERE "PSA_AssessResult"='0' AND
+		"PSA_Sort"
+		LIKE '10%'
+		AND "PSA_Date"=(SELECT MAX("PSA_Date") FROM "tb_psa" )
+	</select>
+
+	<select id="sqlServergetGeneralPhysical.Count1" resultClass="int">
+		select COUNT("PK_PSA") from "tb_psa" WHERE "PSA_AssessResult"='1' AND
+		"PSA_Sort"
+		LIKE '10%'
+		AND "PSA_Date"=(SELECT MAX("PSA_Date") FROM "tb_psa" )
+	</select>
+
+	<select id="sqlServergetGeneralPhysical.Count1and0" resultClass="int">
+		select COUNT("PK_PSA") from "tb_psa" WHERE "PSA_AssessResult" in ('0','1') AND
+		"PSA_Sort" LIKE '10%'
+		AND "PSA_Date"=(SELECT MAX("PSA_Date" ) FROM "tb_psa" )
+	</select>
+
+	<select id="sqlServergetGeneralPhysical.Count2" resultClass="int">
+		select COUNT("PK_PSA") from "tb_psa" WHERE "PSA_AssessResult"='2' AND
+		"PSA_Sort"
+		LIKE '10%'
+		AND "PSA_Date"=(SELECT MAX("PSA_Date" ) FROM "tb_psa" )
+	</select>
+	<!--3.1 通用管理 差距项统计表 -->
+
+
+	<select id="sqlServergetManagementCount.Count0" resultClass="int">
+		select COUNT("PK_MSA") from "tb_msa" WHERE "MSA_AssessResult"='0' AND
+		"MSA_Sort"
+		LIKE '11%' AND "MSA_Date"=(SELECT
+		MAX("MSA_Date") FROM "tb_msa" )
+	</select>
+
+
+	<select id="sqlServergetManagementCount.Count1" resultClass="int">
+		select COUNT("PK_MSA") from "tb_msa" WHERE "MSA_AssessResult"='1' AND
+		"MSA_Sort"
+		LIKE '11%' AND "MSA_Date"=(SELECT
+		MAX("MSA_Date") FROM "tb_msa" )
+	</select>
+
+
+	<select id="sqlServergetManagementCount.Count0and1" resultClass="int">
+		select COUNT("PK_MSA") from "tb_msa" WHERE "MSA_AssessResult" in ('0','1') AND
+		"MSA_Sort" LIKE '11%' AND "MSA_Date"=(SELECT
+		MAX("MSA_Date") FROM "tb_msa" )
+	</select>
+
+	<select id="sqlServergetManagementCount.Count2" resultClass="int">
+		select
+		COUNT("PK_MSA") from "tb_msa" WHERE "MSA_AssessResult"='2' AND
+		"MSA_Sort" LIKE
+		'11%' AND "MSA_Date"=(SELECT
+		MAX("MSA_Date") FROM "tb_msa" )
+	</select>
+
+
+	<!-- end- -->
+
+	<select id="sqlServergetGeneralPhysical.Count" resultClass="String"
+		parameterClass="String">
+		select "PK_PSA" from "tb_psa" WHERE "PSA_AssessResult"='0' AND
+		"PSA_Sort" LIKE #sort#
+		AND "PSA_Date"=(SELECT MAX("PSA_Date" ) FROM "tb_psa" )
+	</select>
+ 
+	<select id="sqlServergetManagementCount.Count" resultClass="int"
+		parameterClass="String">
+		select count("PK_MSA") from "tb_msa" WHERE "MSA_AssessResult"='0' AND
+		"MSA_Sort" LIKE #sort# AND "MSA_Date"=(SELECT
+		MAX("MSA_Date") FROM "tb_msa" )
+	</select>
+	<select id="sqlServergetTechnologyCount.Count" resultClass="int"
+		parameterClass="int">
+		SELECT COUNT("PK_CIA") from "tb_cia" WHERE "FK_CA" =#pca# AND
+		"CIA_AssessResult"='0'
+	</select>
+
+	<!-- 通用物理 -->
+	<select id="sqlServergetTongYongWuLi.CountA" resultClass="int"
+		parameterClass="String">
+		select COUNT("PK_PSA") from "tb_psa" WHERE "PSA_A"= #sort#
+		AND "PSA_Date"=(SELECT MAX("PSA_Date") FROM "tb_psa")
+	</select>
+
+	<select id="sqlServergetTongYongWuLi.CountB" resultClass="int"
+		parameterClass="String">
+		select COUNT("PK_PSA") from "tb_psa" WHERE "PSA_B"= #sort#
+		AND "PSA_Date"=(SELECT MAX("PSA_Date") FROM "tb_psa")
+	</select>
+
+	<select id="sqlServergetTongYongWuLi.CountC" resultClass="int"
+		parameterClass="String">
+		select COUNT("PK_PSA") from "tb_psa" WHERE "PSA_C"= #sort#
+		AND "PSA_Date"=(SELECT MAX("PSA_Date") FROM "tb_psa")
+	</select>
+
+	<select id="sqlServergetTongYongWuLi.CountD" resultClass="int"
+		parameterClass="String">
+		select COUNT("PK_PSA") from "tb_psa" WHERE "PSA_D"= #sort#
+		AND "PSA_Date"=(SELECT MAX("PSA_Date") FROM "tb_psa")
+	</select>
+
+	<select id="sqlServergetTongYongWuLi.CountE" resultClass="int"
+		parameterClass="String">
+		select COUNT("PK_PSA") from "tb_psa" WHERE "PSA_E"= #sort#
+		AND "PSA_Date"=(SELECT MAX("PSA_Date") FROM "tb_psa")
+	</select>
+
+	<select id="sqlServergetTongYongWuLi.CountF" resultClass="int"
+		parameterClass="String">
+		select COUNT("PK_PSA") from "tb_psa" WHERE "PSA_F"= #sort#
+		AND "PSA_Date"=(SELECT MAX("PSA_Date") FROM "tb_psa")
+	</select>
+
+
+	<select id="sqlServergetTongYongWuLi.CountG" resultClass="int"
+		parameterClass="String">
+		select COUNT("PK_PSA") from "tb_psa" WHERE "PSA_G"= #sort#
+		AND "PSA_Date"=(SELECT MAX("PSA_Date") FROM "tb_psa")
+	</select>
+
+	<select id="sqlServergetTongYongWuLi.CountH" resultClass="int"
+		parameterClass="String">
+		select COUNT("PK_PSA") from "tb_psa" WHERE "PSA_H"= #sort#
+		AND "PSA_Date"=(SELECT MAX("PSA_Date") FROM "tb_psa")
+	</select>
+
+	<select id="sqlServergetTongYongWuLi.CountI" resultClass="int"
+		parameterClass="String">
+		select COUNT("PK_PSA") from "tb_psa" WHERE "PSA_I"= #sort#
+		AND "PSA_Date"=(SELECT MAX("PSA_Date") FROM "tb_psa")
+	</select>
+	<select id="sqlServergetTongYongWuLi.CountJ" resultClass="int"
+		parameterClass="String">
+		select COUNT("PK_PSA") from "tb_psa" WHERE "PSA_J"= #sort#
+		AND "PSA_Date"=(SELECT MAX("PSA_Date") FROM "tb_psa")
+	</select>
+
+
+	<!-- 通用管理 -->
+
+	<select id="sqlServergetTongYongGuanLi.CountA" resultClass="int"
+		parameterClass="String">
+		SELECT COUNT("PK_MSA") FROM "tb_msa" WHERE "MSA_A" =#sort#
+		AND "MSA_Date"=(SELECT
+		MAX("MSA_Date") FROM "tb_msa" )
+	</select>
+
+
+	<select id="sqlServergetTongYongGuanLi.CountB" resultClass="int"
+		parameterClass="String">
+		SELECT COUNT("PK_MSA") FROM "tb_msa" WHERE "MSA_B" =#sort#
+		AND "MSA_Date"=(SELECT
+		MAX("MSA_Date") FROM "tb_msa" )
+	</select>
+
+
+	<select id="sqlServergetTongYongGuanLi.CountC" resultClass="int"
+		parameterClass="String">
+		SELECT COUNT("PK_MSA") FROM "tb_msa" WHERE "MSA_C" =#sort#
+		AND "MSA_Date"=(SELECT
+		MAX("MSA_Date") FROM "tb_msa" )
+	</select>
+
+
+	<select id="sqlServergetTongYongGuanLi.CountD" resultClass="int"
+		parameterClass="String">
+		SELECT COUNT("PK_MSA") FROM "tb_msa" WHERE "MSA_D" =#sort#
+		AND "MSA_Date"=(SELECT
+		MAX("MSA_Date") FROM "tb_msa" )
+	</select>
+
+
+	<select id="sqlServergetTongYongGuanLi.CountE" resultClass="int"
+		parameterClass="String">
+		SELECT COUNT("PK_MSA") FROM "tb_msa" WHERE "MSA_E" =#sort#
+		AND "MSA_Date"=(SELECT MAX("MSA_Date") FROM "tb_msa")
+	</select>
+
+
+	<select id="sqlServergetTongYongGuanLi.CountF" resultClass="int"
+		parameterClass="String">
+		SELECT COUNT("PK_MSA") FROM "tb_msa" WHERE "MSA_F" =#sort#
+		AND "MSA_Date"=(SELECT
+		MAX("MSA_Date") FROM "tb_msa" )
+	</select>
+
+
+	<select id="sqlServergetTongYongGuanLi.CountG" resultClass="int"
+		parameterClass="String">
+		SELECT COUNT("PK_MSA") FROM "tb_msa" WHERE "MSA_G" =#sort#
+		AND "MSA_Date"=(SELECT
+		MAX("MSA_Date") FROM "tb_msa" )
+	</select>
+
+
+	<select id="sqlServergetTongYongGuanLi.CountH" resultClass="int"
+		parameterClass="String">
+		SELECT COUNT("PK_MSA") FROM "tb_msa" WHERE "MSA_H" =#sort#
+		AND "MSA_Date"=(SELECT
+		MAX("MSA_Date") FROM "tb_msa" )
+	</select>
+
+
+	<select id="sqlServergetTongYongGuanLi.CountI" resultClass="int"
+		parameterClass="String">
+		SELECT COUNT("PK_MSA") FROM "tb_msa" WHERE "MSA_I" =#sort#
+		AND "MSA_Date"=(SELECT
+		MAX("MSA_Date") FROM "tb_msa" )
+	</select>
+
+
+	<select id="sqlServergetTongYongGuanLi.CountJ" resultClass="int"
+		parameterClass="String">
+		SELECT COUNT("PK_MSA") FROM "tb_msa" WHERE "MSA_J" =#sort#
+		AND "MSA_Date"=(SELECT
+		MAX("MSA_Date") FROM "tb_msa" )
+	</select>
+
+
+</sqlMap>

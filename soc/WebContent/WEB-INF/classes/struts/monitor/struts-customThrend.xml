@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="customTrend" extends="struts-default" namespace="/customTrend">
+		<action name="query" class="customTrendAction" method="queryCustomTrend">
+		<result name="success">/pages/monitor/customThrend_list.jsp</result>
+		</action>
+		<action name="queryEvents" class="customTrendAction" method="queryEvents">
+		<result name="success">/pages/monitor/custom_events_info.jsp</result>
+		</action>
+		<action name="editCustom" class="customTrendAction" method="edit">
+		<result name="success">/pages/monitor/customThrend_info.jsp</result>
+		</action>
+		<action name="delteCustomThend" class="customTrendAction" method="delete">
+		
+		</action>
+		<action name="saveCustomThend" class="customTrendAction" method="save">
+		<interceptor-ref name="defaultStack"/><!-- 需要注意拦截器栈的配置顺序-->  
+            <interceptor-ref name="token"/><!-- 这就是用来防止表单重复提交的拦截器-->  
+            <result name="invalid.token" type="redirectAction">
+            <param name="namespace">/customTrend</param>
+		       <param name="actionName">query</param>
+            
+            </result><!-- 需要注意的是名字必须为invalid.token-->  
+		</action>
+		<action name="checkName" class="customTrendAction" method="checkName"></action>
+		<action name="queryAllEvents" class="customTrendAction" method="queryAllEvents"></action>
+		<action name="exportReport" class="customTrendAction" method="ExportReport">
+		</action>
+	</package>
+</struts>

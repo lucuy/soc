@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+
+<!-- //合规管理 ////差距分析 //差距分析报告 //表：安全领域符合度 -->
+<sqlMap>
+<select id="pgAdmingetSecurityTable.count" parameterClass="securityGap"
+		resultClass="int">
+		SELECT COUNT("PK_CIA") FROM "tb_cia" WHERE "CIA_Sort" LIKE
+		'%$str$%'
+		AND "CIA_AssessResult"='0'  AND "FK_CA" =#pkca#
+	</select>
+	<select id="sqlServergetSecurityTable.count" parameterClass="securityGap"
+		resultClass="int">
+		SELECT COUNT("PK_CIA") FROM "tb_cia" WHERE "CIA_Sort" LIKE
+		'%$str$%'
+		AND "CIA_AssessResult"='0'  AND "FK_CA" =#pkca#
+	</select>
+	
+	
+	
+</sqlMap>

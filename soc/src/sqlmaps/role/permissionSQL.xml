@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="permissionSQL">
+	
+	<resultMap id="permissionResult" class="permission">
+		<result	property="permissionId"				column="PERMISSION_ID"				jdbcType="bigint" />
+		<result	property="permissionModuleName"		column="PERMISSION_MODULE_NAME"		jdbcType="varchar" />
+		<result	property="permissionType"			column="PERMISSION_TYPE"			jdbcType="tinyint" />
+		<result	property="permissionSuperiorId"		column="PERMISSION_SUPERIOR_ID"		jdbcType="bigint" />
+		<result	property="permissionUrl"			column="PERMISSION_URL"				jdbcType="vachar" />
+		<result property="permissionModuleList"     column="PERMISSION_ID"              select="pgAdminpermission.queryModule"/>
+   	</resultMap>
+
+	<!-- 查询 -->
+	<select id="pgAdminpermission.queryPermission"  parameterClass="java.util.HashMap" resultMap="permissionResult">
+		SELECT * FROM "tbl_permission" where "PERMISSION_TYPE" = 0 and "PERMISSION_IS_SHOW" = 1 ORDER BY "PERMISSION_ID" ASC
+	</select>
+	
+	<!-- 查询子模块 -->
+	<select id="pgAdminpermission.queryModule"  parameterClass="long" resultMap="permissionResult">
+		SELECT * FROM "tbl_permission" where "PERMISSION_SUPERIOR_ID" = #value# and "PERMISSION_IS_SHOW" = 1  ORDER BY "PERMISSION_ID" ASC
+	</select>
+	
+	<!-- 根据ID查询 -->
+	<select id="pgAdminpermission.queryById"  parameterClass="long" resultMap="permissionResult">
+		<![CDATA[
+			SELECT * FROM "tbl_permission" WHERE "PERMISSION_ID" = #permissionId#   and "PERMISSION_IS_SHOW" = 1 
+		]]>
+	</select>
+	<!-- sqlServer -->
+	<!-- 查询 -->
+	<select id="sqlServerpermission.queryPermission"  parameterClass="java.util.HashMap" resultMap="permissionResult">
+		SELECT * FROM "tbl_permission" where "PERMISSION_TYPE" = 0  and "PERMISSION_IS_SHOW" = 1  ORDER BY "PERMISSION_ID" ASC
+	</select>
+	
+	<!-- 查询子模块 -->
+	<select id="sqlServerpermission.queryModule"  parameterClass="long" resultMap="permissionResult">
+		SELECT * FROM "tbl_permission" where "PERMISSION_SUPERIOR_ID" = #value# and "PERMISSION_IS_SHOW" = 1  ORDER BY "PERMISSION_ID" ASC
+	</select>
+	
+	<!-- 根据ID查询 -->
+	<select id="sqlServerpermission.queryById"  parameterClass="long" resultMap="permissionResult">
+		<![CDATA[
+			SELECT * FROM "tbl_permission" WHERE "PERMISSION_ID" = #permissionId#   and "PERMISSION_IS_SHOW" = 1 
+		]]>
+	</select>
+	
+	
+</sqlMap>

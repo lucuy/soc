@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="settingArchive" extends="struts-default" namespace="/settingArchive">
+		<action name="archiveList" class="SettingArchiveAction" method="archiveList">
+			<result name="success">/pages/systemsetting/setting_archiveList.jsp</result>
+		</action>
+		<action name="updateArchive" class="SettingArchiveAction" method="updateArchive">
+		    <result name="success" type="chain">
+		    	<param name="namespace">/settingArchive</param>
+		    	<param name="actionName">archiveList</param>
+		    </result>
+		</action>
+		<action name="auto" class="SettingArchiveAction" method="auto">
+			<result name="success">/pages/systemsetting/setting_archiveAuto.jsp</result>
+		</action>
+	</package>
+</struts>

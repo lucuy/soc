@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    
+    <sqlMap>
+        <resultMap class="MsaShow" id="MsaShowResult">
+           <result property="gFatherSort"       column="gMSAD_Sort" />
+           <result property="gFatherName"     column="gMSAD_Name" />
+           <result property="fatherSort"     column="fMSAD_Sort" />
+           <result property="fatherName"    column="fMSAD_Name" />
+           <result property="sonSort"      column="sMSAD_Sort" />
+           <result property="sonContent" column="sMSAD_Content" />
+        </resultMap>
+         <select id="pgAdminmsaShow.queryAllData"  resultMap="MsaShowResult">
+          select distinct
+	           g."MSAD_Sort" as "gMSAD_Sort",
+	           g."MSAD_Name" as "gMSAD_Name",
+	           f."MSAD_Sort" as "fMSAD_Sort",
+	          f."MSAD_Name" as "fMSAD_Name",
+	          s."MSAD_Sort" as "sMSAD_Sort",
+	          s."MSAD_Content" as "sMSAD_Content" from "tb_msad" g,"tb_msad" f,"tb_msad" s 
+           where s."MSAD_Content" is not null and g."MSAD_Sort"=f."MSAD_FatherSort" and f."MSAD_Sort"=s."MSAD_FatherSort"
+            and (f."MSAD_Sort" not like'%3') order by f."MSAD_Sort"
+        </select>
+        <!-- 根据msadid查找msadname -->
+        <select id="pgAdminmsaShow.queryMsadName" parameterClass="java.lang.String" resultClass="java.lang.String">
+         select g."MSAD_Name" FROM "tb_msad" g WHERE g."MSAD_Sort"=#value#
+        </select>
+        <!--sqlserver  -->
+        <select id="sqlServermsaShow.queryAllData"  resultMap="MsaShowResult">
+          select distinct
+	           g."MSAD_Sort" as "gMSAD_Sort",
+	           g."MSAD_Name" as "gMSAD_Name",
+	           f."MSAD_Sort" as "fMSAD_Sort",
+	          f."MSAD_Name" as "fMSAD_Name",
+	          s."MSAD_Sort" as "sMSAD_Sort",
+	          s."MSAD_Content" as "sMSAD_Content" from "tb_msad" g,"tb_msad" f,"tb_msad" s 
+           where s."MSAD_Content" is not null and g."MSAD_Sort"=f."MSAD_FatherSort" and f."MSAD_Sort"=s."MSAD_FatherSort"
+            and (f."MSAD_Sort" not like'%3') order by f."MSAD_Sort"
+        </select>
+        <!-- 根据msadid查找msadname -->
+        <select id="sqlServermsaShow.queryMsadName" parameterClass="java.lang.String" resultClass="java.lang.String">
+         select g."MSAD_Name" FROM "tb_msad" g WHERE g."MSAD_Sort"=#value#
+        </select>
+    </sqlMap>

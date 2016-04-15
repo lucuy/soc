@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="monitorAlarmSQL">
+
+	<resultMap id="monitorAlarmResult" class="monitorAlarm">
+		<result property="monitorAlarmId" column="MONITOR_ALARM_ID" jdbcType="bigint" />
+		<result property="monitorAlarmContent" column="MONITOR_ALARM_CONTENT" jdbcType="varchar" />
+		<result property="monitorAlarmTime" column="MONITOR_ALARM_TIME"
+			jdbcType="datetime" />
+		<result property="monitorAlarmRank" column="MONITOR_ALARM_RANK"
+			jdbcType="int" />
+		<result property="monitorAlarmIndex" column="MONITOR_ALARM_INDEX"
+			jdbcType="varchar" />
+		<result property="monitorAlarmCurrentValue" column="MONITOR_ALARM_CURRENT_VALUE"
+			jdbcType="double" />
+		<result property="monitorAlarmThreshold" column="MONITOR_ALARM_THRESHOLD" jdbcType="Integer" />
+		<result property="monitorAlarmAssetId" column="MONITOR_ALARM_ASSET_ID"
+			jdbcType="bigint" />
+	</resultMap>
+	<!-- APM告警对象与资产对象整合 -->
+	<resultMap id="monitorAlarmAssetResult" class="monitorAlarmAsset">
+	    <result property="assetId" column="ASSET_ID" jdbcType="bigint" />
+		<result property="assetName" column="ASSET_NAME" jdbcType="varchar" />
+		<result property="assetMac" column="ASSET_MAC" jdbcType="varchar" />
+	    <result property="monitorAlarmId" column="MONITOR_ALARM_ID" jdbcType="bigint" />
+		<result property="monitorAlarmContent" column="MONITOR_ALARM_CONTENT" jdbcType="varchar" />
+		<result property="monitorAlarmTime" column="MONITOR_ALARM_TIME"
+			jdbcType="datetime" />
+		<result property="monitorAlarmRank" column="MONITOR_ALARM_RANK"
+			jdbcType="int" />
+		<result property="monitorAlarmIndex" column="MONITOR_ALARM_INDEX"
+			jdbcType="varchar" />
+		<result property="monitorAlarmCurrentValue" column="MONITOR_ALARM_CURRENT_VALUE"
+			jdbcType="double" />
+		<result property="monitorAlarmThreshold" column="MONITOR_ALARM_THRESHOLD" jdbcType="Integer" />
+		<result property="monitorAlarmAssetId" column="MONITOR_ALARM_ASSET_ID"
+			jdbcType="bigint" />
+	</resultMap>
+	
+	<!-- 查询条数 -->
+	<select id="pgAdminmonitorAlarm.count" resultClass="int" parameterClass="java.util.HashMap">
+		SELECT COUNT(*) FROM "tbl_monitor_alarm" WHERE 1=1
+		<isNotEmpty prepend="AND" property="keyword">
+		  <![CDATA[
+		    ("lower"("MONITOR_ALARM_CONTENT") like '%$keyword$%' OR "lower"("MONITOR_ALARM_INDEX") like '%$keyword$%') 
+		  ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="relAssetId">
+			<![CDATA[
+				"MONITOR_ALARM_ASSET_ID" = #relAssetId#
+			]]>
+		</isNotEmpty>
+		
+	</select>
+	
+	<!-- 查询 -->
+	<select id="pgAdminmonitorAlarm.query"  parameterClass="java.util.HashMap" resultMap="monitorAlarmResult" >
+		SELECT * FROM "tbl_monitor_alarm" WHERE 1=1
+		<isNotEmpty prepend="AND" property="keyword">
+		  <![CDATA[
+		    ("lower"("MONITOR_ALARM_CONTENT") like '%$keyword$%' OR "lower"("MONITOR_ALARM_INDEX") like '%$keyword$%') 
+		  ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="relAssetId">
+			<![CDATA[
+				"MONITOR_ALARM_ASSET_ID" = #relAssetId#
+			]]>
+		</isNotEmpty>
+	     ORDER BY "MONITOR_ALARM_TIME" desc
+	</select>
+	
+	<!-- 添加告警 -->
+	<insert id="pgAdminmonitorAlarm.insert" parameterClass="monitorAlarm" >
+		INSERT INTO "tbl_monitor_alarm" 
+				(   "MONITOR_ALARM_CONTENT", 
+					"MONITOR_ALARM_TIME", 
+					"MONITOR_ALARM_RANK", 
+					"MONITOR_ALARM_INDEX", 
+					"MONITOR_ALARM_CURRENT_VALUE", 
+					"MONITOR_ALARM_THRESHOLD", 
+					"MONITOR_ALARM_ASSET_ID"
+				)
+		VALUES 
+				(   #monitorAlarmContent#,
+					#monitorAlarmTime#, 
+					#monitorAlarmRank#, 
+					#monitorAlarmIndex#, 
+					#monitorAlarmCurrentValue#, 
+					#monitorAlarmThreshold#, 
+					#monitorAlarmAssetId#
+				)
+		<selectKey resultClass="java.lang.Long" keyProperty="monitorAlarmId" >
+            SELECT currval('tbl_monitor_alarm_seq'::regclass) AS monitorAlarmId
+      	</selectKey>
+	</insert>
+	
+	<!-- 首页展示图表SQL：最近24小时最新的10条阀值告警 -->
+	<select id="pgAdminmonitorAlarm.GetTenMonitorAPMMessage" resultClass="java.util.HashMap" parameterClass="java.util.HashMap">
+		   SELECT
+		M ."MONITOR_ALARM_CONTENT" AS "alarmContent",
+		M ."MONITOR_ALARM_THRESHOLD" AS "alarmThreshold",
+		ROUND(
+			M ."MONITOR_ALARM_CURRENT_VALUE"
+		) AS "alarmCurrentValue",
+		M ."MONITOR_ALARM_INDEX" AS "alarmIndex",
+		M ."MONITOR_ALARM_RANK" AS "alarmRank",
+		TO_CHAR(M ."MONITOR_ALARM_TIME", 'yyyy-MM-dd HH24:MI:SS') AS "alarmTime",
+		A ."ASSET_ID" AS "assetId",
+		A ."ASSET_NAME" AS "assetName",
+		A ."ASSET_MAC" AS "assetMac",
+		A ."ASSET_SUPPORT_DEVICE_ID" AS "assetSupportDeviceId"
+	FROM
+		"tbl_monitor_alarm" M
+	LEFT JOIN "tbl_asset" A ON M ."MONITOR_ALARM_ASSET_ID" = A ."ASSET_ID"
+	WHERE
+		1 = 1
+		<isNotEmpty prepend="AND" property="alertAssetId">
+             "MONITOR_ALARM_ASSET_ID" in  ($alertAssetId$)
+          </isNotEmpty>
+	<isNotEmpty prepend="AND" property="startTime">
+	         "MONITOR_ALARM_TIME" BETWEEN #endTime# AND #startTime#
+	</isNotEmpty>
+	ORDER BY M."MONITOR_ALARM_TIME" DESC LIMIT 10 OFFSET 0;
+	   
+	</select>
+	
+	<!-- sqlserver -->
+	<!-- 查询条数 -->
+	<select id="sqlServermonitorAlarm.count" resultClass="int" parameterClass="java.util.HashMap">
+		SELECT COUNT(*) FROM "tbl_monitor_alarm" WHERE 1=1
+		<isNotEmpty prepend="AND" property="keyword">
+		  <![CDATA[
+		    ("lower"("MONITOR_ALARM_CONTENT") like '%$keyword$%' OR "lower"("MONITOR_ALARM_INDEX") like '%$keyword$%') 
+		  ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="relAssetId">
+			<![CDATA[
+				"MONITOR_ALARM_ASSET_ID" = #relAssetId#
+			]]>
+		</isNotEmpty>
+		
+	</select>
+	
+	<!-- 查询 -->
+	<select id="sqlServermonitorAlarm.query"  parameterClass="java.util.HashMap" resultMap="monitorAlarmResult" >
+		SELECT * FROM "tbl_monitor_alarm" WHERE 1=1
+		<isNotEmpty prepend="AND" property="keyword">
+		  <![CDATA[
+		    ("lower"("MONITOR_ALARM_CONTENT") like '%$keyword$%' OR "lower"("MONITOR_ALARM_INDEX") like '%$keyword$%') 
+		  ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="relAssetId">
+			<![CDATA[
+				"MONITOR_ALARM_ASSET_ID" = #relAssetId#
+			]]>
+		</isNotEmpty>
+	     ORDER BY "MONITOR_ALARM_TIME" desc
+	</select>
+	
+	<!-- 添加告警 -->
+	<insert id="sqlServermonitorAlarm.insert" parameterClass="monitorAlarm" >
+		INSERT INTO "tbl_monitor_alarm" 
+				(   "MONITOR_ALARM_CONTENT", 
+					"MONITOR_ALARM_TIME", 
+					"MONITOR_ALARM_RANK", 
+					"MONITOR_ALARM_INDEX", 
+					"MONITOR_ALARM_CURRENT_VALUE", 
+					"MONITOR_ALARM_THRESHOLD", 
+					"MONITOR_ALARM_ASSET_ID"
+				)
+		VALUES 
+				(   #monitorAlarmContent#,
+					#monitorAlarmTime#, 
+					#monitorAlarmRank#, 
+					#monitorAlarmIndex#, 
+					#monitorAlarmCurrentValue#, 
+					#monitorAlarmThreshold#, 
+					#monitorAlarmAssetId#
+				)
+		<!-- <selectKey resultClass="java.lang.Long" keyProperty="monitorAlarmId" >
+            SELECT currval('tbl_monitor_alarm_seq'::regclass) AS monitorAlarmId
+      	</selectKey> -->
+	</insert>
+	<!-- 首页展示图表SQL：最近24小时最新的10条阀值告警 -->
+	<select id="sqlServermonitorAlarm.GetTenMonitorAPMMessage" resultClass="java.util.HashMap" parameterClass="java.util.HashMap">
+		   SELECT TOP 10
+		M ."MONITOR_ALARM_CONTENT" AS "alarmContent",
+		M ."MONITOR_ALARM_THRESHOLD" AS "alarmThreshold",
+		ROUND(
+			M ."MONITOR_ALARM_CURRENT_VALUE" , 1
+		) AS "alarmCurrentValue",
+		M ."MONITOR_ALARM_INDEX" AS "alarmIndex",
+		M ."MONITOR_ALARM_RANK" AS "alarmRank",
+	M ."MONITOR_ALARM_TIME" AS "alarmTime",
+		A ."ASSET_ID" AS "assetId",
+		A ."ASSET_NAME" AS "assetName",
+		A ."ASSET_MAC" AS "assetMac",
+		A ."ASSET_SUPPORT_DEVICE_ID" AS "assetSupportDeviceId"
+	FROM
+		"tbl_monitor_alarm" M
+	LEFT JOIN "tbl_asset" A ON M ."MONITOR_ALARM_ASSET_ID" = A ."ASSET_ID"
+	WHERE
+		1 = 1
+		<isNotEmpty prepend="AND" property="alertAssetId">
+             "MONITOR_ALARM_ASSET_ID" in  ($alertAssetId$)
+          </isNotEmpty>
+	<isNotEmpty prepend="AND" property="startTime">
+	         "MONITOR_ALARM_TIME" BETWEEN '$startTime$' AND '$endTime$'
+	</isNotEmpty>
+	ORDER BY M."MONITOR_ALARM_TIME" DESC ;
+	   
+	</select>
+	
+</sqlMap>

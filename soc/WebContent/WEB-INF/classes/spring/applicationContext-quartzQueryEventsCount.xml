@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+         xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    
+	<!-- 定义注入的类和参数 -->
+	<bean name="queryEventsCountTaskTrigger" class="com.soc.service.screen.impl.BigScreenServiceImpl">
+		<property name="bigScreenDao" ref="bigScreenDao"></property>
+		<property name="assetGroupManager" ref="assetGroupManager"></property>
+	</bean>
+	
+    <!-- 定义定时器，指定执行的类和方法 -->
+    <bean name="queryEventsCountTaskDetailBean" 
+    		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="queryEventsCountTaskTrigger" />
+		<property name="targetMethod" value="queryCountEvents"/>
+		
+	</bean>
+
+	   <bean name="queryEventsCountTaskTriggerBean" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+        <property name="jobDetail" ref="queryEventsCountTaskDetailBean"/>
+        <property name="repeatInterval" value="115000"/>
+        <property name="startDelay" value="5000"/><!-- 启动延时5秒启动 -->
+    </bean>
+    
+	<bean name="queryEventsCountTrigger" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		  <property name="triggers">
+			<list>
+				<ref bean="queryEventsCountTaskTriggerBean"/>
+			</list>
+		</property>  
+	</bean>  
+</beans>

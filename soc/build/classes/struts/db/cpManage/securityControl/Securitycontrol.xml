@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="securityControl" extends="struts-default"
+		namespace="/securityControl">
+
+		<action name="securityControlAnalysis" class="securityControlAction"
+			method="getSecurityControl">
+			<result name="success">/pages/dbPage/ensure/chajuC.jsp</result>
+		</action>
+
+		<action name="projectShowcase" class="securityControlAction"
+			method="getProjectShowcase">
+			<result name="success">/pages/dbPage/ensure/chaju.jsp</result>
+			<result name="none">/pages/dbPage/ensure/chajuNullC.jsp</result>
+		</action>
+
+		<!-- 查询统计报表 -->
+		<action name="queryAjax" class="securityControlAction" method="queryAjax" />
+		<action name="queryAjaxZhuXing" class="securityControlAction"
+			method="queryAjaxZhuXing" />
+		<action name="queryAjaxEquelsNull" class="securityControlAction"
+			method="queryAjaxEquelsNull" />
+		<action name="queryAjaxZhuXingEquelsNull" class="securityControlAction"
+			method="queryAjaxZhuXingEquelsNull" />
+
+
+
+
+	</package>
+</struts>

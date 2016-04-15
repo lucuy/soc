@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="addressPolicySQL">
+	<typeAlias alias="addressPolicy" type="com.soc.model.policy.AddressPolicy" />
+	<typeAlias alias="address" type="com.soc.model.policy.Address" />
+	<resultMap class="addressPolicy" id="addressPolicyResult">
+		<result property="addressPolicyId" column="ADDRESS_POLICY_ID"
+			jdbcType="bigint" />
+		<result property="addressPolicyName" column="ADDRESS_POLICY_NAME"
+			jdbcType="varchar" />
+		<result property="addressPolicyEffectWay" column="ADDRESS_POLICY_EFFECT_WAY"
+			jdbcType="int" />
+		<result property="addressPolicyStatus" column="ADDRESS_POLICY_STATUS"
+			jdbcType="int" />
+		<result property="addressPolicyCreateTime" column="ADDRESS_POLICY_CREATE_DATE_TIME"
+			jdbcType="datetime" />
+		<result property="addressPolicyUpdateTime" column="ADDRESS_POLICY_UPDATE_DATE_TIME"
+			jdbcType="datetime" />
+		<result property="addressPolicyCreateUserLoginName" column="ADDRESS_CREATOR_USER_LOGIN_NAME"
+			jdbcType="varchar" />
+		<result property="addressPolicyIsDelete" column="ADDRESS_POLICY_IS_DELETE"
+			jdbcType="tinyint" />
+		<result property="addressPolicyMemo" column="ADDRESS_MEMO"
+			jdbcType="text" />
+		<result property="addressList" column="ADDRESS_POLICY_ID"
+			select="pgAdminaddressPolicySQL.queryAddressById" />
+	</resultMap>
+	<resultMap id="userResult" class="user">
+   		<result property="userId" 				    column="USER_ID" 				    jdbcType="bigint"/>
+   		<result property="userLoginName"            column="USER_LOGIN_NAME"            jdbcType="varchar"/>
+   		<result property="userRealName"             column="USER_REAL_NAME"             jdbcType="varchar"/>
+   		<result property="userPassword"             column="USER_PASSWORD"              jdbcType="varchar"/>
+   		<result property="userStatus"               column="USER_STATUS"                jdbcType="int"/>
+   		<result property="userAuthType"             column="USER_AUTH_TYPE"             jdbcType="int"/>
+   		<result property="userChangePassword"       column="USER_CHANGE_PASSWORD"       jdbcType="int"/>
+   		<result property="userEmail"                column="USER_EMAIL"                 jdbcType="varchar"/>
+   		<result property="userMobile"               column="USER_MOBILE"                jdbcType="varchar"/>
+   		<result property="userTelephone"            column="USER_TELEPHONE"             jdbcType="varchar"/>
+   		<result property="userAddress"              column="USER_ADDRESS"               jdbcType="varchar"/>
+   		<result property="userCreatorIp"            column="USER_CREATOR_IP"            jdbcType="varchar"/>
+   		<result property="userCreateDateTime"       column="USER_CREATE_DATE_TIME"      jdbcType="datetime"/>
+   		<result property="userUpdateDateTime"       column="USER_UPDATE_DATE_TIME"      jdbcType="datetime"/>
+   		<result property="userDisplay"              column="USER_DISPLAY"               jdbcType="int"/>
+   		<result property="userMemo"                 column="USER_MEMO"                  jdbcType="text"/>
+   		<result property="userLockTime"             column="USER_LOCKED_TIME"           jdbcType="datetime"/>
+   		<result property="userFailNum"              column="USER_FAIL_NUM"              jdbcType="int"/>
+   		<result property="userIsDelete"             column="USER_IS_DELETE"             jdbcType="int"/>
+   		<result property="userRoleList"             column="USER_ID"                    select="pgAdminuser.queryRoleByUserId"/>
+   	</resultMap>
+	<!-- 关联地址 -->
+	<resultMap class="address" id="addressResult">
+		<result property="addressId" column="ADDRESS_ID" jdbcType="bigint" />
+		<result property="addressStartIp" column="ADDRESS_AREA_START"
+			jdbcType="varchar" />
+		<result property="addressEndIp" column="ADDRESS_AREA_END"
+			jdbcType="varchar" />
+		<result property="relAddressPolicyId" column="ADDRESS_ADDRESS_POLICY_ID"
+			jdbcType="bigint" />
+	</resultMap>
+
+	<!-- 查询条数 -->
+	<select id="pgAdminaddressPolicy.count" parameterClass="java.util.HashMap"
+		resultClass="int">
+		SELECT COUNT(*) FROM "tbl_address_policy"  WHERE "ADDRESS_POLICY_IS_DELETE" = 0
+		<isNotEmpty prepend="AND" property="keyword">
+			("ADDRESS_POLICY_NAME" LIKE '%$keyword$%' OR "ADDRESS_MEMO" LIKE '%$keyword$%')
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="addressPolicyName">
+		   <![CDATA[  
+		    "ADDRESS_POLICY_NAME" LIKE '%$addressPolicyName$%'
+		     ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="addressPolicyMemo">
+		    <![CDATA[
+		    "ADDRESS_MEMO" LIKE '%$addressPolicyMemo$%'
+		    ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="addressPolicyStatus">
+		    <![CDATA[
+		    "ADDRESS_POLICY_STATUS" = #addressPolicyStatus#
+		    ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="addressPolicyEffectWay">
+             <![CDATA[
+              "ADDRESS_POLICY_EFFECT_WAY"  =  #addressPolicyEffectWay#
+             ]]>
+		</isNotEmpty>
+	</select>
+
+	<!-- 查询结果列表 -->
+	<select id="pgAdminaddressPolicy.queryAddressPolicy" resultMap="addressPolicyResult"
+		parameterClass="java.util.HashMap">
+		SELECT * FROM "tbl_address_policy"  WHERE "ADDRESS_POLICY_IS_DELETE" = 0	
+		<isNotEmpty prepend="AND" property="keyword">
+			("ADDRESS_POLICY_NAME" 	LIKE '%$keyword$%' OR "ADDRESS_MEMO" LIKE '%$keyword$%')
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="addressPolicyName">
+		   <![CDATA[  
+		    "ADDRESS_POLICY_NAME" LIKE '%$addressPolicyName$%'
+		     ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="addressPolicyMemo">
+		    <![CDATA[
+		    "ADDRESS_MEMO" LIKE '%$addressPolicyMemo$%'
+		    ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="addressPolicyStatus">
+		    <![CDATA[
+		    "ADDRESS_POLICY_STATUS" = #addressPolicyStatus#
+		    ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="addressPolicyEffectWay">
+             <![CDATA[
+              "ADDRESS_POLICY_EFFECT_WAY" =  #addressPolicyEffectWay#
+             ]]>
+		</isNotEmpty>
+		ORDER BY "ADDRESS_POLICY_UPDATE_DATE_TIME" DESC
+	</select>
+	
+	<!-- 查询所有 -->
+	<select id="pgAdminaddressPolicy.queryAddressPolicyEx" resultMap="addressPolicyResult"
+		parameterClass="java.util.HashMap">
+		SELECT * FROM "tbl_address_policy" WHERE "ADDRESS_POLICY_IS_DELETE" = 0	
+		<isNotEmpty prepend="AND" property="keyword">
+			("ADDRESS_POLICY_NAME"
+			LIKE '%$keyword$%' OR "ADDRESS_MEMO" LIKE '%$keyword$%')
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="addressPolicyName">
+		   <![CDATA[  
+		    "ADDRESS_POLICY_NAME" LIKE '%$addressPolicyName$%'
+		     ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="addressPolicyMemo">
+		    <![CDATA[
+		    "ADDRESS_MEMO" LIKE '%$addressPolicyMemo$%'
+		    ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="addressPolicyStatus">
+		    <![CDATA[
+		    "ADDRESS_POLICY_STATUS" LIKE '%$addressPolicyStatus$%'
+		    ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="addressPolicyEffectWay">
+             <![CDATA[
+              "ADDRESS_POLICY_EFFECT_WAY" LIKE '%$addressPolicyEffectWay$%'
+             ]]>
+		</isNotEmpty>
+		ORDER BY "ADDRESS_POLICY_UPDATE_DATE_TIME" DESC
+	</select>
+
+	<!-- 查询关联地址策略的地址列表 -->
+	<select id="pgAdminaddressPolicySQL.queryAddressById" parameterClass="long"
+		resultMap="addressResult">
+      <![CDATA[  
+          SELECT * FROM "tbl_address" WHERE "ADDRESS_ADDRESS_POLICY_ID" = #value#
+       ]]>
+	</select>
+
+	<!-- 更新地址策略状态 -->
+	<update id="pgAdminaddressPolicy.updateStatus" parameterClass="java.util.HashMap">
+       <![CDATA[ 
+          UPDATE "tbl_address_policy" 
+          SET 
+                "ADDRESS_POLICY_STATUS" = #addressPolicyStatus#,
+                "ADDRESS_POLICY_UPDATE_DATE_TIME" = #addressPolicyUpdateDateTime# 
+          where 
+                "ADDRESS_POLICY_ID" = #addressPolicyId#
+       ]]>
+	</update>
+
+	<!-- 根据id查询地址策略 -->
+	<select id="pgAdminaddressPolicy.queryAddressPolicyById"
+		parameterClass="long" resultMap="addressPolicyResult">
+        <![CDATA[
+           SELECT * FROM  "tbl_address_policy" WHERE "ADDRESS_POLICY_ID" = #value#
+        ]]>
+	</select>
+    
+	<!-- 根据id标记删除地址策略 -->
+	<update id="pgAdminaddressPolicy.deletePolicy" parameterClass="java.util.HashMap">
+        <![CDATA[
+         UPDATE "tbl_address_policy" 
+         SET 
+                "ADDRESS_POLICY_IS_DELETE" = 1,
+                "ADDRESS_POLICY_UPDATE_DATE_TIME" =  #addressPolicyUpdateDateTime# 
+         where  "ADDRESS_POLICY_ID" = #addressPolicyId#
+        ]]>
+	</update>
+	
+	<!-- 更新地址策略 增加修改地址策略名称的字段-->
+	<update id="pgAdminaddressPolicy.updateAddress" parameterClass="addressPolicy">
+	    <![CDATA[
+	     UPDATE "tbl_address_policy" 
+	     SET 
+	           "ADDRESS_POLICY_EFFECT_WAY" = #addressPolicyEffectWay#,
+	           "ADDRESS_POLICY_UPDATE_DATE_TIME" = #addressPolicyUpdateTime#,
+	           "ADDRESS_MEMO" = #addressPolicyMemo#,
+	           "ADDRESS_POLICY_NAME"=#addressPolicyName#
+	     WHERE 
+	           "ADDRESS_POLICY_ID" =#addressPolicyId#
+	    ]]>
+	</update>
+	
+	<!-- 插入地址策略 -->
+	<insert id="pgAdminaddressPolicy.insertAddressPolicy" parameterClass="addressPolicy">
+	    <![CDATA[ 
+	       INSERT INTO "tbl_address_policy"
+	               ("ADDRESS_POLICY_NAME",
+	                "ADDRESS_POLICY_EFFECT_WAY",
+	                "ADDRESS_POLICY_STATUS",
+	                "ADDRESS_POLICY_CREATE_DATE_TIME",
+	                "ADDRESS_POLICY_UPDATE_DATE_TIME",
+	                "ADDRESS_CREATOR_USER_LOGIN_NAME",
+	                "ADDRESS_POLICY_IS_DELETE",
+	                "ADDRESS_MEMO")
+	       VALUES
+	               (#addressPolicyName#,
+	                #addressPolicyEffectWay#,
+	                #addressPolicyStatus#,
+	                #addressPolicyCreateTime#,
+	                #addressPolicyUpdateTime#,
+	                #addressPolicyCreateUserLoginName#,
+	                #addressPolicyIsDelete#,
+	                #addressPolicyMemo#)
+	    ]]>
+	    <selectKey resultClass="java.lang.Long" keyProperty="addressPolicyId" >
+            SELECT currval('tbl_address_policy_seq'::regclass) AS "addressPolicyId"
+      	</selectKey>
+	</insert>
+	<!-- 根据地址策略名称查询对象 -->
+	<select id="pgAdminaddressPolicy.queryByAddressName" parameterClass="java.lang.String" resultMap="addressPolicyResult">
+	  <![CDATA[
+	      SELECT * FROM "tbl_address_policy" WHERE "ADDRESS_POLICY_NAME" = #value# and "ADDRESS_POLICY_IS_DELETE" = 0
+	  ]]>
+	</select>
+	<!-- 排序 -->
+	<select id="pgAdminaddressPolicy.sort" parameterClass="java.lang.String"
+		resultMap="addressPolicyResult">
+		SELECT * FROM "tbl_address_policy"  WHERE "ADDRESS_POLICY_IS_DELETE" = 0 ORDER BY $str$
+	</select>
+	
+	 <!-- 根据地址策略Id查询所有与之关联的用户 -->
+	 <select id="pgAdminaddressPolicy.queryuser" parameterClass="long" resultMap="userResult">
+		select * from "tbl_user" where "USER_ID" in (select "REL_USER_ID" from "tbl_rel_user_address_policy" where "REL_ADDRESS_POLICY_ID"=#value#)	 	
+	 </select> 
+	<!-- sqlServer -->
+	<!-- 查询条数 -->
+	<select id="sqlServeraddressPolicy.count" parameterClass="java.util.HashMap"
+		resultClass="int">
+		SELECT COUNT(*) FROM "tbl_address_policy"  WHERE "ADDRESS_POLICY_IS_DELETE" = 0
+		<isNotEmpty prepend="AND" property="keyword">
+			("ADDRESS_POLICY_NAME" LIKE '%$keyword$%' OR "ADDRESS_MEMO" LIKE '%$keyword$%')
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="addressPolicyName">
+		   <![CDATA[  
+		    "ADDRESS_POLICY_NAME" LIKE '%$addressPolicyName$%'
+		     ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="addressPolicyMemo">
+		    <![CDATA[
+		    "ADDRESS_MEMO" LIKE '%$addressPolicyMemo$%'
+		    ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="addressPolicyStatus">
+		    <![CDATA[
+		    "ADDRESS_POLICY_STATUS" = #addressPolicyStatus#
+		    ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="addressPolicyEffectWay">
+             <![CDATA[
+              "ADDRESS_POLICY_EFFECT_WAY"  =  #addressPolicyEffectWay#
+             ]]>
+		</isNotEmpty>
+	</select>
+
+	<!-- 查询结果列表 -->
+	<select id="sqlServeraddressPolicy.queryAddressPolicy" resultMap="addressPolicyResult"
+		parameterClass="java.util.HashMap">
+		SELECT * FROM "tbl_address_policy"  WHERE "ADDRESS_POLICY_IS_DELETE" = 0	
+		<isNotEmpty prepend="AND" property="keyword">
+			("ADDRESS_POLICY_NAME" 	LIKE '%$keyword$%' OR "ADDRESS_MEMO" LIKE '%$keyword$%')
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="addressPolicyName">
+		   <![CDATA[  
+		    "ADDRESS_POLICY_NAME" LIKE '%$addressPolicyName$%'
+		     ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="addressPolicyMemo">
+		    <![CDATA[
+		    "ADDRESS_MEMO" LIKE '%$addressPolicyMemo$%'
+		    ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="addressPolicyStatus">
+		    <![CDATA[
+		    "ADDRESS_POLICY_STATUS" = #addressPolicyStatus#
+		    ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="addressPolicyEffectWay">
+             <![CDATA[
+              "ADDRESS_POLICY_EFFECT_WAY" =  #addressPolicyEffectWay#
+             ]]>
+		</isNotEmpty>
+		ORDER BY "ADDRESS_POLICY_UPDATE_DATE_TIME" DESC
+	</select>
+	
+	<!-- 查询所有 -->
+	<select id="sqlServeraddressPolicy.queryAddressPolicyEx" resultMap="addressPolicyResult"
+		parameterClass="java.util.HashMap">
+		SELECT * FROM "tbl_address_policy" WHERE "ADDRESS_POLICY_IS_DELETE" = 0	
+		<isNotEmpty prepend="AND" property="keyword">
+			("ADDRESS_POLICY_NAME"
+			LIKE '%$keyword$%' OR "ADDRESS_MEMO" LIKE '%$keyword$%')
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="addressPolicyName">
+		   <![CDATA[  
+		    "ADDRESS_POLICY_NAME" LIKE '%$addressPolicyName$%'
+		     ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="addressPolicyMemo">
+		    <![CDATA[
+		    "ADDRESS_MEMO" LIKE '%$addressPolicyMemo$%'
+		    ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="addressPolicyStatus">
+		    <![CDATA[
+		    "ADDRESS_POLICY_STATUS" LIKE '%$addressPolicyStatus$%'
+		    ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="addressPolicyEffectWay">
+             <![CDATA[
+              "ADDRESS_POLICY_EFFECT_WAY" LIKE '%$addressPolicyEffectWay$%'
+             ]]>
+		</isNotEmpty>
+		ORDER BY "ADDRESS_POLICY_UPDATE_DATE_TIME" DESC
+	</select>
+
+	<!-- 查询关联地址策略的地址列表 -->
+	<select id="sqlServeraddressPolicySQL.queryAddressById" parameterClass="long"
+		resultMap="addressResult">
+      <![CDATA[  
+          SELECT * FROM "tbl_address" WHERE "ADDRESS_ADDRESS_POLICY_ID" = #value#
+       ]]>
+	</select>
+
+	<!-- 更新地址策略状态 -->
+	<update id="sqlServeraddressPolicy.updateStatus" parameterClass="java.util.HashMap">
+       <![CDATA[ 
+          UPDATE "tbl_address_policy" 
+          SET 
+                "ADDRESS_POLICY_STATUS" = #addressPolicyStatus#,
+                "ADDRESS_POLICY_UPDATE_DATE_TIME" = #addressPolicyUpdateDateTime# 
+          where 
+                "ADDRESS_POLICY_ID" = #addressPolicyId#
+       ]]>
+	</update>
+
+	<!-- 根据id查询地址策略 -->
+	<select id="sqlServeraddressPolicy.queryAddressPolicyById"
+		parameterClass="long" resultMap="addressPolicyResult">
+        <![CDATA[
+           SELECT * FROM  "tbl_address_policy" WHERE "ADDRESS_POLICY_ID" = #value#
+        ]]>
+	</select>
+    
+	<!-- 根据id标记删除地址策略 -->
+	<update id="sqlServeraddressPolicy.deletePolicy" parameterClass="java.util.HashMap">
+        <![CDATA[
+         UPDATE "tbl_address_policy" 
+         SET 
+                "ADDRESS_POLICY_IS_DELETE" = 1,
+                "ADDRESS_POLICY_UPDATE_DATE_TIME" =  #addressPolicyUpdateDateTime# 
+         where  "ADDRESS_POLICY_ID" = #addressPolicyId#
+        ]]>
+	</update>
+	
+	<!-- 更新地址策略 增加修改地址策略名称的字段-->
+	<update id="sqlServeraddressPolicy.updateAddress" parameterClass="addressPolicy">
+	    <![CDATA[
+	     UPDATE "tbl_address_policy" 
+	     SET 
+	           "ADDRESS_POLICY_EFFECT_WAY" = #addressPolicyEffectWay#,
+	           "ADDRESS_POLICY_UPDATE_DATE_TIME" = #addressPolicyUpdateTime#,
+	           "ADDRESS_MEMO" = #addressPolicyMemo#,
+	           "ADDRESS_POLICY_NAME"=#addressPolicyName#
+	     WHERE 
+	           "ADDRESS_POLICY_ID" =#addressPolicyId#
+	    ]]>
+	</update>
+	
+	<!-- 插入地址策略 -->
+	<insert id="sqlServeraddressPolicy.insertAddressPolicy" parameterClass="addressPolicy">
+	    <![CDATA[ 
+	       INSERT INTO "tbl_address_policy"
+	               ("ADDRESS_POLICY_NAME",
+	                "ADDRESS_POLICY_EFFECT_WAY",
+	                "ADDRESS_POLICY_STATUS",
+	                "ADDRESS_POLICY_CREATE_DATE_TIME",
+	                "ADDRESS_POLICY_UPDATE_DATE_TIME",
+	                "ADDRESS_CREATOR_USER_LOGIN_NAME",
+	                "ADDRESS_POLICY_IS_DELETE",
+	                "ADDRESS_MEMO")
+	       VALUES
+	               (#addressPolicyName#,
+	                #addressPolicyEffectWay#,
+	                #addressPolicyStatus#,
+	                #addressPolicyCreateTime#,
+	                #addressPolicyUpdateTime#,
+	                #addressPolicyCreateUserLoginName#,
+	                #addressPolicyIsDelete#,
+	                #addressPolicyMemo#)
+	    ]]>
+	    <selectKey resultClass="java.lang.Long" keyProperty="addressPolicyId" >
+            SELECT @@IDENTITY AS addressPolicyId
+      	</selectKey>
+	</insert>
+	<!-- 根据地址策略名称查询对象 -->
+	<select id="sqlServeraddressPolicy.queryByAddressName" parameterClass="java.lang.String" resultMap="addressPolicyResult">
+	  <![CDATA[
+	      SELECT * FROM "tbl_address_policy" WHERE "ADDRESS_POLICY_NAME" = #value# and "ADDRESS_POLICY_IS_DELETE" = 0
+	  ]]>
+	</select>
+	<!-- 排序 -->
+	<select id="sqlServeraddressPolicy.sort" parameterClass="java.lang.String"
+		resultMap="addressPolicyResult">
+		SELECT * FROM "tbl_address_policy"  WHERE "ADDRESS_POLICY_IS_DELETE" = 0 ORDER BY $str$
+	</select>
+	
+	 <!-- 根据地址策略Id查询所有与之关联的用户 -->
+	 <select id="sqlServeraddressPolicy.queryuser" parameterClass="long" resultMap="userResult">
+		select * from "tbl_user" where "USER_ID" in (select "REL_USER_ID" from "tbl_rel_user_address_policy" where "REL_ADDRESS_POLICY_ID"=#value#)	 	
+	 </select> 
+	
+</sqlMap>

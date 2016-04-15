@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="auditSQL">
+	<resultMap id="auditResult" class="audit">
+		<result property="auditId" column="AUDIT_ID" jdbcType="bigint" />
+		<result property="auditUserId" column="AUDIT_USER_ID" jdbcType="bigint" />
+		<result property="auditUserLoginName" column="AUDIT_USER_lOGIN_NAME"
+			jdbcType="varchar" />
+		<result property="auditOperationProcedure" column="AUDIT_OPERARION_PROCEDURE"
+			jdbcType="varchar" />
+		<result property="auditOperationTime" column="AUDIT_OPERATION_TIME"/>
+		<result property="auditOperationIp" column="AUDIT_OPERATION_IP"
+			jdbcType="varchar" />
+		<result property="auditInformation" column="AUDIT_INFORMATION"
+			jdbcType="text" />
+
+	</resultMap>
+	<!-- 查询条数 -->
+	  <select id="pgAdminaudit.count" resultClass="int" parameterClass="java.util.HashMap">
+		SELECT COUNT(*) FROM "tbl_audit" WHERE 1=1
+		<isNotEmpty prepend= "AND"  property="auditUserLoginName">
+			<![CDATA[
+				"AUDIT_USER_lOGIN_NAME" LIKE '%$auditUserLoginName$%'
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend= "AND"  property="auditOperationProcedure">
+			<![CDATA[
+				"AUDIT_OPERARION_PROCEDURE" LIKE '%$auditOperationProcedure$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="auditOperationIp">
+			<![CDATA[
+				"AUDIT_OPERATION_IP" LIKE '%$auditOperationIp$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="auditInformation">
+			<![CDATA[
+				"AUDIT_INFORMATION" LIKE '%$auditInformation$%' 
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				("AUDIT_USER_lOGIN_NAME" LIKE '%$keyword$%' OR "AUDIT_OPERARION_PROCEDURE" LIKE '%$keyword$%'   OR "AUDIT_OPERATION_IP" LIKE '%$keyword$%' )
+			]]>
+		</isNotEmpty>
+	
+	</select>
+	<!-- 根据条件查询 -->
+   	 <select id="pgAdminaudit.query" resultMap="auditResult" parameterClass="java.util.HashMap">
+		SELECT * FROM "tbl_audit" WHERE 1=1
+		<isNotEmpty prepend= "AND"  property="auditUserLoginName">
+			<![CDATA[
+				"AUDIT_USER_lOGIN_NAME" LIKE '%$auditUserLoginName$%'
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend= "AND"  property="auditOperationProcedure">
+			<![CDATA[
+				"AUDIT_OPERARION_PROCEDURE" LIKE '%$auditOperationProcedure$%'
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend= "AND"  property="auditOperationIp">
+			<![CDATA[
+				"AUDIT_OPERATION_IP" LIKE '%$auditOperationIp$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="auditInformation">
+			<![CDATA[
+				"AUDIT_INFORMATION" LIKE '%$auditInformation$%' 
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				("AUDIT_USER_lOGIN_NAME" LIKE '%$keyword$%' OR "AUDIT_OPERARION_PROCEDURE" LIKE '%$keyword$%'   OR "AUDIT_OPERATION_IP" LIKE '%$keyword$%' )
+			]]>
+		</isNotEmpty>
+	  ORDER BY "AUDIT_ID" DESC
+	</select>
+	<!-- 导出Excel表 -->
+	<select id="pgAdminaudit.export" resultClass="java.util.HashMap" parameterClass="java.util.HashMap">
+		SELECT * FROM "tbl_audit" WHERE 1=1
+		<isNotEmpty prepend= "AND"  property="ids">
+			"AUDIT_ID" in($ids$)
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="auditUserLoginName">
+			<![CDATA[
+				"AUDIT_USER_lOGIN_NAME" LIKE '%$auditUserLoginName$%'
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend= "AND"  property="auditOperationProcedure">
+			<![CDATA[
+				"AUDIT_OPERARION_PROCEDURE" LIKE '%$auditOperationProcedure$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="auditOperationIp">
+			<![CDATA[
+				"AUDIT_OPERATION_IP" LIKE '%$auditOperationIp$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="auditInformation">
+			<![CDATA[
+				"AUDIT_INFORMATION" LIKE '%$auditInformation$%' 
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				("AUDIT_USER_lOGIN_NAME" LIKE '%$keyword$%' OR "AUDIT_OPERARION_PROCEDURE" LIKE '%$keyword$%'   OR "AUDIT_OPERATION_IP" LIKE '%$keyword$%' )
+			]]>
+		</isNotEmpty>
+	</select>
+	<!-- 新增 -->
+	<insert id="pgAdminaudit.insert" parameterClass="audit">
+		INSERT INTO "tbl_audit" 
+				("AUDIT_USER_ID",
+				 "AUDIT_USER_lOGIN_NAME",
+				 "AUDIT_OPERATION_TIME",
+				 "AUDIT_OPERARION_PROCEDURE", 
+				 "AUDIT_INFORMATION", "AUDIT_OPERATION_IP")		 
+		VALUES 
+				(#auditUserId#,
+				 #auditUserLoginName#,
+				 #auditOperationTime#, 
+				 #auditOperationProcedure#, 
+				 #auditInformation#, 
+				 #auditOperationIp#)
+		<selectKey resultClass="java.lang.Integer" keyProperty="auditId" >
+            SELECT currval('tbl_audit_seq'::regclass) AS AUDIT_ID
+      	</selectKey>
+	</insert>
+	
+	<!-- 排列 -->
+	<select id="pgAdminaudit.asc" resultMap="auditResult" parameterClass="java.lang.String">
+	   SELECT * FROM tbl_audit ORDER BY $str$
+	</select>
+	<!-- sqlserver -->
+	 <!-- 查询条数 -->
+	  <select id="sqlServeraudit.count" resultClass="int" parameterClass="java.util.HashMap">
+		SELECT COUNT(*) FROM "tbl_audit" WHERE 1=1
+		<isNotEmpty prepend= "AND"  property="auditUserLoginName">
+			<![CDATA[
+				"AUDIT_USER_lOGIN_NAME" LIKE '%$auditUserLoginName$%'
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend= "AND"  property="auditOperationProcedure">
+			<![CDATA[
+				"AUDIT_OPERARION_PROCEDURE" LIKE '%$auditOperationProcedure$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="auditOperationIp">
+			<![CDATA[
+				"AUDIT_OPERATION_IP" LIKE '%$auditOperationIp$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="auditInformation">
+			<![CDATA[
+				"AUDIT_INFORMATION" LIKE '%$auditInformation$%' 
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				("AUDIT_USER_lOGIN_NAME" LIKE '%$keyword$%' OR "AUDIT_OPERARION_PROCEDURE" LIKE '%$keyword$%'   OR "AUDIT_OPERATION_IP" LIKE '%$keyword$%' )
+			]]>
+		</isNotEmpty>
+	
+	</select>
+	<!-- 根据条件查询 -->
+   	 <select id="sqlServeraudit.query" resultMap="auditResult" parameterClass="java.util.HashMap">
+		SELECT * FROM "tbl_audit" WHERE 1=1
+		<isNotEmpty prepend= "AND"  property="auditUserLoginName">
+			<![CDATA[
+				"AUDIT_USER_lOGIN_NAME" LIKE '%$auditUserLoginName$%'
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend= "AND"  property="auditOperationProcedure">
+			<![CDATA[
+				"AUDIT_OPERARION_PROCEDURE" LIKE '%$auditOperationProcedure$%'
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend= "AND"  property="auditOperationIp">
+			<![CDATA[
+				"AUDIT_OPERATION_IP" LIKE '%$auditOperationIp$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="auditInformation">
+			<![CDATA[
+				"AUDIT_INFORMATION" LIKE '%$auditInformation$%' 
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				("AUDIT_USER_lOGIN_NAME" LIKE '%$keyword$%' OR "AUDIT_OPERARION_PROCEDURE" LIKE '%$keyword$%'   OR "AUDIT_OPERATION_IP" LIKE '%$keyword$%' )
+			]]>
+		</isNotEmpty>
+	  ORDER BY "AUDIT_ID" DESC
+	</select>
+	<!-- 导出Excel表 -->
+	<select id="sqlServeraudit.export" resultClass="java.util.HashMap" parameterClass="java.util.HashMap">
+			SELECT COUNT(*) FROM "tbl_audit" WHERE 1=1
+		<isNotEmpty prepend= "AND"  property="auditUserLoginName">
+			<![CDATA[
+				"AUDIT_USER_lOGIN_NAME" LIKE '%$auditUserLoginName$%'
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend= "AND"  property="auditOperationProcedure">
+			<![CDATA[
+				"AUDIT_OPERARION_PROCEDURE" LIKE '%$auditOperationProcedure$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="auditOperationIp">
+			<![CDATA[
+				"AUDIT_OPERATION_IP" LIKE '%$auditOperationIp$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="auditInformation">
+			<![CDATA[
+				"AUDIT_INFORMATION" LIKE '%$auditInformation$%' 
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				("AUDIT_USER_lOGIN_NAME" LIKE '%$keyword$%' OR "AUDIT_OPERARION_PROCEDURE" LIKE '%$keyword$%'   OR "AUDIT_OPERATION_IP" LIKE '%$keyword$%' )
+			]]>
+		</isNotEmpty>
+	
+	</select>
+	<!-- 新增 -->
+	<insert id="sqlServeraudit.insert" parameterClass="audit">
+		INSERT INTO "tbl_audit" 
+				("AUDIT_USER_ID",
+				 "AUDIT_USER_lOGIN_NAME",
+				 "AUDIT_OPERATION_TIME",
+				 "AUDIT_OPERARION_PROCEDURE", 
+				 "AUDIT_INFORMATION", "AUDIT_OPERATION_IP")		 
+		VALUES 
+				(#auditUserId#,
+				 #auditUserLoginName#,
+				 #auditOperationTime#, 
+				 #auditOperationProcedure#, 
+				 #auditInformation#, 
+				 #auditOperationIp#)
+		<!-- <selectKey resultClass="java.lang.Integer" keyProperty="auditId" >
+            SELECT currval('tbl_audit_seq'::regclass) AS AUDIT_ID
+      	</selectKey> -->
+	</insert>
+	
+	<!-- 排列 -->
+	<select id="sqlServeraudit.asc" resultMap="auditResult" parameterClass="java.lang.String">
+	   SELECT * FROM tbl_audit ORDER BY $str$
+	</select>
+</sqlMap>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="deviceCategory" extends="struts-default" namespace="/deviceCategory">
+		<action name="queryAllDeviceCategory" class="deviceCategoryAction" method="queryAllDeviceCategory">
+			<result>/pages/topoPage/device/deviceCategory_list.jsp</result>
+		</action>
+		<action name="deleteDeviceCategory" class="deviceCategoryAction" method="deleteDeviceCategory">
+			<result name="success" type="chain">
+		        <param name="namespace">/deviceCategory</param>
+				<param name="actionName">queryAllDeviceCategory</param>
+		   </result>
+		   <result name="error" >
+		        /pages/topoPage/device/deviceCategoryError.jsp
+		   </result>
+		   
+		</action>
+		<action name="editDeviceCategory" class="deviceCategoryAction" method="addDeviceCategory">
+			<result name="success">/pages/topoPage/device/addDeviceCategory.jsp</result>  
+		</action>
+		<action name="updateDeviceCategory" class="deviceCategoryAction" method="updateDeviceCategory">
+			<result name="success" type="chain">
+				 <param name="namespace">/deviceCategory</param>
+				<param name="actionName">queryAllDeviceCategory</param>
+			</result>
+		</action>
+		<!-- 检测设备类型的状态 -->
+		<action name="deviceCategoryStatus" class="deviceCategoryAction" method="deviceCategoryStatus"></action>
+		<!-- 根据设备类型图片路径返回图片名称 -->
+		<action name="photoName" class="deviceCategoryAction" method="queryDiviceCategoryNameByPhoto"></action>
+		<!-- 导向ping页面 -->
+		<action name="pingPage" class="deviceCategoryAction" method="queryDefaultIp">
+			<result name="success">/pages/topoPage/device/pingPage.jsp</result> 
+		</action>
+		<!-- 导向telnet页面 -->
+		<action name="telnetPage" class="deviceCategoryAction" method="queryDefaultIp">
+			<result name="success">/pages/topoPage/device/telnetPage.jsp</result> 
+		</action>
+		<!-- 导向ssh页面 -->
+		<action name="sshPage" class="deviceCategoryAction" method="queryDefaultIp">
+			<result name="success">/pages/topoPage/device/sshPage.jsp</result> 
+		</action>
+		<!-- telnet模块 -->
+		<action name="telnetConnect" class="deviceCategoryAction" method="connectPort"></action>
+		<action name="telnetDisConnect" class="deviceCategoryAction" method="disconnect"></action>
+		<action name="doCmd" class="deviceCategoryAction"  method="runTelnet"></action>
+		<!-- ssh模块 -->
+		<action name="sshConnect" class="deviceCategoryAction" method="sshConnect"></action>
+		<action name="sshDisConnect" class="deviceCategoryAction" method="disConnectSsh"></action>
+		<action name="doSshCmd" class="deviceCategoryAction"  method="doSshCmd"></action>
+		<!-- Ping模块 -->
+		<action name="pingDevice" class="deviceCategoryAction" method="execPingCommand">
+			<!-- <result name="success">/pages/topoPage/device/pingPage.jsp</result>   -->
+		</action>
+		<!-- 检测设备类型是否重名 -->
+		<action name="judgeDeviceCategoryNameExist" class="deviceCategoryAction" method="judgeDeviceCategoryNameExist"></action>
+	</package>
+</struts>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="monitorGroup" extends="json-default"
+		namespace="/monitorGroup">
+		<action name="showGroupTree" class="monitorGroupAction" method="showGroupTree">
+			<result name="success">/pages/monitor/monitor_menu.jsp</result>
+		</action>
+		<action name="showGroups" class="monitorGroupAction" method="showGroups">
+			<result name="success">/pages/monitor/monitor_change.jsp</result>
+		</action>
+		<action name="addGroup" class="monitorGroupAction" method="addGroup">
+			<!-- <result type="redirectAction">showGroups</result> -->
+		</action>
+
+		<action name="deleteGroups" class="monitorGroupAction" method="deleteGroups">
+		</action>
+		<action name="showAsset" class="monitorGroupAction" method="showAsset">
+			<result name="success">/pages/monitor/monitor_asset_list.jsp</result>
+		</action>
+
+		<action name="queryInfo" class="monitorGroupAction" method="queryInfo">
+			<result name="success">/pages/monitor/monitor_dynamic_info.jsp</result>
+			<result name="netInfo">/pages/monitor/monitor_net_dynamic_info.jsp</result>
+		</action>
+
+		<action name="queryDynamic" class="monitorGroupAction" method="queryDynamic">
+		</action>
+		<!-- 返回监控进程的信息 -->
+		<action name="progressMsg" class="monitorGroupAction" method="progressMsg">
+			<result name="win" type="json">
+				<param name="root">winProgressMsgs</param>
+			</result>
+			<result name="linux" type="json">
+				<param name="root">LinuxProgressMsgs</param>
+			</result>
+		</action>
+		<!-- 返回监控服务的信息 -->
+		<action name="serviceMsg" class="monitorGroupAction" method="serviceMsg">
+			<result name="win" type="json">
+				<param name="root">winServiceMsgs</param>
+			</result>
+			<result name="linux" type="json">
+				<param name="root">linuxServiceMsgs</param>
+			</result>
+		</action>
+		<!-- 返回监控软件的信息 -->
+		<action name="softMsg" class="monitorGroupAction" method="softMsg">
+			<result name="soft" type="json">
+				<param name="root">softMsgs</param>
+			</result>
+		</action>
+		<!-- 得到最新的告警信息 -->
+		<action name="queryMonitorAlarm" class="monitorGroupAction" method="queryMonitorAlarm">
+		
+		</action>
+		
+		<!-- 告警页面查询方法  -->
+		<action name="queryMonitorAlarmForList" class="monitorGroupAction" method="queryMonitorAlarmForList" >
+		     <result name="success">
+		        /pages/monitor/monitor_list_query.jsp
+		     </result>
+		</action>
+		<!-- 查询历史AMP信息 -->
+		<action name="queryMonitorAPM" class="monitorAlarmHistoryAction" method="query">
+		<result name="mah"> /pages/monitor/monitor_alar_history.jsp</result>
+		<result name="linuxPro">/pages/monitor/monitor_linuxPro_history.jsp</result>
+		<result name="linuxSer">/pages/monitor/monitor_linuxSer_history.jsp</result>
+		<result name="winPro">/pages/monitor/monitor_winPro_history.jsp</result>
+		<result name="winSer">/pages/monitor/monitor_winSer_history.jsp</result>
+		<result name="winSotf">/pages/monitor/monitor_winSotf_history.jsp</result>
+		</action>
+	</package>
+</struts>

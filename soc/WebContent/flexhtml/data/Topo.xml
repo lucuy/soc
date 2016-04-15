@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<Graph>
+  <Node id="33" displayName="新闻网络制播业务系统" scaling="0.9" type="business" level="business" positionX="646.0" positionY="3.0" severity="0" icon="icon/default.gif" /> 
+  <Node id="34" displayName="WAS应用" scaling="null" type="logic" level="logic" positionX="340.05" positionY="133.7" severity="0" icon="icon/default.gif" /> 
+  <Node id="35" displayName="WAS A岛" scaling="null" type="logic" level="logic" positionX="208.8" positionY="263.4" severity="0" icon="icon/default.gif" /> 
+  <Node id="143" type="linux" displayName="接口服务（内、外合并）1" ip="10.102.211.65" icon="icon/default.gif" severity="0" name="NP1-ITE-1:LZ" positionX="0" positionY="450" level="3" /> 
+  <Node id="142" type="websphere" displayName="NP1-ITE-1Node01-server1" ip="10.102.211.65" icon="icon/default.gif" severity="0" name="Primary:NP1-ITE-1:KYNA" positionX="0" positionY="600" level="3" /> 
+  <Edge fromID="142" toID="143" /> 
+  <Node id="174" type="linux" displayName="通稿A岛数据库访问中间件A1" ip="10.102.211.1" icon="icon/default.gif" severity="0" name="NP1-TGAPP-A1:LZ" positionX="100" positionY="450" level="3" /> 
+  <Node id="173" type="websphere" displayName="NP1-TGAPP-A1Node01-server1" ip="10.102.211.1" icon="icon/default.gif" severity="0" name="Primary:NP1-TGAPP-A1:KYNA" positionX="100" positionY="600" level="3" /> 
+  <Edge fromID="173" toID="174" /> 
+  <Node id="176" type="linux" displayName="通稿A岛数据库访问中间件A2" ip="10.102.211.2" icon="icon/default.gif" severity="0" name="NP1-TGAPP-A2:LZ" positionX="200" positionY="450" level="3" /> 
+  <Node id="175" type="websphere" displayName="NP1-TGAPP-A2Node01-server1" ip="10.102.211.2" icon="icon/default.gif" severity="0" name="Primary:NP1-TGAPP-A2:KYNA" positionX="200" positionY="600" level="3" /> 
+  <Edge fromID="175" toID="176" /> 
+  <Node id="186" type="linux" displayName="制作A岛数据库访问中间件A1" ip="10.102.211.33" icon="icon/default.gif" severity="0" name="NP1-ZZAPP-A1:LZ" positionX="300" positionY="450" level="3" /> 
+  <Node id="185" type="websphere" displayName="NP1-ZZAPP-A1Node01-server1" ip="10.102.211.33" icon="icon/default.gif" severity="0" name="Primary:NP1-ZZAPP-A1:KYNA" positionX="300" positionY="600" level="3" /> 
+  <Edge fromID="185" toID="186" /> 
+  <Node id="188" type="linux" displayName="制作A岛数据库访问中间件A2" ip="10.102.211.34" icon="icon/default.gif" severity="0" name="NP1-ZZAPP-A2:LZ" positionX="400" positionY="450" level="3" /> 
+  <Node id="187" type="websphere" displayName="NP1-ZZAPP-A2Node01-server1" ip="10.102.211.34" icon="icon/default.gif" severity="0" name="Primary:NP1-ZZAPP-A2:KYNA" positionX="400" positionY="600" level="3" /> 
+  <Edge fromID="187" toID="188" /> 
+  <Edge fromID="143" toID="35" /> 
+  <Edge fromID="174" toID="35" /> 
+  <Edge fromID="176" toID="35" /> 
+  <Edge fromID="186" toID="35" /> 
+  <Edge fromID="188" toID="35" /> 
+  <Node id="36" displayName="WAS B岛" scaling="null" type="logic" level="logic" positionX="683.8" positionY="261.5" severity="0" icon="icon/default.gif" /> 
+  <Node id="145" type="linux" displayName="接口服务（内、外合并）2" ip="10.102.211.66" icon="icon/default.gif" severity="0" name="NP1-ITE-2:LZ" positionX="500" positionY="450" level="3" /> 
+  <Node id="144" type="websphere" displayName="NP1-ITE-2Node01-server1" ip="10.102.211.66" icon="icon/default.gif" severity="0" name="Primary:NP1-ITE-2:KYNA" positionX="501.0" positionY="611.0" level="3" /> 
+  <Edge fromID="144" toID="145" /> 
+  <Node id="190" type="linux" displayName="制作B岛数据库访问中间件B1" ip="10.102.212.33" icon="icon/default.gif" severity="0" name="NP1-ZZAPP-B1:LZ" positionX="600" positionY="450" level="3" /> 
+  <Node id="189" type="websphere" displayName="NP1-ZZAPP-B1Node01-server1" ip="10.102.212.33" icon="icon/default.gif" severity="0" name="Primary:NP1-ZZAPP-B1:KYNA" positionX="603.0" positionY="609.0" level="3" /> 
+  <Edge fromID="189" toID="190" /> 
+  <Node id="192" type="linux" displayName="制作B岛数据库访问中间件B2" ip="10.102.212.34" icon="icon/default.gif" severity="0" name="NP1-ZZAPP-B2:LZ" positionX="700" positionY="450" level="3" /> 
+  <Node id="191" type="websphere" displayName="NP1-ZZAPP-B2Node01-server1" ip="10.102.212.34" icon="icon/default.gif" severity="0" name="Primary:NP1-ZZAPP-B2:KYNA" positionX="697.0" positionY="604.75" level="3" /> 
+  <Edge fromID="191" toID="192" /> 
+  <Node id="194" type="linux" displayName="通稿B岛数据库访问中间件B1" ip="10.102.212.1" icon="icon/default.gif" severity="0" name="NP1-TGAPP-B1:LZ" positionX="800" positionY="450" level="3" /> 
+  <Node id="193" type="websphere" displayName="NP1-TGAPP-B1Node01-server1" ip="10.102.212.1" icon="icon/default.gif" severity="0" name="Primary:NP1-TGAPP-B1:KYNA" positionX="796.0" positionY="605.0" level="3" /> 
+  <Edge fromID="193" toID="194" /> 
+  <Node id="196" type="linux" displayName="通稿B岛数据库访问中间件B2" ip="10.102.212.2" icon="icon/default.gif" severity="0" name="NP1-TGAPP-B2:LZ" positionX="900" positionY="450" level="3" /> 
+  <Node id="197" type="websphere" displayName="NP1-TGAPP-B2Node01-server1" ip="10.102.212.2" icon="icon/default.gif" severity="0" name="Primary:NP1-TGAPP-B2:KYNA" positionX="900.0" positionY="611.0" level="3" /> 
+  <Edge fromID="197" toID="196" /> 
+  <Edge fromID="145" toID="36" /> 
+  <Edge fromID="190" toID="36" /> 
+  <Edge fromID="192" toID="36" /> 
+  <Edge fromID="194" toID="36" /> 
+  <Edge fromID="196" toID="36" /> 
+  <Edge fromID="35" toID="34" /> 
+  <Edge fromID="36" toID="34" /> 
+  <Node id="37" displayName="Oracle应用" scaling="null" type="logic" level="logic" positionX="450.05" positionY="133.2" severity="0" icon="icon/default.gif" /> 
+  <Node id="38" displayName="DNS应用" scaling="null" type="logic" level="logic" positionX="568.7" positionY="142.2" severity="0" icon="icon/default.gif" /> 
+  <Node id="39" displayName="防病毒服务" scaling="null" type="logic" level="logic" positionX="695.3" positionY="147.25" severity="0" icon="icon/default.gif" /> 
+  <Node id="40" displayName="SOBEY制播" scaling="null" type="logic" level="logic" positionX="884.0" positionY="147.0" severity="0" icon="icon/default.gif" /> 
+  <Node id="138" type="windows" displayName="MPC调度服务器A1" ip="10.102.201.225" icon="icon/default.gif" severity="0" name="Primary:NP1-MPC-A1:NT" positionX="1086.75" positionY="515.4" level="3" /> 
+  <Node id="139" type="windows" displayName="MPC调度服务器A2" ip="10.102.201.226" icon="icon/default.gif" severity="1" name="Primary:NP1-MPC-A2:NT" positionX="1363.2" positionY="512.95" level="3" /> 
+  <Node id="140" type="windows" displayName="MPC调度服务器B1" ip="10.102.202.225" icon="icon/default.gif" severity="2" name="Primary:NP1-MPC-B1:NT" positionX="1294.6" positionY="511.65" level="3" /> 
+  <Node id="141" type="windows" displayName="MPC调度服务器B2" ip="10.102.202.226" icon="icon/default.gif" severity="3" name="Primary:NP1-MPC-B2:NT" positionX="1226.35" positionY="513.35" level="3" /> 
+  <Node id="150" type="windows" displayName="播出迁移服务器A1" ip="10.102.201.161" icon="icon/default.gif" severity="4" name="Primary:NP1-MSVTR-A1:NT" positionX="1224.0" positionY="414.25" level="3" /> 
+  <Node id="151" type="windows" displayName="播出迁移服务器A2" ip="10.102.201.162" icon="icon/default.gif" severity="5" name="Primary:NP1-MSVTR-A2:NT" positionX="1166.15" positionY="509.65" level="3" /> 
+  <Node id="152" type="windows" displayName="播出迁移服务器A3" ip="10.102.201.163" icon="icon/default.gif" severity="0" name="Primary:NP1-MSVTR-A3:NT" positionX="998.0" positionY="320.0" level="3" /> 
+  <Node id="153" type="windows" displayName="播出迁移服务器A4" ip="10.102.201.164" icon="icon/default.gif" severity="0" name="Primary:NP1-MSVTR-A4:NT" positionX="1077.75" positionY="319.75" level="3" /> 
+  <Node id="154" type="windows" displayName="播出迁移服务器B1" ip="10.102.202.161" icon="icon/default.gif" severity="0" name="Primary:NP1-MSVTR-B1:NT" positionX="1154.25" positionY="318.75" level="3" /> 
+  <Node id="155" type="windows" displayName="播出迁移服务器B2" ip="10.102.202.162" icon="icon/default.gif" severity="0" name="Primary:NP1-MSVTR-B2:NT" positionX="1226.35" positionY="318.8" level="3" /> 
+  <Node id="156" type="windows" displayName="播出迁移服务器B3" ip="10.102.202.163" icon="icon/default.gif" severity="0" name="Primary:NP1-MSVTR-B3:NT" positionX="1290.4" positionY="319.5" level="3" /> 
+  <Node id="157" type="windows" displayName="播出迁移服务器B4" ip="10.102.202.164" icon="icon/default.gif" severity="0" name="Primary:NP1-MSVTR-B4:NT" positionX="1358.0" positionY="320.75" level="3" /> 
+  <Node id="161" type="windows" displayName="流媒体转码工作站A1" ip="10.102.203.41" icon="icon/default.gif" severity="0" name="Primary:NP1-TCODE-A1:NT" positionX="1433.75" positionY="322.5" level="3" /> 
+  <Node id="162" type="windows" displayName="流媒体转码工作站A2" ip="10.102.203.42" icon="icon/default.gif" severity="0" name="Primary:NP1-TCODE-A2:NT" positionX="1440.3" positionY="515.4" level="3" /> 
+  <Node id="163" type="windows" displayName="流媒体转码工作站B1" ip="10.102.204.41" icon="icon/default.gif" severity="0" name="Primary:NP1-TCODE-B1:NT" positionX="1511.55" positionY="321.85" level="3" /> 
+  <Node id="164" type="windows" displayName="流媒体转码工作站B2" ip="10.102.204.42" icon="icon/default.gif" severity="0" name="Primary:NP1-TCODE-B2:NT" positionX="1591.25" positionY="322.5" level="3" /> 
+  <Node id="165" type="windows" displayName="资源管理服务器A1" ip="10.102.201.227" icon="icon/default.gif" severity="0" name="Primary:NP1-MLS-A1:NT" positionX="1002.7" positionY="626.35" level="3" /> 
+  <Node id="166" type="windows" displayName="资源管理服务器A2" ip="10.102.201.228" icon="icon/default.gif" severity="0" name="Primary:NP1-MLS-A2:NT" positionX="1002.7" positionY="519.5" level="3" /> 
+  <Node id="167" type="windows" displayName="资源管理服务器B1" ip="10.102.202.227" icon="icon/default.gif" severity="0" name="Primary:NP1-MLS-B1:NT" positionX="1592.05" positionY="518.55" level="3" /> 
+  <Node id="168" type="windows" displayName="资源管理服务器B2" ip="10.102.202.228" icon="icon/default.gif" severity="0" name="Primary:NP1-MLS-B2:NT" positionX="1593.5" positionY="415.55" level="3" /> 
+  <Node id="198" type="windows" displayName="制作生成工作站A1" ip="10.102.203.37" icon="icon/default.gif" severity="0" name="Primary:NP1-HDRENDER-A1:NT" positionX="1513.95" positionY="515.5" level="3" /> 
+  <Node id="199" type="windows" displayName="制作生成工作站A2" ip="10.102.203.38" icon="icon/default.gif" severity="0" name="Primary:NP1-HDRENDER-A2:NT" positionX="1513.75" positionY="416.0" level="3" /> 
+  <Node id="200" type="windows" displayName="制作生成工作站A3" ip="10.102.203.39" icon="icon/default.gif" severity="0" name="Primary:NP1-HDRENDER-A3:NT" positionX="1433.0" positionY="415.0" level="3" /> 
+  <Node id="201" type="windows" displayName="制作生成工作站A4" ip="10.102.203.40" icon="icon/default.gif" severity="0" name="Primary:NP1-HDRENDER-A4:NT" positionX="1361.25" positionY="413.25" level="3" /> 
+  <Node id="202" type="windows" displayName="制作生成工作站B1" ip="10.102.204.37" icon="icon/default.gif" severity="0" name="Primary:NP1-HDRENDER-B1:NT" positionX="1293.1" positionY="414.4" level="3" /> 
+  <Node id="203" type="windows" displayName="制作生成工作站B2" ip="10.102.204.38" icon="icon/default.gif" severity="0" name="Primary:NP1-HDRENDER-B2:NT" positionX="1161.75" positionY="417.0" level="3" /> 
+  <Node id="204" type="windows" displayName="制作生成工作站B3" ip="10.102.204.39" icon="icon/default.gif" severity="0" name="Primary:NP1-HDRENDER-B3:NT" positionX="999.5" positionY="421.25" level="3" /> 
+  <Node id="205" type="windows" displayName="制作生成工作站B4" ip="10.102.204.40" icon="icon/default.gif" severity="0" name="Primary:NP1-HDRENDER-B4:NT" positionX="1081.05" positionY="420.75" level="3" /> 
+  <Edge fromID="138" toID="40" /> 
+  <Edge fromID="139" toID="40" /> 
+  <Edge fromID="140" toID="40" /> 
+  <Edge fromID="141" toID="40" /> 
+  <Edge fromID="150" toID="40" /> 
+  <Edge fromID="151" toID="40" /> 
+  <Edge fromID="152" toID="40" /> 
+  <Edge fromID="153" toID="40" /> 
+  <Edge fromID="154" toID="40" /> 
+  <Edge fromID="155" toID="40" /> 
+  <Edge fromID="156" toID="40" /> 
+  <Edge fromID="157" toID="40" /> 
+  <Edge fromID="161" toID="40" /> 
+  <Edge fromID="162" toID="40" /> 
+  <Edge fromID="163" toID="40" /> 
+  <Edge fromID="164" toID="40" /> 
+  <Edge fromID="165" toID="40" /> 
+  <Edge fromID="166" toID="40" /> 
+  <Edge fromID="167" toID="40" /> 
+  <Edge fromID="168" toID="40" /> 
+  <Edge fromID="198" toID="40" /> 
+  <Edge fromID="199" toID="40" /> 
+  <Edge fromID="200" toID="40" /> 
+  <Edge fromID="201" toID="40" /> 
+  <Edge fromID="202" toID="40" /> 
+  <Edge fromID="203" toID="40" /> 
+  <Edge fromID="204" toID="40" /> 
+  <Edge fromID="205" toID="40" /> 
+  <Node id="41" displayName="WEB应用" scaling="null" type="logic" level="logic" positionX="1356.25" positionY="151.5" severity="0" icon="icon/default.gif" /> 
+  <Edge fromID="34" toID="33" /> 
+  <Edge fromID="37" toID="33" /> 
+  <Edge fromID="38" toID="33" /> 
+  <Edge fromID="39" toID="33" /> 
+  <Edge fromID="40" toID="33" /> 
+  <Edge fromID="41" toID="33" /> 
+</Graph>

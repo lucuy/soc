@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="workOrder" extends="struts-default" namespace="/workOrder">
+		<!--高级查询工单 -->
+		<action name="query" class="workOrder" method="query">
+			<result name="finished">/pages/workorder/finished_WorkOrder_list.jsp</result>
+			<result name="unfinished">/pages/workorder/unfinished_WorkOrder_list.jsp</result>
+			<result name="disptch">/pages/workorder/dispatch_WorkOrder_list.jsp</result>
+		</action>
+		<!-- 查询未处理工单总数 -->
+		<action name="queryUnfinshWorkOrderCount" class="workOrder" method="queryUnfinshWorkOrderCount"/>
+		<!-- 关闭工单 -->
+		<action name="closeWorkOrder" class="workOrder" method="closeWorkOrder"/>
+		<!-- 查询关闭工单原因 -->
+		<action name="queryCloseReason" class="workOrder" method="queryCloseReason"/>
+		<!-- 快速查询 -->
+		<action name="quckQuery" class="workOrder" method="quckQuery">
+			<result name="success">/pages/workorder/workOrder_list.jsp</result>
+		</action>
+		<!-- 跳转至添加页面 -->
+		<action name="toAddWorkOrder" class="workOrder" method="toAddWorkOrder">
+			<result name="success">/pages/workorder/workOrder_add.jsp</result>
+		</action>
+		<!-- 删除工单 因为高级查询有冲突所以只能用左侧查询-->
+		<action name="deleteById" class="workOrder" method="deleteById">
+		    <result name="success" type="chain">
+		    	<param name="namespace">/workOrder</param>
+		    	<param name="actionName">quckQuery</param>
+		    	<param name="manyStatus">${manyStatus}</param>
+		    </result>
+		</action>
+		<!-- 修改工单 -->
+		<action name="updateWordOrder" class="workOrder" method="updateWordOrder">
+		 <interceptor-ref name="defaultStack"/><!-- 需要注意拦截器栈的配置顺序-->  
+            <interceptor-ref name="token"/><!-- 这就是用来防止表单重复提交的拦截器-->  
+            <result name="invalid.token" type="redirectAction">
+            <param name="namespace">/workOrder</param>
+		    	<param name="actionName">query</param>
+		    	<param name="falg">${falg}</param>
+            
+            </result><!-- 需要注意的是名字必须为invalid.token-->  
+		<result name="success" type="chain">
+		    	<param name="namespace">/workOrder</param>
+		    	<param name="actionName">query</param>
+		    	<param name="falg">${falg}</param>
+		    </result>
+		
+		</action>
+		<!-- 添加工单 -->
+		<action name="addWorkOrder" class="workOrder" method="addWorkOrder">
+		 <interceptor-ref name="defaultStack"/><!-- 需要注意拦截器栈的配置顺序-->  
+            <interceptor-ref name="token"/><!-- 这就是用来防止表单重复提交的拦截器-->  
+            <result name="invalid.token" type="redirectAction">
+            <param name="namespace">/workOrder</param>
+		    	<param name="actionName">query</param>
+		    	<param name="falg">${falg}</param>
+            
+            </result><!-- 需要注意的是名字必须为invalid.token-->  
+				<result name="success" type="chain">
+		    	<param name="namespace">/workOrder</param>
+		    	<param name="actionName">query</param>
+		    	<param name="falg">${falg}</param>
+		    </result>
+		</action>
+		
+		<!-- 详细查询 -->
+		<action name="queryById" class="workOrder" method="queryById">
+			<result name="success">/pages/workorder/workOrder_detail.jsp</result>
+		</action>
+		
+		<!-- 左侧查询工单 -->
+		<action name="queryLeft" class="workOrder" method="queryLeft">
+			<result name="success">/pages/workorder/workOrder_list.jsp</result>
+		</action>
+	</package>
+</struts>

@@ -1,0 +1,1705 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="eventsLogSQL">
+	<resultMap id="eventsLogResult" class="events">
+		<result property="eventsId" column="LOG_ID" />
+		<result property="name" column="LOG_NAME" />
+		<result property="aggregatedCount" column="LOG_AGGREGATED_COUNT" />
+		<result property="systype" column="LOG_SYSTYPE" />
+		<result property="collectType" column="LOG_COLLECTTYPE" />
+		<result property="sensorAddr" column="LOG_SENSORADDR" />
+		<result property="sensorName" column="LOG_SENSORNAME" />
+		<result property="collectorAddr" column="LOG_COLLECTORADDR" />
+		<result property="collectorName" column="LOG_COLLECTORNAME" />
+		<result property="cateGory" column="LOG_CATEGORY" />
+		<result property="type" column="LOG_TYPE" />
+		<result property="priority" column="LOG_PRIORITY" />
+		<result property="oriPriority" column="LOG_ORIPRIORITY" />
+		<result property="rawId" column="LOG_RAWID" />
+		<result property="duration" column="LOG_DURATION" />
+		<result property="send" column="LOG_SEND" />
+		<result property="receive" column="LOG_RECEIVE" />
+		<result property="protocol" column="LOG_PROTOCOL" />
+		<result property="object" column="LOG_OBJECT" />
+		<result property="policy" column="LOG_POLICY" />
+		<result property="resource" column="LOG_RESOURCE" />
+		<result property="action" column="LOG_ACTION" />
+		<result property="intent" column="LOG_INTENT" />
+		<result property="result" column="LOG_RESULT" />
+		<result property="sAddr" column="LOG_SADDR" />
+		<result property="sName" column="LOG_SNAME" />
+		<result property="sPort" column="LOG_SPORT" />
+		<result property="sprocess" column="LOG_SPROCESS" />
+		<result property="suserId" column="LOG_SUSERID" />
+		<result property="suserName" column="LOG_SUSERNAME" />
+		<result property="sTAddr" column="LOG_STADDR" />
+		<result property="sTPort" column="LOG_STPORT" />
+		<result property="dAddr" column="LOG_DADDR" />
+		<result property="dName" column="LOG_DNAME" />
+		<result property="dPort" column="LOG_DPORT" />
+		<result property="dProcess" column="LOG_DPROCESS" />
+		<result property="dUserId" column="LOG_DUSERID" />
+		<result property="dUserName" column="LOG_DUSERNAME" />
+		<result property="dTAddr" column="LOG_DTADDR" />
+		<result property="dTPort" column="LOG_DTPORT" />
+		<result property="devAdd" column="LOG_DEVADDR" />
+		<result property="devName" column="LOG_DEVNAME" />
+		<result property="devCategory" column="LOG_DEVCATEGORY" />
+		<result property="devType" column="LOG_DEVTYPE" />
+		<result property="devVendor" column="LOG_DEVVENDOR" />
+		<result property="programType" column="LOG_PROGRAMTYPE" />
+		<result property="program" column="LOG_PROGRAM" />
+		<result property="customs1" column="LOG_CUSTOMS1" />
+		<result property="customs2" column="LOG_CUSTOMS2" />
+		<result property="customs3" column="LOG_CUSTOMS3" />
+		<result property="customs4" column="LOG_CUSTOMS4" />
+		<result property="customd1" column="LOG_CUSTOMD1" />
+		<result property="customd2" column="CUSTOMD2" />
+		<result property="devproduct" column="LOG_DEVPRODUCT" />
+		<result property="sessionId" column="LOG_SESSIONID" />
+		<result property="customs5" column="LOG_CUSTOMS5" />
+		<result property="customs6" column="LOG_SUSTOMS6" />
+		<result property="customs7" column="CUSTOMS7" />
+		<result property="customd3" column="CUSTOMD3" />
+		<result property="customd4" column="CUSTOMD4" />
+		<result property="requesturi" column="LOG_REQUESTURI" />
+		<result property="msg" column="LOG_MSG" />
+		<result property="sendTime" column="LOG_SENDTIME" />
+		<result property="receptTime" column="LOG_RECEPT_TIME" />
+		<result property="identification" column="LOG_IDENTIFICATION" />
+		<result property="appProtocol" column="LOG_APPPROTOCOL" />
+		<!--  <result property="originLog" column="LOG_IDENTIFICATION"
+			select="query.originLog" />-->
+		<result property="assetId" column="LOG_ASSET_ID" />
+	</resultMap>
+    
+    <insert id="pgAdmininsert.events" parameterClass="events">
+		INSERT INTO $tableName$
+		(
+		"LOG_NAME",
+		"LOG_AGGREGATED_COUNT",
+		"LOG_SYSTYPE",
+		"LOG_COLLECTTYPE",
+		"LOG_SENSORADDR",
+		"LOG_SENSORNAME",
+		"LOG_COLLECTORADDR",
+		"LOG_COLLECTORNAME",
+		"LOG_CATEGORY",
+		"LOG_TYPE",
+		"LOG_PRIORITY",
+		"LOG_ORIPRIORITY",
+		"LOG_RAWID",
+		"LOG_DURATION",
+		"LOG_SEND",
+		"LOG_RECEIVE",
+		"LOG_PROTOCOL",
+		"LOG_OBJECT",
+		"LOG_POLICY",
+		"LOG_RESOURCE",
+		"LOG_ACTION",
+		"LOG_INTENT",
+		"LOG_RESULT",
+		"LOG_SADDR",
+		"LOG_SNAME",
+		"LOG_SPORT",
+		"LOG_SPROCESS",
+		"LOG_SUSERID",
+		"LOG_SUSERNAME",
+		"LOG_STADDR",
+		"LOG_STPORT",
+		"LOG_DADDR",
+		"LOG_DNAME",
+		"LOG_DPORT",
+		"LOG_DPROCESS",
+		"LOG_DUSERID",
+		"LOG_DUSERNAME",
+		"LOG_DTADDR",
+		"LOG_DTPORT",
+		"LOG_DEVADDR",
+		"LOG_DEVNAME",
+		"LOG_DEVCATEGORY",
+		"LOG_DEVTYPE",
+		"LOG_DEVVENDOR",
+		"LOG_PROGRAMTYPE",
+		"LOG_PROGRAM",
+		"LOG_CUSTOMS1",
+		"LOG_CUSTOMS2",
+		"LOG_CUSTOMS3",
+		"LOG_CUSTOMS4",
+		"LOG_CUSTOMD1",
+		"CUSTOMD2",
+		"LOG_DEVPRODUCT",
+		"LOG_SESSIONID",
+		"LOG_CUSTOMS5",
+		"LOG_SUSTOMS6",
+		"CUSTOMS7",
+		"CUSTOMD3",
+		"CUSTOMD4",
+		"LOG_REQUESTURI",
+		"LOG_MSG",
+		"LOG_SENDTIME",
+		"LOG_RECEPT_TIME",
+		"LOG_IDENTIFICATION",
+		"LOG_APPPROTOCOL",
+		"LOG_ASSET_ID")
+		VALUES (#name#,
+		#aggregatedCount#,
+		#systype#,
+		#collectType#,
+		#sensorAddr#,
+		#sensorName#,
+		#collectorAddr#,
+		#collectorName#,
+		#cateGory#,
+		#type#,
+		#priority#,
+		#oriPriority#,
+		#rawId#,
+		#duration#,
+		#send#,
+		#receive#,
+		#protocol#,
+		#object#,
+		#policy#,
+		#resource#,
+		#action#,
+		#intent#,
+		#result#,
+		#sAddr#,
+		#sName#,
+		#sPort#,
+		#sprocess#,
+		#suserId#,
+		#suserName#,
+		#sTAddr#,
+		#sTPort#,
+		#dAddr#,
+		#dName#,
+		#dPort#,
+		#dProcess#,
+		#dUserId#,
+		#dUserName#,
+		#dTAddr#,
+		#dTPort#,
+		#devAdd#,
+		#devName#,
+		#devCategory#,
+		#devType#,
+		#devVendor#,
+		#programType#,
+		#program#,
+		#customs1#,
+		#customs2#,
+		#customs3#,
+		#customs4#,
+		#customd1#,
+		#customd2#,
+		#devproduct#,
+		#sessionId#,
+		#customs5#,
+		#customs6#,
+		#customs7#,
+		#customd3#,
+		#customd4#,
+		#requesturi#,
+		#msg#,
+		#sendTime#,
+		#receptTime#,
+		#identification#,
+		#appProtocol#,
+		#assetId#);
+		<!-- <selectKey resultClass="java.lang.Long" keyProperty="eventsId" > SELECT 
+			currval('tbl_log_seq'::regclass) AS "eventsId" </selectKey> -->
+	</insert>
+
+	<!-- 关联分析cache_relevance_analysis -->
+	<insert id="pgAdmininsert.relevance_analysis" parameterClass="java.util.HashMap">
+		INSERT
+		INTO "cache_relevance_analysis" ("LOG_IDENTIFICATION", "LOG_TYPE",
+		"LOG_NAME", "LOG_RAWID", "LOG_PROGRAMTYPE",
+		"LOG_DEVTYPE",
+		"LOG_ACTION", "LOG_CUSTOMS2", "LOG_MSG", "LOG_DEVVENDOR",
+		"LOG_RESOURCE", "LOG_DEVPRODUCT", "LOG_RESULT", "LOG_SYSTYPE",
+		"LOG_PROGRAM", "LOG_PRIORITY", "LOG_SADDR", "LOG_SPORT", "LOG_DADDR",
+		"LOG_DPORT", "LOG_AGGREGATED_COUNT",
+		"LOG_SENDTIME","REL_IDENTIFICATION","TABLE_NAME")
+		VALUES
+		(#identification#, #type#, #name#, #rawId#, #programType#,
+		#devType#,
+		#action#, #customs2#, #msg#, #devVendor#,
+		#resource#, #devproduct#,
+		#result#, #systype#, #program#,
+		#priority#, #sAddr#, #sPort#, #dAddr#,
+		#dPort#,
+		#aggregatedCount#, #sendTime#,#relId#,#tableName#);
+	</insert>
+    
+    
+	<statement id="pgAdminemptyTable_cache">
+		DELETE FROM "cache_relevance_analysis"
+	</statement>
+
+	<!-- 自定义总条数 -->
+	<select id="pgAdmincustom.count" parameterClass="java.util.HashMap"
+		resultClass="int">
+		SELECT COUNT(*) FROM $tableName$ WHERE 1=1
+		<isNotEmpty prepend="AND" property="threatValue">
+          <![CDATA[
+            "LOG_ORIPRIORITY" SIMILAR TO '%($threatValue$)%'   
+          ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="sourceAdd">
+          <![CDATA[
+            "LOG_SADDR"  = CAST(#sourceAdd#  AS bigint) 
+          ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="sourcePort">
+          <![CDATA[
+            "LOG_SPORT" = CAST(#sourcePort# AS bigint) 
+          ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="targetAdd">
+          <![CDATA[
+            "LOG_DADDR" = CAST(#targetAdd#  AS bigint) 
+          ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="targetPort">
+          <![CDATA[
+            "LOG_DPORT" = CAST(#targetPort# AS bigint) 
+          ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="eventsType">
+          <![CDATA[
+            "LOG_TYPE"  SIMILAR TO '%($eventsType$)%'   
+          ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="beginTime">
+          <![CDATA[
+            "LOG_SENDTIME" >= CAST(#beginTime# AS bigint) 
+          ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="endTime">
+          <![CDATA[
+            "LOG_RECEPT_TIME" <= CAST(#endTime#AS bigint) 
+          ]]>
+
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="assetId">
+          <![CDATA[
+            "LOG_ASSET_ID" in ($assetId$) 
+          ]]>
+		</isNotEmpty>
+		<!-- <isNotEmpty prepend="AND" property="timeRange"> <![CDATA[ "LOG_DEVVENDOR" 
+			= #devvendor# ]]> </isNotEmpty> -->
+	</select>
+<!-- 查询单条事件 
+	<select id="pgAdminquery.detail_result" parameterClass="java.util.HashMap"
+		resultMap="eventsLogResult">
+		SELECT "LOG_ID", "LOG_AGGREGATED_COUNT", "LOG_SYSTYPE",
+		"LOG_COLLECTTYPE",
+		"LOG_SENSORADDR", "LOG_SENSORNAME",
+		"LOG_COLLECTORADDR", "LOG_COLLECTORNAME",
+		"LOG_CATEGORY", "LOG_TYPE",
+		"LOG_PRIORITY", "LOG_ORIPRIORITY",
+		"LOG_RAWID", "LOG_DURATION",
+		"LOG_SEND", "LOG_RECEIVE",
+		"LOG_PROTOCOL",
+		"LOG_OBJECT", "LOG_POLICY",
+		"LOG_RESOURCE", "LOG_ACTION", "LOG_INTENT",
+		"LOG_RESULT", "LOG_SADDR",
+		"LOG_SNAME", "LOG_SPORT", "LOG_SPROCESS",
+		"LOG_SUSERID",
+		"LOG_SUSERNAME", "LOG_STADDR", "LOG_STPORT",
+		"LOG_DADDR",
+		"LOG_DNAME",
+		"LOG_DPORT", "LOG_DPROCESS", "LOG_DUSERID", "LOG_DUSERNAME",
+		"LOG_DTADDR", "LOG_DTPORT", "LOG_DEVADDR", "LOG_DEVNAME",
+		"LOG_DEVCATEGORY",
+		"LOG_DEVTYPE", "LOG_DEVVENDOR", "LOG_PROGRAMTYPE",
+		"LOG_PROGRAM",
+		"LOG_CUSTOMS1", "LOG_CUSTOMS2", "LOG_CUSTOMS3",
+		"LOG_CUSTOMS4",
+		"LOG_NAME", "LOG_CUSTOMD1", "CUSTOMD2",
+		"LOG_DEVPRODUCT", "LOG_SESSIONID",
+		"LOG_CUSTOMS5", "LOG_SUSTOMS6",
+		"CUSTOMS7", "CUSTOMD3", "CUSTOMD4",
+		"LOG_REQUESTURI", "LOG_MSG",
+		"LOG_SENDTIME", "LOG_RECEPT_TIME",
+		"LOG_IDENTIFICATION",
+		"LOG_APPPROTOCOL", "LOG_ASSET_ID" FROM
+		$tableName$ WHERE  "LOG_ID" = #eventsId#
+	</select>
+	-->
+	<!-- 自定义 -->
+	<select id="pgAdminquery.custom_result" parameterClass="java.util.HashMap"
+		resultMap="eventsLogResult">
+		SELECT "LOG_ID", "LOG_AGGREGATED_COUNT", "LOG_SYSTYPE",
+		"LOG_COLLECTTYPE",
+		"LOG_SENSORADDR", "LOG_SENSORNAME",
+		"LOG_COLLECTORADDR", "LOG_COLLECTORNAME",
+		"LOG_CATEGORY", "LOG_TYPE",
+		"LOG_PRIORITY", "LOG_ORIPRIORITY",
+		"LOG_RAWID", "LOG_DURATION",
+		"LOG_SEND", "LOG_RECEIVE",
+		"LOG_PROTOCOL",
+		"LOG_OBJECT", "LOG_POLICY",
+		"LOG_RESOURCE", "LOG_ACTION", "LOG_INTENT",
+		"LOG_RESULT", "LOG_SADDR",
+		"LOG_SNAME", "LOG_SPORT", "LOG_SPROCESS",
+		"LOG_SUSERID",
+		"LOG_SUSERNAME", "LOG_STADDR", "LOG_STPORT",
+		"LOG_DADDR",
+		"LOG_DNAME",
+		"LOG_DPORT", "LOG_DPROCESS", "LOG_DUSERID", "LOG_DUSERNAME",
+		"LOG_DTADDR", "LOG_DTPORT", "LOG_DEVADDR", "LOG_DEVNAME",
+		"LOG_DEVCATEGORY",
+		"LOG_DEVTYPE", "LOG_DEVVENDOR", "LOG_PROGRAMTYPE",
+		"LOG_PROGRAM",
+		"LOG_CUSTOMS1", "LOG_CUSTOMS2", "LOG_CUSTOMS3",
+		"LOG_CUSTOMS4",
+		"LOG_NAME", "LOG_CUSTOMD1", "CUSTOMD2",
+		"LOG_DEVPRODUCT", "LOG_SESSIONID",
+		"LOG_CUSTOMS5", "LOG_SUSTOMS6",
+		"CUSTOMS7", "CUSTOMD3", "CUSTOMD4",
+		"LOG_REQUESTURI", "LOG_MSG",
+		"LOG_SENDTIME", "LOG_RECEPT_TIME",
+		"LOG_IDENTIFICATION",
+		"LOG_APPPROTOCOL", "LOG_ASSET_ID" FROM
+		$tableName$ WHERE 1=1
+		<isNotEmpty prepend="AND" property="eventsId">
+		 <![CDATA[
+            "LOG_ID" = $eventsId$
+          ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="protocol">
+          <![CDATA[
+            "LOG_PROTOCOL" IN ($protocol$)
+          ]]>
+		</isNotEmpty>
+	<isNotEmpty prepend="AND" property="assetId">
+          <![CDATA[
+            "LOG_ASSET_ID" in ($assetId$) 
+          ]]>
+		</isNotEmpty>
+		<!-- <isNotEmpty prepend="AND" property="timeRange"> <![CDATA[ "LOG_DEVVENDOR" 
+			= #devvendor# ]]> </isNotEmpty> -->
+
+	</select>
+	
+	
+	<!-- 大屏展示 -->
+	   <!-- 显示本天的最新的1000条数据 -->
+	  <select id="pgAdmincustomTrend.queryAllEvents" parameterClass="java.lang.String" resultMap="eventsLogResult">
+	     $sql$
+	  </select> 
+	   <select id="pgAdmincustomTrend.queryEventsCount" parameterClass="java.lang.String" resultClass="int">
+	     $sql$
+	  </select> 
+	   <!-- 事件类型 -->
+	   <select id="pgAdminquery.eventsByType" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	      SELECT COUNT("LOG_AGGREGATED_COUNT") AS "count","LOG_TYPE" AS "type" FROM
+	      $tableName$ WHERE 1 = 1  
+	      GROUP BY "EVENTS_SOURCEADDT"
+	      ORDER BY "count" DESC
+	      LIMIT 8 offset 0
+	   </select>
+	   
+	   <!-- 设备类型 -->
+	   <select id="pgAdminquery.eventsByDeviceType" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	      SELECT COUNT("LOG_AGGREGATED_COUNT") AS "count","LOG_DEVCATEGORY" AS "deviceType" FROM $tableName$ WHERE
+	      1 = 1
+	      GROUP BY "deviceType"
+	      ORDER BY "count" DESC
+	      LIMIT 10 offset 0	   
+	   </select>
+	
+	
+	  <!-- 显示本天的最新的1000条数据 -->
+	  <select id="pgAdminquery.recentLogs" parameterClass="java.util.HashMap" resultMap="eventsLogResult">
+	      SELECT * FROM $tableName$ WHERE 1 = 1 AND "LOG_ID" > 
+	      ((SELECT MAX("LOG_ID") - 100 AS "ID" FROM $tableName$ WHERE 1
+	    	= 1))
+	    	<isNotEmpty prepend="AND" property="assetId">
+          <![CDATA[
+            "LOG_ASSET_ID" in ($assetId$) 
+          ]]>
+		</isNotEmpty>
+	       ORDER BY "LOG_ID" DESC
+	  </select> 
+	  
+	  <!-- 显示首页的大屏展示数量 -->
+	  <!-- -->
+	  <select id="pgAdminquery.recentLogsCount" parameterClass="java.util.HashMap" resultClass="int">
+	     SELECT COUNT("LOG_ID") FROM $tableName$ WHERE 1 = 1  AND "LOG_ID">
+	     ((SELECT MAX("LOG_ID") - 100 AS "ID" FROM $tableName$ WHERE 1
+	        = 1))
+	        <isNotEmpty prepend="AND" property="assetId">
+          <![CDATA[
+            "LOG_ASSET_ID" in ($assetId$) 
+          ]]>
+		</isNotEmpty>
+	  </select>
+	
+	<!-- 大屏展示结尾 -->
+
+	<!-- 监控处查询分类事件 -->
+	<select id="pgAdminqueryMonitor.events" parameterClass="java.util.HashMap"
+		resultClass="java.util.HashMap">
+		SELECT "LOG_NAME" AS "events_name","LOG_AGGREGATED_COUNT" AS
+		"count","LOG_PRIORITY" AS "priority","LOG_ID",
+		"LOG_SADDR","LOG_SPORT","LOG_DADDR","LOG_DPORT","LOG_SNAME","LOG_TYPE","LOG_DEVPRODUCT","LOG_PROGRAM","LOG_DEVVENDOR",
+		"LOG_DEVTYPE","LOG_DEVNAME","LOG_PROGRAMTYPE","LOG_CUSTOMD1","LOG_RAWID","LOG_ASSET_ID","LOG_POLICY","LOG_ACTION"
+		FROM $tableName$ where 1 = 1 AND "LOG_ID" > #event_id#
+		<isNotEmpty prepend="AND" property="appprotocol">
+			"LOG_APPPROTOCOL" =
+			#appprotocol#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="policy">
+			"LOG_POLICY" = #policy#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="action">
+			"LOG_ACTION" = #action#
+		</isNotEmpty>
+		<isNotEmpty property="rawid1" prepend="AND">
+			<isNotEmpty property="rawidList">
+		      <![CDATA[
+		      ((#rawid1# <= "LOG_RAWID" AND "LOG_RAWID"<=#rawid2#)  OR "LOG_RAWID" in ($rawidList$)  OR  (#rawid3# <="LOG_RAWID" AND "LOG_RAWID" <= #rawid4#))
+		      ]]>
+			</isNotEmpty>
+			<isEmpty property="rawidList">
+		    <![CDATA[
+		        (#rawid1# <= "LOG_RAWID"  AND "LOG_RAWID" <=#rawid2#)
+		     ]]>
+			</isEmpty>
+		</isNotEmpty>
+		<isEmpty property="rawid1">
+		<isNotEmpty prepend="AND" property="rawidList">
+          <![CDATA[
+               "LOG_RAWID" in ($rawidList$)
+          ]]>
+		</isNotEmpty>
+		</isEmpty>
+		<isNotEmpty prepend="AND" property="devvendor">
+		   <![CDATA[
+		      "LOG_DEVVENDOR" = #devvendor#
+		   ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="assetId">
+          <![CDATA[
+            "LOG_ASSET_ID" in ($assetId$) 
+          ]]>
+		</isNotEmpty>
+		ORDER BY "LOG_ID" ASC
+	</select>
+
+
+	<!-- <insert id="pgAdmininsert.monitorFtp" parameterClass="events"> INSERT INTO 
+		"tbl_monitor_ftp_events" ("LOG_NAME", "LOG_AGGREGATED_COUNT", "LOG_SYSTYPE", 
+		"LOG_COLLECTTYPE", "LOG_SENSORADDR", "LOG_SENSORNAME", "LOG_COLLECTORADDR", 
+		"LOG_COLLECTORNAME", "LOG_CATEGORY", "LOG_TYPE", "LOG_PRIORITY", "LOG_ORIPRIORITY", 
+		"LOG_RAWID", "LOG_DURATION", "LOG_SEND", "LOG_RECEIVE", "LOG_PROTOCOL", "LOG_OBJECT", 
+		"LOG_POLICY", "LOG_RESOURCE", "LOG_ACTION", "LOG_INTENT", "LOG_RESULT", "LOG_SADDR", 
+		"LOG_SNAME", "LOG_SPORT", "LOG_SPROCESS", "LOG_SUSERID", "LOG_SUSERNAME", 
+		"LOG_STADDR", "LOG_STPORT", "LOG_DADDR", "LOG_DNAME", "LOG_DPORT", "LOG_DPROCESS", 
+		"LOG_DUSERID", "LOG_DUSERNAME", "LOG_DTADDR", "LOG_DTPORT", "LOG_DEVADDR", 
+		"LOG_DEVNAME", "LOG_DEVCATEGORY", "LOG_DEVTYPE", "LOG_DEVVENDOR", "LOG_PROGRAMTYPE", 
+		"LOG_PROGRAM", "LOG_DEVPRODUCT", "LOG_SESSIONID", "LOG_CUSTOMS5", "LOG_SUSTOMS6", 
+		"CUSTOMS7", "CUSTOMD3", "CUSTOMD4", "LOG_REQUESTURI", "LOG_MSG", "LOG_SENDTIME", 
+		"LOG_RECEPT_TIME", "LOG_IDENTIFICATION", "LOG_APPPROTOCOL", "LOG_ASSET_ID") 
+		VALUES(#name#, #aggregatedCount#, #systype#, #collectType#, #sensorAddr#, 
+		#sensorName#, #collectorAddr#, #collectorName#, #cateGory#, #type#, #priority#, 
+		#oriPriority#, #rawId#, #duration#, #send#, #receive#, #protocol#, #object#, 
+		#policy#, #resource#, #action#, #intent#, #result#, #sAddr#, #sName#, #sPort#, 
+		#sprocess#, #suserId#, #suserName#, #sTAddr#, #sTPort#, #dAddr#, #dName#, 
+		#dPort#, #dProcess#, #dUserId#, #dUserName#, #dTAddr#, #dTPort#, #devAdd#, 
+		#devName#, #devCategory#, #devType#, #devVendor#, #programType#, #program#, 
+		#devproduct#, #sessionId#, #customs5#, #customs6#, #customs7#, #customd3#, 
+		#customd4#, #requesturi#, #msg#, #sendTime#, #receptTime#, #identification#, 
+		#appProtocol#, #assetId# ) </insert> -->
+	<!-- 关联分析 -->
+	<select id="pgAdminquery.relevance_analysis" parameterClass="java.util.HashMap"
+		resultMap="eventsLogResult">
+		SELECT "LOG_ID", "LOG_AGGREGATED_COUNT", "LOG_SYSTYPE",
+		"LOG_COLLECTTYPE",
+		"LOG_SENSORADDR", "LOG_SENSORNAME",
+		"LOG_COLLECTORADDR", "LOG_COLLECTORNAME",
+		"LOG_CATEGORY", "LOG_TYPE",
+		"LOG_PRIORITY", "LOG_ORIPRIORITY",
+		"LOG_RAWID", "LOG_DURATION",
+		"LOG_SEND", "LOG_RECEIVE",
+		"LOG_PROTOCOL",
+		"LOG_OBJECT", "LOG_POLICY",
+		"LOG_RESOURCE", "LOG_ACTION", "LOG_INTENT",
+		"LOG_RESULT", "LOG_SADDR",
+		"LOG_SNAME", "LOG_SPORT", "LOG_SPROCESS",
+		"LOG_SUSERID",
+		"LOG_SUSERNAME", "LOG_STADDR", "LOG_STPORT",
+		"LOG_DADDR",
+		"LOG_DNAME",
+		"LOG_DPORT", "LOG_DPROCESS", "LOG_DUSERID", "LOG_DUSERNAME",
+		"LOG_DTADDR", "LOG_DTPORT", "LOG_DEVADDR", "LOG_DEVNAME",
+		"LOG_DEVCATEGORY",
+		"LOG_DEVTYPE", "LOG_DEVVENDOR", "LOG_PROGRAMTYPE",
+		"LOG_PROGRAM",
+		"LOG_CUSTOMS1", "LOG_CUSTOMS2", "LOG_CUSTOMS3",
+		"LOG_CUSTOMS4",
+		"LOG_NAME", "LOG_CUSTOMD1", "CUSTOMD2",
+		"LOG_DEVPRODUCT", "LOG_SESSIONID",
+		"LOG_CUSTOMS5", "LOG_SUSTOMS6",
+		"CUSTOMS7", "CUSTOMD3", "CUSTOMD4",
+		"LOG_REQUESTURI", "LOG_MSG",
+		"LOG_SENDTIME", "LOG_RECEPT_TIME",
+		"LOG_IDENTIFICATION",
+		"LOG_APPPROTOCOL", "LOG_ASSET_ID" FROM
+		$tableName$ WHERE 1=1
+		<isNotEmpty prepend="AND" property="type">
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="protocol">
+          <![CDATA[
+            "LOG_PROTOCOL" IN ($protocol$)
+          ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="timeRange">
+
+          <![CDATA[
+            "LOG_TYPE" = #type# 
+          ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="name">
+          <![CDATA[
+            "LOG_NAME"  SIMILAR TO '%($name$)%'  
+          ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="programtype">
+          <![CDATA[
+            "LOG_PROGRAMTYPE" = #programtype# 
+          ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="devtype">
+          <![CDATA[
+            "LOG_DEVTYPE" = #devtype# 
+          ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="action">
+          <![CDATA[
+            "LOG_ACTION" = #action# 
+          ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="customs2">
+          <![CDATA[
+            "LOG_CUSTOMS2" = #customs2# 
+          ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="msg">
+          <![CDATA[
+            "LOG_MSG" SIMILAR TO '%($msg$)%' 
+          ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="rawid">
+          <![CDATA[
+            "LOG_RAWID" = CAST(#rawid# AS bigint) 
+          ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="devvendor">
+          <![CDATA[
+            "LOG_DEVVENDOR" = #devvendor# 
+          ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="resource">
+          <![CDATA[
+            "LOG_RESOURCE" = #resource# 
+          ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="devproduct">
+          <![CDATA[
+            "LOG_DEVPRODUCT" = #devproduct# 
+          ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="result">
+          <![CDATA[
+            "LOG_RESULT" = #result# 
+          ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="systype">
+          <![CDATA[
+            "LOG_SYSTYPE" = CAST(#systype# AS bigint)
+          ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="program">
+          <![CDATA[
+            "LOG_PROGRAM" = #program# 
+          ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="assetId">
+          <![CDATA[
+            "LOG_ASSET_ID" in ($assetId$) 
+          ]]>
+		</isNotEmpty>
+	</select>
+
+	<select id="pgAdminquery.events" resultMap="eventsLogResult"
+		parameterClass="java.util.HashMap">
+		SELECT "LOG_ID", "LOG_AGGREGATED_COUNT", "LOG_SYSTYPE",
+		"LOG_COLLECTTYPE",
+		"LOG_SENSORADDR", "LOG_SENSORNAME",
+		"LOG_COLLECTORADDR",
+		"LOG_COLLECTORNAME",
+		"LOG_CATEGORY", "LOG_TYPE",
+		"LOG_PRIORITY", "LOG_ORIPRIORITY",
+		"LOG_RAWID", "LOG_DURATION",
+		"LOG_SEND", "LOG_RECEIVE", "LOG_PROTOCOL",
+		"LOG_OBJECT", "LOG_POLICY",
+		"LOG_RESOURCE", "LOG_ACTION",
+		"LOG_INTENT",
+		"LOG_RESULT", "LOG_SADDR",
+		"LOG_SNAME", "LOG_SPORT", "LOG_SPROCESS",
+		"LOG_SUSERID",
+		"LOG_SUSERNAME", "LOG_STADDR", "LOG_STPORT", "LOG_DADDR",
+		"LOG_DNAME",
+		"LOG_DPORT", "LOG_DPROCESS", "LOG_DUSERID",
+		"LOG_DUSERNAME",
+		"LOG_DTADDR", "LOG_DTPORT", "LOG_DEVADDR", "LOG_DEVNAME",
+		"LOG_DEVCATEGORY",
+		"LOG_DEVTYPE", "LOG_DEVVENDOR", "LOG_PROGRAMTYPE",
+		"LOG_PROGRAM",
+		"LOG_CUSTOMS1", "LOG_CUSTOMS2", "LOG_CUSTOMS3",
+		"LOG_CUSTOMS4",
+		"LOG_NAME", "LOG_CUSTOMD1", "CUSTOMD2",
+		"LOG_DEVPRODUCT",
+		"LOG_SESSIONID",
+		"LOG_CUSTOMS5", "LOG_SUSTOMS6",
+		"CUSTOMS7", "CUSTOMD3", "CUSTOMD4",
+		"LOG_REQUESTURI", "LOG_MSG",
+		"LOG_SENDTIME", "LOG_RECEPT_TIME",
+		"LOG_IDENTIFICATION"
+		,"LOG_APPPROTOCOL","LOG_ASSET_ID"
+		FROM $tableName$ WHERE
+		"LOG_IDENTIFICATION" = #identification#
+		<isNotEmpty prepend="AND" property="assetId">
+          <![CDATA[
+            "LOG_ASSET_ID" in ($assetId$) 
+          ]]>
+		</isNotEmpty>
+	</select>
+
+	<insert id="pgAdmininsert.originLog" parameterClass="java.util.HashMap">
+		INSERT INTO
+		$tableName$(
+		"ORIGIN_LOG_IDENTIFICATION",
+		"ORIGIN_LOG_MSG",
+		"ORIGIN_LOG_ASSET_ID",
+		"ORIGIN_LOG_ASSET_NAME")
+		VALUES (
+		#identification#,
+		#msg#,
+		#assetId#,
+		#assetName#);
+	</insert>
+
+	<select id="pgAdminquery.originLog" parameterClass="long" resultClass="java.lang.String">
+		SELECT "ORIGIN_LOG_MSG" FROM "tbl_origin_log" WHERE
+		"ORIGIN_LOG_IDENTIFICATION" = #value#
+	</select>
+
+	<select id="pgAdminexists.log" parameterClass="String" resultClass="int">
+		SELECT count(*) FROM pg_tables WHERE tablename = #value#
+	</select>
+
+	<select id="pgAdminexists.seq" parameterClass="String" resultClass="String">
+		SELECT * FROM pg_class WHERE relkind = 'S' AND relname = #value#
+	</select>
+
+	<statement id="pgAdmincreate.seq" parameterClass="String">
+		CREATE SEQUENCE
+		$seqName$
+		INCREMENT 1
+		MINVALUE 1
+		MAXVALUE 999999999999999999
+		START 1
+		CACHE
+		1;
+	</statement>
+
+	<statement id="pgAdmincreate.log" parameterClass="java.util.HashMap">
+		Create Table
+		$tableName$
+		(
+		"LOG_ID" bigint NOT NULL DEFAULT
+		nextval('$seqName$'::regclass),
+		"LOG_AGGREGATED_COUNT" bigint,
+		"LOG_SYSTYPE" bigint,
+		"LOG_COLLECTTYPE" bigint,
+		"LOG_SENSORADDR" bigint,
+		"LOG_SENSORNAME" character varying(255),
+		"LOG_COLLECTORADDR" bigint,
+		"LOG_COLLECTORNAME" character varying(255),
+		"LOG_CATEGORY" character
+		varying(255),
+		"LOG_TYPE" character varying(255),
+		"LOG_PRIORITY" bigint,
+		"LOG_ORIPRIORITY" character varying(255),
+		"LOG_RAWID" bigint,
+		"LOG_DURATION" bigint,
+		"LOG_SEND" bigint,
+		"LOG_RECEIVE" bigint,
+		"LOG_PROTOCOL" integer,
+		"LOG_OBJECT" character varying(255),
+		"LOG_POLICY" character varying(255),
+		"LOG_RESOURCE" character
+		varying(255),
+		"LOG_ACTION" character varying(255),
+		"LOG_INTENT"
+		character varying(255),
+		"LOG_RESULT" character varying(255),
+		"LOG_SADDR" bigint,
+		"LOG_SNAME" character varying(255),
+		"LOG_SPORT"
+		integer,
+		"LOG_SPROCESS" character varying(255),
+		"LOG_SUSERID" character
+		varying(255),
+		"LOG_SUSERNAME" character varying(255),
+		"LOG_STADDR"
+		bigint,
+		"LOG_STPORT" integer,
+		"LOG_DADDR" bigint,
+		"LOG_DNAME" character
+		varying(255),
+		"LOG_DPORT" integer,
+		"LOG_DPROCESS" character
+		varying(255),
+		"LOG_DUSERID" character varying(255),
+		"LOG_DUSERNAME"
+		character varying(255),
+		"LOG_DTADDR" bigint,
+		"LOG_DTPORT" integer,
+		"LOG_DEVADDR" bigint,
+		"LOG_DEVNAME" character varying(255),
+		"LOG_DEVCATEGORY" bigint,
+		"LOG_DEVTYPE" character varying(255),
+		"LOG_DEVVENDOR" character varying(255),
+		"LOG_PROGRAMTYPE" character
+		varying(255),
+		"LOG_PROGRAM" character varying(255),
+		"LOG_CUSTOMS1"
+		character varying(1000),
+		"LOG_CUSTOMS2" character varying(1000),
+		"LOG_CUSTOMS3" character varying(1000),
+		"LOG_CUSTOMS4" character
+		varying(1000),
+		"LOG_NAME" character varying(255),
+		"LOG_CUSTOMD1" bigint,
+		"CUSTOMD2" bigint,
+		"LOG_DEVPRODUCT" character varying(255),
+		"LOG_SESSIONID" character varying(255),
+		"LOG_CUSTOMS5" character
+		varying(1000),
+		"LOG_SUSTOMS6" character varying(255),
+		"CUSTOMS7"
+		character varying(1000),
+		"CUSTOMD3" double precision,
+		"CUSTOMD4" double
+		precision,
+		"LOG_REQUESTURI" text,
+		"LOG_MSG" text,
+		"LOG_SENDTIME" bigint,
+		"LOG_RECEPT_TIME" bigint,
+		"LOG_IDENTIFICATION" bigint,
+		"LOG_APPPROTOCOL" integer,
+		"LOG_ASSET_ID" bigint,
+		CONSTRAINT
+		"$primaryKey$" PRIMARY KEY ("LOG_ID")
+		)
+	</statement>
+
+
+
+	<select id="pgAdmincount.custom_muchTable" resultClass="int"
+		parameterClass="java.lang.String">
+		$sql$
+	</select>
+
+
+	<select id="pgAdminquery.custom_muchTable" resultMap="eventsLogResult"
+		parameterClass="java.lang.String">
+		$sql$
+	</select>
+	
+	<select id="pgAdmincount.queryEventByasset" resultClass="int" parameterClass="java.lang.String">
+	   $sql$
+	</select>
+    
+    <select id="pgAdminquery.queryEventByasset" resultMap="eventsLogResult"  parameterClass="java.lang.String">
+	    $sql$
+	</select>
+	
+	  <!-- 首页当天的事件统计 -->
+     <select id="pgAdminhomepage.queryEvents" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+        SELECT SUM("LOG_AGGREGATED_COUNT") AS "value","LOG_PRIORITY" AS "key" from $tableName$
+        where 1=1 and "LOG_PRIORITY" in (1,2,3,4,5)
+        <isNotEmpty prepend="AND" property="assetId">
+          <![CDATA[
+            "LOG_ASSET_ID" in ($assetId$) 
+          ]]>
+		</isNotEmpty>
+        GROUP BY "key"
+        ORDER BY "key" DESC
+     </select>
+    
+    <!-- 近n小时事件趋势 -->
+	<select id="pgAdminEvents.trendAnalysis" parameterClass="java.util.HashMap" resultClass="int">
+	SELECT count(*) as "count"
+  FROM $tbl$ where "LOG_RECEPT_TIME" between $tempTime1$ and  $tempTime2$
+  
+    <isNotEmpty prepend="AND" property="alertAssetId">
+          <![CDATA[
+            "LOG_ASSET_ID" in ($alertAssetId$) 
+          ]]>
+		</isNotEmpty>
+  ;
+	</select>
+	
+	<!-- 当天事件类型分布 -->
+	<select id="pgAdminQuery.EventByCategory" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	SELECT "LOG_CATEGORY" AS "key",count(*) AS "value"
+  FROM $tbl$ 
+   where 1=1 
+    <isNotEmpty prepend="AND" property="alertAssetId">
+          <![CDATA[
+            "LOG_ASSET_ID" in ($alertAssetId$) 
+          ]]>
+		</isNotEmpty>
+  
+  group by "LOG_CATEGORY";
+	</select>
+	<!-- 删除表 -->
+	<delete id="pgAdminDelete.table" parameterClass="String">
+	DROP TABLE $value$
+	
+	</delete>
+	<!-- 删除序列 -->
+	<delete id="pgAdminDelete.sequence" parameterClass="String">
+	DROP SEQUENCE $value$
+	
+	</delete>
+	
+	<!-- 当天事件IP分布 -->
+	<select id="pgAdminQuery.EventByIP" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	SELECT "LOG_DEVADDR" AS "key",count(*) AS "value"
+  FROM $tbl$ 
+  where 1=1 
+    <isNotEmpty prepend="AND" property="alertAssetId">
+          <![CDATA[
+            "LOG_ASSET_ID" in ($alertAssetId$) 
+          ]]>
+		</isNotEmpty>
+  group by "LOG_DEVADDR"
+  
+  ;
+	</select>
+    
+   
+   <!-- sqlServer用的语句 --> 
+	<insert id="sqlServerinsert.events" parameterClass="events">
+		INSERT INTO $tableName$
+		(
+		"LOG_NAME",
+		"LOG_AGGREGATED_COUNT",
+		"LOG_SYSTYPE",
+		"LOG_COLLECTTYPE",
+		"LOG_SENSORADDR",
+		"LOG_SENSORNAME",
+		"LOG_COLLECTORADDR",
+		"LOG_COLLECTORNAME",
+		"LOG_CATEGORY",
+		"LOG_TYPE",
+		"LOG_PRIORITY",
+		"LOG_ORIPRIORITY",
+		"LOG_RAWID",
+		"LOG_DURATION",
+		"LOG_SEND",
+		"LOG_RECEIVE",
+		"LOG_PROTOCOL",
+		"LOG_OBJECT",
+		"LOG_POLICY",
+		"LOG_RESOURCE",
+		"LOG_ACTION",
+		"LOG_INTENT",
+		"LOG_RESULT",
+		"LOG_SADDR",
+		"LOG_SNAME",
+		"LOG_SPORT",
+		"LOG_SPROCESS",
+		"LOG_SUSERID",
+		"LOG_SUSERNAME",
+		"LOG_STADDR",
+		"LOG_STPORT",
+		"LOG_DADDR",
+		"LOG_DNAME",
+		"LOG_DPORT",
+		"LOG_DPROCESS",
+		"LOG_DUSERID",
+		"LOG_DUSERNAME",
+		"LOG_DTADDR",
+		"LOG_DTPORT",
+		"LOG_DEVADDR",
+		"LOG_DEVNAME",
+		"LOG_DEVCATEGORY",
+		"LOG_DEVTYPE",
+		"LOG_DEVVENDOR",
+		"LOG_PROGRAMTYPE",
+		"LOG_PROGRAM",
+		"LOG_CUSTOMS1",
+		"LOG_CUSTOMS2",
+		"LOG_CUSTOMS3",
+		"LOG_CUSTOMS4",
+		"LOG_CUSTOMD1",
+		"CUSTOMD2",
+		"LOG_DEVPRODUCT",
+		"LOG_SESSIONID",
+		"LOG_CUSTOMS5",
+		"LOG_SUSTOMS6",
+		"CUSTOMS7",
+		"CUSTOMD3",
+		"CUSTOMD4",
+		"LOG_REQUESTURI",
+		"LOG_MSG",
+		"LOG_SENDTIME",
+		"LOG_RECEPT_TIME",
+		"LOG_IDENTIFICATION",
+		"LOG_APPPROTOCOL",
+		"LOG_ASSET_ID")
+		VALUES (#name#,
+		#aggregatedCount#,
+		#systype#,
+		#collectType#,
+		#sensorAddr#,
+		#sensorName#,
+		#collectorAddr#,
+		#collectorName#,
+		#cateGory#,
+		#type#,
+		#priority#,
+		#oriPriority#,
+		#rawId#,
+		#duration#,
+		#send#,
+		#receive#,
+		#protocol#,
+		#object#,
+		#policy#,
+		#resource#,
+		#action#,
+		#intent#,
+		#result#,
+		#sAddr#,
+		#sName#,
+		#sPort#,
+		#sprocess#,
+		#suserId#,
+		#suserName#,
+		#sTAddr#,
+		#sTPort#,
+		#dAddr#,
+		#dName#,
+		#dPort#,
+		#dProcess#,
+		#dUserId#,
+		#dUserName#,
+		#dTAddr#,
+		#dTPort#,
+		#devAdd#,
+		#devName#,
+		#devCategory#,
+		#devType#,
+		#devVendor#,
+		#programType#,
+		#program#,
+		#customs1#,
+		#customs2#,
+		#customs3#,
+		#customs4#,
+		#customd1#,
+		#customd2#,
+		#devproduct#,
+		#sessionId#,
+		#customs5#,
+		#customs6#,
+		#customs7#,
+		#customd3#,
+		#customd4#,
+		#requesturi#,
+		#msg#,
+		#sendTime#,
+		#receptTime#,
+		#identification#,
+		#appProtocol#,
+		#assetId#);
+		<!-- <selectKey resultClass="java.lang.Long" keyProperty="eventsId" > SELECT 
+			currval('tbl_log_seq'::regclass) AS "eventsId" </selectKey> -->
+	</insert>
+
+	<!-- 关联分析cache_relevance_analysis -->
+	<insert id="sqlServerinsert.relevance_analysis" parameterClass="java.util.HashMap">
+		INSERT
+		INTO "cache_relevance_analysis" ("LOG_IDENTIFICATION", "LOG_TYPE",
+		"LOG_NAME", "LOG_RAWID", "LOG_PROGRAMTYPE",
+		"LOG_DEVTYPE",
+		"LOG_ACTION", "LOG_CUSTOMS2", "LOG_MSG", "LOG_DEVVENDOR",
+		"LOG_RESOURCE", "LOG_DEVPRODUCT", "LOG_RESULT", "LOG_SYSTYPE",
+		"LOG_PROGRAM", "LOG_PRIORITY", "LOG_SADDR", "LOG_SPORT", "LOG_DADDR",
+		"LOG_DPORT", "LOG_AGGREGATED_COUNT",
+		"LOG_SENDTIME","REL_IDENTIFICATION","TABLE_NAME")
+		VALUES
+		(#identification#, #type#, #name#, #rawId#, #programType#,
+		#devType#,
+		#action#, #customs2#, #msg#, #devVendor#,
+		#resource#, #devproduct#,
+		#result#, #systype#, #program#,
+		#priority#, #sAddr#, #sPort#, #dAddr#,
+		#dPort#,
+		#aggregatedCount#, #sendTime#,#relId#,#tableName#);
+	</insert>
+    
+    
+	<statement id="sqlServeremptyTable_cache">
+		DELETE FROM "cache_relevance_analysis"
+	</statement>
+
+	<!-- 自定义总条数 -->
+	<select id="sqlServercustom.count" parameterClass="java.util.HashMap"
+		resultClass="int">
+		SELECT COUNT(*) FROM $tableName$ WHERE 1=1
+		<isNotEmpty prepend="AND" property="threatValue">
+          <![CDATA[
+            "LOG_ORIPRIORITY" SIMILAR TO '%($threatValue$)%'   
+          ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="sourceAdd">
+          <![CDATA[
+            "LOG_SADDR"  = CAST(#sourceAdd#  AS bigint) 
+          ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="sourcePort">
+          <![CDATA[
+            "LOG_SPORT" = CAST(#sourcePort# AS bigint) 
+          ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="targetAdd">
+          <![CDATA[
+            "LOG_DADDR" = CAST(#targetAdd#  AS bigint) 
+          ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="targetPort">
+          <![CDATA[
+            "LOG_DPORT" = CAST(#targetPort# AS bigint) 
+          ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="eventsType">
+          <![CDATA[
+            "LOG_TYPE"  SIMILAR TO '%($eventsType$)%'   
+          ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="beginTime">
+          <![CDATA[
+            "LOG_SENDTIME" >= CAST(#beginTime# AS bigint) 
+          ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="endTime">
+          <![CDATA[
+            "LOG_RECEPT_TIME" <= CAST(#endTime#AS bigint) 
+          ]]>
+
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="assetId">
+          <![CDATA[
+            "LOG_ASSET_ID" in ($assetId$) 
+          ]]>
+		</isNotEmpty>
+		<!-- <isNotEmpty prepend="AND" property="timeRange"> <![CDATA[ "LOG_DEVVENDOR" 
+			= #devvendor# ]]> </isNotEmpty> -->
+	</select>
+<!-- 查询单条事件 
+	<select id="sqlServerquery.detail_result" parameterClass="java.util.HashMap"
+		resultMap="eventsLogResult">
+		SELECT "LOG_ID", "LOG_AGGREGATED_COUNT", "LOG_SYSTYPE",
+		"LOG_COLLECTTYPE",
+		"LOG_SENSORADDR", "LOG_SENSORNAME",
+		"LOG_COLLECTORADDR", "LOG_COLLECTORNAME",
+		"LOG_CATEGORY", "LOG_TYPE",
+		"LOG_PRIORITY", "LOG_ORIPRIORITY",
+		"LOG_RAWID", "LOG_DURATION",
+		"LOG_SEND", "LOG_RECEIVE",
+		"LOG_PROTOCOL",
+		"LOG_OBJECT", "LOG_POLICY",
+		"LOG_RESOURCE", "LOG_ACTION", "LOG_INTENT",
+		"LOG_RESULT", "LOG_SADDR",
+		"LOG_SNAME", "LOG_SPORT", "LOG_SPROCESS",
+		"LOG_SUSERID",
+		"LOG_SUSERNAME", "LOG_STADDR", "LOG_STPORT",
+		"LOG_DADDR",
+		"LOG_DNAME",
+		"LOG_DPORT", "LOG_DPROCESS", "LOG_DUSERID", "LOG_DUSERNAME",
+		"LOG_DTADDR", "LOG_DTPORT", "LOG_DEVADDR", "LOG_DEVNAME",
+		"LOG_DEVCATEGORY",
+		"LOG_DEVTYPE", "LOG_DEVVENDOR", "LOG_PROGRAMTYPE",
+		"LOG_PROGRAM",
+		"LOG_CUSTOMS1", "LOG_CUSTOMS2", "LOG_CUSTOMS3",
+		"LOG_CUSTOMS4",
+		"LOG_NAME", "LOG_CUSTOMD1", "CUSTOMD2",
+		"LOG_DEVPRODUCT", "LOG_SESSIONID",
+		"LOG_CUSTOMS5", "LOG_SUSTOMS6",
+		"CUSTOMS7", "CUSTOMD3", "CUSTOMD4",
+		"LOG_REQUESTURI", "LOG_MSG",
+		"LOG_SENDTIME", "LOG_RECEPT_TIME",
+		"LOG_IDENTIFICATION",
+		"LOG_APPPROTOCOL", "LOG_ASSET_ID" FROM
+		$tableName$ WHERE  "LOG_ID" = #eventsId#
+	</select>
+	-->
+	<!-- 自定义 -->
+	<select id="sqlServerquery.custom_result" parameterClass="java.util.HashMap"
+		resultMap="eventsLogResult">
+		SELECT "LOG_ID", "LOG_AGGREGATED_COUNT", "LOG_SYSTYPE",
+		"LOG_COLLECTTYPE",
+		"LOG_SENSORADDR", "LOG_SENSORNAME",
+		"LOG_COLLECTORADDR", "LOG_COLLECTORNAME",
+		"LOG_CATEGORY", "LOG_TYPE",
+		"LOG_PRIORITY", "LOG_ORIPRIORITY",
+		"LOG_RAWID", "LOG_DURATION",
+		"LOG_SEND", "LOG_RECEIVE",
+		"LOG_PROTOCOL",
+		"LOG_OBJECT", "LOG_POLICY",
+		"LOG_RESOURCE", "LOG_ACTION", "LOG_INTENT",
+		"LOG_RESULT", "LOG_SADDR",
+		"LOG_SNAME", "LOG_SPORT", "LOG_SPROCESS",
+		"LOG_SUSERID",
+		"LOG_SUSERNAME", "LOG_STADDR", "LOG_STPORT",
+		"LOG_DADDR",
+		"LOG_DNAME",
+		"LOG_DPORT", "LOG_DPROCESS", "LOG_DUSERID", "LOG_DUSERNAME",
+		"LOG_DTADDR", "LOG_DTPORT", "LOG_DEVADDR", "LOG_DEVNAME",
+		"LOG_DEVCATEGORY",
+		"LOG_DEVTYPE", "LOG_DEVVENDOR", "LOG_PROGRAMTYPE",
+		"LOG_PROGRAM",
+		"LOG_CUSTOMS1", "LOG_CUSTOMS2", "LOG_CUSTOMS3",
+		"LOG_CUSTOMS4",
+		"LOG_NAME", "LOG_CUSTOMD1", "CUSTOMD2",
+		"LOG_DEVPRODUCT", "LOG_SESSIONID",
+		"LOG_CUSTOMS5", "LOG_SUSTOMS6",
+		"CUSTOMS7", "CUSTOMD3", "CUSTOMD4",
+		"LOG_REQUESTURI", "LOG_MSG",
+		"LOG_SENDTIME", "LOG_RECEPT_TIME",
+		"LOG_IDENTIFICATION",
+		"LOG_APPPROTOCOL", "LOG_ASSET_ID" FROM
+		$tableName$ WHERE 1=1
+		<isNotEmpty prepend="AND" property="eventsId">
+		 <![CDATA[
+            "LOG_ID" = $eventsId$
+          ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="protocol">
+          <![CDATA[
+            "LOG_PROTOCOL" IN ($protocol$)
+          ]]>
+		</isNotEmpty>
+	<isNotEmpty prepend="AND" property="assetId">
+          <![CDATA[
+            "LOG_ASSET_ID" in ($assetId$) 
+          ]]>
+		</isNotEmpty>
+		<!-- <isNotEmpty prepend="AND" property="timeRange"> <![CDATA[ "LOG_DEVVENDOR" 
+			= #devvendor# ]]> </isNotEmpty> -->
+
+	</select>
+	
+	
+	<!-- 大屏展示 -->
+	   <!-- 显示本天的最新的1000条数据 -->
+	  <select id="sqlServercustomTrend.queryAllEvents" parameterClass="java.lang.String" resultMap="eventsLogResult">
+	     $sql$
+	  </select> 
+	   <select id="sqlServercustomTrend.queryEventsCount" parameterClass="java.lang.String" resultClass="int">
+	     $sql$
+	  </select> 
+	   <!-- 事件类型 -->
+	   <select id="sqlServerquery.eventsByType" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	      SELECT COUNT("LOG_AGGREGATED_COUNT") AS "count","LOG_TYPE" AS "type" FROM
+	      $tableName$ WHERE 1 = 1  
+	      GROUP BY "EVENTS_SOURCEADDT"
+	      ORDER BY "count" DESC
+	      LIMIT 8 offset 0
+	   </select>
+	   
+	   <!-- 设备类型 -->
+	   <select id="sqlServerquery.eventsByDeviceType" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	      SELECT COUNT("LOG_AGGREGATED_COUNT") AS "count","LOG_DEVCATEGORY" AS "deviceType" FROM $tableName$ WHERE
+	      1 = 1
+	      GROUP BY "deviceType"
+	      ORDER BY "count" DESC
+	      LIMIT 10 offset 0	   
+	   </select>
+	
+	
+	  <!-- 显示本天的最新的1000条数据 -->
+	  <select id="sqlServerquery.recentLogs" parameterClass="java.util.HashMap" resultMap="eventsLogResult">
+	      SELECT * FROM $tableName$ WHERE 1 = 1 AND "LOG_ID" > 
+	      ((SELECT MAX("LOG_ID") - 100 AS "ID" FROM $tableName$ WHERE 1
+	    	= 1))
+	    	<isNotEmpty prepend="AND" property="assetId">
+          <![CDATA[
+            "LOG_ASSET_ID" in ($assetId$) 
+          ]]>
+		</isNotEmpty>
+	       ORDER BY "LOG_ID" DESC
+	  </select> 
+	  
+	  <!-- 显示首页的大屏展示数量 -->
+	  <!-- -->
+	  <select id="sqlServerquery.recentLogsCount" parameterClass="java.util.HashMap" resultClass="int">
+	     SELECT COUNT("LOG_ID") FROM $tableName$ WHERE 1 = 1  AND "LOG_ID">
+	     ((SELECT MAX("LOG_ID") - 100 AS "ID" FROM $tableName$ WHERE 1
+	        = 1))
+	        <isNotEmpty prepend="AND" property="assetId">
+          <![CDATA[
+            "LOG_ASSET_ID" in ($assetId$) 
+          ]]>
+		</isNotEmpty>
+	  </select>
+	
+	<!-- 大屏展示结尾 -->
+
+	<!-- 监控处查询分类事件 -->
+	<select id="sqlServerqueryMonitor.events" parameterClass="java.util.HashMap"
+		resultClass="java.util.HashMap">
+		SELECT "LOG_NAME" AS "events_name","LOG_AGGREGATED_COUNT" AS
+		"count","LOG_PRIORITY" AS "priority","LOG_ID",
+		"LOG_SADDR","LOG_SPORT","LOG_DADDR","LOG_DPORT","LOG_SNAME","LOG_TYPE","LOG_DEVPRODUCT","LOG_PROGRAM","LOG_DEVVENDOR",
+		"LOG_DEVTYPE","LOG_DEVNAME","LOG_PROGRAMTYPE","LOG_CUSTOMD1","LOG_RAWID","LOG_ASSET_ID","LOG_POLICY","LOG_ACTION"
+		FROM $tableName$ where 1 = 1 AND "LOG_ID" > #event_id#
+		<isNotEmpty prepend="AND" property="appprotocol">
+			"LOG_APPPROTOCOL" =
+			#appprotocol#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="policy">
+			"LOG_POLICY" = #policy#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="action">
+			"LOG_ACTION" = #action#
+		</isNotEmpty>
+		<isNotEmpty property="rawid1" prepend="AND">
+			<isNotEmpty property="rawidList">
+		      <![CDATA[
+		      ((#rawid1# <= "LOG_RAWID" AND "LOG_RAWID"<=#rawid2#)  OR "LOG_RAWID" in ($rawidList$)  OR  (#rawid3# <="LOG_RAWID" AND "LOG_RAWID" <= #rawid4#))
+		      ]]>
+			</isNotEmpty>
+			<isEmpty property="rawidList">
+		    <![CDATA[
+		        (#rawid1# <= "LOG_RAWID"  AND "LOG_RAWID" <=#rawid2#)
+		     ]]>
+			</isEmpty>
+		</isNotEmpty>
+		<isEmpty property="rawid1">
+		<isNotEmpty prepend="AND" property="rawidList">
+          <![CDATA[
+               "LOG_RAWID" in ($rawidList$)
+          ]]>
+		</isNotEmpty>
+		</isEmpty>
+		<isNotEmpty prepend="AND" property="devvendor">
+		   <![CDATA[
+		      "LOG_DEVVENDOR" = #devvendor#
+		   ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="assetId">
+          <![CDATA[
+            "LOG_ASSET_ID" in ($assetId$) 
+          ]]>
+		</isNotEmpty>
+		ORDER BY "LOG_ID" ASC
+	</select>
+
+
+	<!-- <insert id="sqlServerinsert.monitorFtp" parameterClass="events"> INSERT INTO 
+		"tbl_monitor_ftp_events" ("LOG_NAME", "LOG_AGGREGATED_COUNT", "LOG_SYSTYPE", 
+		"LOG_COLLECTTYPE", "LOG_SENSORADDR", "LOG_SENSORNAME", "LOG_COLLECTORADDR", 
+		"LOG_COLLECTORNAME", "LOG_CATEGORY", "LOG_TYPE", "LOG_PRIORITY", "LOG_ORIPRIORITY", 
+		"LOG_RAWID", "LOG_DURATION", "LOG_SEND", "LOG_RECEIVE", "LOG_PROTOCOL", "LOG_OBJECT", 
+		"LOG_POLICY", "LOG_RESOURCE", "LOG_ACTION", "LOG_INTENT", "LOG_RESULT", "LOG_SADDR", 
+		"LOG_SNAME", "LOG_SPORT", "LOG_SPROCESS", "LOG_SUSERID", "LOG_SUSERNAME", 
+		"LOG_STADDR", "LOG_STPORT", "LOG_DADDR", "LOG_DNAME", "LOG_DPORT", "LOG_DPROCESS", 
+		"LOG_DUSERID", "LOG_DUSERNAME", "LOG_DTADDR", "LOG_DTPORT", "LOG_DEVADDR", 
+		"LOG_DEVNAME", "LOG_DEVCATEGORY", "LOG_DEVTYPE", "LOG_DEVVENDOR", "LOG_PROGRAMTYPE", 
+		"LOG_PROGRAM", "LOG_DEVPRODUCT", "LOG_SESSIONID", "LOG_CUSTOMS5", "LOG_SUSTOMS6", 
+		"CUSTOMS7", "CUSTOMD3", "CUSTOMD4", "LOG_REQUESTURI", "LOG_MSG", "LOG_SENDTIME", 
+		"LOG_RECEPT_TIME", "LOG_IDENTIFICATION", "LOG_APPPROTOCOL", "LOG_ASSET_ID") 
+		VALUES(#name#, #aggregatedCount#, #systype#, #collectType#, #sensorAddr#, 
+		#sensorName#, #collectorAddr#, #collectorName#, #cateGory#, #type#, #priority#, 
+		#oriPriority#, #rawId#, #duration#, #send#, #receive#, #protocol#, #object#, 
+		#policy#, #resource#, #action#, #intent#, #result#, #sAddr#, #sName#, #sPort#, 
+		#sprocess#, #suserId#, #suserName#, #sTAddr#, #sTPort#, #dAddr#, #dName#, 
+		#dPort#, #dProcess#, #dUserId#, #dUserName#, #dTAddr#, #dTPort#, #devAdd#, 
+		#devName#, #devCategory#, #devType#, #devVendor#, #programType#, #program#, 
+		#devproduct#, #sessionId#, #customs5#, #customs6#, #customs7#, #customd3#, 
+		#customd4#, #requesturi#, #msg#, #sendTime#, #receptTime#, #identification#, 
+		#appProtocol#, #assetId# ) </insert> -->
+	<!-- 关联分析 -->
+	<select id="sqlServerquery.relevance_analysis" parameterClass="java.util.HashMap"
+		resultMap="eventsLogResult">
+		SELECT "LOG_ID", "LOG_AGGREGATED_COUNT", "LOG_SYSTYPE",
+		"LOG_COLLECTTYPE",
+		"LOG_SENSORADDR", "LOG_SENSORNAME",
+		"LOG_COLLECTORADDR", "LOG_COLLECTORNAME",
+		"LOG_CATEGORY", "LOG_TYPE",
+		"LOG_PRIORITY", "LOG_ORIPRIORITY",
+		"LOG_RAWID", "LOG_DURATION",
+		"LOG_SEND", "LOG_RECEIVE",
+		"LOG_PROTOCOL",
+		"LOG_OBJECT", "LOG_POLICY",
+		"LOG_RESOURCE", "LOG_ACTION", "LOG_INTENT",
+		"LOG_RESULT", "LOG_SADDR",
+		"LOG_SNAME", "LOG_SPORT", "LOG_SPROCESS",
+		"LOG_SUSERID",
+		"LOG_SUSERNAME", "LOG_STADDR", "LOG_STPORT",
+		"LOG_DADDR",
+		"LOG_DNAME",
+		"LOG_DPORT", "LOG_DPROCESS", "LOG_DUSERID", "LOG_DUSERNAME",
+		"LOG_DTADDR", "LOG_DTPORT", "LOG_DEVADDR", "LOG_DEVNAME",
+		"LOG_DEVCATEGORY",
+		"LOG_DEVTYPE", "LOG_DEVVENDOR", "LOG_PROGRAMTYPE",
+		"LOG_PROGRAM",
+		"LOG_CUSTOMS1", "LOG_CUSTOMS2", "LOG_CUSTOMS3",
+		"LOG_CUSTOMS4",
+		"LOG_NAME", "LOG_CUSTOMD1", "CUSTOMD2",
+		"LOG_DEVPRODUCT", "LOG_SESSIONID",
+		"LOG_CUSTOMS5", "LOG_SUSTOMS6",
+		"CUSTOMS7", "CUSTOMD3", "CUSTOMD4",
+		"LOG_REQUESTURI", "LOG_MSG",
+		"LOG_SENDTIME", "LOG_RECEPT_TIME",
+		"LOG_IDENTIFICATION",
+		"LOG_APPPROTOCOL", "LOG_ASSET_ID" FROM
+		$tableName$ WHERE 1=1
+		<isNotEmpty prepend="AND" property="type">
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="protocol">
+          <![CDATA[
+            "LOG_PROTOCOL" IN ($protocol$)
+          ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="timeRange">
+
+          <![CDATA[
+            "LOG_TYPE" = #type# 
+          ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="name">
+          <![CDATA[
+            "LOG_NAME"  SIMILAR TO '%($name$)%'  
+          ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="programtype">
+          <![CDATA[
+            "LOG_PROGRAMTYPE" = #programtype# 
+          ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="devtype">
+          <![CDATA[
+            "LOG_DEVTYPE" = #devtype# 
+          ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="action">
+          <![CDATA[
+            "LOG_ACTION" = #action# 
+          ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="customs2">
+          <![CDATA[
+            "LOG_CUSTOMS2" = #customs2# 
+          ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="msg">
+          <![CDATA[
+            "LOG_MSG" SIMILAR TO '%($msg$)%' 
+          ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="rawid">
+          <![CDATA[
+            "LOG_RAWID" = CAST(#rawid# AS bigint) 
+          ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="devvendor">
+          <![CDATA[
+            "LOG_DEVVENDOR" = #devvendor# 
+          ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="resource">
+          <![CDATA[
+            "LOG_RESOURCE" = #resource# 
+          ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="devproduct">
+          <![CDATA[
+            "LOG_DEVPRODUCT" = #devproduct# 
+          ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="result">
+          <![CDATA[
+            "LOG_RESULT" = #result# 
+          ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="systype">
+          <![CDATA[
+            "LOG_SYSTYPE" = CAST(#systype# AS bigint)
+          ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="program">
+          <![CDATA[
+            "LOG_PROGRAM" = #program# 
+          ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="assetId">
+          <![CDATA[
+            "LOG_ASSET_ID" in ($assetId$) 
+          ]]>
+		</isNotEmpty>
+	</select>
+
+	<select id="sqlServerquery.events" resultMap="eventsLogResult"
+		parameterClass="java.util.HashMap">
+		SELECT "LOG_ID", "LOG_AGGREGATED_COUNT", "LOG_SYSTYPE",
+		"LOG_COLLECTTYPE",
+		"LOG_SENSORADDR", "LOG_SENSORNAME",
+		"LOG_COLLECTORADDR",
+		"LOG_COLLECTORNAME",
+		"LOG_CATEGORY", "LOG_TYPE",
+		"LOG_PRIORITY", "LOG_ORIPRIORITY",
+		"LOG_RAWID", "LOG_DURATION",
+		"LOG_SEND", "LOG_RECEIVE", "LOG_PROTOCOL",
+		"LOG_OBJECT", "LOG_POLICY",
+		"LOG_RESOURCE", "LOG_ACTION",
+		"LOG_INTENT",
+		"LOG_RESULT", "LOG_SADDR",
+		"LOG_SNAME", "LOG_SPORT", "LOG_SPROCESS",
+		"LOG_SUSERID",
+		"LOG_SUSERNAME", "LOG_STADDR", "LOG_STPORT", "LOG_DADDR",
+		"LOG_DNAME",
+		"LOG_DPORT", "LOG_DPROCESS", "LOG_DUSERID",
+		"LOG_DUSERNAME",
+		"LOG_DTADDR", "LOG_DTPORT", "LOG_DEVADDR", "LOG_DEVNAME",
+		"LOG_DEVCATEGORY",
+		"LOG_DEVTYPE", "LOG_DEVVENDOR", "LOG_PROGRAMTYPE",
+		"LOG_PROGRAM",
+		"LOG_CUSTOMS1", "LOG_CUSTOMS2", "LOG_CUSTOMS3",
+		"LOG_CUSTOMS4",
+		"LOG_NAME", "LOG_CUSTOMD1", "CUSTOMD2",
+		"LOG_DEVPRODUCT",
+		"LOG_SESSIONID",
+		"LOG_CUSTOMS5", "LOG_SUSTOMS6",
+		"CUSTOMS7", "CUSTOMD3", "CUSTOMD4",
+		"LOG_REQUESTURI", "LOG_MSG",
+		"LOG_SENDTIME", "LOG_RECEPT_TIME",
+		"LOG_IDENTIFICATION"
+		,"LOG_APPPROTOCOL","LOG_ASSET_ID"
+		FROM $tableName$ WHERE
+		"LOG_IDENTIFICATION" = #identification#
+		<isNotEmpty prepend="AND" property="assetId">
+          <![CDATA[
+            "LOG_ASSET_ID" in ($assetId$) 
+          ]]>
+		</isNotEmpty>
+	</select>
+
+	<insert id="sqlServerinsert.originLog" parameterClass="java.util.HashMap">
+		INSERT INTO
+		$tableName$(
+		"ORIGIN_LOG_IDENTIFICATION",
+		"ORIGIN_LOG_MSG",
+		"ORIGIN_LOG_ASSET_ID",
+		"ORIGIN_LOG_ASSET_NAME")
+		VALUES (
+		#identification#,
+		#msg#,
+		#assetId#,
+		#assetName#);
+	</insert>
+
+	<select id="sqlServerquery.originLog" parameterClass="long" resultClass="java.lang.String">
+		SELECT "ORIGIN_LOG_MSG" FROM "tbl_origin_log" WHERE
+		"ORIGIN_LOG_IDENTIFICATION" = #value#
+	</select>
+
+	<select id="sqlServerexists.log" parameterClass="String" resultClass="int">
+		 select count(*) from sys.objects where name= #value#
+	</select>
+
+	<select id="sqlServerexists.seq" parameterClass="String" resultClass="String">
+		SELECT * FROM pg_class WHERE relkind = 'S' AND relname = #value#
+	</select>
+
+	<statement id="sqlServercreate.seq" parameterClass="String">
+		CREATE SEQUENCE
+		$seqName$
+		INCREMENT 1
+		MINVALUE 1
+		MAXVALUE 999999999999999999
+		START 1
+		CACHE
+		1;
+	</statement>
+
+	<!-- 创建事件表 -->
+	<statement id="sqlServercreate.log" parameterClass="java.util.HashMap">
+		Create Table
+		$tableName$
+		(
+		"LOG_ID" bigint NOT NULL PRIMARY KEY IDENTITY(1,1),
+		"LOG_AGGREGATED_COUNT" bigint,
+		"LOG_SYSTYPE" bigint,
+		"LOG_COLLECTTYPE" bigint,
+		"LOG_SENSORADDR" bigint,
+		"LOG_SENSORNAME" character varying(255),
+		"LOG_COLLECTORADDR" bigint,
+		"LOG_COLLECTORNAME" character varying(255),
+		"LOG_CATEGORY" character varying(255),
+		"LOG_TYPE" character varying(255),
+		"LOG_PRIORITY" bigint,
+		"LOG_ORIPRIORITY" character varying(255),
+		"LOG_RAWID" bigint,
+		"LOG_DURATION" bigint,
+		"LOG_SEND" bigint,
+		"LOG_RECEIVE" bigint,
+		"LOG_PROTOCOL" integer,
+		"LOG_OBJECT" character varying(255),
+		"LOG_POLICY" character varying(255),
+		"LOG_RESOURCE" character varying(255),
+		"LOG_ACTION" character varying(255),
+		"LOG_INTENT" character varying(255),
+		"LOG_RESULT" character varying(255),
+		"LOG_SADDR" bigint,
+		"LOG_SNAME" character varying(255),
+		"LOG_SPORT" bigint,
+		"LOG_SPROCESS" character varying(255),
+		"LOG_SUSERID" character varying(255),
+		"LOG_SUSERNAME" character varying(255),
+		"LOG_STADDR" bigint,
+		"LOG_STPORT" bigint,
+		"LOG_DADDR" bigint,
+		"LOG_DNAME" character varying(255),
+		"LOG_DPORT" bigint,
+		"LOG_DPROCESS" character varying(255),
+		"LOG_DUSERID" character varying(255),
+		"LOG_DUSERNAME" character varying(255),
+		"LOG_DTADDR" bigint,
+		"LOG_DTPORT" bigint,
+		"LOG_DEVADDR" bigint,
+		"LOG_DEVNAME" character varying(255),
+		"LOG_DEVCATEGORY" bigint,
+		"LOG_DEVTYPE" character varying(255),
+		"LOG_DEVVENDOR" character varying(255),
+		"LOG_PROGRAMTYPE" character varying(255),
+		"LOG_PROGRAM" character varying(255),
+		"LOG_CUSTOMS1" character varying(1000),
+		"LOG_CUSTOMS2" character varying(1000),
+		"LOG_CUSTOMS3" character varying(1000),
+		"LOG_CUSTOMS4" character varying(1000),
+		"LOG_NAME" character varying(255),
+		"LOG_CUSTOMD1" bigint,
+		"CUSTOMD2" bigint,
+		"LOG_DEVPRODUCT" character varying(255),
+		"LOG_SESSIONID" character varying(255),
+		"LOG_CUSTOMS5" character varying(1000),
+		"LOG_SUSTOMS6" character varying(255),
+		"CUSTOMS7" character varying(1000),
+		"CUSTOMD3" float,
+		"CUSTOMD4" float,
+		"LOG_REQUESTURI" text,
+		"LOG_MSG" text,
+		"LOG_SENDTIME" bigint,
+		"LOG_RECEPT_TIME" bigint,
+		"LOG_IDENTIFICATION" bigint,
+		"LOG_APPPROTOCOL" bigint,
+		"LOG_ASSET_ID" bigint,
+		)
+	</statement>
+	
+     
+
+
+
+	<select id="sqlServercount.custom_muchTable" resultClass="int"
+		parameterClass="java.lang.String">
+		$sql$
+	</select>
+
+
+	<select id="sqlServerquery.custom_muchTable" resultMap="eventsLogResult"
+		parameterClass="java.lang.String">
+		$sql$
+	</select>
+	
+	<select id="sqlServercount.queryEventByasset" resultClass="int" parameterClass="java.lang.String">
+	   $sql$
+	</select>
+    
+    <select id="sqlServerquery.queryEventByasset" resultMap="eventsLogResult"  parameterClass="java.lang.String">
+	    $sql$
+	</select>
+	
+	  <!-- 首页当天的事件统计 -->
+     <select id="sqlServerhomepage.queryEvents" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+        SELECT SUM("LOG_AGGREGATED_COUNT") AS 'value',"LOG_PRIORITY" AS 'key' from $tableName$
+        where 1=1 and "LOG_PRIORITY" in (1,2,3,4,5)
+        <isNotEmpty prepend="AND" property="assetId">
+          <![CDATA[
+            "LOG_ASSET_ID" in ($assetId$) 
+          ]]>
+		</isNotEmpty>
+        GROUP BY "LOG_PRIORITY"
+        ORDER BY "LOG_PRIORITY" DESC
+     </select>
+     
+     <!-- 近n小时事件趋势 -->
+	<select id="sqlServerEvents.trendAnalysis" parameterClass="java.util.HashMap" resultClass="int">
+	SELECT count(*) as "count"
+  FROM $tbl$ where "LOG_RECEPT_TIME" between $tempTime1$ and  $tempTime2$
+
+    <isNotEmpty prepend="AND" property="alertAssetId">
+          <![CDATA[
+            "LOG_ASSET_ID" in ($alertAssetId$) 
+          ]]>
+		</isNotEmpty>
+  ;
+	</select>
+	
+	<!-- 当天事件类型分布 -->
+	<select id="sqlServerQuery.EventByCategory" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	SELECT "LOG_CATEGORY" AS "key",count(*) AS "value"
+  FROM $tbl$ 
+  where 1=1 
+    <isNotEmpty prepend="AND" property="alertAssetId">
+          <![CDATA[
+            "LOG_ASSET_ID" in ($alertAssetId$) 
+          ]]>
+		</isNotEmpty>
+  group by "LOG_CATEGORY";
+	</select>
+	
+	
+	<!-- 当天事件IP分布 -->
+	<select id="sqlServerQuery.EventByIP" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	SELECT "LOG_DEVADDR" AS "key",count(*) AS "value"
+  FROM $tbl$ 
+  where 1=1 
+    <isNotEmpty prepend="AND" property="alertAssetId">
+          <![CDATA[
+            "LOG_ASSET_ID" in ($alertAssetId$) 
+          ]]>
+		</isNotEmpty>
+  group by "LOG_DEVADDR";
+	</select>
+     
+     <!-- sqlServer用的sqlKey -->
+    
+</sqlMap>

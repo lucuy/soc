@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    
+    <sqlMap>
+        <resultMap class="GpaRect"       id="gpaRectResult1">
+           <result property="gpaRectId"      column="gpaRectId" />
+           <result property="gpaDate"        column="gpaDate" />
+           <result property="gpaRectAdvise"  column="gpaRectAdvise" />
+           <result property="gpaRectDate"    column="gpaRectDate" />
+           <result property="gFatherSort"    column="gFatherSort" />
+           <result property="gFatherName"    column="gFatherName" />
+           <result property="fatherSort"     column="fatherSort" />
+           <result property="fatherName"     column="fatherName" />
+           <result property="sonSort"        column="sonSort" />
+           <result property="sonContent"     column="sonContent" />
+           <result property="gpaAssessResult"     column="gpaAssessResult" />
+           
+        </resultMap>
+        
+        <resultMap class="GpaRect"       id="gpaRectResult2">
+           <result property="gFatherSort"  column="gPSAD_Sort" />
+           <result property="gFatherName"  column="gPSAD_Name" />
+           <result property="fatherSort"   column="fPSAD_Sort" />
+           <result property="fatherName"   column="fPSAD_Name" />
+           <result property="sonSort"      column="sPSAD_Sort" />
+           <result property="sonContent"   column="sPSAD_Content" />
+        </resultMap>
+        
+        <resultMap class="GpaRect"       id="gpaRectResult3">
+           <result property="gpaDate"        column="gpaDate" />
+        </resultMap>
+        <!-- 查询所有的通用物理源数据 -->
+        <select id="pgAdmingpaRect.queryAllData"  resultMap="gpaRectResult2">
+          select distinct
+           g."PSAD_Sort" as "gPSAD_Sort",
+           g."PSAD_Name" as "gPSAD_Name",
+           f."PSAD_Sort" as "fPSAD_Sort" ,
+           f."PSAD_Name" as "fPSAD_Name" ,
+           s."PSAD_Sort" as "sPSAD_Sort",
+           s."PSAD_Content" as "sPSAD_Content" from "tb_psad" g,"tb_psad" f,"tb_psad" s where s."PSAD_Content" is not null and g."PSAD_Sort"=f."PSAD_FatherSort" 
+          and f."PSAD_Sort"=s."PSAD_FatherSort" and (f."PSAD_Sort" not like'%3') order by f."PSAD_Sort"
+        </select>
+        <!--查询通用物理整改建议 -->
+        <select id="pgAdmingpaRect.queryByMap" parameterClass="java.util.HashMap"  resultMap="gpaRectResult1">
+          select * from "tb_gparect" where 1=1
+               <isNotEmpty prepend="AND" property="gpaDate">
+                 <![CDATA[
+                    ("gpaDate"=#gpaDate#)
+                 ]]>
+              </isNotEmpty>
+               
+              <isNotEmpty prepend="AND" property="gpaAssessResult">
+                <![CDATA[
+                   ("gpaAssessResult"=#gpaAssessResult#)
+                ]]>
+             </isNotEmpty>    
+        </select>
+        
+        <!--根据日期 查询通用物理整改建议 -->
+          <select id="pgAdmingpaRect.query" parameterClass="java.util.HashMap"  resultMap="gpaRectResult1">
+          select * from "tb_gparect" where 1=1 
+            <isNotEmpty prepend="AND" property="gpaDate">
+                 <![CDATA[
+                    "gpaDate"=#gpaDate#
+                 ]]>
+              </isNotEmpty>
+        </select>  
+        
+        <!--根据主键查询通用物理整改建议 -->
+        <select id="pgAdmingpaRect.queryById" parameterClass="int"  resultMap="gpaRectResult1">
+          select * from "tb_gparect" where "gpaRectId"=#gpaRectId#
+        </select>        
+        <!--通用物理整改建议历史树 -->
+        <select id="pgAdmingpaRect.queryTree"  resultMap="gpaRectResult3">
+          select distinct  "gpaDate" from "tb_gparect"
+        </select>
+        
+   		<!-- 添加通用物理整改建议-->
+   		<insert id="pgAdmingpaRect.insert" parameterClass="GpaRect">
+            INSERT INTO "tb_gparect"(
+            				"gpaDate",
+            				"gpaRectAdvise",
+            				"gpaRectDate",
+            				"gFatherSort",
+            				"gFatherName",
+            				"fatherSort",
+            				"fatherName",
+            				"sonSort",
+            				"sonContent",
+            				"gpaAssessResult") 
+            VALUES(
+            				#gpaDate#,
+            				#gpaRectAdvise#,
+            				#gpaRectDate#,
+            				#gFatherSort#,
+            				#gFatherName#,
+            				#fatherSort#,
+            				#fatherName#,
+            				#sonSort#,
+            				#sonContent#,
+            				#gpaAssessResult#)
+   		</insert>
+   		
+   		<delete id="pgAdmingpaRect.delete" parameterClass="int">
+   		  delete from "tb_gparect" where "gpaRectId"=#gpaRectId#
+   		</delete>
+   		
+   		<!--修改通用物理整改建议-->
+   		<update id="pgAdmingpaRect.update" parameterClass="GpaRect">
+   		  update "tb_gparect" set "gpaRectAdvise"=#gpaRectAdvise#,"gpaRectDate"=#gpaRectDate# where "gpaRectId"=#gpaRectId#
+   		</update>
+   
+        <!-- sqlserver -->
+        <!-- 查询所有的通用物理源数据 -->
+        <select id="sqlServergpaRect.queryAllData"  resultMap="gpaRectResult2">
+          select distinct
+           g."PSAD_Sort" as "gPSAD_Sort",
+           g."PSAD_Name" as "gPSAD_Name",
+           f."PSAD_Sort" as "fPSAD_Sort" ,
+           f."PSAD_Name" as "fPSAD_Name" ,
+           s."PSAD_Sort" as "sPSAD_Sort",
+           s."PSAD_Content" as "sPSAD_Content" from "tb_psad" g,"tb_psad" f,"tb_psad" s where s."PSAD_Content" is not null and g."PSAD_Sort"=f."PSAD_FatherSort" 
+          and f."PSAD_Sort"=s."PSAD_FatherSort" and (f."PSAD_Sort" not like'%3') order by f."PSAD_Sort"
+        </select>
+        <!--查询通用物理整改建议 -->
+        <select id="sqlServergpaRect.queryByMap" parameterClass="java.util.HashMap"  resultMap="gpaRectResult1">
+          select * from "tb_gparect" where 1=1
+               <isNotEmpty prepend="AND" property="gpaDate">
+                 <![CDATA[
+                    ("gpaDate"=#gpaDate#)
+                 ]]>
+              </isNotEmpty>
+               
+              <isNotEmpty prepend="AND" property="gpaAssessResult">
+                <![CDATA[
+                   ("gpaAssessResult"=#gpaAssessResult#)
+                ]]>
+             </isNotEmpty>    
+        </select>
+        
+        <!--根据日期 查询通用物理整改建议 -->
+          <select id="sqlServergpaRect.query" parameterClass="java.util.HashMap"  resultMap="gpaRectResult1">
+          select * from "tb_gparect" where 1=1 
+            <isNotEmpty prepend="AND" property="gpaDate">
+                 <![CDATA[
+                    "gpaDate"=#gpaDate#
+                 ]]>
+              </isNotEmpty>
+        </select>  
+        
+        <!--根据主键查询通用物理整改建议 -->
+        <select id="sqlServergpaRect.queryById" parameterClass="int"  resultMap="gpaRectResult1">
+          select * from "tb_gparect" where "gpaRectId"=#gpaRectId#
+        </select>        
+        <!--通用物理整改建议历史树 -->
+        <select id="sqlServergpaRect.queryTree"  resultMap="gpaRectResult3">
+          select distinct  "gpaDate" from "tb_gparect"
+        </select>
+        
+   		<!-- 添加通用物理整改建议-->
+   		<insert id="sqlServergpaRect.insert" parameterClass="GpaRect">
+            INSERT INTO "tb_gparect"(
+            				"gpaDate",
+            				"gpaRectAdvise",
+            				"gpaRectDate",
+            				"gFatherSort",
+            				"gFatherName",
+            				"fatherSort",
+            				"fatherName",
+            				"sonSort",
+            				"sonContent",
+            				"gpaAssessResult") 
+            VALUES(
+            				#gpaDate#,
+            				#gpaRectAdvise#,
+            				#gpaRectDate#,
+            				#gFatherSort#,
+            				#gFatherName#,
+            				#fatherSort#,
+            				#fatherName#,
+            				#sonSort#,
+            				#sonContent#,
+            				#gpaAssessResult#)
+   		</insert>
+   		
+   		<delete id="sqlServergpaRect.delete" parameterClass="int">
+   		  delete from "tb_gparect" where "gpaRectId"=#gpaRectId#
+   		</delete>
+   		
+   		<!--修改通用物理整改建议-->
+   		<update id="sqlServergpaRect.update" parameterClass="GpaRect">
+   		  update "tb_gparect" set "gpaRectAdvise"=#gpaRectAdvise#,"gpaRectDate"=#gpaRectDate# where "gpaRectId"=#gpaRectId#
+   		</update>
+   
+    </sqlMap>

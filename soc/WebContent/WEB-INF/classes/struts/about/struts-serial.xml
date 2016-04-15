@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	
+	<package name="serial" extends="struts-default" namespace="/serial">
+		
+		<action name="serial" class="serialAction" method="serial">
+			<result name="success">/pages/about/serial.jsp</result>     	
+		</action>
+		
+		<action name="register" class="serialAction" method="register">
+			<result name="success">/pages/about/serial.jsp</result>     	
+		</action>
+		
+		<action name="initSerial" class="serialAction" method="serial">
+			<result name="success">/pages/serial.jsp</result>     	
+		</action>
+		
+		<action name="initRegister" class="serialAction" method="register">
+			<result name="success">/pages/login.jsp</result>     	
+		</action>
+		
+	</package>
+	
+</struts>

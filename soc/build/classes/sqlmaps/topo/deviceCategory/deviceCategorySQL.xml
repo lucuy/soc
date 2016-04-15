@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="deviceCategorySQL">
+
+       <resultMap class="deviceCategory" id="deviceCategoryResult">
+       		<result property="deviceCategory_id" column="DEVICECATEGORY_ID" jdbcType="long"/>
+       		<result property="deviceCategory_name" column="DEVICECATEGORY_NAME" jdbcType="varchar"/>
+       		<result property="deviceCategory_photo" column="DEVICECATEGORY_PHOTO" jdbcType="text"/>
+       		<result property="deviceCategory_describe" column="DEVICECATEGORY_DESCRIBE" jdbcType="varchar"/>
+       </resultMap>
+       		
+       <resultMap class="deviceCategoryPhoto" id="deviceCategoryPhotoResult">
+       		<result property="deviceCategoryPhoto_id" column="DEVICECATEGORYPHOTO_ID" jdbcType="long"/>
+       		<result property="deviceCategoryphoto_Path" column="DEVICECATEGORYPHOTO_PATH" jdbcType="text"/>
+       		<result property="deviceCategoryphoto_name" column="DEVICECATEGORYPHOTO_NAME" jdbcType="text"/>
+       </resultMap>
+
+	<!-- <sql id="query">
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="did">
+				did = #did#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="dip">
+				dip = #dip#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="dname">
+				dname = #dname#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="dtype">
+				dtype = #dtype#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="dmodel">
+				dmodel = #dmodel#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="pox">
+				pox = #pox#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="poy">
+				poy = #poy#
+			</isNotEmpty>
+		</dynamic>
+		order by convert(did using GB2312)
+		<isNotNull prepend="limit" property="pagination">
+			#pagination.pageIndex#, #pagination.pageSize#
+		</isNotNull>
+	</sql> -->
+	<!-- 添加设备类型 -->
+	<insert id="addDeviceCategory" parameterClass="deviceCategory">
+		insert into "tbl_devicecategory"("DEVICECATEGORY_NAME", "DEVICECATEGORY_PHOTO", "DEVICECATEGORY_DESCRIBE")
+		values(#deviceCategory_name#, #deviceCategory_photo#, #deviceCategory_describe#)
+	</insert>
+	<!-- 根据设备类型ID删除，一次可以删多个也可以删一个 -->
+	
+	<delete id="deleteDeviceCategoryByIds">
+    	delete from "tbl_devicecategory" where "DEVICECATEGORY_ID" in ( <iterate conjunction=",">#[]#</iterate>)
+    </delete>
+	<!-- 更新设备类型 -->
+	<update id="editDeviceCategory" parameterClass="deviceCategory">
+		update "tbl_devicecategory" set 
+		"DEVICECATEGORY_NAME"=#deviceCategory_name#,
+		"DEVICECATEGORY_PHOTO"=#deviceCategory_photo#,
+		"DEVICECATEGORY_DESCRIBE"=#deviceCategory_describe#
+		where "DEVICECATEGORY_ID"=#deviceCategory_id#
+	</update>
+	<!-- 查询所有的设备类型信息 -->
+	<select id="deviceCategoryAll" resultMap="deviceCategoryResult">
+		select * from "tbl_devicecategory"
+	</select>
+	<!-- 根据设备类型ID查询设备类型信息 -->
+	<select id="queryDeviceCategoryById" parameterClass="long" resultMap="deviceCategoryResult">
+		select * from "tbl_devicecategory" where "DEVICECATEGORY_ID"=#deviceCategory_id#;
+	</select>
+	<!-- 根据设备类型名称查询设备类型信息 -->
+	<select id="queryDeviceCategoryByName" parameterClass="String" resultMap="deviceCategoryResult">
+		select * from "tbl_devicecategory" where "DEVICECATEGORY_NAME"=#deviceCategory_NAME#;
+	</select>
+	
+	<!-- 获取所有设备类型图片的路径 -->
+	<select id="queryAllDeviceCategoryPhoto"  resultMap="deviceCategoryPhotoResult">
+		select * from "tbl_devicecategoryhoto";
+	</select>
+	<!-- <select id="getRecordCount" resultClass="int">
+		select count(*) from sys_device
+		<include refid="query"/>
+	</select>
+	
+	<select id="getDeviceById" parameterClass="string" resultClass="Device">
+		select * from sys_device where did = #did#
+	</select>
+	
+	<select id="getDevice" resultClass="Device">
+		select * from sys_device
+		<include refid="query"/>
+	</select> -->
+</sqlMap>

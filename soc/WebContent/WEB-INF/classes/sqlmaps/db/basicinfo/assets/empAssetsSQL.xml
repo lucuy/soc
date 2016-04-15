@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="empAssetsSQL">
+
+	<resultMap class="empAssets" id="empAssetsResult">
+		<result property="id" column="PK_SAFETYOFFICER" jdbcType="int" />
+		<result property="empName" column="SAFETYOFFICER_Name" jdbcType="varchar" />
+		<result property="conInfo" column="SAFETYOFFICER_Tel" jdbcType="varchar" />
+		<result property="jobDes" column="SAFETYOFFICER_JobDes" jdbcType="varchar" />
+		<result property="empRemarks" column="SAFETYOFFICER_Remark" jdbcType="varchar" />
+		<result property="resType" column="SAFETYOFFICER_AssetType" jdbcType="varchar" />
+		<result property="relsysName" column="PK_SAFETYOFFICER" select="pgAdminempAssets.getSysName" />
+	</resultMap>
+	<!-- postrgreSql -->
+	<select id="pgAdminempAssets.getSysName" parameterClass="int" resultClass="string">
+		select "SYSINFO_Name" from "tb_sysref" where "PK_SAFETYOFFICER" = #value#
+	</select>
+	<insert id="pgAdminempAssets.addSysName">
+		insert into "tb_sysref" ("SYSINFO_Name", "PK_SAFETYOFFICER")
+		values(#relsysName#, #id#)
+	</insert>
+	<delete id="pgAdminempAssets.delSysName" parameterClass="int">
+		delete from "tb_sysref" where "PK_SAFETYOFFICER" = #value#
+	</delete>
+	<!-- sqlServer -->
+	<select id="sqlServerempAssets.getSysName" parameterClass="int" resultClass="string">
+		select "SYSINFO_Name" from "tb_sysref" where "PK_SAFETYOFFICER" = #value#
+	</select>
+	<insert id="sqlServerempAssets.addSysName">
+		insert into "tb_sysref" ("SYSINFO_Name", "PK_SAFETYOFFICER")
+		values(#relsysName#, #id#)
+	</insert>
+	<delete id="sqlServerempAssets.delSysName" parameterClass="int">
+		delete from "tb_sysref" where "PK_SAFETYOFFICER" = #value#
+	</delete>
+	<!-- 根据信息系统名称查询业务应用软件总记录数 -->
+	<sql id="count5BySysName">
+		SELECT count(*) FROM "tb_safetyofficer"
+		WHERE
+			"PK_SAFETYOFFICER" IN (
+				SELECT
+					A ."PK_SAFETYOFFICER"
+				FROM
+					tb_safetyofficer A
+				RIGHT JOIN tb_sysref b ON A ."PK_SAFETYOFFICER" = b."PK_SAFETYOFFICER"
+				WHERE
+					b."SYSINFO_Name" = #keyword2#
+			)
+	</sql>
+	<!-- 根据信息系统名称查询业务应用软件 -->
+	<sql id="query5BySysName">
+		SELECT * FROM "tb_safetyofficer"
+		WHERE
+			"PK_SAFETYOFFICER" IN (
+				SELECT
+					A ."PK_SAFETYOFFICER"
+				FROM
+					tb_safetyofficer A
+				RIGHT JOIN tb_sysref b ON A ."PK_SAFETYOFFICER" = b."PK_SAFETYOFFICER"
+				WHERE
+					b."SYSINFO_Name" = #keyword2#
+			)
+	</sql>
+	<!-- 姓名、所管理系统名称、岗位描述、联系方式进行模糊查询查询条数 -->
+	<select id="pgAdminempAssets.count" resultClass="int">
+		<isEmpty property="keyword2">
+			SELECT COUNT(*) FROM "tb_safetyofficer"   where 1=1
+			<isNotEmpty prepend="AND" property="keyword">
+				<![CDATA[
+					(
+						"SAFETYOFFICER_Name" LIKE '%$keyword$%' 
+						or "SAFETYOFFICER_JobDes" LIKE '%$keyword$%'
+						or "SAFETYOFFICER_Tel" LIKE '%$keyword$%' 
+						
+					)
+				]]>
+			</isNotEmpty>
+		</isEmpty>
+	</select>
+	<!-- 添加安全相关人员 -->
+	<insert id="pgAdminempAssets.insert" parameterClass="empAssets">
+		<selectKey resultClass="int" type="pre" keyProperty="id">
+			SELECT nextval('tb_safetyofficer_seq'::regclass)
+		</selectKey>
+		insert into "tb_safetyofficer"("PK_SAFETYOFFICER", "SAFETYOFFICER_Name","SAFETYOFFICER_Tel",
+		"SAFETYOFFICER_JobDes" ,"SAFETYOFFICER_Remark","SAFETYOFFICER_AssetType")
+		values(#id#,#empName#,#conInfo#,#jobDes#,#empRemarks#,#resType#)
+	</insert>
+	<!-- 根据id查询 -->
+	<select id="pgAdminempAssets.queryById" parameterClass="Integer" resultMap="empAssetsResult">
+
+		select * from "tb_safetyofficer" where "PK_SAFETYOFFICER" = #id#
+	</select>
+	<!-- 修改安全相关人员信息 -->
+	<update id="pgAdminempAssets.update" parameterClass="empAssets">
+		update "tb_safetyofficer"  
+		SET
+		"SAFETYOFFICER_Name" = #empName#,
+		"SAFETYOFFICER_Tel" = #conInfo#,
+		"SAFETYOFFICER_JobDes" = #jobDes#,
+		"SAFETYOFFICER_Remark" = #empRemarks#,
+		"SAFETYOFFICER_AssetType" = #resType#
+		where
+		"PK_SAFETYOFFICER" = #id#
+	</update>
+	<!-- 按照姓名、所管理系统名称、岗位描述、联系方式进行模糊查询 -->
+
+	<select id="pgAdminempAssets.query" resultMap="empAssetsResult" parameterClass="java.util.HashMap">
+		SELECT * FROM "tb_safetyofficer"   where 1=1
+		<isNotEmpty prepend="AND" property="keyword">
+			<![CDATA[
+				(
+					
+					"SAFETYOFFICER_Name" LIKE '%$keyword$%' 
+					or "SAFETYOFFICER_JobDes" LIKE '%$keyword$%'
+					or "SAFETYOFFICER_Tel" LIKE '%$keyword$%' 
+					
+				)
+			]]>
+		</isNotEmpty>
+		order by "PK_SAFETYOFFICER" desc
+	</select>
+	<!-- 删除安全相关人员 -->
+	<delete id="pgAdminempAssets.delete" parameterClass="int">
+		delete from "tb_safetyofficer" WHERE "PK_SAFETYOFFICER"=#id#
+	</delete>
+	<!-- 按照姓名、所管理系统名称、联系方式进行精确查找查询条数 -->
+	<select id="pgAdminempAssets.countprecise" resultClass="int">
+		<isNotEmpty property="keyword2">
+			<include refid="count5BySysName"/>
+		</isNotEmpty>
+		<isEmpty property="keyword2">
+			SELECT COUNT(*) FROM "tb_safetyofficer"   where 1=1
+			<isNotEmpty prepend="AND" property="keyword1">
+				<![CDATA[
+					(
+						"SAFETYOFFICER_Name" =#keyword1# 
+					)
+				]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="keyword2">
+				<![CDATA[
+					(
+						"SYSINFO_Names" =#keyword2# 
+					)
+				]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="keyword3">
+				<![CDATA[
+					(
+						"SAFETYOFFICER_Tel" =#keyword3# 
+					)
+				]]>
+			</isNotEmpty>
+		</isEmpty>
+	</select>
+	<!-- 按照姓名、所管理系统名称、联系方式进行精确查找 -->
+
+	<select id="pgAdminempAssets.queryprecise" resultMap="empAssetsResult" parameterClass="java.util.HashMap">
+		<isNotEmpty property="keyword2">
+			<include refid="query5BySysName"/>
+		</isNotEmpty>
+		<isEmpty property="keyword2">
+			SELECT * FROM "tb_safetyofficer"   where 1=1
+			<isNotEmpty prepend="AND" property="keyword1">
+				<![CDATA[
+					(
+						"SAFETYOFFICER_Name" =#keyword1# 
+					)
+				]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="keyword2">
+				<![CDATA[
+					(
+						"SYSINFO_Names" =#keyword2# 
+					
+					)
+				]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="keyword3">
+				<![CDATA[
+					(
+						"SAFETYOFFICER_Tel" =#keyword3# 
+					)
+				]]>
+			</isNotEmpty>
+		</isEmpty>
+		order by "PK_SAFETYOFFICER" desc
+	</select>
+
+	<!-- 评估导出报表。查询所有 -->
+	<select id="pgAdminempAssets.queryAll" resultMap="empAssetsResult">
+		SELECT * FROM "tb_safetyofficer"
+	</select>
+	<!-- sqlserver -->
+	<!-- 姓名、所管理系统名称、岗位描述、联系方式进行模糊查询查询条数 -->
+	<select id="sqlServerempAssets.count" resultClass="int">
+		SELECT COUNT(*) FROM "tb_safetyofficer"   where 1=1
+		<isNotEmpty prepend="AND" property="keyword">
+			<![CDATA[
+				(
+					"SAFETYOFFICER_Name" LIKE '%$keyword$%' 
+					or "SAFETYOFFICER_JobDes" LIKE '%$keyword$%'
+					or "SAFETYOFFICER_Tel" LIKE '%$keyword$%' 
+					
+				)
+			]]>
+		</isNotEmpty>
+
+	</select>
+	<!-- 添加安全相关人员 -->
+	<insert id="sqlServerempAssets.insert" parameterClass="empAssets">
+		insert into "tb_safetyofficer"("SAFETYOFFICER_Name","SAFETYOFFICER_Tel",
+		"SAFETYOFFICER_JobDes" ,"SAFETYOFFICER_Remark","SAFETYOFFICER_AssetType")
+		values(#empName#,#conInfo#,#jobDes#,#empRemarks#,#resType#)
+		<selectKey resultClass="int" type="post" keyProperty="id" >
+           SELECT @@IDENTITY AS id
+      	</selectKey>
+	</insert>
+	<!-- 根据id查询 -->
+	<select id="sqlServerempAssets.queryById" parameterClass="Integer" resultMap="empAssetsResult">
+
+		select * from "tb_safetyofficer" where "PK_SAFETYOFFICER" = #id#
+	</select>
+	<!-- 修改安全相关人员信息 -->
+	<update id="sqlServerempAssets.update" parameterClass="empAssets">
+		update "tb_safetyofficer"  
+		SET
+		"SAFETYOFFICER_Name" = #empName#,
+		"SAFETYOFFICER_Tel" = #conInfo#,
+		"SAFETYOFFICER_JobDes" = #jobDes#,
+		"SAFETYOFFICER_Remark" = #empRemarks#,
+		"SAFETYOFFICER_AssetType" = #resType#
+		where
+		"PK_SAFETYOFFICER" = #id#
+	</update>
+	<!-- 按照姓名、所管理系统名称、岗位描述、联系方式进行模糊查询 -->
+
+	<select id="sqlServerempAssets.query" resultMap="empAssetsResult" parameterClass="java.util.HashMap">
+		SELECT * FROM "tb_safetyofficer"   where 1=1
+		<isNotEmpty prepend="AND" property="keyword">
+			<![CDATA[
+				(
+					
+					"SAFETYOFFICER_Name" LIKE '%$keyword$%' 
+					or "SAFETYOFFICER_JobDes" LIKE '%$keyword$%'
+					or "SAFETYOFFICER_Tel" LIKE '%$keyword$%' 
+					
+				)
+			]]>
+		</isNotEmpty>
+		order by "PK_SAFETYOFFICER" desc
+	</select>
+	<!-- 删除安全相关人员 -->
+	<delete id="sqlServerempAssets.delete" parameterClass="int">
+		delete from "tb_safetyofficer" WHERE "PK_SAFETYOFFICER"=#id#
+	</delete>
+	<!-- 按照姓名、所管理系统名称、联系方式进行精确查找查询条数 -->
+	<select id="sqlServerempAssets.countprecise" resultClass="int">
+		<isNotEmpty property="keyword2">
+			<include refid="count5BySysName"/>
+		</isNotEmpty>
+		<isEmpty property="keyword2">
+			SELECT COUNT(*) FROM "tb_safetyofficer"   where 1=1
+			<isNotEmpty prepend="AND" property="keyword1">
+				<![CDATA[
+					(
+						"SAFETYOFFICER_Name" =#keyword1# 
+					)
+				]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="keyword2">
+				<![CDATA[
+					(
+						"SYSINFO_Names" =#keyword2# 
+					)
+				]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="keyword3">
+				<![CDATA[
+					(
+						"SAFETYOFFICER_Tel" =#keyword3# 
+					)
+				]]>
+			</isNotEmpty>
+		</isEmpty>
+	</select>
+	<!-- 按照姓名、所管理系统名称、联系方式进行精确查找 -->
+
+	<select id="sqlServerempAssets.queryprecise" resultMap="empAssetsResult" parameterClass="java.util.HashMap">
+		<isNotEmpty property="keyword2">
+			<include refid="query5BySysName"/>
+		</isNotEmpty>
+		<isEmpty property="keyword2">
+			SELECT * FROM "tb_safetyofficer"   where 1=1
+			<isNotEmpty prepend="AND" property="keyword1">
+				<![CDATA[
+					(
+						"SAFETYOFFICER_Name" =#keyword1# 
+					)
+				]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="keyword2">
+				<![CDATA[
+					(
+						"SYSINFO_Names" =#keyword2# 
+					
+					)
+				]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="keyword3">
+				<![CDATA[
+					(
+						"SAFETYOFFICER_Tel" =#keyword3# 
+					)
+				]]>
+			</isNotEmpty>
+		</isEmpty>
+		order by "PK_SAFETYOFFICER" desc
+	</select>
+
+	<!-- 评估导出报表。查询所有 -->
+	<select id="sqlServerempAssets.queryAll" resultMap="empAssetsResult">
+		SELECT * FROM "tb_safetyofficer"
+	</select>
+
+</sqlMap>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="summaryAnalysi" extends="struts-default"
+		namespace="/summaryAnalysis">
+
+		<action name="securityGap" class="summaryAnalysisAction"
+			method="getSecurityGapList">
+			<result name="success">/pages/dbPage/ensure/anquan.jsp</result>
+		</action>
+
+		<action name="securityGapC" class="summaryAnalysisAction"
+			method="getSecurityGapListC">
+			<result name="success">/pages/dbPage/ensure/anquanC.jsp</result>
+		</action>
+		<action name="projectShowcase" class="summaryAnalysisAction"
+			method="getProjectShowcase">
+			<result name="success">/pages/dbPage/ensure/anquan.jsp</result>
+			<result name="none">/pages/dbPage/ensure/anquanNullC.jsp</result>
+		</action>
+
+		<action name="getSecurityControlXiaLaKuang" class="summaryAnalysisAction"
+			method="getProjectShowcase">
+			<result name="success">/pages/dbPage/ensure/chaju.jsp</result>
+		</action>
+
+
+		<action name="getSecurityControlXiaLaKuangC" class="summaryAnalysisAction"
+			method="getSecurityGapListC">
+			<result name="success">/pages/dbPage/ensure/chajuC.jsp</result>
+		</action>
+
+	</package>
+</struts>

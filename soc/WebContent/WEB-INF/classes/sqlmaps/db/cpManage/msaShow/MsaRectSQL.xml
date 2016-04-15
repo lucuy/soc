@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    
+    <sqlMap>
+        <resultMap class="MsaRect"       id="msaRectResult1">
+           <result property="msaRectId"      column="msaRectId" />
+           <result property="msaDate"        column="msaDate" />
+           <result property="msaRectAdvise"  column="msaRectAdvise" />
+           <result property="msaRectDate"    column="msaRectDate" />
+           <result property="gFatherSort"    column="gFatherSort" />
+           <result property="gFatherName"    column="gFatherName" />
+           <result property="fatherSort"     column="fatherSort" />
+           <result property="fatherName"     column="fatherName" />
+           <result property="sonSort"        column="sonSort" />
+           <result property="sonContent"     column="sonContent" />
+           <result property="msaAssessResult"     column="msaAssessResult" />
+           
+        </resultMap>
+        
+        <resultMap class="MsaRect"       id="msaRectResult2">
+           <result property="gFatherSort"  column="gMSAD_Sort" />
+           <result property="gFatherName"  column="gMSAD_Name" />
+           <result property="fatherSort"   column="fMSAD_Sort" />
+           <result property="fatherName"   column="fMSAD_Name" />
+           <result property="sonSort"      column="sMSAD_Sort" />
+           <result property="sonContent"   column="sMSAD_Content" />
+        </resultMap>
+        
+        <resultMap class="MsaRect"       id="msaRectResult3">
+           <result property="msaDate"        column="msaDate" />
+        </resultMap>
+        <!-- 查询所有的通用管理源数据 -->
+        <select id="pgAdminmsaRect.queryAllData"  resultMap="msaRectResult2">
+          select distinct
+           g."MSAD_Sort" as "gMSAD_Sort",
+           g."MSAD_Name" as "gMSAD_Name",
+           f."MSAD_Sort" as "fMSAD_Sort",
+           f."MSAD_Name" as "fMSAD_Name",
+           s."MSAD_Sort" as "sMSAD_Sort",
+           s."MSAD_Content" as "sMSAD_Content" from "tb_msad" g,"tb_msad" f,"tb_msad" s where s."MSAD_Content" is not null and g."MSAD_Sort"=f."MSAD_FatherSort"
+            and f."MSAD_Sort"=s."MSAD_FatherSort" and (f."MSAD_Sort" not like'%3') order by f."MSAD_Sort"
+        </select>
+        <!--查询通用管理整改建议 -->
+        <select id="pgAdminmsaRect.queryByMap" parameterClass="java.util.HashMap"  resultMap="msaRectResult1">
+          select * from "tb_msarect" where 1=1
+               <isNotEmpty prepend="AND" property="msaDate">
+                 <![CDATA[
+                    ("msaDate"='$msaDate$')
+                 ]]>
+              </isNotEmpty>
+               
+              <isNotEmpty prepend="AND" property="msaAssessResult">
+                <![CDATA[
+                   ("msaAssessResult"='$msaAssessResult$')
+                ]]>
+             </isNotEmpty>    
+        </select>
+        
+        <!--根据日期 查询通用管理整改建议 -->
+        <select id="pgAdminmsaRect.query" parameterClass="String"  resultMap="msaRectResult1">
+          select * from "tb_msarect" where "msaDate" =#msaDate#
+        </select>
+        
+        <!--根据主键查询通用管理整改建议 -->
+        <select id="pgAdminmsaRect.queryById" parameterClass="int"  resultMap="msaRectResult1">
+          select * from "tb_msarect" where "msaRectId"=#msaRectId#
+        </select>        
+        <!--通用管理整改建议历史树 -->
+        <select id="pgAdminmsaRect.queryTree"  resultMap="msaRectResult3">
+          select distinct  "msaDate" from "tb_msarect"
+        </select>
+        
+   		<!-- 添加通用管理整改建议-->
+   		<insert id="pgAdminmsaRect.insert" parameterClass="MsaRect">
+            INSERT INTO "tb_msarect"("msaDate","msaRectAdvise","msaRectDate","gFatherSort","gFatherName","fatherSort","fatherName","sonSort","sonContent","msaAssessResult") VALUES(#msaDate#,#msaRectAdvise#,#msaRectDate#,#gFatherSort#,#gFatherName#,#fatherSort#,#fatherName#,#sonSort#,#sonContent#,#msaAssessResult#)
+   		</insert>
+   		
+   		<delete id="pgAdminmsaRect.delete" parameterClass="int">
+   		  delete from "tb_msarect" where "msaRectId"=#msaRectId#
+   		</delete>
+   		
+   		<!--修改通用管理整改建议-->
+   		<update id="pgAdminmsaRect.update" parameterClass="MsaRect">
+   		  update "tb_msarect" set "msaRectAdvise"=#msaRectAdvise#,"msaRectDate"=#msaRectDate# where "msaRectId"=#msaRectId#
+   		</update>
+   
+        <!-- sqlserver -->
+        <!-- 查询所有的通用管理源数据 -->
+        <select id="sqlServermsaRect.queryAllData"  resultMap="msaRectResult2">
+          select distinct
+           g."MSAD_Sort" as "gMSAD_Sort",
+           g."MSAD_Name" as "gMSAD_Name",
+           f."MSAD_Sort" as "fMSAD_Sort",
+           f."MSAD_Name" as "fMSAD_Name",
+           s."MSAD_Sort" as "sMSAD_Sort",
+           s."MSAD_Content" as "sMSAD_Content" from "tb_msad" g,"tb_msad" f,"tb_msad" s where s."MSAD_Content" is not null and g."MSAD_Sort"=f."MSAD_FatherSort"
+            and f."MSAD_Sort"=s."MSAD_FatherSort" and (f."MSAD_Sort" not like'%3') order by f."MSAD_Sort"
+        </select>
+        <!--查询通用管理整改建议 -->
+        <select id="sqlServermsaRect.queryByMap" parameterClass="java.util.HashMap"  resultMap="msaRectResult1">
+          select * from "tb_msarect" where 1=1
+               <isNotEmpty prepend="AND" property="msaDate">
+                 <![CDATA[
+                    ("msaDate"='$msaDate$')
+                 ]]>
+              </isNotEmpty>
+               
+              <isNotEmpty prepend="AND" property="msaAssessResult">
+                <![CDATA[
+                   ("msaAssessResult"='$msaAssessResult$')
+                ]]>
+             </isNotEmpty>    
+        </select>
+        
+        <!--根据日期 查询通用管理整改建议 -->
+        <select id="sqlServermsaRect.query" parameterClass="String"  resultMap="msaRectResult1">
+          select * from "tb_msarect" where "msaDate" =#msaDate#
+        </select>
+        
+        <!--根据主键查询通用管理整改建议 -->
+        <select id="sqlServermsaRect.queryById" parameterClass="int"  resultMap="msaRectResult1">
+          select * from "tb_msarect" where "msaRectId"=#msaRectId#
+        </select>        
+        <!--通用管理整改建议历史树 -->
+        <select id="sqlServermsaRect.queryTree"  resultMap="msaRectResult3">
+          select distinct  "msaDate" from "tb_msarect"
+        </select>
+        
+   		<!-- 添加通用管理整改建议-->
+   		<insert id="sqlServermsaRect.insert" parameterClass="MsaRect">
+            INSERT INTO "tb_msarect"("msaDate","msaRectAdvise","msaRectDate","gFatherSort","gFatherName","fatherSort","fatherName","sonSort","sonContent","msaAssessResult") VALUES(#msaDate#,#msaRectAdvise#,#msaRectDate#,#gFatherSort#,#gFatherName#,#fatherSort#,#fatherName#,#sonSort#,#sonContent#,#msaAssessResult#)
+   		</insert>
+   		
+   		<delete id="sqlServermsaRect.delete" parameterClass="int">
+   		  delete from "tb_msarect" where "msaRectId"=#msaRectId#
+   		</delete>
+   		
+   		<!--修改通用管理整改建议-->
+   		<update id="sqlServermsaRect.update" parameterClass="MsaRect">
+   		  update "tb_msarect" set "msaRectAdvise"=#msaRectAdvise#,"msaRectDate"=#msaRectDate# where "msaRectId"=#msaRectId#
+   		</update>
+   
+    </sqlMap>

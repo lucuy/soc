@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd"
+	default-lazy-init="true">
+
+	<!-- Transaction manager for a single JDBC DataSource -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- SqlMap setup for iBATIS Database Layer -->
+	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation">
+			<value>classpath:sql-map-config.xml
+			</value>
+		</property>
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- sqlExecutor -->
+	<bean id="sqlExecutor" class="com.soc.dao.ibatis.LimitSqlExecutor">
+		<property name="dialect">
+			<bean class="com.soc.dao.ibatis.MyDialect" />
+		</property>
+	</bean>
+
+	<!--baseDao 所有service都继承此类 -->
+	<bean id="baseDao" abstract="true" class="com.soc.dao.ibatis.BaseDaoiBatis"
+		init-method="initialize">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient" />
+		</property>
+		<property name="sqlExecutor">
+			<ref bean="sqlExecutor" />
+		</property>
+	</bean>
+	
+	<!-- 用户 -->
+	<bean id="userDao" class="com.soc.dao.user.ibatis.UserDaoIbatis"
+		parent="baseDao" />
+
+	<!-- 登录 -->
+	<bean id="loginDao" class="com.soc.dao.user.ibatis.LoginDaoIbatis"
+		parent="baseDao" />
+
+	<!-- 角色 -->
+	<bean id="roleDao" class="com.soc.dao.role.ibatis.RoleDaoIbatis"
+		parent="baseDao" />
+
+	<!-- 角色-权限 -->
+	<bean id="permissionDao" class="com.soc.dao.role.ibatis.PermissionDaoIbatis"
+		parent="baseDao" />
+
+	<!-- 密码策略 -->
+	<bean id="passwordPolicyDao" class="com.soc.dao.policy.ibatis.PasswordPolicyDaoIbatis"
+		parent="baseDao" />
+
+
+	<!-- 时间策略 -->
+	<bean id="timePolicyDao" class="com.soc.dao.policy.ibatis.TimePolicyDaoIbatis"
+		parent="baseDao" />
+
+	<!-- 地址策略 -->
+	<bean id="addressPolicyDao" class="com.soc.dao.policy.ibatis.AddressPolicyDaoIbatis"
+		parent="baseDao" />
+
+	<!-- 地址 -->
+	<bean id="addressDao" class="com.soc.dao.policy.ibatis.AddressDaoIbatis"
+		parent="baseDao" />
+
+
+	<!-- 资产 -->
+	<bean id="assetDao" class="com.soc.dao.asset.ibatis.AssetDaoIbatis"
+		parent="baseDao" />
+
+	<!-- 资产组 -->
+	<bean id="assetGroupDao" class="com.soc.dao.asset.ibatis.AssetGroupDaoIbatis"
+		parent="baseDao" />
+	<!-- 资产任务 -->
+	<bean id="assetProbeTaskDao" class="com.soc.dao.asset.ibatis.AssetProbeTaskDaoIbatis"
+		parent="baseDao" />
+	<!-- 资产信息 -->
+	<bean id="assetProbeDao" class="com.soc.dao.asset.ibatis.AssetProbeDaoIbatis"
+		parent="baseDao" />
+	<!-- 资产状态 -->
+	<bean id="probeStateDao" class="com.soc.dao.asset.ibatis.ProbeStateDaoIbatis"
+		parent="baseDao" />
+
+	<!-- 风险 -->
+	<bean id="assetRiskDao" class="com.soc.dao.asset.ibatis.risk.AssetRiskDaoIbatis"
+		parent="baseDao" />
+
+	<bean id="vulnerabilityAssessmentDao"
+		class="com.soc.dao.risk.ibatis.VulnerabilityAssessmentDaoIbatis"
+		parent="baseDao" />
+		
+		<bean id="assetRiskGroupDao"
+		class="com.soc.dao.risk.ibatis.AssetRiskGroupDaoIbatis"
+		parent="baseDao" />
+	<!-- 资产风险赋值 -->
+	<bean id="assetRiskEvaluationDao"
+		class="com.soc.dao.risk.ibatis.AssetRiskEvaluationDaoIbatis"
+		parent="baseDao" />
+
+	<!-- 历史资产 -->
+	<bean id="historyAssetDao" class="com.soc.dao.asset.ibatis.HistoryAssetDaoIbatis"
+		parent="baseDao" />
+
+	<!-- 内部审计 -->
+	<bean id="auditDao" class="com.soc.dao.audit.ibatis.AuditDaoIbatis"
+		parent="baseDao" />
+	<!-- 外部审计 -->
+	<bean id="auditReportDao" class="com.soc.dao.audit.ibatis.AuditDaoReportDaoIbatis"
+		parent="baseDao" />
+	<!-- 系统设置 -->
+
+	<bean id="mailserversinstancedao"
+		class="com.soc.dao.systemsetting.ibatis.MailServersInstanceDaoIbatis"
+		parent="baseDao" />
+	<bean id="settingDao" class="com.soc.dao.systemsetting.ibatis.SettingDaoIbatis"
+		parent="baseDao" />
+
+
+	<bean id="settingCpuDao" class="com.soc.dao.systemsetting.ibatis.SettingCpuDaoIbatus"
+		parent="baseDao"></bean>
+	<bean id="systemMemoryDao" class="com.soc.dao.systemsetting.ibatis.SystemMemoryDaoIbatis"
+		parent="baseDao"></bean>
+
+
+	<!-- 监控管理 -->
+	<bean id="monitorGroupDao" class="com.soc.dao.monitor.ibatis.MonitorGroupDaoIbatis"
+		parent="baseDao">
+	</bean>
+	<bean id="monitorDao" class="com.soc.dao.monitor.ibatis.MonitorDaoIbatis"
+		parent="baseDao">
+	</bean>
+	<bean id="monitorAlarmDao" class="com.soc.dao.monitor.ibatis.MonitorAlarmDaoIbatis"
+		parent="baseDao">
+	</bean> 
+	<bean id="monitorNetworkTopologyDao" class="com.soc.dao.monitor.ibatis.MonitorNetworkTopologyDaoIbatis"
+		parent="baseDao">
+	</bean>
+	<!-- 注册采集器 -->
+	<bean id="settingCollectorDao" class="com.soc.dao.systemsetting.ibatis.SettingCollectorIbatis"
+		parent="baseDao"></bean>
+
+	<!-- 关联规则 -->
+	<bean id="associationDao"
+		class="com.soc.dao.systemsetting.ibatis.rules.AssociationRulesDaoIbatis"
+		parent="baseDao"></bean>
+
+	<!-- 关联规则 -->
+	<bean id="analysisDao"
+		class="com.soc.dao.systemsetting.ibatis.rules.AnalysisRulesDaoIbatis"
+		parent="baseDao"></bean>
+	<!-- 自定义过滤规则 -->
+	<bean id="filteringRuleDao"
+		class="com.soc.dao.systemsetting.ibatis.rules.FilteringRuleDaoIbatis"
+		parent="baseDao"></bean>
+		<!-- 自定义关联规则 -->
+	<bean id="relevanceRuleDao"
+		class="com.soc.dao.systemsetting.ibatis.rules.RelevanceRuleDaoIbatis"
+		parent="baseDao"></bean>
+		<!-- 自定义关联规则组 -->
+	<bean id="relevanceRuleGroupDao"
+		class="com.soc.dao.systemsetting.ibatis.rules.RelevanceRuleGroupDaoIbatis"
+		parent="baseDao"></bean>
+	<!-- 添加解析规则 -->
+	<bean id="addRulesDao"
+		class="com.soc.dao.addrules.ibatis.AddRulesDaoIbatis"
+		parent="baseDao"></bean>
+	<!-- 归档 -->
+	<bean id="archiveDao"
+		class="com.soc.dao.systemsetting.ibatis.SettingArchiveDaoIbatis"
+		parent="baseDao"></bean>
+
+	<!-- 事件 -->
+	<!-- 事件树  -->
+	<bean id="eventTreeDao" class="com.soc.dao.events.ibatis.EventTreeDaoIbatis" 
+		parent="baseDao"></bean>
+	<!-- 事件库 -->	
+	<bean id="eventLibraryDao" class="com.soc.dao.events.ibatis.EventLibraryDaoIbatis" 
+	parent="baseDao"></bean>
+	<!-- 查询事件 -->
+
+	<bean id="queryEvevntsDao" class="com.soc.dao.events.ibatis.QueryEventsDaoIbatis"
+		parent="baseDao">
+	</bean>
+	<!-- 审计规则 -->
+		<bean id="queryAuditGroupDao" class="com.soc.dao.audit.ibatis.QueryAuditGroupDaoIbatis"
+		parent="baseDao">
+		</bean>
+	<!-- 查询事件组 -->
+	<bean id="queryEvevtsGroupDao" class="com.soc.dao.events.ibatis.QueryEvevtsGroupDaoIbatis"
+		parent="baseDao">
+	</bean>
+	<!-- 概要事件 -->
+	<bean id="summaryEventsDao" class="com.soc.dao.events.ibatis.SummaryEventsDaoIbatis"
+		parent="baseDao" />
+	<!-- 过滤规则 -->
+	<bean id="filterDao" class="com.soc.dao.events.ibatis.FilterDaoIbatis"
+		parent="baseDao" />
+
+	<!-- 过滤规则 -->
+	<bean id="filterByGroupDao" class="com.soc.dao.events.ibatis.FilterByGroupDaoIbatis"
+		parent="baseDao" />
+
+	<!--事件 -->
+	<bean id="eventsDao" class="com.soc.dao.events.ibatis.EventsDaoIbatis"
+		parent="baseDao" >
+		<property name="msg" ref="sendmsg"></property>
+		</bean>
+
+	<!-- 原始日志 -->
+	<bean id="originalLogDao" class="com.soc.dao.events.ibatis.OriginalLogDaoIbatis"
+		parent="baseDao" />
+
+	<!-- 解析失败日志 -->
+	<bean id="notAnalyticEventsDao" class="com.soc.dao.events.ibatis.NotAnalyticEventsDaoIbatis"
+		parent="baseDao" />
+
+	<!-- 告警规则 -->
+	<bean id="alertRuleDao" class="com.soc.dao.alert.ibatis.AlertRuleDaoIbatis"
+		parent="baseDao" />
+
+
+	<!-- 告警事件 -->
+	<bean id="alertMessageDao" class="com.soc.dao.alert.ibatis.AlertMessageDaoIbatis"
+		parent="baseDao" />
+
+	<!-- 阀值 -->
+	<bean id="thresholdDao" class="com.soc.dao.alert.ibatis.ThresholdDaoIbatis"
+		parent="baseDao" />
+
+	<!-- 预警发布 -->
+	<bean id="warnDao" class="com.soc.dao.repository.ibatis.WarnDaoIbatis"
+		parent="baseDao" />
+
+	<!-- 知识库 -->
+
+	<bean id="leakDao" class="com.soc.dao.knowledgemanger.ibatis.LeakDaoIbatis"
+		parent="baseDao"></bean>
+	<bean id="securityDao" class="com.soc.dao.knowledgemanger.ibatis.SecurityDaoIbatis"
+		parent="baseDao"></bean>
+	<!-- 漏洞库 -->
+	<bean id="vulnerabilityDao"
+		class="com.soc.dao.knowledgemanger.ibatis.VulnerabilityDaoIbatis"
+		parent="baseDao" />
+
+	<!-- 工单管理 -->
+	<bean id="workOrderDao" class="com.soc.dao.workorder.ibatis.WorkOrderDaoIbatis"
+		parent="baseDao" />
+		
+		<!-- 事件 -->
+	<bean id="eventTypeTagDao" class="com.soc.dao.eventtypetag.ibatis.EventTypeTagDaoIbatis"
+		parent="baseDao" />
+
+	   <!-- 事件类别 -->
+	  <bean id="eventCategoryDao"
+		class="com.soc.dao.eventtypetag.ibatis.EventCategoryTagDaoIbatis"
+		parent="baseDao" />
+	  
+	    <!-- 大屏展示 -->    
+	<bean id="comprehensiveEmergeDao" class="com.soc.dao.screen.ibatis.ComprehensiveEmergeIbatis"
+	    parent="baseDao" />
+    <bean id="bigScreenDao" class="com.soc.dao.screen.ibatis.BigScreenIbatis" 
+	    parent="baseDao"/>   
+
+	<!-- 首页div的显示情况 -->
+	<bean id="homePageDao" class="com.soc.dao.homepagediv.ibatis.HomePageDaoIbatis"
+		parent="baseDao" />
+		
+	<!-- 消息中心 -->
+	<bean id="messageDao" class="com.soc.dao.knowledgemanger.ibatis.MessageDaoIbatis"
+		parent="baseDao" />
+	
+	<!-- 设备类型 -->	 
+	<bean id="categoryDao" class="com.soc.dao.asset.ibatis.device.CategoryDaoIbatis"
+		parent="baseDao" />	
+		
+	<!-- 资源系统 -->	 
+	<bean id="assetSystemDao" class="com.soc.dao.asset.ibatis.system.AssetSystemDaoIbatis"
+		parent="baseDao" />		
+		
+		<!-- 同步用户-->	 
+	<bean id="systemSettingDao" class="com.soc.dao.systemsetting.ibatis.SystemSettingDaoIbatis"
+		parent="baseDao" />			
+		<!-- 关联分析dao -->
+	<bean id="relevanceEventsDao" class="com.soc.dao.events.ibatis.RelevanceEventsDaoIbatis"
+		parent="baseDao" />	
+		<!-- 级联节点Dao -->
+		<bean id="nodeGroupDao" class="com.soc.dao.systemsetting.ibatis.NodeGroupDaoIbatis" 
+		parent="baseDao"/>	
+		<!-- 趋势分析 -->
+			<bean id="customTrendDao" class="com.soc.dao.monitor.ibatis.CustomTrendDaoIbatis" 
+		parent="baseDao"/>	
+		<bean id="settingFunctionControlDao" class="com.soc.dao.systemsetting.ibatis.SettingFunctionControlDaoIbatis" 
+		parent="baseDao"/>
+			<!-- 直播星事件dao -->
+			<bean id="satelliteEventsDao" class="com.soc.dao.satellite.ibatis.SatelliteEventsDaoIbatis" 
+		parent="baseDao"/>	
+		<!-- amp历史信息 -->
+		<bean id="monitorHistoryDao" class="com.soc.dao.monitor.ibatis.MonitorHistoryDaoIbatis" parent="baseDao"/>
+		<!-- 安全策略管理 -->
+	<bean id="securityPolicyDao" class="com.soc.dao.securityPolicy.ibatis.SecurityPolicyDaoIbatis"
+		parent="baseDao" />	
+		<!-- 漏扫联动 -->
+		<bean id="scanTaskDao" class="com.soc.dao.scanTask.ibatis.ScanTaskDaoIbatis" parent="baseDao"/>
+		<!-- 数据库监控 -->
+		<bean id="mdtDao" class="com.soc.dao.monitor.ibatis.MonitorDatabaseTaskDaoIbatis" parent="baseDao"/>
+		<!-- tomcat监控 -->
+		<bean id="mttDao" class="com.soc.dao.monitor.ibatis.MonitorTomcatTaskDaoIbatis" parent="baseDao"/>
+		<!-- Windows监控 -->
+		<bean id="mwtDao" class="com.soc.dao.monitor.ibatis.MonitorWindowsTaskDaoIbatis" parent="baseDao"/>
+</beans>

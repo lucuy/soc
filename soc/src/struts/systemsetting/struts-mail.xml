@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="settingMail" extends="struts-default" namespace="/settingMail">
+		<!-- 显示邮箱信息 -->
+		<action name="settingMail" class="SettingMailAction" method="show">
+			<result name="success">/pages/systemsetting/setting_mail.jsp</result>
+		</action>
+		
+		<!--更新或者添加邮箱 -->
+		<action name="update-e" class="SettingMailAction" method="update">
+			<result name="success">/pages/systemsetting/setting_mail.jsp</result>
+		</action>
+		
+		<!-- 自动匹配邮箱信息 -->
+	 	<action name="mailInstance" class="SettingMailAction" method="mailInstance" />
+	    
+	    <!-- 查询需要ssl验证的端口号 -->
+	    <action name="selectPort" class="SettingMailAction" method="mailSelectPort"/>
+	</package>
+</struts>

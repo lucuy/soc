@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="assetsystem" extends="struts-default" namespace="/assetSystem">
+		<action name="queryAssetSystem" class="assetSystemAction" method="querySystem">
+			<result name="success">/pages/systemsetting/setting_AssetSystem_list.jsp</result>
+		</action>
+		<action name="toEditAssetSystem" class="assetSystemAction" method="toEditAssetSystem">
+			<result name="success">/pages/systemsetting/asset_system_add.jsp</result>
+		</action>
+		<action name="insertAssetSystem" class="assetSystemAction" method="insertAssetSystem">
+		  <interceptor-ref name="defaultStack"/><!-- 需要注意拦截器栈的配置顺序-->  
+            <interceptor-ref name="token"/><!-- 这就是用来防止表单重复提交的拦截器-->  
+            <result name="invalid.token" type="redirectAction">
+            <param name="namespace">/assetSystem</param>
+		       <param name="actionName">queryAssetSystem</param>
+            
+            </result><!-- 需要注意的是名字必须为invalid.token-->  
+		    <result name="success" type="chain">
+		       <param name="namespace">/assetSystem</param>
+		       <param name="actionName">queryAssetSystem</param>
+		    </result>
+		</action>
+		<action name="deleteAssetSystem" class="assetSystemAction" method="deleteAssetSystem">
+			<result name="success" type="chain">
+		       <param name="namespace">/assetSystem</param>
+		       <param name="actionName">queryAssetSystem</param>
+		    </result>
+		</action>
+		<!-- 检查操作系统是否唯一 -->
+		<action name="checkSystemName" class="assetSystemAction" method="checkSystemName"></action>
+	</package>
+</struts>

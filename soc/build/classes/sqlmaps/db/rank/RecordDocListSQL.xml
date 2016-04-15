@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    <sqlMap >
+
+    <resultMap class="RecordDocList" id="recordDocListResult">
+		<result property="recordDocListId" 			column="Pk_SYSRECORDLIST"/>
+		<result property="recordId" 			    column="FK_SYSRECORD"/>
+		<result property="recordDocListDocmentName" column="SYSRECORDLIST_DocmentName"/>
+		<result property="recordDocListProduceDate" column="SYSRECORDLIST_ProduceDate"/>
+		<result property="recordDocListDownDate" 	column="SYSRECORDLIST_DownDate"/>
+		<result property="recordDocListDownloads" 	column="SYSRECORDLIST_Downloads"/> 
+		<!-- 2013-12-12添加文件名重命名列修改文件名乱码问题 -->
+		<result property="reRecordDocListDocmentName" column="SYSRECORDLIST_ReDocmentName"/>
+    </resultMap>
+      <!-- 根据编号查询 -->
+   <select id="pgAdminrecordDocList.queryById" parameterClass="int" resultMap="recordDocListResult">
+   	   select * from "tb_sysrecordlist" where "Pk_SYSRECORDLIST" = #recordDocListId# order by "Pk_SYSRECORDLIST" desc
+   </select>
+
+   <!-- 根据备案编号查询 -->
+   <select id="pgAdminrecordDocList.queryByRecordId" parameterClass="int" resultMap="recordDocListResult">
+   	   select * from "tb_sysrecordlist" where "FK_SYSRECORD" = #recordId# order by  "Pk_SYSRECORDLIST" desc
+   </select>
+   	
+   
+   <!-- 添加-->
+   <insert id="pgAdminrecordDocList.insert"  parameterClass="RecordDocList">
+     insert into "tb_sysrecordlist"("FK_SYSRECORD","SYSRECORDLIST_DocmentName","SYSRECORDLIST_ProduceDate","SYSRECORDLIST_DownDate","SYSRECORDLIST_Downloads","SYSRECORDLIST_ReDocmentName") values(#recordId#,#recordDocListDocmentName#,#recordDocListProduceDate#,#recordDocListDownDate#,#recordDocListDownloads#,#reRecordDocListDocmentName#);
+   </insert>
+   
+    <!--备案修改-->
+   <update id="pgAdminrecordDocList.update"  parameterClass="RecordDocList">
+    update "tb_sysrecordlist" set 
+		"SYSRECORDLIST_Downloads"=#recordDocListDownloads#,
+		"SYSRECORDLIST_DownDate"=#recordDocListDownDate#
+    where "Pk_SYSRECORDLIST"=#recordDocListId#
+   </update>
+    <!-- sqlserver -->
+
+   <!-- 根据编号查询 -->
+   <select id="sqlServerrecordDocList.queryById" parameterClass="int" resultMap="recordDocListResult">
+   	   select * from "tb_sysrecordlist" where "Pk_SYSRECORDLIST" = #recordDocListId# order by "Pk_SYSRECORDLIST" desc
+   </select>
+
+   <!-- 根据备案编号查询 -->
+   <select id="sqlServerrecordDocList.queryByRecordId" parameterClass="int" resultMap="recordDocListResult">
+   	   select * from "tb_sysrecordlist" where "FK_SYSRECORD" = #recordId# order by  "Pk_SYSRECORDLIST" desc
+   </select>
+   	
+   
+   <!-- 添加-->
+   <insert id="sqlServerrecordDocList.insert"  parameterClass="RecordDocList">
+     insert into "tb_sysrecordlist"("FK_SYSRECORD","SYSRECORDLIST_DocmentName","SYSRECORDLIST_ProduceDate","SYSRECORDLIST_DownDate","SYSRECORDLIST_Downloads","SYSRECORDLIST_ReDocmentName") values(#recordId#,#recordDocListDocmentName#,#recordDocListProduceDate#,#recordDocListDownDate#,#recordDocListDownloads#,#reRecordDocListDocmentName#);
+   </insert>
+   
+    <!--备案修改-->
+   <update id="sqlServerrecordDocList.update"  parameterClass="RecordDocList">
+    update "tb_sysrecordlist" set 
+		"SYSRECORDLIST_Downloads"=#recordDocListDownloads#,
+		"SYSRECORDLIST_DownDate"=#recordDocListDownDate#
+    where "Pk_SYSRECORDLIST"=#recordDocListId#
+   </update>
+   	
+</sqlMap>

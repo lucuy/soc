@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="psadInfo" extends="struts-default" namespace="/psadquery">
+		<action name="psadChooseAction" class="com.compliance.webapp.action.psad.PsadChooseAction" method="queryByFatherSort">
+			<result name="success">/pages/dbPage/psad/psdChoose.jsp</result>
+		</action>
+	</package>
+
+</struts>

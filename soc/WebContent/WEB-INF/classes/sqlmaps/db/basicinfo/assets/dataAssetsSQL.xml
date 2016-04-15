@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="devAssetsSQL">
+
+	<resultMap class="dataAssets" id="dataAssetsResult">
+		<result property="id" column="PK_CTY" jdbcType="int" />
+		<result property="dateType" column="CTY_DateType" jdbcType="varchar" />
+		<result property="devDescription" column="CTY_DevDescription" jdbcType="varchar" />
+		<result property="dataRemarks" column="CTY_Remark" jdbcType="varchar" />
+		<result property="impDegree" column="CTY_Importance" jdbcType="varchar" />
+		<result property="assetsType" column="CTY_AssetType" jdbcType="varchar" />
+		<result property="relsysName" column="PK_CTY" select="pgAdmindataAssets.getSysName" />
+		<result property="relresName" column="PK_CTY" select="pgAdmindataAssets.getResName" />
+	</resultMap>
+	<!-- postrgreSql -->
+	<!-- 从信息系统名称关联表查找指定记录的所属系统名称集合 -->
+	<select id="pgAdmindataAssets.getSysName" parameterClass="int" resultClass="string">
+		select "SYSINFO_Name" from "tb_sysref" where "PK_CTY" = #value# and "SYSINFO_Name" is NOT NULL
+	</select>
+	<!-- 从信息系统名称关联表查找指定记录的所属业务应用软件名称集合 -->
+	<select id="pgAdmindataAssets.getResName" parameterClass="int" resultClass="string">
+		select "BUSINESSSoft_SoftName" from "tb_sysref" where "PK_CTY" = #value# and "BUSINESSSoft_SoftName" is NOT NULL
+	</select>
+	<!-- 从信息系统名称关联表插入信息系统名称关联 -->
+	<insert id="pgAdmindataAssets.addSysName">
+		insert into "tb_sysref" ("SYSINFO_Name", "PK_CTY")
+		values(#relsysName#, #id#)
+	</insert>
+	<!-- 从信息系统名称关联表插入业务应用软件 -->
+	<insert id="pgAdmindataAssets.addResName">
+		insert into "tb_sysref" ("BUSINESSSoft_SoftName", "PK_CTY")
+		values(#relresName#, #id#)
+	</insert>
+	<!-- 从信息系统名称关联表更新业务应用软件与信息系统名称关联 -->
+	<delete id="pgAdmindataAssets.delSysName" parameterClass="int">
+		delete from "tb_sysref" where "PK_CTY" = #id#
+	</delete>
+	<!-- sqlServer -->
+	<!-- 从信息系统名称关联表查找指定记录的所属系统名称集合 -->
+	<select id="sqlServerdataAssets.getSysName" parameterClass="int" resultClass="string">
+		select "SYSINFO_Name" from "tb_sysref" where "PK_CTY" = #value# and "SYSINFO_Name" is NOT NULL
+	</select>
+	<!-- 从信息系统名称关联表查找指定记录的所属业务应用软件名称集合 -->
+	<select id="sqlServerdataAssets.getResName" parameterClass="int" resultClass="string">
+		select "BUSINESSSoft_SoftName" from "tb_sysref" where "PK_CTY" = #value# and "BUSINESSSoft_SoftName" is NOT NULL
+	</select>
+	<!-- 从信息系统名称关联表插入信息系统名称关联 -->
+	<insert id="sqlServerdataAssets.addSysName">
+		insert into "tb_sysref" ("SYSINFO_Name", "PK_CTY")
+		values(#relsysName#, #id#)
+	</insert>
+	<!-- 从信息系统名称关联表插入业务应用软件 -->
+	<insert id="sqlServerdataAssets.addResName">
+		insert into "tb_sysref" ("BUSINESSSoft_SoftName", "PK_CTY")
+		values(#relresName#, #id#)
+	</insert>
+	<!-- 从信息系统名称关联表更新业务应用软件与信息系统名称关联 -->
+	<delete id="sqlServerdataAssets.delSysName" parameterClass="int">
+		delete from "tb_sysref" where "PK_CTY" = #id#
+	</delete>
+	<!-- 根据信息系统名称查询业务应用软件总记录数 -->
+	<sql id="count7BySysName">
+		SELECT count(*) FROM "tb_criticaldatatype"
+		WHERE
+			"PK_CTY" IN (
+				SELECT
+					A ."PK_CTY"
+				FROM
+					tb_criticaldatatype A
+				RIGHT JOIN tb_sysref b ON A ."PK_CTY" = b."PK_CTY"
+				WHERE
+					b."SYSINFO_Name" = #keyword2#
+			)
+	</sql>
+	<!-- 根据信息系统名称查询业务应用软件 -->
+	<sql id="query7BySysName">
+		SELECT * FROM "tb_criticaldatatype"
+		WHERE
+			"PK_CTY" IN (
+				SELECT
+					A ."PK_CTY"
+				FROM
+					tb_criticaldatatype A
+				RIGHT JOIN tb_sysref b ON A ."PK_CTY" = b."PK_CTY"
+				WHERE
+					b."SYSINFO_Name" = #keyword2#
+			)
+	</sql>
+	<!-- 根据信息系统名称查询业务应用软件总记录数 -->
+	<sql id="count2ByResName">
+		SELECT count(*) FROM "tb_criticaldatatype"
+		WHERE
+			"PK_CTY" IN (
+				SELECT
+					A ."PK_CTY"
+				FROM
+					tb_criticaldatatype A
+				RIGHT JOIN tb_sysref b ON A ."PK_CTY" = b."PK_CTY"
+				WHERE
+					b."BUSINESSSoft_SoftName" = #keyword3#
+			)
+	</sql>
+	<!-- 根据信息系统名称查询业务应用软件 -->
+	<sql id="query2ByResName">
+		SELECT * FROM "tb_criticaldatatype"
+		WHERE
+			"PK_CTY" IN (
+				SELECT
+					A ."PK_CTY"
+				FROM
+					tb_criticaldatatype A
+				RIGHT JOIN tb_sysref b ON A ."PK_CTY" = b."PK_CTY"
+				WHERE
+					b."BUSINESSSoft_SoftName" = #keyword3#
+			)
+	</sql>
+	<!-- 查询数据条数 (已测试) -->
+	<select id="pgAdmindataAssets.count" resultClass="int">
+		SELECT COUNT(*) FROM "tb_criticaldatatype"   where 1=1
+		<isNotEmpty prepend="AND" property="keyword">
+			<![CDATA[
+				(
+					"CTY_DateType" LIKE '%$keyword$%' 
+					or "CTY_DevDescription" LIKE '%$keyword$%' 
+					or "CTY_Importance LIKE" '%$keyword$%'
+					
+				)
+			]]>
+		</isNotEmpty>
+
+	</select>
+	<!-- 添加关键数据类别(已测试) -->
+	<insert id="pgAdmindataAssets.insert" parameterClass="dataAssets">
+		<selectKey resultClass="int" type="pre" keyProperty="id">
+			SELECT nextval('tb_criticaldatatype_seq'::regclass)
+		</selectKey>
+		insert into
+		"tb_criticaldatatype" ("PK_CTY","CTY_DateType","CTY_DevDescription","CTY_Remark","CTY_Importance","CTY_AssetType")
+		values(#id#, #dateType#,#devDescription#,#dataRemarks#,#impDegree#,#assetsType#)
+	</insert>
+	<!-- 删除关键数据类别(已测试) -->
+	<delete id="pgAdmindataAssets.delete" parameterClass="int">
+		delete from
+		"tb_criticaldatatype" WHERE "PK_CTY"=#id#
+	</delete>
+	<!-- 根据id查找关键数据类别 (已测试) -->
+	<select id="pgAdmindataAssets.queryById" parameterClass="Integer" resultMap="dataAssetsResult">
+
+		select * from "tb_criticaldatatype"   where "PK_CTY" = #id#
+	</select>
+	<!-- 修改关键数据类别(已测试) -->
+	<update id="pgAdmindataAssets.update" parameterClass="dataAssets">
+		update
+		"tb_criticaldatatype" d
+		SET
+		"CTY_DateType" = #dateType#,
+		"CTY_DevDescription" = #devDescription#,
+		"CTY_Remark" = #dataRemarks#,
+		"CTY_Importance" = #impDegree#,
+		"CTY_AssetType"= #assetsType#
+		where
+		"PK_CTY" = #id#
+	</update>
+	<!-- 按照数据类别、所属系统名称、业务应用软件、存储设备描述、重要程度模糊搜索(已测试) -->
+	<select id="pgAdmindataAssets.query" resultMap="dataAssetsResult" parameterClass="java.util.HashMap">
+		SELECT * FROM "tb_criticaldatatype"   where 1=1
+		<isNotEmpty prepend="AND" property="keyword">
+			<![CDATA[
+				(
+					
+					"CTY_DateType" LIKE '%$keyword$%' 
+					or "CTY_DevDescription" LIKE '%$keyword$%' 
+					or "CTY_Importance" LIKE '%$keyword$%'
+				)
+			]]>
+		</isNotEmpty>
+		order by "PK_CTY" desc
+	</select>
+	<!-- 根据数据类别、所属系统名称、业务应用软件、关键数据类别描述、重要程度进行高级搜索(未测试) -->
+	<select id="pgAdmindataAssets.precisequery" resultMap="dataAssetsResult" parameterClass="java.util.HashMap">
+		<isNotEmpty property="keyword2">
+			<include refid="query7BySysName"/>
+		</isNotEmpty>
+		<isNotEmpty property="keyword3">
+			<include refid="query2ByResName"/>
+		</isNotEmpty>
+		<isEmpty property="keyword2">
+			<isEmpty property="keyword3">
+				SELECT * FROM "tb_criticaldatatype"   where 1=1
+		
+				<isNotEmpty prepend="AND" property="keyword1">
+					<![CDATA[
+							"CTY_DateType"=#keyword1# 
+					]]>
+				</isNotEmpty>
+				<isNotEmpty prepend="AND" property="keyword4">
+					<![CDATA[
+							 "CTY_DevDescription" =#keyword4# 
+					]]>
+				</isNotEmpty>
+				<isNotEmpty prepend="AND" property="keyword5">
+					<![CDATA[
+							"CTY_Importance"=#keyword5#
+					]]>
+				</isNotEmpty>
+			</isEmpty>
+		</isEmpty>
+		order by "PK_CTY" desc
+	</select>
+	<!-- 根据数据类别、所属系统名称、业务应用软件、关键数据类别描述、重要程度进行高级搜索，数据行数(未测试) -->
+	<select id="pgAdmindataAssets.precisequerycount" resultClass="int" parameterClass="java.util.HashMap">
+		<isNotEmpty property="keyword2">
+			<include refid="count7BySysName"/>
+		</isNotEmpty>
+		<isNotEmpty property="keyword3">
+			<include refid="count2ByResName"/>
+		</isNotEmpty>
+		<isEmpty property="keyword2">
+			<isEmpty property="keyword3">
+				SELECT COUNT(*) FROM "tb_criticaldatatype"   where 1=1
+		
+				<isNotEmpty prepend="AND" property="keyword1">
+					<![CDATA[
+						"CTY_DateType"=#keyword1# 
+					]]>
+				</isNotEmpty>
+				<isNotEmpty prepend="AND" property="keyword4">
+					<![CDATA[
+							"CTY_DevDescription" =#keyword4# 
+					]]>
+				</isNotEmpty>
+				<isNotEmpty prepend="AND" property="keyword5">
+					<![CDATA[
+							"CTY_Importance"=#keyword5#
+					]]>
+				</isNotEmpty>
+			</isEmpty>
+		</isEmpty>
+
+	</select>
+	
+	
+	<!-- 评估导出报表。查询所有 -->
+	<select id="pgAdmindataAssets.queryAll" resultMap="dataAssetsResult">
+		SELECT * FROM "tb_criticaldatatype"
+	</select>
+	
+	<!-- sqlserver -->
+	<!-- 查询数据条数 (已测试) -->
+	<select id="sqlServerdataAssets.count" resultClass="int">
+		SELECT COUNT(*) FROM "tb_criticaldatatype"   where 1=1
+		<isNotEmpty prepend="AND" property="keyword">
+			<![CDATA[
+				(
+					"CTY_DateType" LIKE '%$keyword$%' 
+					or "CTY_DevDescription" LIKE '%$keyword$%' 
+					or "CTY_Importance" LIKE '%$keyword$%'
+					
+				)
+			]]>
+		</isNotEmpty>
+
+	</select>
+	<!-- 添加关键数据类别(已测试) -->
+	<insert id="sqlServerdataAssets.insert" parameterClass="dataAssets">
+		insert into
+		"tb_criticaldatatype" ("CTY_DateType", "CTY_DevDescription","CTY_Remark","CTY_Importance","CTY_AssetType")
+		values(#dateType#,#devDescription#,#dataRemarks#,#impDegree#,#assetsType#)
+		<selectKey resultClass="int" type="post" keyProperty="id" >
+           SELECT @@IDENTITY AS id
+      	</selectKey>
+	</insert>
+	<!-- 删除关键数据类别(已测试) -->
+	<delete id="sqlServerdataAssets.delete" parameterClass="int">
+		delete from
+		"tb_criticaldatatype" WHERE "PK_CTY"=#id#
+	</delete>
+	<!-- 根据id查找关键数据类别 (已测试) -->
+	<select id="sqlServerdataAssets.queryById" parameterClass="Integer" resultMap="dataAssetsResult">
+
+		select * from "tb_criticaldatatype"   where "PK_CTY" = #id#
+	</select>
+	<!-- 修改关键数据类别(已测试) -->
+	<update id="sqlServerdataAssets.update" parameterClass="dataAssets">
+		update
+		"tb_criticaldatatype"
+		SET
+		"CTY_DateType" = #dateType#,
+		"CTY_DevDescription" = #devDescription#,
+		"CTY_Remark" = #dataRemarks#,
+		"CTY_Importance" = #impDegree#,
+		"CTY_AssetType"= #assetsType#
+		where
+		"PK_CTY" = #id#
+	</update>
+	<!-- 按照数据类别、所属系统名称、业务应用软件、存储设备描述、重要程度模糊搜索(已测试) -->
+	<select id="sqlServerdataAssets.query" resultMap="dataAssetsResult" parameterClass="java.util.HashMap">
+		SELECT * FROM "tb_criticaldatatype"   where 1=1
+		<isNotEmpty prepend="AND" property="keyword">
+			<![CDATA[
+				(
+					
+					"CTY_DateType" LIKE '%$keyword$%' 
+					or "CTY_DevDescription" LIKE '%$keyword$%' 
+					or "CTY_Importance" LIKE '%$keyword$%'
+				)
+			]]>
+		</isNotEmpty>
+		order by "PK_CTY" desc
+	</select>
+	<!-- 根据数据类别、所属系统名称、业务应用软件、关键数据类别描述、重要程度进行高级搜索(未测试) -->
+	<select id="sqlServerdataAssets.precisequery" resultMap="dataAssetsResult" parameterClass="java.util.HashMap">
+		<isNotEmpty property="keyword2">
+			<include refid="query7BySysName"/>
+		</isNotEmpty>
+		<isNotEmpty property="keyword3">
+			<include refid="query2ByResName"/>
+		</isNotEmpty>
+		<isEmpty property="keyword2">
+			<isEmpty property="keyword3">
+				SELECT * FROM "tb_criticaldatatype"   where 1=1
+		
+				<isNotEmpty prepend="AND" property="keyword1">
+					<![CDATA[
+							"CTY_DateType"=#keyword1# 
+					]]>
+				</isNotEmpty>
+				<isNotEmpty prepend="AND" property="keyword2">
+					<![CDATA[
+							 "SYSINFO_Names"=#keyword2# 
+						
+					]]>
+				</isNotEmpty>
+				<isNotEmpty prepend="AND" property="keyword3">
+					<![CDATA[
+					"BUSINESSSoft_SoftName"=#keyword3#	
+					]]>
+				</isNotEmpty>
+				<isNotEmpty prepend="AND" property="keyword4">
+					<![CDATA[
+							 "CTY_DevDescription" =#keyword4# 
+					]]>
+				</isNotEmpty>
+				<isNotEmpty prepend="AND" property="keyword5">
+					<![CDATA[
+							"CTY_Importance"=#keyword5#
+					]]>
+				</isNotEmpty>
+			</isEmpty>
+		</isEmpty>
+		order by "PK_CTY" desc
+	</select>
+	<!-- 根据数据类别、所属系统名称、业务应用软件、关键数据类别描述、重要程度进行高级搜索，数据行数(未测试) -->
+	<select id="sqlServerdataAssets.precisequerycount" resultClass="int" parameterClass="java.util.HashMap">
+		<isNotEmpty property="keyword2">
+			<include refid="count7BySysName"/>
+		</isNotEmpty>
+		<isNotEmpty property="keyword3">
+			<include refid="count2ByResName"/>
+		</isNotEmpty>
+		<isEmpty property="keyword2">
+			<isEmpty property="keyword3">
+				SELECT COUNT(*) FROM "tb_criticaldatatype"   where 1=1
+		
+				<isNotEmpty prepend="AND" property="keyword1">
+					<![CDATA[
+						"CTY_DateType"=#keyword1# 
+					]]>
+				</isNotEmpty>
+				<isNotEmpty prepend="AND" property="keyword2">
+					<![CDATA[
+						 "SYSINFO_Names"=#keyword2# 
+					]]>
+				</isNotEmpty>
+				<isNotEmpty prepend="AND" property="keyword3">
+					<![CDATA[
+							"BUSINESSSoft_SoftName" =#keyword3#
+				]]>
+				</isNotEmpty>
+				<isNotEmpty prepend="AND" property="keyword4">
+					<![CDATA[
+							"CTY_DevDescription" =#keyword4# 
+					]]>
+				</isNotEmpty>
+				<isNotEmpty prepend="AND" property="keyword5">
+					<![CDATA[
+							"CTY_Importance"=#keyword5#
+					]]>
+				</isNotEmpty>
+			</isEmpty>
+		</isEmpty>
+	</select>
+	
+	
+	<!-- 评估导出报表。查询所有 -->
+	<select id="sqlServerdataAssets.queryAll" resultMap="dataAssetsResult">
+		SELECT * FROM "tb_criticaldatatype"
+	</select>
+
+</sqlMap>

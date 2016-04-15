@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<!-- START SNIPPET: xworkSample -->
+<struts>
+	<!-- Some or all of these can be flipped to true for debugging -->
+	<constant name="struts.i18n.encoding" value="utf-8"></constant>
+	<constant name="struts.i18n.reload" value="false" />
+	<constant name="struts.devMode" value="true" />
+	<constant name="struts.configuration.xml.reload" value="false" />
+	<constant name="struts.custom.i18n.resources" value="ApplicationResources" />
+	<constant name="struts.serve.static" value="true" />
+	<constant name="struts.serve.static.browserCache" value="false" />
+
+	<constant name="struts.multipart.maxSize" value="200000000" />
+	<constant name="struts.multipart.saveDir" value=" /tmp/" />
+    
+
+	<!-- 用户 -->
+	<include file="struts/user/struts-user.xml" />
+
+	<!-- 登录 -->
+	<include file="struts/user/struts-login.xml" />
+
+	<!-- 角色 -->
+	<include file="struts/role/struts-role.xml"></include>
+
+	<!-- 密码策略 -->
+	<include file="struts/policy/struts-passwordPolicy.xml" />
+
+	<!-- 地址策略 -->
+	<include file="struts/policy/struts-addressPolicy.xml"></include>
+
+	<!-- 时间策略 -->
+	<include file="struts/policy/struts-timePolicy.xml"></include>
+
+	<!-- 资产 -->
+	<include file="struts/asset/struts-asset.xml" />
+	<!-- 资产组 -->
+	<include file="struts/asset/struts-assetGroup.xml" />
+
+	<!-- 探测任务处理 -->
+	<include file="struts/asset/struts-assetProbeTask.xml" />
+
+	<!-- 风险管理 -->
+	<include file="struts/asset/struts-riskGroup.xml" />
+	<include file="struts/asset/struts-riskValue.xml" />
+	<include file="struts/risk/struts-vulnerabilityAssessment.xml" />
+	<include file="struts/risk/struts-assetRiskGroup.xml" />
+
+	<!-- 审计 -->
+	<include file="struts/audit/struts-audit.xml" />
+	<!-- 外部审计 -->
+	<include file="struts/audit/struts-auditReport.xml" />
+
+	<!-- 监控管理 -->
+	<include file="struts/monitor/struts-monitorGroup.xml" />
+	<include file="struts/monitor/struts-monitor.xml" />
+	<include file="struts/monitor/struts-networkTopology.xml" />
+
+
+	<!--事件 -->
+	<include file="struts/events/struts-events.xml" />
+
+	<!-- 解析失败事件 -->
+	<include file="struts/events/struts-notAnalyticEvents.xml" />
+
+	<!-- 警告 -->
+	<include file="struts/alert/struts-alert.xml" />
+
+	<include file="struts/alert/struts-alertMessage.xml" />
+
+
+	<!-- 阀值 -->
+	<include file="struts/systemsetting/struts-threshold.xml" />
+
+	<!-- 首页 -->
+	<include file="struts/home/struts-home.xml" />
+
+	<!-- 系统设置 -->
+	<include file="struts/systemsetting/struts-setting.xml" />
+	<include file="struts/systemsetting/struts-network.xml" />
+	<include file="struts/systemsetting/struts-route.xml" />
+	<!-- <include file="struts/systemsetting/struts-global.xml" /> -->
+	<include file="struts/systemsetting/struts-syslog.xml" />
+	<include file="struts/systemsetting/struts-SNMP.xml" />
+	<include file="struts/systemsetting/struts-mail.xml" />
+	<include file="struts/systemsetting/struts-shutdown.xml" />
+	<include file="struts/systemsetting/strute-localcollector.xml" />
+	<include file="struts/systemsetting/strute-logger.xml" />
+	<include file="struts/systemsetting/strute-storage.xml" />
+	<include file="struts/systemsetting/struts-alertSetting.xml" />
+	<include file="struts/systemsetting/struts-saveTimeSetting.xml" />
+	<include file="struts/systemsetting/rules/struts-AssociationRules.xml" />
+	<include file="struts/systemsetting/rules/struts-AnalysisRules.xml" />
+	<include file="struts/systemsetting/struts-upgrade.xml" />
+	<include file="struts/systemsetting/struts-archive.xml" />
+	<include file="struts/systemsetting/struts-terrace.xml" />
+	<include file="struts/systemsetting/struts-centerIp.xml" />
+	<include file="struts/systemsetting/struts-syncIp.xml" />
+	<include file="struts/systemsetting/struts-oem.xml" />
+	
+
+	<!-- 知识库 -->
+	<include file="struts/repository/struts-repository.xml"></include>
+	<!-- 知识管理 -->
+	<include file="struts/knowledgemanger/struts-leak.xml" />
+	<include file="struts/knowledgemanger/struts-securitybulletin.xml" />
+
+	<!-- 工单管理 -->
+	<include file="struts/workorder/struts-workOrder.xml" />
+
+	<!-- <include file="struts/fileupload/struts-fileupload.xml" /> -->
+	<!-- 漏洞 -->
+	<include file="struts/knowledgemanger/struts-vulnerability.xml" />
+	<!-- 自定义过滤规则管理 -->
+	<include file="struts/systemsetting/rules/struts-FilterRule.xml" />
+
+
+	<!-- 大屏显示 -->
+	<include file="struts/screen/struts-indexscreen.xml" />
+	<include file="struts/screen/struts-comprehensive.xml" />
+	
+	<!-- 注册码 -->
+	<include file="struts/about/struts-serial.xml"/>
+    <include file="struts/about/struts-about.xml"/>
+
+
+	<!-- 自定义 规则管理 -->
+	<include file="struts/systemsetting/rules/struts-RelevanceRule.xml" />
+	<!-- 自定义 规则管理组 -->
+	<include file="struts/systemsetting/rules/struts-RelevanceRuleGroup.xml" />
+	<include file="struts/knowledgemanger/struts-message.xml" />
+	<!-- 级联节点 -->
+	<include file="struts/systemsetting/node/strute-node.xml"></include>
+	<!-- 自定义趋势 -->
+	<include file="struts/monitor/struts-customThrend.xml"></include>
+	<!-- 等保 -->
+	<!-- 基础信息开始 -->
+	<!-- 单位信息 -->
+	<include file="struts/db/basicinfo/unitinfo/unitInfo.xml" />
+	<!-- 用户管理 -->
+	<!-- <include file="struts/db/basicinfo/employee/struts-employee.xml"></include> -->
+	<!-- 组织部门-->
+	<include file="struts/db/basicinfo/division/division.xml"></include>
+	<!-- 信息系统管理 -->
+	<include file="struts/db/basicinfo/system/system.xml"></include>
+	<!-- 信息资产:业务应用信息 -->
+	<include file="struts/db/basicinfo/assets/softUse.xml" />
+	<!-- 信息资产:关键数据类别 -->
+	<include file="struts/db/basicinfo/assets/dataAssets.xml" />
+	<!-- 信息资产:主机存储设备 -->
+	<include file="struts/db/basicinfo/assets/compAssets.xml" />
+	<!-- 信息资产:安全设备 -->
+	<include file="struts/db/basicinfo/assets/devAssets.xml" />
+	<!-- 信息资产:网络互连设备 -->
+	<include file="struts/db/basicinfo/assets/netAssets.xml" />
+	<!-- 信息资产:安全相关人员 -->
+	<include file="struts/db/basicinfo/assets/empAssets.xml" />
+	<!-- 信息资产:安全文档管理 -->
+	<include file="struts/db/basicinfo/assets/docAssets.xml" />
+	<!-- 基础数据结束 -->
+	<!-- —————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————— -->
+
+	<!-- 定级备案开始 -->
+	<!-- 定级 -->
+	<include file="struts/db/rank/rank.xml" />
+	<!-- 备案 -->
+	<include file="struts/db/rank/record.xml" />
+	<!-- 备案历史 -->
+	<include file="struts/db/rank/RecordHistory.xml" />
+	<!-- 备案集 -->
+	<include file="struts/db/rank/RecordDocList.xml" />
+	<!-- 系统废止 -->
+	<include file="struts/db/rank/sysAbolish.xml" />
+	<!--定级报告 -->
+	<include file="struts/db/rank/rankReport.xml"/>
+	<!-- 定级备案结束 -->
+	<!-- —————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————— -->
+	<!--合规管理开始 -->
+	<!-- 通用差距分析开始 -->
+
+
+	<!-- 技术差距分析 -->
+	<include file="struts/db/cpManage/technology/technology.xml" />
+    <!--整改需求汇总-->
+    <include file="struts/db/cpManage/demand/demandCollet.xml"/>
+     <!-- 通用物理 -->
+     <include file="struts/db/psad/psad.xml"></include>
+     <!-- 通用物理评估 -->
+     <include file="struts/db/psad/psa.xml"></include>
+     <!-- 通用管理 -->
+     <include file="struts/db/msad/msad.xml"></include>
+     <!-- 通用管理评估 -->
+     <include file="struts/db/msad/msa.xml"></include>
+    <!--技术差距评估-->
+   <!--  <include file="struts/db/cpManage/assessResult/assessResult.xml"></include> -->
+
+ 
+	<!--通用管理整改需求汇总-->
+    <include file="struts/db/cpManage/msaShow/msaShow.xml"/>
+ 	<!--通用物理整改需求汇总-->
+    <include file="struts/db/cpManage/gpaShow/gpaShow.xml"/>   
+
+	<!--技术差距评估 -->
+	 <include file="struts/db/cpManage/assessResult/assessResult.xml"/>
+	<!-- 差距分析报告 -->
+	<!-- 差距分析进度 -->
+	<include file="struts/db/cpManage/gapAnalysisSchedule/GapSchedule.xml"></include>
+ 	<!-- 差距分析报告导出 -->
+	<include file="struts/db/cpManage/gapReportDocument/GapReportDocument.xml"></include>
+ 
+	<!--整改建议 -->
+
+	<include file="struts/db/cpManage/rectificationProposal/rectificationProposal.xml"></include>
+
+	<include file="struts/db/cpManage/rectificationProposal/rectificationProposal.xml"></include>
+	<!--通用物理整改建议 -->
+	<include file="struts/db/cpManage/gpaShow/gpaRect.xml"></include>
+	<!--通用管理整改建议 -->
+	<include file="struts/db/cpManage/msaShow/msaRect.xml"></include>	
+
+	<!--整改建议历史对比 -->
+	<include file="struts/db/cpManage/contrastRectification/contrast.xml"></include>
+	<!--整改需求汇总 -->
+	<include file="struts/db/cpManage/demand/demandCollet.xml" />
+	<!-- 汇总分析 -->
+	<!-- 安全差距分析 -->
+	<include file="struts/db/cpManage/summaryanalysis/Summaryanalysis.xml"/>
+	<!--安全控制分析报告-->
+	<include file="struts/db/cpManage/securityControl/Securitycontrol.xml"/>
+ <!-- 审计管理 -->
+
+	<!-- 资产设备类型 -->
+	<include file="struts/asset/device/struts-category.xml" />
+	<!-- 资产系统 -->
+	<include file="struts/asset/system/struts-assetSystem.xml" />
+	
+	<!-- 同步系统时间 -->
+	<include file="struts/systemsetting/struts-syncDate.xml"></include>
+	
+	<include file="struts/addrules/struts-addRules.xml"></include>
+	
+	<!-- 文件管理 -->
+	<include file="struts/db/files/filesdown.xml"></include>
+	<!--等保  -->
+	<!-- 安全管理平台设备信息 -->
+	<include file="struts/topo/device/struts-device.xml"/>
+	<!-- 安全管理平台临时设备 -->
+	<include file="struts/topo/device/struts-tempDevice.xml"/>
+	<!-- 资产设备类型 -->
+	<include file="struts/topo/deviceCategory/struts-deviceCategory.xml"/>
+	<include file="struts/topo/device/struts-netBackGroundPhoto.xml"/>
+		<!-- 直播星 -->
+	<include file="struts/satellite/satellite_events.xml"></include>
+	<!-- 安全策略管理 -->
+	<include file="struts/securityPolicy/struts-securityPolicy.xml"></include>
+	<!-- 漏扫联动 --> 
+	<include file="struts/scanTask/struts-scanTask.xml"></include>
+	<!-- 数据库监控 -->
+	<include file="struts/monitor/struts-monitorDatabaseTask.xml"></include>
+	<!-- tomCat监控 -->
+	<include file="struts/monitor/struts-monitorTomcatTask.xml"/>
+	<!-- windows监控 -->
+	<include file="struts/monitor/struts-monitorWindowsTask.xml"/>
+	
+	<package name="default" extends="tiles-default" namespace="/">
+		<action name="frame" class="frameAction" method="frame">
+			<!-- member.layout -->
+			<result name="success" type="tiles">soc.layout
+			</result>
+		</action>
+
+		<action name="frameHeader" class="frameAction" method="frameHeader">
+			<result type="tiles">soc.frameHeader</result>
+		</action>
+
+		<action name="frameBottom">
+			<result type="tiles">soc.frameBottom</result>
+		</action>
+	</package>
+</struts>

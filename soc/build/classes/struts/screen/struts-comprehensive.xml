@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+	<package name="comprehensive" extends="json-default" namespace="/comprehensive">
+     
+     <!-- 查看全部安全态势综合展现 -->
+     <action name="queryAll" class="comprehensiveAction" method="query">
+         <result name="success">/pages/screen/safety_situation_show.jsp</result>
+     </action>
+     
+     <!-- 刷新查看设备事件top 10 -->
+     <action name="queryfacility" class="comprehensiveAction" method="queryfacility">
+         <result name="success" type="json">
+                 <param name="root">facilityJson</param>
+         </result>
+     </action>
+     
+     <!-- 刷新查看安全事件top 10 -->
+     <action name="querysafety" class="comprehensiveAction" method="querysafety">
+        <result name="success" type="json">
+			<param name="root">safetyJson</param>
+		</result>
+     </action>
+     
+      <!-- 大屏展示设备事件  Top 10 -->
+     <action name="querybigfacility" class="comprehensiveAction" method="querybigfacility">
+         <result name="success">/pages/screen/safety_facility_event.jsp</result>
+     </action>
+  
+      <!-- 大屏查看安全事件top 10 -->
+     <action name="querybigsafety" class="comprehensiveAction" method="querybigsafety">
+        <result name="success">/pages/screen/safety_safety_event.jsp</result>
+     </action>
+     
+      <!-- 大屏全局域风险变化趋势  -->
+      <action name="querybigrisk" class="comprehensiveAction" method="querybigrisk">
+        <result name="success">/pages/screen/safety_risk_event.jsp</result>
+      </action>
+      
+      <!-- 大屏子域风险变化趋势 -->
+      <action name="querybigsonrisk" class="comprehensiveAction" method="querybigsonrisk">
+        <result name="success">/pages/screen/safety_sonrisk_event.jsp</result>
+      </action>
+     
+	</package>
+</struts>	

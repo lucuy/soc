@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="division" extends="struts-default" namespace="/division">
+	
+		 <!-- 查询组织部门信息树 -->
+		<action name="query" class="divisionAction" method="query"/>
+		
+		<!-- 查询组织部门信息 -->
+		<action name="queryInfo" class="divisionAction" method="queryInfo"/>
+		
+		<!-- 修改组织部门信息 -->
+		<action name="updateInfo" class="divisionAction" method="updateInfo"/>
+		
+		<!-- 添加组织部门信息 -->
+		<action name="addInfo" class="divisionAction" method="addInfo"/>
+		
+		<!-- 删除组织部门信息 -->
+		<action name="deleteInfo" class="divisionAction" method="deleteInfo"/>
+
+	</package>
+</struts>

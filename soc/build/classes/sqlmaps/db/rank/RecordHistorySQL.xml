@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    <sqlMap >
+
+    
+    <resultMap class="RecordHistory" id="recordHistoryResult">
+		<result property="recordHistoryId" 			column="Pk_HISTORYRECORD"/>
+		<result property="sysInFoId" 				column="SYSINFO_Id"/>
+		<result property="sysInFoName" 				column="SYSINFO_Name"/>
+		<result property="sysInFoBusDescription" 	column="SYSINFO_BusDescription"/>
+		<result property="rankGrade" 				column="RANK_Grade"/>
+		<result property="recordHistoryDocument" 	column="HISTORYRECORD_Document"/> 
+		<result property="recordHistoryDate" 	    column="HISTORYRECORD_ProduceDate"/> 
+		<!-- 2013-12-12添加文档重命名列修改文件名乱码问题 -->
+		<result property="reRecordHistoryDocument" 	    column="HISTORYRECORD_ReDocument"/> 
+    </resultMap>
+    <!-- 查询备案历史 -->
+    <select id="pgAdminrecordHistory.query" parameterClass="java.util.HashMap" resultMap="recordHistoryResult">
+    	select * from "tb_historyrecord"  where 1=1
+    	<isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				(
+					"SYSINFO_Name" LIKE '%$keyword$%' or
+				    "HISTORYRECORD_Document" LIKE '%$keyword$%'  or
+					"RANK_Grade" LIKE '%$keyword$%' 
+				)
+			]]>
+		</isNotEmpty> 
+    	order by "Pk_HISTORYRECORD" desc
+    </select>
+    
+     <!-- 查询备案条数 -->
+     <select id="pgAdminrecordHistory.count" parameterClass="java.util.HashMap" resultClass="int">
+    	select COUNT(*) from "tb_historyrecord" where 1=1
+    	<isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				(
+					"SYSINFO_Name" LIKE '%$keyword$%' or
+				    "HISTORYRECORD_Document" LIKE '%$keyword$%'  or
+					"RANK_Grade" LIKE '%$keyword$%' 
+				)
+			]]>
+		</isNotEmpty> 
+    </select>
+
+
+   <!-- 根据备案编号查询备案 -->
+   <select id="pgAdminrecordHistory.queryById" parameterClass="int" resultMap="recordHistoryResult">
+   	   select * from "tb_historyrecord" where "Pk_HISTORYRECORD" = #recordHistoryId# 
+   </select>
+   	
+
+   
+   <!-- 添加备案历史-->
+   <insert id="pgAdminrecordHistory.insert"  parameterClass="RecordHistory">
+     insert into "tb_historyrecord"("SYSINFO_Id","SYSINFO_Name","SYSINFO_BusDescription","RANK_Grade","HISTORYRECORD_Document","HISTORYRECORD_ProduceDate","HISTORYRECORD_ReDocument") values(#sysInFoId#,#sysInFoName#,#sysInFoBusDescription#,#rankGrade#,#recordHistoryDocument#,#recordHistoryDate#,#reRecordHistoryDocument#);
+   </insert>
+   
+    <!--备案修改
+   <update id="pgAdminrecordHistory.update"  parameterClass="RecordHistory">
+    update TB_SYSRECORD set 
+
+    where Pk_SYSRECORD=#recordId#
+   </update>-->
+   <!-- 高级搜索备案历史数据条数 -->
+   	<select id="pgAdminrecordHistory.precisecount" parameterClass="java.util.HashMap" resultClass="int">
+    	select COUNT(*) from "tb_historyrecord"   where 1=1
+    	<isNotEmpty prepend= "AND"  property="keyword1">
+			<![CDATA[
+					"SYSINFO_Name" = #keyword1#
+			]]>
+		</isNotEmpty> 
+		<isNotEmpty prepend= "AND"  property="keyword2">
+			<![CDATA[
+					"RANK_Grade" = #keyword2# 
+			]]>
+		</isNotEmpty> 
+		<isNotEmpty prepend= "AND"  property="keyword3">
+			<![CDATA[
+				    "HISTORYRECORD_Document" = #keyword3#
+			]]>
+		</isNotEmpty> 
+		<isNotEmpty prepend= "AND"  property="keyword4">
+			<![CDATA[
+					"HISTORYRECORD_ProduceDate" = #keyword4#
+			]]>
+		</isNotEmpty> 
+    </select>
+    <!-- 高级搜索备案历史详细信息 -->
+   	<select id="pgAdminrecordHistory.precisequery" parameterClass="java.util.HashMap" resultMap="recordHistoryResult">
+    	select * from "tb_historyrecord"   where 1=1
+    	<isNotEmpty prepend= "AND"  property="keyword1">
+			<![CDATA[
+					"SYSINFO_Name" = #keyword1#
+			]]>
+		</isNotEmpty> 
+		<isNotEmpty prepend= "AND"  property="keyword2">
+			<![CDATA[
+					"RANK_Grade" = #keyword2# 
+			]]>
+		</isNotEmpty> 
+		<isNotEmpty prepend= "AND"  property="keyword3">
+			<![CDATA[
+				    "HISTORYRECORD_Document" = #keyword3#
+			]]>
+		</isNotEmpty> 
+		<isNotEmpty prepend= "AND"  property="keyword4">
+			<![CDATA[
+					"HISTORYRECORD_ProduceDate" = #keyword4#
+			]]>
+		</isNotEmpty> 
+		order by "Pk_HISTORYRECORD" desc
+    </select>
+    <!-- sqlserver -->
+    <!-- 查询备案历史 -->
+    <select id="sqlServerrecordHistory.query" parameterClass="java.util.HashMap" resultMap="recordHistoryResult">
+    	select * from "tb_historyrecord"  where 1=1
+    	<isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				(
+					"SYSINFO_Name" LIKE '%$keyword$%' or
+				    "HISTORYRECORD_Document" LIKE '%$keyword$%'  or
+					"RANK_Grade" LIKE '%$keyword$%' 
+				)
+			]]>
+		</isNotEmpty> 
+    	order by "Pk_HISTORYRECORD" desc
+    </select>
+    
+     <!-- 查询备案条数 -->
+     <select id="sqlServerrecordHistory.count" parameterClass="java.util.HashMap" resultClass="int">
+    	select COUNT(*) from "tb_historyrecord" where 1=1
+    	<isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				(
+					"SYSINFO_Name" LIKE '%$keyword$%' or
+				    "HISTORYRECORD_Document" LIKE '%$keyword$%'  or
+					"RANK_Grade" LIKE '%$keyword$%' 
+				)
+			]]>
+		</isNotEmpty> 
+    </select>
+
+
+   <!-- 根据备案编号查询备案 -->
+   <select id="sqlServerrecordHistory.queryById" parameterClass="int" resultMap="recordHistoryResult">
+   	   select * from "tb_historyrecord" where "Pk_HISTORYRECORD" = #recordHistoryId# 
+   </select>
+   	
+
+   
+   <!-- 添加备案历史-->
+   <insert id="sqlServerrecordHistory.insert"  parameterClass="RecordHistory">
+     insert into "tb_historyrecord"("SYSINFO_Id","SYSINFO_Name","SYSINFO_BusDescription","RANK_Grade","HISTORYRECORD_Document","HISTORYRECORD_ProduceDate","HISTORYRECORD_ReDocument") values(#sysInFoId#,#sysInFoName#,#sysInFoBusDescription#,#rankGrade#,#recordHistoryDocument#,#recordHistoryDate#,#reRecordHistoryDocument#);
+   </insert>
+   
+    <!--备案修改
+   <update id="sqlServerrecordHistory.update"  parameterClass="RecordHistory">
+    update TB_SYSRECORD set 
+
+    where Pk_SYSRECORD=#recordId#
+   </update>-->
+   <!-- 高级搜索备案历史数据条数 -->
+   	<select id="sqlServerrecordHistory.precisecount" parameterClass="java.util.HashMap" resultClass="int">
+    	select COUNT(*) from "tb_historyrecord"   where 1=1
+    	<isNotEmpty prepend= "AND"  property="keyword1">
+			<![CDATA[
+					"SYSINFO_Name" = #keyword1#
+			]]>
+		</isNotEmpty> 
+		<isNotEmpty prepend= "AND"  property="keyword2">
+			<![CDATA[
+					"RANK_Grade" = #keyword2# 
+			]]>
+		</isNotEmpty> 
+		<isNotEmpty prepend= "AND"  property="keyword3">
+			<![CDATA[
+				    "HISTORYRECORD_Document" = #keyword3#
+			]]>
+		</isNotEmpty> 
+		<isNotEmpty prepend= "AND"  property="keyword4">
+			<![CDATA[
+					"HISTORYRECORD_ProduceDate" = #keyword4#
+			]]>
+		</isNotEmpty> 
+    </select>
+    <!-- 高级搜索备案历史详细信息 -->
+   	<select id="sqlServerrecordHistory.precisequery" parameterClass="java.util.HashMap" resultMap="recordHistoryResult">
+    	select * from "tb_historyrecord"   where 1=1
+    	<isNotEmpty prepend= "AND"  property="keyword1">
+			<![CDATA[
+					"SYSINFO_Name" = #keyword1#
+			]]>
+		</isNotEmpty> 
+		<isNotEmpty prepend= "AND"  property="keyword2">
+			<![CDATA[
+					"RANK_Grade" = #keyword2# 
+			]]>
+		</isNotEmpty> 
+		<isNotEmpty prepend= "AND"  property="keyword3">
+			<![CDATA[
+				    "HISTORYRECORD_Document" = #keyword3#
+			]]>
+		</isNotEmpty> 
+		<isNotEmpty prepend= "AND"  property="keyword4">
+			<![CDATA[
+					"HISTORYRECORD_ProduceDate" = #keyword4#
+			]]>
+		</isNotEmpty> 
+		order by "Pk_HISTORYRECORD" desc
+    </select>
+</sqlMap>

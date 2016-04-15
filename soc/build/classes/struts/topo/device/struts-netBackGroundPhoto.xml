@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="netBackGroundPhoto" extends="struts-default" namespace="/netBackGroundPhoto">
+		<!-- 查询所有的设备列表 -->
+		<action name="queryAllPhoto" class="netBackGroundPhotoAction" method="queryAll">
+			<result>/pages/topoPage/device/addNetBackGroundPhoto.jsp</result>
+		</action>
+		<!-- 修改 -->
+		<action name="updatePhotoName" class="netBackGroundPhotoAction" method="updatePhotoName">
+			<result>/pages/topoPage/device/addNetBackGroundPhoto.jsp</result>
+		</action>
+		<!--选择网络拓扑背景的图片-->
+		<action name="queryPhotoName" class="netBackGroundPhotoAction" method="queryPhotoName">
+		</action>
+	
+	</package>
+</struts>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+
+	<!-- 差距分析报告 -->
+	<!-- 差距分析进度 -->
+	
+	<resultMap class="projectShowcase" id="projectShowcaseid">
+		<result property="pkca" column="PK_CA" jdbcType="int" />
+		<result property="caName" column="CA_Name" jdbcType="varchar" />
+		<result property="sysinfoId" column="SYSINFO_Id" jdbcType="varchar" />
+		<result property="caEndTime" column="CA_EndTime" jdbcType="date" />
+		<result property="casysGrade" column="CA_SysGrade" jdbcType="varchar" />
+	</resultMap>
+	<select id="pgAdmingetGapSchedule.count" resultClass="int"
+		parameterClass="gapschedule">
+		SELECT COUNT("PK_CIA") FROM "tb_cia" WHERE "FK_CA" =#fkca#
+		AND "CIA_Sort" LIKE #ciaSort#
+	</select>
+	
+<!-- 	<select id="getGapSchedule.show" resultMap="projectShowcaseid">
+		SELECT "CA_Name", "SYSINFO_Id" ,"PK_CA","CA_EndTime","CA_SysGrade" FROM "tb_ca"
+		WHERE "CA_CurrentState" in('0','1','2')  GROUP BY "CA_Name" ORDER BY "CA_EndTime" DESC
+	</select> -->
+	
+		<select id="pgAdmingetGapSchedule.show" resultMap="projectShowcaseid">
+		SELECT "CA_Name", "SYSINFO_Id" ,"PK_CA","CA_EndTime","CA_SysGrade"  from  "tb_ca" WHERE "CA_Name" in(SELECT "CA_Name" FROM "tb_ca"
+		WHERE "CA_CurrentState" in('0','1','2')  GROUP BY "CA_Name") and "CA_EndTime" in (SELECT  MAX("CA_EndTime")as "CA_EndTime" FROM "tb_ca"
+		WHERE "CA_CurrentState" in('0','1','2')  GROUP BY "CA_Name" ORDER BY "CA_EndTime" DESC  )
+	</select>
+	
+	<!-- <select id="getJinDuProjectShowcase.showByName" resultMap="projectShowcaseid" parameterClass="int">
+		SELECT "CA_Name", "SYSINFO_Id" ,"PK_CA","CA_EndTime","CA_SysGrade" FROM "tb_ca"
+		WHERE "CA_CurrentState" in  ('0','1','2') and "PK_CA"=#pkca# GROUP BY "CA_Name" ORDER BY "CA_EndTime" DESC
+	</select> -->
+	<select id="pgAdmingetJinDuProjectShowcase.showByName" resultMap="projectShowcaseid" parameterClass="int">
+		SELECT "CA_Name", "SYSINFO_Id" ,"PK_CA","CA_EndTime","CA_SysGrade"  from  "tb_ca" WHERE "CA_Name" in(SELECT "CA_Name" FROM "tb_ca"
+		WHERE "CA_CurrentState" in('0','1','2')  GROUP BY "CA_Name") and "CA_EndTime" in (SELECT  MAX("CA_EndTime")as "CA_EndTime" FROM "tb_ca"
+		WHERE "CA_CurrentState" in('0','1','2')  GROUP BY "CA_Name" ORDER BY "CA_EndTime" DESC  ) and "PK_CA"=#pkca#
+	</select>
+<!-- sqlserver -->
+	<select id="sqlServergetGapSchedule.count" resultClass="int"
+		parameterClass="gapschedule">
+		SELECT COUNT("PK_CIA") FROM "tb_cia" WHERE "FK_CA" =#fkca#
+		AND "CIA_Sort" LIKE #ciaSort#
+	</select>
+	
+<!-- 	<select id="getGapSchedule.show" resultMap="projectShowcaseid">
+		SELECT "CA_Name", "SYSINFO_Id" ,"PK_CA","CA_EndTime","CA_SysGrade" FROM "tb_ca"
+		WHERE "CA_CurrentState" in('0','1','2')  GROUP BY "CA_Name" ORDER BY "CA_EndTime" DESC
+	</select> -->
+	
+		<select id="sqlServergetGapSchedule.show" resultMap="projectShowcaseid">
+		<!-- SELECT "CA_Name", "SYSINFO_Id" ,"PK_CA","CA_EndTime","CA_SysGrade"  from  "tb_ca" WHERE "CA_Name" in(SELECT "CA_Name" FROM "tb_ca"
+		WHERE "CA_CurrentState" in('0','1','2')  GROUP BY "CA_Name") and "CA_EndTime" in (SELECT  MAX("CA_EndTime")as "CA_EndTime" FROM "tb_ca"
+		WHERE "CA_CurrentState" in('0','1','2')  GROUP BY "CA_Name" ORDER BY "CA_EndTime" DESC  ) -->
+		<!-- 把orderby去掉 pxm -->
+		SELECT "CA_Name", "SYSINFO_Id" ,"PK_CA","CA_EndTime","CA_SysGrade"  from  "tb_ca" WHERE "CA_Name" in(SELECT "CA_Name" FROM "tb_ca"
+		WHERE "CA_CurrentState" in('0','1','2')  GROUP BY "CA_Name") and "CA_EndTime" in (SELECT  MAX("CA_EndTime")as "CA_EndTime" FROM "tb_ca"
+		WHERE "CA_CurrentState" in('0','1','2')  GROUP BY "CA_Name"   )
+	</select>
+	
+	<!-- <select id="getJinDuProjectShowcase.showByName" resultMap="projectShowcaseid" parameterClass="int">
+		SELECT "CA_Name", "SYSINFO_Id" ,"PK_CA","CA_EndTime","CA_SysGrade" FROM "tb_ca"
+		WHERE "CA_CurrentState" in  ('0','1','2') and "PK_CA"=#pkca# GROUP BY "CA_Name" ORDER BY "CA_EndTime" DESC
+	</select> -->
+	<select id="sqlServergetJinDuProjectShowcase.showByName" resultMap="projectShowcaseid" parameterClass="int">
+		<!-- SELECT "CA_Name", "SYSINFO_Id" ,"PK_CA","CA_EndTime","CA_SysGrade"  from  "tb_ca" WHERE "CA_Name" in(SELECT "CA_Name" FROM "tb_ca"
+		WHERE "CA_CurrentState" in('0','1','2')  GROUP BY "CA_Name") and "CA_EndTime" in (SELECT  MAX("CA_EndTime")as "CA_EndTime" FROM "tb_ca"
+		WHERE "CA_CurrentState" in('0','1','2')  GROUP BY "CA_Name" ORDER BY "CA_EndTime" DESC  ) and "PK_CA"=#pkca# -->
+		<!-- 把orderby去掉 pxm -->
+		SELECT "CA_Name", "SYSINFO_Id" ,"PK_CA","CA_EndTime","CA_SysGrade"  from  "tb_ca" WHERE "CA_Name" in(SELECT "CA_Name" FROM "tb_ca"
+		WHERE "CA_CurrentState" in('0','1','2')  GROUP BY "CA_Name") and "CA_EndTime" in (SELECT  MAX("CA_EndTime")as "CA_EndTime" FROM "tb_ca"
+		WHERE "CA_CurrentState" in('0','1','2')  GROUP BY "CA_Name"  ) and "PK_CA"=#pkca#
+	</select>
+	
+</sqlMap>

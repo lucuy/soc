@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+	<package name="scanTask" extends="json-default" namespace="/scanTask">
+	<!-- 查询所有 -->
+	<action name="query" class="scanTaskAction" method="queryAll">
+	<result name="success">/pages/securityPolicy/scan_task_list.jsp</result>
+	</action>
+	<!-- 编辑 -->
+	<action name="edit" class="scanTaskAction" method="editScanTask">
+	<result name="success">/pages/securityPolicy/scan_task_info.jsp</result>
+	</action>
+	<!-- 修改/新增 -->
+	<action name="saveScanTask" class="scanTaskAction" method="insertORUpdate">
+	<interceptor-ref name="defaultStack"/><!-- 需要注意拦截器栈的配置顺序-->  
+            <interceptor-ref name="token"/><!-- 这就是用来防止表单重复提交的拦截器-->  
+            <result name="invalid.token" type="redirectAction">
+            <param name="namespace">/scanTask</param>
+		       <param name="actionName">query</param>
+            
+            </result><!-- 需要注意的是名字必须为invalid.token-->  
+			<result name="success" type="chain">
+			<param name="namespace">/scanTask</param>
+		       <param name="actionName">query</param>
+			</result>
+	</action>
+	<!-- 检查名称 -->
+	<action name="checkName" class="scanTaskAction" method="checkName"></action>
+	<!-- 执行扫描 -->
+	<action name="issuedMethod" class="scanTaskAction" method="issuedMethod" >
+	<result name="success" type="chain">
+			<param name="namespace">/scanTask</param>
+		       <param name="actionName">query</param>
+			</result>
+	</action>
+	<!-- 删除 -->
+	<action name="delete" class="scanTaskAction" method="delete" >
+	<result name="success" type="chain">
+			<param name="namespace">/scanTask</param>
+		       <param name="actionName">query</param>
+			</result>
+	</action>
+	
+	
+	</package>
+
+</struts>	

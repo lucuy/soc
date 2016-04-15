@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    
+<sqlMap namespace="categorySQL">
+	<resultMap id="categoryResult" class="category">
+   		<result property="device_category_id" 		column="DEVICE_CATEGORY_ID" 	jdbcType="bigint"/>
+   		<result property="device_category_name" 	column="DEVICE_CATEGORY_NAME"   jdbcType="varchar"/>
+   		<result property="higher_ups_id"       		column="HIGHER_UPS_ID"          jdbcType="bigint"/>
+   		<result property="events_devname"      		column="EVENTS_DEVNAME"     	jdbcType="varchar"/>
+   		<result property="events_programtype"  		column="EVENTS_PROGRAMTYPE"     jdbcType="varchar"/>
+   		<result property="events_customd1" 			column="EVENTS_CUSTOMD1" 		jdbcType="bigint"/>
+   		<result property="events_rawid"    			column="EVENTS_RAWID"  			jdbcType="bigint"/>
+   		<result property="device_category_code" 	column="DEVICE_CATEGORY_CODE"  	jdbcType="varchar"/>
+   		<result property="devicelist" column="DEVICE_CATEGORY_ID" select="sqlServerselect.devicelistByUpsId"/>
+	</resultMap>
+	<resultMap id="categoryResult1" class="category">
+   		<result property="device_category_id" 		column="DEVICE_CATEGORY_ID" 	jdbcType="bigint"/>
+   		<result property="device_category_name" 	column="DEVICE_CATEGORY_NAME"   jdbcType="varchar"/>
+   		<result property="higher_ups_id"       		column="HIGHER_UPS_ID"          jdbcType="bigint"/>
+   		<result property="devicelist" column="DEVICE_CATEGORY_ID" select="sqlServerselect.devicelistByUpsId"/>
+	</resultMap>
+	<!-- 新增资产设备 -->
+	<insert id="pgAdmininsert.category" parameterClass="java.util.HashMap">
+	   INSERT INTO "tbl_device_category" 
+		       ("DEVICE_CATEGORY_NAME",
+		       "HIGHER_UPS_ID",
+		       "EVENTS_CUSTOMD1")
+	     VALUES 
+	           (#deviceCategoryName#,
+	            #higherUpsId#,
+	          	1)
+	    <selectKey resultClass="long" keyProperty="device_category_id">
+			SELECT
+			currval('tbl_device_category_seq'::regclass) AS device_category_id
+		</selectKey>      
+    </insert>
+    <!-- 查询 资产设备 -->
+	<select id="pgAdminselect.devicelistByUpsId" resultMap="categoryResult1" parameterClass="long">
+			SELECT *
+			FROM "tbl_device_category" WHERE "HIGHER_UPS_ID" = #value# 
+			ORDER BY
+			"DEVICE_CATEGORY_ID" desc
+	</select>
+	<!-- 查询 资产设备厂商 -->
+	<select id="pgAdminselect.devicelist" resultMap="categoryResult1" >
+			SELECT	*
+			FROM "tbl_device_category" WHERE "HIGHER_UPS_ID" = 0 
+			<isNotEmpty prepend="AND" property="deviceId">
+			    <![CDATA[ 
+			      "DEVICE_CATEGORY_ID" = #deviceId#
+			    ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="keyword">
+			    <![CDATA[ 
+			      "DEVICE_CATEGORY_NAME" LIKE '%$keyword$%'
+			    ]]>
+			</isNotEmpty>
+			ORDER BY
+			"DEVICE_CATEGORY_ID" desc
+	</select>
+	<!-- 根据id查询单条记录 -->
+	<select id="pgAdminselect.devicelistById" resultMap="categoryResult1" parameterClass="long">
+			SELECT	*
+			FROM "tbl_device_category" WHERE "HIGHER_UPS_ID" = 0 
+			AND "DEVICE_CATEGORY_ID" = #value#
+			ORDER BY
+			"DEVICE_CATEGORY_ID" desc
+	</select>
+	
+	<!-- 根据设备名查询单条记录 -->
+	<select id="pgAdminselect.devicelistByName" resultMap="categoryResult1" parameterClass="java.lang.String">
+			SELECT	*
+			FROM "tbl_device_category" WHERE "HIGHER_UPS_ID" = 0 
+			AND "DEVICE_CATEGORY_NAME" = #value#
+			
+	</select>
+	<!-- 查询总记录数 -->
+	<select id="pgAdminselect.categoryCount" resultClass="int" parameterClass="java.util.HashMap">
+			SELECT COUNT(*) FROM "tbl_device_category" WHERE "HIGHER_UPS_ID" = 0 
+			
+			<isNotEmpty prepend="AND" property="keyword">
+			    <![CDATA[ 
+			      "DEVICE_CATEGORY_NAME" LIKE '%$keyword$%'
+			    ]]>
+			</isNotEmpty>
+			
+	</select>
+	<!-- 删除设备 -->
+	<delete id="pgAdmindelete.categoryById" parameterClass="long">
+			DELETE FROM "tbl_device_category" WHERE "DEVICE_CATEGORY_ID" = #value#
+	</delete>
+	<!-- 删除设备厂商 -->
+	<delete id="pgAdmindelete.categoryByUpsId" parameterClass="long" >
+			DELETE FROM "tbl_device_category" WHERE "HIGHER_UPS_ID" = #value#
+	</delete>
+	<!-- sqlserver -->
+	
+	<!-- 新增资产设备 -->
+	<insert id="sqlServerinsert.category" parameterClass="java.util.HashMap">
+	   INSERT INTO "tbl_device_category" 
+		       ("DEVICE_CATEGORY_NAME",
+		       "HIGHER_UPS_ID",
+		       "EVENTS_CUSTOMD1")
+	     VALUES 
+	           (#deviceCategoryName#,
+	            #higherUpsId#,
+	          	1)
+	    <selectKey resultClass="long" keyProperty="device_category_id">
+			SELECT @@IDENTITY AS device_category_id
+		</selectKey>      
+    </insert>
+    <!-- 查询 资产设备 -->
+	<select id="sqlServerselect.devicelistByUpsId" resultMap="categoryResult1" parameterClass="long">
+			SELECT *
+			FROM "tbl_device_category" WHERE "HIGHER_UPS_ID" = #value# 
+			ORDER BY
+			"DEVICE_CATEGORY_ID" desc
+	</select>
+	<!-- 查询 资产设备厂商 -->
+	<select id="sqlServerselect.devicelist" resultMap="categoryResult1" >
+			SELECT	*
+			FROM "tbl_device_category" WHERE "HIGHER_UPS_ID" = 0 
+			<isNotEmpty prepend="AND" property="deviceId">
+			    <![CDATA[ 
+			      "DEVICE_CATEGORY_ID" = #deviceId#
+			    ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="keyword">
+			    <![CDATA[ 
+			      "DEVICE_CATEGORY_NAME" LIKE '%$keyword$%'
+			    ]]>
+			</isNotEmpty>
+			ORDER BY
+			"DEVICE_CATEGORY_ID" desc
+	</select>
+	<!-- 根据id查询单条记录 -->
+	<select id="sqlServerselect.devicelistById" resultMap="categoryResult1" parameterClass="long">
+			SELECT	*
+			FROM "tbl_device_category" WHERE "HIGHER_UPS_ID" = 0 
+			AND "DEVICE_CATEGORY_ID" = #value#
+			ORDER BY
+			"DEVICE_CATEGORY_ID" desc
+	</select>
+	<!-- 根据设备名查询单条记录 -->
+	<select id="sqlServerselect.devicelistByName" resultMap="categoryResult1" parameterClass="java.lang.String">
+			SELECT	*
+			FROM "tbl_device_category" WHERE "HIGHER_UPS_ID" = 0 
+			AND "DEVICE_CATEGORY_NAME" = #value#
+			ORDER BY
+			"DEVICE_CATEGORY_ID" desc
+	</select>
+	<!-- 查询总记录数 -->
+	<select id="sqlServerselect.categoryCount" resultClass="int" parameterClass="java.util.HashMap">
+			SELECT COUNT(*) FROM "tbl_device_category" WHERE "HIGHER_UPS_ID" = 0 
+			
+			<isNotEmpty prepend="AND" property="keyword">
+			    <![CDATA[ 
+			      "DEVICE_CATEGORY_NAME" LIKE '%$keyword$%'
+			    ]]>
+			</isNotEmpty>
+			
+	</select>
+	<!-- 删除设备 -->
+	<delete id="sqlServerdelete.categoryById" parameterClass="long">
+			DELETE FROM "tbl_device_category" WHERE "DEVICE_CATEGORY_ID" = #value#
+	</delete>
+	<!-- 删除设备厂商 -->
+	<delete id="sqlServerdelete.categoryByUpsId" parameterClass="long" >
+			DELETE FROM "tbl_device_category" WHERE "HIGHER_UPS_ID" = #value#
+	</delete>
+</sqlMap>
+   	    

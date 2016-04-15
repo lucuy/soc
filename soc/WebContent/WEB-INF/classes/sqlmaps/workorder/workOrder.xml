@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="workOrderSQL">
+	<resultMap class="workOrder" id="workOrderResult">
+		<result property="workOrderId" column="WORKORDER_ID" jdbcType="bigint"/>
+		<result property="workOrderName" column="WORKORDER_NAME" jdbcType="varchar"/>
+		<result property="exigencyLevel" column="EXIGENCY_LEVEL" jdbcType="integer"/>
+		<result property="workOrderDescribe" column="WORKORDER_DESCRIBE" jdbcType="text"/>
+		<result property="produceDate" column="PRODUCEDATE" jdbcType="date"/>
+		<result property="predictDate" column="PREDICTDATE" jdbcType="date"/>
+		<result property="realityDate" column="REALITYDATE" jdbcType="date"/>
+		<result property="workOrderStart" column="WORKORDER_START" jdbcType="varchar"/>
+		<result property="workOrderHandle" column="WORKORDER_HANDLE" jdbcType="varchar"/>
+		<result property="workOrderAudit" column="WORKORDER_AUDIT" jdbcType="varchar"/>
+		<result property="status" column="STATUS" jdbcType="integer"/>
+		<result property="remark" column="REMARK" jdbcType="text"/>
+		<result property="alarmID" column="ALARM_ID" jdbcType="integer"/>
+		<result property="sendMail" column="SEND_EMAIL" jdbcType="int"/>
+		<result property="closeReason" column="CLOSE_REASON" jdbcType="text"/>		
+	</resultMap>
+	<!-- 查询条数 -->	
+	 <select id="pgAdminworkOrder.count" parameterClass="java.util.HashMap" resultClass="int">
+		SELECT COUNT(*) FROM "tbl_workorder" WHERE 1=1
+		<isNotEmpty prepend="AND" property="keyword">
+			<![CDATA[
+				(("WORKORDER_NAME" LIKE '%$keyword$%') or ("WORKORDER_HANDLE" LIKE '%$keyword$%') or ("WORKORDER_START" LIKE '%$keyword$%'))
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selWorkOrderName">
+			("WORKORDER_NAME" LIKE '%$selWorkOrderName$%')
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selExigencyLevel">
+			("EXIGENCY_LEVEL"='$selExigencyLevel$')
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selStatus">
+			("STATUS"='$selStatus$')
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="status">
+			("STATUS"in ($status$))
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selworkOrderHandle">
+			("WORKORDER_HANDLE" LIKE '%$selworkOrderHandle$%')
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selworkOrderStart">
+			("WORKORDER_START" LIKE '%$selworkOrderStart$%')
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="workOrderHandle">
+			("WORKORDER_HANDLE"='$workOrderHandle$')
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="workOrderStart">
+			("WORKORDER_START"='$workOrderStart$')
+		</isNotEmpty>
+		
+	</select> 
+	<!-- <select id="pgAdminworkOrder.count" parameterClass="java.util.HashMap" resultClass="int">
+		SELECT COUNT(*) FROM "tbl_workorder" WHERE 1=1
+		<isNotEmpty prepend="AND" property="keyword">
+			<![CDATA[
+				(("WORKORDER_NAME" LIKE '%$keyword$%') or ("WORKORDER_HANDLE" LIKE '%$keyword$%') or ("WORKORDER_AUDIT" LIKE '%$keyword$%'))
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selWorkOrderName">
+			("WORKORDER_NAME" LIKE '%$selWorkOrderName$%')
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selExigencyLevel">
+			("EXIGENCY_LEVEL"='$selExigencyLevel$')
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selStatus">
+			("STATUS"='$selStatus$')
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selworkOrderHandle">
+			("WORKORDER_HANDLE"='$selworkOrderHandle$')
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selworkOrderAudit">
+			("WORKORDER_AUDIT"='$selworkOrderAudit$')
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="manyStatus">
+			"STATUS" in $manyStatus$
+		</isNotEmpty>
+		ANd( '$username$' in ("WORKORDER_START","WORKORDER_HANDLE","WORKORDER_AUDIT")
+		<isNotEmpty prepend="OR" property="ids">
+		   <![CDATA[
+			"ALARM_ID" in (select "ALARM_ID" from "tbl_alarm" where "ALARM_ASSET_ID" in ($ids$))
+			]]>
+		</isNotEmpty>
+		)
+	</select> -->
+	
+	<!-- 查询工单 -->
+	<select id="pgAdminworkOrder.query" parameterClass="java.util.HashMap" resultMap="workOrderResult">
+		SELECT * FROM "tbl_workorder" WHERE 1=1
+		<!-- <isNotEmpty prepend="AND" property="keyword">
+			<![CDATA[
+				(("WORKORDER_NAME" LIKE '%$keyword$%') or ("WORKORDER_HANDLE" LIKE '%$keyword$%') or ("WORKORDER_AUDIT" LIKE '%$keyword$%'))
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selWorkOrderName">
+			("WORKORDER_NAME" LIKE '%$selWorkOrderName$%')
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selExigencyLevel">
+			("EXIGENCY_LEVEL"='$selExigencyLevel$')
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selStatus">
+			("STATUS"='$selStatus$')
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selworkOrderHandle">
+			("WORKORDER_HANDLE"='$selworkOrderHandle$')
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selworkOrderAudit">
+			("WORKORDER_AUDIT"='$selworkOrderAudit$')
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="manyStatus">
+			"STATUS" in $manyStatus$
+		</isNotEmpty>
+		ANd( '$username$' in ("WORKORDER_START","WORKORDER_HANDLE","WORKORDER_AUDIT")
+		<isNotEmpty prepend="OR" property="ids">
+		   <![CDATA[
+			"ALARM_ID" in (select "ALARM_ID" from "tbl_alarm" where "ALARM_ASSET_ID" in ($ids$))
+			]]>
+		</isNotEmpty>
+		) -->
+		<isNotEmpty prepend="AND" property="keyword">
+			<![CDATA[
+				(("WORKORDER_NAME" LIKE '%$keyword$%') or ("WORKORDER_HANDLE" LIKE '%$keyword$%') or ("WORKORDER_START" LIKE '%$keyword$%'))
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selWorkOrderName">
+			("WORKORDER_NAME" LIKE '%$selWorkOrderName$%')
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selExigencyLevel">
+			("EXIGENCY_LEVEL"='$selExigencyLevel$')
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selStatus">
+			("STATUS"='$selStatus$')
+		</isNotEmpty>
+		
+		<isNotEmpty prepend="AND" property="selworkOrderHandle">
+			("WORKORDER_HANDLE" LIKE '%$selworkOrderHandle$%')
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selworkOrderStart">
+			("WORKORDER_START" LIKE '%$selworkOrderStart$%')
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="status">
+			("STATUS"in ($status$))
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="workOrderHandle">
+			("WORKORDER_HANDLE"='$workOrderHandle$')
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="workOrderStart">
+			("WORKORDER_START"='$workOrderStart$')
+		</isNotEmpty>
+	  ORDER BY "STATUS" 
+	</select>
+	
+	<!-- 批量删除 -->
+	<delete id="pgAdminworkOrder.delete" parameterClass="java.lang.String">
+		DELETE FROM "tbl_workorder" WHERE "WORKORDER_ID" IN ($String$)
+	</delete>
+	
+	<!-- 添加工单 -->
+	<!-- INSERT INTO "tbl_workorder"(
+             "WORKORDER_NAME", "EXIGENCY_LEVEL", "WORKORDER_DESCRIBE", 
+            "PRODUCEDATE", "PREDICTDATE", "REALITYDATE", "WORKORDER_START", 
+            "WORKORDER_HANDLE", "WORKORDER_AUDIT", "STATUS", "REMARK","ALARM_ID","SEND_EMAIL")
+    VALUES (#workOrderName#,0,#workOrderDescribe#,#produceDate#,#predictDate#,#realityDate#,
+    #workOrderStart#,#workOrderHandle#,#workOrderAudit#,#status#,#remark#,#alarmID#,#sendMail#); -->
+	<insert id="pgAdminworkOrder.insert" parameterClass="workOrder">
+		INSERT INTO "tbl_workorder"(
+             "WORKORDER_NAME", "EXIGENCY_LEVEL", "WORKORDER_DESCRIBE", 
+            "PRODUCEDATE","WORKORDER_START", 
+            "WORKORDER_HANDLE", "STATUS", "ALARM_ID","SEND_EMAIL")
+    VALUES (#workOrderName#,#exigencyLevel#,#workOrderDescribe#,#produceDate#,
+    #workOrderStart#,#workOrderHandle#,0,#alarmID#,#sendMail#);
+    <selectKey resultClass="int" keyProperty="workOrderId" >
+            SELECT currval('tbl_workorder_seq'::regclass) AS workOrderId
+      	</selectKey>
+	</insert>
+	
+	<!-- 通过id查询工单 -->
+	<select id="pgAdminworkOrder.queryById" parameterClass="java.lang.Long" resultMap="workOrderResult">
+		SELECT * FROM "tbl_workorder" WHERE "WORKORDER_ID" = #id#
+	</select>
+	
+	<!-- 通过ALARM_ID查询工单 -->
+	<select id="pgAdminworkOrder.queryByAlarmId" parameterClass="java.lang.Long" resultMap="workOrderResult">
+		SELECT * FROM "tbl_workorder" WHERE "ALARM_ID" = #id#
+	</select>
+	
+	<!-- 修改工单 -->
+	<!-- UPDATE "tbl_workorder"
+  		 SET  "WORKORDER_NAME"=#workOrderName#, "EXIGENCY_LEVEL"=#exigencyLevel#, "WORKORDER_DESCRIBE"=#workOrderDescribe#, 
+       "PRODUCEDATE"=#produceDate#, "PREDICTDATE"=#predictDate#, "REALITYDATE"=#realityDate#, "WORKORDER_START"=#workOrderStart#, 
+       "WORKORDER_HANDLE"=#workOrderHandle#, "WORKORDER_AUDIT"=#workOrderAudit#, "STATUS"=#status#, "REMARK"=#remark#
+		 WHERE "WORKORDER_ID"=#workOrderId#; -->
+	<update id="pgAdminworkOrder.update" parameterClass="workOrder">
+		
+		UPDATE "tbl_workorder"
+  		 SET    
+        "STATUS"=#status#, "REMARK"=#remark#
+		 WHERE "WORKORDER_ID"=#workOrderId#;
+	</update>
+	<!-- 查询关闭原因 -->
+	<select id="pgAdminworkOrder.closeReason" parameterClass="int" resultClass="String">
+		select "CLOSE_REASON" from "tbl_workorder" where "WORKORDER_ID"=#workOrderId#;
+	
+	</select>
+	<!-- 关闭工单 -->
+	<update id="pgAdminworkOrder.close" parameterClass="java.util.HashMap">
+		UPDATE "tbl_workorder"
+  		 SET    
+        "STATUS"=2, "CLOSE_REASON"='$closeReason$'
+		 WHERE "WORKORDER_ID"=#workOrderId#;
+	</update>
+	<!-- 查询工单状态 -->
+	<select id="pgAdminworkOrder.status" parameterClass="int" resultClass="int">
+		select "STATUS"  from   "tbl_workorder"
+		 WHERE "WORKORDER_ID"=#workOrderId#;
+	</select>
+	<!-- sqlserver -->
+	<select id="sqlServerworkOrder.count" parameterClass="java.util.HashMap" resultClass="int">
+		SELECT COUNT(*) FROM "tbl_workorder" WHERE 1=1
+		<isNotEmpty prepend="AND" property="keyword">
+			<![CDATA[
+				(("WORKORDER_NAME" LIKE '%$keyword$%') or ("WORKORDER_HANDLE" LIKE '%$keyword$%') or ("WORKORDER_AUDIT" LIKE '%$keyword$%'))
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selWorkOrderName">
+			("WORKORDER_NAME" LIKE '%$selWorkOrderName$%')
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selExigencyLevel">
+			("EXIGENCY_LEVEL"='$selExigencyLevel$')
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selStatus">
+			("STATUS"='$selStatus$')
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="status">
+			("STATUS"in ($status$))
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selworkOrderHandle">
+			("WORKORDER_HANDLE" LIKE '%$selworkOrderHandle$%')
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selworkOrderAudit">
+			("WORKORDER_AUDIT"='$selworkOrderAudit$')
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="manyStatus">
+			"STATUS" in $manyStatus$
+		</isNotEmpty>
+		ANd( '$username$' in ("WORKORDER_START","WORKORDER_HANDLE","WORKORDER_AUDIT")
+		<isNotEmpty prepend="OR" property="ids">
+		   <![CDATA[
+			"ALARM_ID" in (select "ALARM_ID" from "tbl_alarm" where "ALARM_ASSET_ID" in ($ids$))
+			]]>
+		</isNotEmpty>
+		)
+	</select>
+	
+	<!-- 查询工单 -->
+	<select id="sqlServerworkOrder.query" parameterClass="java.util.HashMap" resultMap="workOrderResult">
+		SELECT * FROM "tbl_workorder" WHERE 1=1
+		<isNotEmpty prepend="AND" property="keyword">
+			<![CDATA[
+				(("WORKORDER_NAME" LIKE '%$keyword$%') or ("WORKORDER_HANDLE" LIKE '%$keyword$%') or ("WORKORDER_AUDIT" LIKE '%$keyword$%'))
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selWorkOrderName">
+			("WORKORDER_NAME" LIKE '%$selWorkOrderName$%')
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selExigencyLevel">
+			("EXIGENCY_LEVEL"='$selExigencyLevel$')
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selStatus">
+			("STATUS"='$selStatus$')
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="status">
+			("STATUS"in ($status$))
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selworkOrderHandle">
+			("WORKORDER_HANDLE" LIKE '%$selworkOrderHandle$%')
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selworkOrderAudit">
+			("WORKORDER_AUDIT"='$selworkOrderAudit$')
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="manyStatus">
+			"STATUS" in $manyStatus$
+		</isNotEmpty>
+		ANd( '$username$' in ("WORKORDER_START","WORKORDER_HANDLE","WORKORDER_AUDIT")
+		<isNotEmpty prepend="OR" property="ids">
+		   <![CDATA[
+			"ALARM_ID" in (select "ALARM_ID" from "tbl_alarm" where "ALARM_ASSET_ID" in ($ids$))
+			]]>
+		</isNotEmpty>
+		)
+	  ORDER BY "WORKORDER_ID" DESC
+	</select>
+	
+	<!-- 批量删除 -->
+	<delete id="sqlServerworkOrder.delete" parameterClass="java.lang.String">
+		DELETE FROM "tbl_workorder" WHERE "WORKORDER_ID" IN ($String$)
+	</delete>
+	
+	<!-- 添加工单 -->
+	<insert id="sqlServerworkOrder.insert" parameterClass="workOrder">
+		INSERT INTO "tbl_workorder"(
+             "WORKORDER_NAME", "EXIGENCY_LEVEL", "WORKORDER_DESCRIBE", 
+            "PRODUCEDATE", "PREDICTDATE", "REALITYDATE", "WORKORDER_START", 
+            "WORKORDER_HANDLE", "WORKORDER_AUDIT", "STATUS", "REMARK","ALARM_ID")
+    VALUES (#workOrderName#,#exigencyLevel#,#workOrderDescribe#,#produceDate#,#predictDate#,#realityDate#,
+    #workOrderStart#,#workOrderHandle#,#workOrderAudit#,#status#,#remark#,#alarmID#);
+	</insert>
+	
+	<!-- 通过id查询工单 -->
+	<select id="sqlServerworkOrder.queryById" parameterClass="java.lang.Long" resultMap="workOrderResult">
+		SELECT * FROM "tbl_workorder" WHERE "WORKORDER_ID" = #id#
+	</select>
+	
+	<!-- 通过ALARM_ID查询工单 -->
+	<select id="sqlServerworkOrder.queryByAlarmId" parameterClass="java.lang.Long" resultMap="workOrderResult">
+		SELECT * FROM "tbl_workorder" WHERE "ALARM_ID" = #id#
+	</select>
+	
+	<!-- 修改工单 -->
+	<update id="sqlServerworkOrder.update" parameterClass="workOrder">
+		UPDATE "tbl_workorder"
+  		 SET  "WORKORDER_NAME"=#workOrderName#, "EXIGENCY_LEVEL"=#exigencyLevel#, "WORKORDER_DESCRIBE"=#workOrderDescribe#, 
+       "PRODUCEDATE"=#produceDate#, "PREDICTDATE"=#predictDate#, "REALITYDATE"=#realityDate#, "WORKORDER_START"=#workOrderStart#, 
+       "WORKORDER_HANDLE"=#workOrderHandle#, "WORKORDER_AUDIT"=#workOrderAudit#, "STATUS"=#status#, "REMARK"=#remark#
+		 WHERE "WORKORDER_ID"=#workOrderId#;
+	</update>
+</sqlMap>

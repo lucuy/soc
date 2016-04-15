@@ -1,0 +1,563 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="assetGroupSQL">
+	<resultMap id="assetGroupResult" class="assetGroup">
+   		<result property="assetGroupId" 			column="ASSET_GROUP_ID" 		    jdbcType="bigint"/>
+   		<result property="assetGroupName"           column="ASSET_GROUP_NAME"           jdbcType="varchar"/>
+   		<result property="assetGroupParentId"       column="ASSET_GROUP_PARENT_ID"             jdbcType="bigint"/>
+   		<result property="assetGroupCreateDateTime"      column="ASSET_GROUP_CREATE_DATE_TIME"     jdbcType="datetime"/>
+   		<result property="assetGroupUpdateDateTime"      column="ASSET_GROUP_UPDATE_DATE_TIME"     jdbcType="datetime"/>
+   		<result property="assetGroupIsDelete"       			column="ASSET_GROUP_IS_DELETE"      			jdbcType="tinyint"/>
+   		<result property="assetGroupMemo"       			column="ASSET_MEMO"      			jdbcType="text"/>
+   		<result property="parentGroup"   column="ASSET_GROUP_PARENT_ID" select="sqlServerassetGroup.queryParent"/>
+   		<result property="assetParentsFeature" column="ASSET_PARENTS_FEATURE"  jdbcType="text"/>
+   		<result property="riskThreatValue" column="RISK_THREATVALUE" jdbcType="numeric"></result>
+		<result property="vAVulnerabilityValue"  column="VAVULNERABILITYVALUE" jdbcType="numeric"/>
+		<result property="assetValue"  column="ASSET_ASSET_VALUE" jdbcType="numeric"/>
+   	</resultMap>
+   	
+   	<resultMap id="assetGroupResult1" class="assetGroup">
+   		<result property="assetGroupId" 			column="ASSET_GROUP_ID" 		    jdbcType="bigint"/>
+   		<result property="assetGroupName"           column="ASSET_GROUP_NAME"           jdbcType="varchar"/>
+   		<result property="assetGroupParentId"       column="ASSET_GROUP_PARENT_ID"             jdbcType="bigint"/>
+   		
+   		<result property="assetGroupCreateDateTime"      column="ASSET_GROUP_CREATE_DATE_TIME"     jdbcType="datetime"/>
+   		<result property="assetGroupUpdateDateTime"      column="ASSET_GROUP_UPDATE_DATE_TIME"     jdbcType="datetime"/>
+   		<result property="assetGroupIsDelete"       			column="ASSET_GROUP_IS_DELETE"      			jdbcType="tinyint"/>
+   		<result property="assetGroupMemo"       			column="ASSET_MEMO"      			jdbcType="text"/>
+        <result property="assetParentsFeature"          column="ASSET_PARENTS_FEATURE"              jdbcType="text"/>
+   	</resultMap>
+   		<!-- 查询条数 -->
+	<select id="pgAdminassetGroup.count" resultClass="int" parameterClass="java.util.HashMap">
+		SELECT COUNT(*) FROM "tbl_asset_group"  WHERE 1=1 and "ASSET_GROUP_IS_DELETE" = 0
+	</select>
+	
+	<!-- 查询 -->
+	<select id="pgAdminassetGroup.query"  parameterClass="java.util.HashMap" resultMap="assetGroupResult" >
+		SELECT * FROM "tbl_asset_group" WHERE 1=1 and "ASSET_GROUP_IS_DELETE" = 0 ORDER BY "ASSET_GROUP_ID" ASC
+	</select>
+	<!-- 查询根据用户id查询旗下的-->
+	<select id="pgAdminassetGroup.queryByUserId"  parameterClass="java.util.HashMap" resultMap="assetGroupResult" >
+		SELECT * FROM "tbl_asset_group" WHERE 1=1 and "ASSET_GROUP_IS_DELETE" = 0 
+		and "ASSET_GROUP_ID" = #assetGroupId#
+		ORDER BY "ASSET_GROUP_ID" ASC
+	</select>
+	<!-- 查询子节点 -->
+	<select id="pgAdminassetGroup.querySon"  parameterClass="java.lang.String" resultClass="java.util.HashMap" >
+		SELECT "ASSET_GROUP_ID" as "assetGroupId" FROM "tbl_asset_group" WHERE 1=1 AND "ASSET_GROUP_IS_DELETE" = 0 AND "ASSET_PARENTS_FEATURE" LIKE '%$value$%'
+	</select>
+	
+	<!-- 按照上级Id查询 -->
+	<select id="pgAdminassetGroup.queryByParentId" parameterClass="java.util.HashMap" resultMap="assetGroupResult">
+	   SELECT * FROM "tbl_asset_group" WHERE 1=1 and "ASSET_GROUP_IS_DELETE" = 0  
+	   <isNotEmpty prepend="AND" property="assetGroupParentId">
+	       <![CDATA[ 
+	          "ASSET_GROUP_PARENT_ID" = #assetGroupParentId#
+	       ]]>
+	        order by "ASSET_GROUP_ID"
+	   </isNotEmpty>
+	</select>
+	<!-- 根据用户Id查询所关联的子节点 -->
+	<select id="pgAdminassetGroup.queryChildrenByParentId" parameterClass="java.util.HashMap" resultMap="assetGroupResult">
+	   SELECT * FROM "tbl_asset_group" WHERE 1=1 and "ASSET_GROUP_IS_DELETE" = 0 
+	   <isNotEmpty prepend="AND" property="assetGroupParentId">
+	       <![CDATA[ 
+	          "ASSET_GROUP_PARENT_ID" = #assetGroupParentId#
+	       ]]>
+	   </isNotEmpty>
+	</select>
+	<!-- 按照用户id查询出顶级父类 -->
+	<select id="pgAdminassetGroup.queryParentsByUserId" parameterClass="java.util.HashMap" resultMap="assetGroupResult">
+	  select * from "tbl_asset_group" where "ASSET_GROUP_ID" in
+(select "REL_ASSET_GROUP_ID" from  tbl_rel_user_asset_group WHERE "REL_USER_ID" =#userid#) order by "ASSET_GROUP_ID" ASC;
+	</select>
+	
+	<!-- 按照本id查询 -->
+	<select id="pgAdminassetGroup.queryById" parameterClass="long" resultMap="assetGroupResult">
+	     SELECT * FROM  "tbl_asset_group" WHERE "ASSET_GROUP_IS_DELETE" = 0 AND "ASSET_GROUP_ID" =#value#
+	</select>
+	
+	
+	<!-- 按照名称查询 -->
+	<select id="pgAdminassetGroup.queryByAssetGroupName" parameterClass="java.lang.String" resultMap="assetGroupResult">
+	     SELECT * FROM  "tbl_asset_group" WHERE "ASSET_GROUP_IS_DELETE" = 0 AND "ASSET_GROUP_NAME" =#value#
+	</select>
+	<!-- 更改本资产组信息 -->
+	<update id="pgAdminassetGroup.update" parameterClass="assetGroup">
+	   UPDATE "tbl_asset_group" 
+	   SET 
+	       "ASSET_GROUP_NAME" = #assetGroupName# ,
+	       "ASSET_GROUP_UPDATE_DATE_TIME" = #assetGroupUpdateDateTime#,
+	       "ASSET_MEMO" = #assetGroupMemo# 
+	  WHERE 
+            "ASSET_GROUP_ID" = #assetGroupId#
+	</update>
+	
+	<!-- 添加资产组信息 -->
+	<insert id="pgAdminassetGroup.insert" parameterClass="assetGroup">
+	   INSERT INTO "tbl_asset_group" 
+		       ("ASSET_GROUP_NAME",
+		       "ASSET_GROUP_PARENT_ID",
+		       "ASSET_GROUP_CREATE_DATE_TIME",
+		       "ASSET_GROUP_UPDATE_DATE_TIME",
+		       "ASSET_GROUP_IS_DELETE",
+		       "ASSET_MEMO",
+		       "ASSET_PARENTS_FEATURE",
+		       "RISK_THREATVALUE",
+		       "VAVULNERABILITYVALUE",
+		       "ASSET_ASSET_VALUE")
+	     VALUES 
+	           (#assetGroupName#,
+	            #assetGroupParentId#,
+	            #assetGroupCreateDateTime#,
+	            #assetGroupUpdateDateTime#,
+	            #assetGroupIsDelete#,
+	            #assetGroupMemo#,
+	            #assetParentsFeature#,
+	            0,
+	            0,
+	            0)
+	     <selectKey resultClass="int" keyProperty="assetGroupId">
+	        select currval('tbl_asset_group_seq') as assetGroupId;
+	     </selectKey>       
+    </insert>
+    
+	<!-- 查询父亲组 -->
+	<select id="pgAdminassetGroup.queryParent" parameterClass="long" resultMap="assetGroupResult1">
+	  SELECT * FROM "tbl_asset_group" WHERE "ASSET_GROUP_IS_DELETE" = 0 AND "ASSET_GROUP_ID" = #value#
+	</select>
+	
+	<!-- 删除组以及自己的子组 -->
+	<update id="pgAdminassetGroup.delete" parameterClass="long">
+	  UPDATE "tbl_asset_group" SET "ASSET_GROUP_IS_DELETE" =1 WHERE "ASSET_GROUP_ID" = #value# OR "ASSET_PARENTS_FEATURE" LIKE '%,$value$,%'
+	</update>
+	
+	<select id="pgAdmincountPage.assetRiskGroup"  parameterClass="java.util.HashMap" resultClass="int">
+		SELECT COUNT(*) FROM "tbl_asset_group" WHERE 1=1 and "ASSET_GROUP_IS_DELETE" = 0 and "ASSET_GROUP_ID" >1
+		<isNotEmpty prepend="AND" property="assetGroupId">
+			"ASSET_GROUP_ID" in ($assetGroupId$) OR  "ASSET_PARENTS_FEATURE" like '%$assetGroupId$%'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword">
+	       <![CDATA[ 
+	          "ASSET_GROUP_NAME" LIKE '%$keyword$%'
+	       ]]>
+	   </isNotEmpty>
+	   <isNotEmpty prepend="AND" property="selvAVulnerabilityValue">
+	       <![CDATA[ 
+	          "VAVULNERABILITYVALUE" =#selvAVulnerabilityValue#
+	       ]]>
+	   </isNotEmpty>
+	   <isNotEmpty prepend="AND" property="selriskThreatValue">
+	       <![CDATA[ 
+	         "RISK_THREATVALUE" =#selriskThreatValue#
+	       ]]>
+	   </isNotEmpty>
+	   <isNotEmpty prepend="AND" property="selassetValue">
+	       <![CDATA[ 
+	          "ASSET_ASSET_VALUE"=#selassetValue#
+	       ]]>
+	   </isNotEmpty>
+	</select>
+	
+	<select id="pgAdminassetRiskGroup.query"  parameterClass="java.util.HashMap" resultMap="assetGroupResult">
+		SELECT * FROM "tbl_asset_group" WHERE 1=1 and "ASSET_GROUP_IS_DELETE" = 0 and "ASSET_GROUP_ID" >1
+		<isNotEmpty prepend="AND" property="assetGroupId">
+			"ASSET_GROUP_ID" in ($assetGroupId$) OR  "ASSET_PARENTS_FEATURE" like '%$assetGroupId$%'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword">
+	       <![CDATA[ 
+	          "ASSET_GROUP_NAME" LIKE '%$keyword$%'
+	       ]]>
+	   </isNotEmpty>
+	   <isNotEmpty prepend="AND" property="selvAVulnerabilityValue">
+	       <![CDATA[ 
+	          "VAVULNERABILITYVALUE" =#selvAVulnerabilityValue#
+	       ]]>
+	   </isNotEmpty>
+	   <isNotEmpty prepend="AND" property="selriskThreatValue">
+	       <![CDATA[ 
+	         "RISK_THREATVALUE" =#selriskThreatValue#
+	       ]]>
+	   </isNotEmpty>
+	   <isNotEmpty prepend="AND" property="selassetValue">
+	       <![CDATA[ 
+	          "ASSET_ASSET_VALUE"=#selassetValue#
+	       ]]>
+	   </isNotEmpty>
+		order by "ASSET_GROUP_UPDATE_DATE_TIME" DESC
+	</select>
+	
+	<select id="pgAdminqueryByGroupName2.query"  resultMap="assetGroupResult">
+		SELECT * FROM "tbl_asset_group" WHERE 1=1 and "ASSET_GROUP_IS_DELETE" = 0
+	</select>
+	
+	<update id="pgAdminriskValue.update" parameterClass="assetGroup">
+		UPDATE
+		"tbl_asset_group"
+		SET "RISK_THREATVALUE" = #riskThreatValue#,
+		"VAVULNERABILITYVALUE" =#vAVulnerabilityValue#,
+		"ASSET_ASSET_VALUE" =#assetValue#
+		WHERE
+		"ASSET_GROUP_ID"=#assetGroupId#
+	</update>
+	<!--按照安全域显示图表 -->
+	<select id="pgAdminrisk.queryRiskAssetGroup" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	SELECT "$key$" as key, avg("$value$") as value FROM "tbl_asset_group" WHERE 1=1 and "ASSET_GROUP_IS_DELETE" = 0  and "ASSET_GROUP_ID" >1
+	<isNotEmpty prepend="AND" property="assetGroupId">
+		"ASSET_GROUP_ID" in ( $assetGroupId$) OR  "ASSET_PARENTS_FEATURE" like '%$assetGroupId$%'
+		</isNotEmpty>
+	GROUP BY key ORDER BY value DESC  LIMIT #topN# offset 0
+	
+	</select>
+	
+	
+	
+	<!-- 资产 导出成excel -->
+	<select id="pgAdminassetGroup.export"  parameterClass="java.util.HashMap"
+		resultClass="java.util.HashMap" >
+		SELECT * FROM "tbl_asset_group" WHERE 1=1 and "ASSET_GROUP_IS_DELETE" = 0 and "ASSET_GROUP_ID" >1
+		<isNotEmpty prepend="AND" property="ids">
+			"ASSET_GROUP_ID" in($ids$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword">
+	       <![CDATA[ 
+	          "ASSET_GROUP_NAME" LIKE '%$keyword$%'
+	       ]]>
+	   </isNotEmpty>
+		<isNotEmpty prepend="AND" property="assetGroupId">
+		"ASSET_GROUP_ID" in ( $assetGroupId$) OR  "ASSET_PARENTS_FEATURE" like '%$assetGroupId$%'
+		</isNotEmpty>
+		 <isNotEmpty prepend="AND" property="selvAVulnerabilityValue">
+	       <![CDATA[ 
+	          "VAVULNERABILITYVALUE" =#selvAVulnerabilityValue#
+	       ]]>
+	   </isNotEmpty>
+	   <isNotEmpty prepend="AND" property="selriskThreatValue">
+	       <![CDATA[ 
+	         "RISK_THREATVALUE" =#selriskThreatValue#
+	       ]]>
+	   </isNotEmpty>
+	   <isNotEmpty prepend="AND" property="selassetValue">
+	       <![CDATA[ 
+	          "ASSET_ASSET_VALUE"=#selassetValue#
+	       ]]>
+	   </isNotEmpty>
+	</select>
+	
+	<!-- 根据资产id获得所关联的资产组 -->
+	<select id="pgAdminquery.assetGroupByAssetId" parameterClass="long" resultMap="assetGroupResult">
+		<![CDATA[
+			SELECT * FROM "tbl_asset_group" WHERE "ASSET_GROUP_ID" IN 
+				(SELECT "ASSET_GROUP_ID" FROM "tbl_asset_group_asset" WHERE "ASSET_ID" = #value# )
+		]]>
+	</select>
+	
+	
+	<!-- 向资产和资产组的关联表中加入数据 -->
+	<insert id="pgAdminassetGroup.asset.linked" parameterClass="java.util.HashMap">
+	     INSERT INTO "tbl_asset_group_asset"("ASSET_ID","ASSET_GROUP_ID") values (#assetId#,#assetGroupId#)
+	</insert>
+	
+    <!-- 删除组时，删除关联表中的数据 -->
+	<delete id="pgAdminassetGroup.delAssetGroupLinked" parameterClass="long">
+	    DELETE FROM "tbl_asset_group_asset" WHERE "ASSET_GROUP_ID" = #value# 
+	</delete>
+	
+	<!-- 修改或者删除资产时，删除中间表信息 -->
+    <delete id="pgAdminassetGroup.delAssetLinked" parameterClass="long">
+	    DELETE FROM "tbl_asset_group_asset" WHERE "ASSET_ID" = #value# 
+	</delete>
+	
+	<!-- 给定条件删除资产与资产组对应关系 -->
+	<delete id="pgAdminassetGroup.delAssetLinkedPro" parameterClass="java.util.HashMap">
+	   DELETE FROM "tbl_asset_group_asset" WHERE "ASSET_ID" = #assetId# AND "ASSET_GROUP_ID" = #assetGroupId#
+	</delete>
+	
+	<!-- 查询去除"全部资产"和"未分组"资产组的其他父类资产组 -->
+	<select id="pgAdminassetGroup.queryFatherGroup"  parameterClass="java.util.HashMap" resultMap="assetGroupResult"> 
+	   select * from "tbl_asset_group" WHERE 1=1 AND "ASSET_GROUP_IS_DELETE" = 0 
+	</select>
+	
+	<!-- 查询 父组及对应的子组 --> 
+    <select id="pgAdminassetGroup.queryFatherGroupAndSon" parameterClass="java.util.HashMap" resultMap="assetGroupResult">
+      <!-- select * from "tbl_asset_group" where 1=1 AND "ASSET_GROUP_IS_DELETE" = 0 AND "ASSET_GROUP_PARENT_ID" = #groupId# OR "ASSET_GROUP_ID" = #groupId#  --> 
+      select * from "tbl_asset_group" WHERE 1=1 AND "ASSET_GROUP_IS_DELETE" = 0 AND "ASSET_GROUP_PARENT_ID" = #groupId#
+    </select>
+    <!-- 根据资产的Id查询对应资产组 -->
+    <select id="pgAdminassetGroup.queryGroupByAssetId" parameterClass="java.util.HashMap" resultMap="assetGroupResult">
+      SELECT * FROM "tbl_asset_group" WHERE "ASSET_GROUP_ID" IN (SELECT "ASSET_GROUP_ID" FROM "tbl_asset_group_asset" WHERE "ASSET_ID" = #assetId#)
+    </select>
+    <!-- 查询所有资产组-->
+   	<select id="pgAdminauditReportSQL.queryAllAssetGroup" resultMap="assetGroupResult">
+   	    SELECT *
+  		FROM "tbl_asset_group"  WHERE "ASSET_GROUP_IS_DELETE" = 0; 
+   	</select>
+   	
+   	<!-- sqlserver -->
+   	<!-- 查询条数 -->
+	<select id="sqlServerassetGroup.count" resultClass="int" parameterClass="java.util.HashMap">
+		SELECT COUNT(*) FROM "tbl_asset_group"  WHERE 1=1 and "ASSET_GROUP_IS_DELETE" = 0
+	</select>
+	
+	<!-- 查询 -->
+	<select id="sqlServerassetGroup.query"  parameterClass="java.util.HashMap" resultMap="assetGroupResult" >
+		SELECT * FROM "tbl_asset_group" WHERE 1=1 and "ASSET_GROUP_IS_DELETE" = 0 ORDER BY "ASSET_GROUP_ID" ASC
+	</select>
+	<!-- 查询根据用户id查询旗下的-->
+	<select id="sqlServerassetGroup.queryByUserId"  parameterClass="java.util.HashMap" resultMap="assetGroupResult" >
+		SELECT * FROM "tbl_asset_group" WHERE 1=1 and "ASSET_GROUP_IS_DELETE" = 0 
+		and "ASSET_GROUP_ID" = #assetGroupId#
+		ORDER BY "ASSET_GROUP_ID" ASC
+	</select>
+	<!-- 查询子节点 -->
+	<select id="sqlServerassetGroup.querySon"  parameterClass="java.lang.String" resultClass="java.util.HashMap" >
+		SELECT "ASSET_GROUP_ID" as "assetGroupId" FROM "tbl_asset_group" WHERE 1=1 AND "ASSET_GROUP_IS_DELETE" = 0 AND "ASSET_PARENTS_FEATURE" LIKE '%$value$%'
+	</select>
+	
+	<!-- 按照上级Id查询 -->
+	<select id="sqlServerassetGroup.queryByParentId" parameterClass="java.util.HashMap" resultMap="assetGroupResult">
+	   SELECT * FROM "tbl_asset_group" WHERE 1=1 and "ASSET_GROUP_IS_DELETE" = 0  
+	   <isNotEmpty prepend="AND" property="assetGroupParentId">
+	       <![CDATA[ 
+	          "ASSET_GROUP_PARENT_ID" = #assetGroupParentId#
+	       ]]>
+	        order by "ASSET_GROUP_ID"
+	   </isNotEmpty>
+	</select>
+	<!-- 根据用户Id查询所关联的子节点 -->
+	<select id="sqlServerassetGroup.queryChildrenByParentId" parameterClass="java.util.HashMap" resultMap="assetGroupResult">
+	   SELECT * FROM "tbl_asset_group" WHERE 1=1 and "ASSET_GROUP_IS_DELETE" = 0 
+	   <isNotEmpty prepend="AND" property="assetGroupParentId">
+	       <![CDATA[ 
+	          "ASSET_GROUP_PARENT_ID" = #assetGroupParentId#
+	       ]]>
+	   </isNotEmpty>
+	</select>
+	<!-- 按照用户id查询出顶级父类 -->
+	<select id="sqlServerassetGroup.queryParentsByUserId" parameterClass="java.util.HashMap" resultMap="assetGroupResult">
+	  select * from "tbl_asset_group" where "ASSET_GROUP_ID" in
+(select "REL_ASSET_GROUP_ID" from  tbl_rel_user_asset_group WHERE "REL_USER_ID" =#userid#) order by "ASSET_GROUP_ID" ASC;
+	</select>
+	
+	<!-- 按照本id查询 -->
+	<select id="sqlServerassetGroup.queryById" parameterClass="long" resultMap="assetGroupResult">
+	     SELECT * FROM  "tbl_asset_group" WHERE "ASSET_GROUP_IS_DELETE" = 0 AND "ASSET_GROUP_ID" =#value#
+	</select>
+	<!-- 按照名称查询 -->
+	<select id="sqlServerassetGroup.queryByAssetGroupName" parameterClass="java.lang.String" resultMap="assetGroupResult">
+	     SELECT * FROM  "tbl_asset_group" WHERE "ASSET_GROUP_IS_DELETE" = 0 AND "ASSET_GROUP_NAME" =#value#
+	</select>
+	<!-- 更改本资产组信息 -->
+	<update id="sqlServerassetGroup.update" parameterClass="assetGroup">
+	   UPDATE "tbl_asset_group" 
+	   SET 
+	       "ASSET_GROUP_NAME" = #assetGroupName# ,
+	       "ASSET_GROUP_UPDATE_DATE_TIME" = #assetGroupUpdateDateTime#,
+	       "ASSET_MEMO" = #assetGroupMemo# 
+	  WHERE 
+            "ASSET_GROUP_ID" = #assetGroupId#
+	</update>
+	
+	<!-- 添加资产组信息 -->
+	<insert id="sqlServerassetGroup.insert" parameterClass="assetGroup">
+	   INSERT INTO "tbl_asset_group" 
+		       ("ASSET_GROUP_NAME",
+		       "ASSET_GROUP_PARENT_ID",
+		       "ASSET_GROUP_CREATE_DATE_TIME",
+		       "ASSET_GROUP_UPDATE_DATE_TIME",
+		       "ASSET_GROUP_IS_DELETE",
+		       "ASSET_MEMO",
+		       "ASSET_PARENTS_FEATURE",
+		       "RISK_THREATVALUE",
+		       "VAVULNERABILITYVALUE",
+		       "ASSET_ASSET_VALUE")
+	     VALUES 
+	           (#assetGroupName#,
+	            #assetGroupParentId#,
+	            #assetGroupCreateDateTime#,
+	            #assetGroupUpdateDateTime#,
+	            #assetGroupIsDelete#,
+	            #assetGroupMemo#,
+	            #assetParentsFeature#,
+	            0,
+	            0,
+	            0)
+	     <selectKey resultClass="int" keyProperty="assetGroupId">
+	        select @@IDENTITY as assetGroupId;
+	     </selectKey>       
+    </insert>
+    
+	<!-- 查询父亲组 -->
+	<select id="sqlServerassetGroup.queryParent" parameterClass="long" resultMap="assetGroupResult1">
+	  SELECT * FROM "tbl_asset_group" WHERE "ASSET_GROUP_IS_DELETE" = 0 AND "ASSET_GROUP_ID" = #value#
+	</select>
+	
+	<!-- 删除组以及自己的子组 -->
+	<update id="sqlServerassetGroup.delete" parameterClass="long">
+	  UPDATE "tbl_asset_group" SET "ASSET_GROUP_IS_DELETE" =1 WHERE "ASSET_GROUP_ID" = #value# OR "ASSET_PARENTS_FEATURE" LIKE '%,$value$,%'
+	</update>
+	
+	<select id="sqlServercountPage.assetRiskGroup"  parameterClass="java.util.HashMap" resultClass="int">
+		SELECT COUNT(*) FROM "tbl_asset_group" WHERE 1=1 and "ASSET_GROUP_IS_DELETE" = 0 and "ASSET_GROUP_ID" >1
+		<isNotEmpty prepend="AND" property="assetGroupId">
+			"ASSET_GROUP_ID" in ($assetGroupId$) OR  "ASSET_PARENTS_FEATURE" like '%$assetGroupId$%'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword">
+	       <![CDATA[ 
+	          "ASSET_GROUP_NAME" LIKE '%$keyword$%'
+	       ]]>
+	   </isNotEmpty>
+	   <isNotEmpty prepend="AND" property="selvAVulnerabilityValue">
+	       <![CDATA[ 
+	          "VAVULNERABILITYVALUE" =#selvAVulnerabilityValue#
+	       ]]>
+	   </isNotEmpty>
+	   <isNotEmpty prepend="AND" property="selriskThreatValue">
+	       <![CDATA[ 
+	         "RISK_THREATVALUE" =#selriskThreatValue#
+	       ]]>
+	   </isNotEmpty>
+	   <isNotEmpty prepend="AND" property="selassetValue">
+	       <![CDATA[ 
+	          "ASSET_ASSET_VALUE"=#selassetValue#
+	       ]]>
+	   </isNotEmpty>
+	</select>
+	
+	<select id="sqlServerassetRiskGroup.query"  parameterClass="java.util.HashMap" resultMap="assetGroupResult">
+		SELECT * FROM "tbl_asset_group" WHERE 1=1 and "ASSET_GROUP_IS_DELETE" = 0 and "ASSET_GROUP_ID" >1
+		<isNotEmpty prepend="AND" property="assetGroupId">
+			"ASSET_GROUP_ID" in ($assetGroupId$) OR  "ASSET_PARENTS_FEATURE" like '%$assetGroupId$%'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword">
+	       <![CDATA[ 
+	          "ASSET_GROUP_NAME" LIKE '%$keyword$%'
+	       ]]>
+	   </isNotEmpty>
+	   <isNotEmpty prepend="AND" property="selvAVulnerabilityValue">
+	       <![CDATA[ 
+	          "VAVULNERABILITYVALUE" =#selvAVulnerabilityValue#
+	       ]]>
+	   </isNotEmpty>
+	   <isNotEmpty prepend="AND" property="selriskThreatValue">
+	       <![CDATA[ 
+	         "RISK_THREATVALUE" =#selriskThreatValue#
+	       ]]>
+	   </isNotEmpty>
+	   <isNotEmpty prepend="AND" property="selassetValue">
+	       <![CDATA[ 
+	          "ASSET_ASSET_VALUE"=#selassetValue#
+	       ]]>
+	   </isNotEmpty>
+		order by "ASSET_GROUP_UPDATE_DATE_TIME" DESC
+	</select>
+	
+	<select id="sqlServerqueryByGroupName2.query"  resultMap="assetGroupResult">
+		SELECT * FROM "tbl_asset_group" WHERE 1=1 and "ASSET_GROUP_IS_DELETE" = 0
+	</select>
+	
+	<update id="sqlServerriskValue.update" parameterClass="assetGroup">
+		UPDATE
+		"tbl_asset_group"
+		SET "RISK_THREATVALUE" = #riskThreatValue#,
+		"VAVULNERABILITYVALUE" =#vAVulnerabilityValue#,
+		"ASSET_ASSET_VALUE" =#assetValue#
+		WHERE
+		"ASSET_GROUP_ID"=#assetGroupId#
+	</update>
+	<!--按照安全域显示图表 -->
+	<select id="sqlServerrisk.queryRiskAssetGroup" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	SELECT  TOP $topN$ "$key$" as 'key', avg("$value$") as 'value' FROM "tbl_asset_group" WHERE 1=1 and "ASSET_GROUP_IS_DELETE" = 0  and "ASSET_GROUP_ID" >1
+	<isNotEmpty prepend="AND" property="assetGroupId">
+		"ASSET_GROUP_ID" in ( $assetGroupId$) OR  "ASSET_PARENTS_FEATURE" like '%$assetGroupId$%'
+		</isNotEmpty>
+	GROUP BY "$key$" ORDER BY 'value' DESC 
+	
+	</select>
+	
+	
+	
+	<!-- 资产 导出成excel -->
+	<select id="sqlServerassetGroup.export"  parameterClass="java.util.HashMap"
+		resultClass="java.util.HashMap" >
+		SELECT * FROM "tbl_asset_group" WHERE 1=1 and "ASSET_GROUP_IS_DELETE" = 0 and "ASSET_GROUP_ID">1
+		<isNotEmpty prepend="AND" property="ids">
+			"ASSET_GROUP_ID" in($ids$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="assetGroupId">
+		"ASSET_GROUP_ID" in ( $assetGroupId$) OR  "ASSET_PARENTS_FEATURE" like '%$assetGroupId$%'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword">
+	       <![CDATA[ 
+	          "ASSET_GROUP_NAME" LIKE '%$keyword$%'
+	       ]]>
+	   </isNotEmpty>
+		 <isNotEmpty prepend="AND" property="selvAVulnerabilityValue">
+	       <![CDATA[ 
+	          "VAVULNERABILITYVALUE" =#selvAVulnerabilityValue#
+	       ]]>
+	   </isNotEmpty>
+	   <isNotEmpty prepend="AND" property="selriskThreatValue">
+	       <![CDATA[ 
+	         "RISK_THREATVALUE" =#selriskThreatValue#
+	       ]]>
+	   </isNotEmpty>
+	   <isNotEmpty prepend="AND" property="selassetValue">
+	       <![CDATA[ 
+	          "ASSET_ASSET_VALUE"=#selassetValue#
+	       ]]>
+	   </isNotEmpty>
+	</select>
+	
+	<!-- 根据资产id获得所关联的资产组 -->
+	<select id="sqlServerquery.assetGroupByAssetId" parameterClass="long" resultMap="assetGroupResult">
+		<![CDATA[
+			SELECT * FROM "tbl_asset_group" WHERE "ASSET_GROUP_ID" IN 
+				(SELECT "ASSET_GROUP_ID" FROM "tbl_asset_group_asset" WHERE "ASSET_ID" = #value# )
+		]]>
+	</select>
+	
+	
+	<!-- 向资产和资产组的关联表中加入数据 -->
+	<insert id="sqlServerassetGroup.asset.linked" parameterClass="java.util.HashMap">
+	     INSERT INTO "tbl_asset_group_asset"("ASSET_ID","ASSET_GROUP_ID") values (#assetId#,#assetGroupId#)
+	</insert>
+	
+    <!-- 删除组时，删除关联表中的数据 -->
+	<delete id="sqlServerassetGroup.delAssetGroupLinked" parameterClass="long">
+	    DELETE FROM "tbl_asset_group_asset" WHERE "ASSET_GROUP_ID" = #value# 
+	</delete>
+	
+	<!-- 修改或者删除资产时，删除中间表信息 -->
+    <delete id="sqlServerassetGroup.delAssetLinked" parameterClass="long">
+	    DELETE FROM "tbl_asset_group_asset" WHERE "ASSET_ID" = #value# 
+	</delete>
+	
+	<!-- 给定条件删除资产与资产组对应关系 -->
+	<delete id="sqlServerassetGroup.delAssetLinkedPro" parameterClass="java.util.HashMap">
+	   DELETE FROM "tbl_asset_group_asset" WHERE "ASSET_ID" = #assetId# AND "ASSET_GROUP_ID" = #assetGroupId#
+	</delete>
+	
+	<!-- 查询去除"全部资产"和"未分组"资产组的其他父类资产组 -->
+	<select id="sqlServerassetGroup.queryFatherGroup"  parameterClass="java.util.HashMap" resultMap="assetGroupResult"> 
+	   select * from "tbl_asset_group" WHERE 1=1 AND "ASSET_GROUP_IS_DELETE" = 0 
+	</select>
+	
+	<!-- 查询 父组及对应的子组 --> 
+    <select id="sqlServerassetGroup.queryFatherGroupAndSon" parameterClass="java.util.HashMap" resultMap="assetGroupResult">
+      <!-- select * from "tbl_asset_group" where 1=1 AND "ASSET_GROUP_IS_DELETE" = 0 AND "ASSET_GROUP_PARENT_ID" = #groupId# OR "ASSET_GROUP_ID" = #groupId#  --> 
+      select * from "tbl_asset_group" WHERE 1=1 AND "ASSET_GROUP_IS_DELETE" = 0 AND "ASSET_GROUP_PARENT_ID" = #groupId#
+    </select>
+    <!-- 根据资产的Id查询对应资产组 -->
+    <select id="sqlServerassetGroup.queryGroupByAssetId" parameterClass="java.util.HashMap" resultMap="assetGroupResult">
+      SELECT * FROM "tbl_asset_group" WHERE "ASSET_GROUP_ID" IN (SELECT "ASSET_GROUP_ID" FROM "tbl_asset_group_asset" WHERE "ASSET_ID" = #assetId#)
+    </select>
+    <!-- 查询所有资产组-->
+   	<select id="sqlServerauditReportSQL.queryAllAssetGroup" resultMap="assetGroupResult">
+   	    SELECT *
+  		FROM "tbl_asset_group"  WHERE "ASSET_GROUP_IS_DELETE" = 0; 
+   	</select>
+
+</sqlMap>

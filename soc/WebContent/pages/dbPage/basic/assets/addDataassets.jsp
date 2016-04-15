@@ -1,0 +1,746 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib prefix="s" uri="/struts-tags"%>
+<%@ page contentType="text/html; charset=utf-8"%>
+<%@ include file="/pages/commons/taglibs.jsp"%>
+
+
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+<%@ include file="/pages/commons/meta.jsp"%>    
+    <title>关键数据类别</title>
+   <link href="${ctx}/styles/dbStyles/style.css" rel="stylesheet" type="text/css">
+<link href="${ctx}/styles/dbStyles/right.css" rel="stylesheet" type="text/css">
+<link href="${ctx}/styles/dbStyles/template.css" rel="stylesheet" type="text/css">
+<LINK href="${ctx}/css/style/jquery-ui.custom.css" type=text/css rel=stylesheet>
+<LINK href="${ctx}/css/style/jquery.popuplayer.css" type=text/css rel=stylesheet>
+
+<SCRIPT src="${ctx}/scripts/util.js" type=text/javascript></SCRIPT>
+<SCRIPT src="${ctx}/scripts/popuplayer.js" type=text/javascript></SCRIPT>
+<script type='text/javascript' src="${ctx}/scripts/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="${ctx}/scripts/jquery-ui.custom.min.js"></script>
+<script type='text/javascript' src="${ctx}/scripts/jquery.validationEngine-en.js"></script>
+<script type='text/javascript' src="${ctx}/scripts/jquery.validationEngine.js"></script>
+<script type="text/javascript" src="${ctx}/scripts/jquery.ui.dialog.js"></script>
+<script type='text/javascript' src="${ctx}/scripts/jquery-1.7.2.min.js"></script>
+<script type='text/javascript' src="${ctx}/scripts/jquery-ui.custom.min.js"></script>
+<script type="text/javascript" src="${ctx}/scripts/check.js"></script>
+<style type="text/css">
+	.tdleft{
+ 		width: 20%;
+ 		text-align: right;
+ 	}
+ 	td{
+ 		font-size: 12px;
+ 	}
+
+</style>
+<script type="text/javascript">
+
+var msgSysNames="";
+var msgSoftUses = "";
+var msgSysNamesTemp="";
+var msgSoftNamesTemp="";
+var sysNameTemp = ";";
+var resNameTemp = ";";
+var action = "";
+
+function checkAll() {
+	var flag = true;
+	var cked;
+	if (action == "sysname") {
+		cked = $("input[name='ids']"); 
+	} else {
+		cked= $("input[name='softs']");
+	}
+	if (cked.length) {
+		for (var i = 0; i < cked.length; i++) {
+			if (!$(cked[i]).attr("checked")) {
+				flag = false;
+			}
+		}
+	} else {
+		flag = false;
+	}
+	return flag;
+}
+function addSysNameCheck(str) {
+	var regex = new RegExp(";" + str + ";");
+	if (!regex.test(sysNameTemp)) {
+		sysNameTemp += str + ";";
+	}
+}
+function addResNameCheck(str) {
+	var regex = new RegExp(";" + str + ";");
+	if (!regex.test(resNameTemp)) {
+		resNameTemp += str + ";";
+	}
+}
+function delSysNameCheck(str) {
+	var regex = new RegExp(";" + str + ";");
+	sysNameTemp = sysNameTemp.replace(regex, ";");
+}
+function delResNameCheck(str) {
+	var regex = new RegExp(";" + str + ";");
+	resNameTemp = resNameTemp.replace(regex, ";");
+}
+
+	$(function()
+	{
+	$("input[name='ids']").live("click", function() {
+		if ($(this).attr("checked")) {
+			addSysNameCheck($(this).val());
+		} else {
+			delSysNameCheck($(this).val());
+		}
+		if (checkAll()) {
+			$("#chkAll").attr("checked", true);
+		} else {
+			$("#chkAll").attr("checked", false);
+		}
+	});
+	$("input[name='softs']").live("click", function() {
+		if ($(this).attr("checked")) {
+			addResNameCheck($(this).val());
+		} else {
+			delResNameCheck($(this).val());
+		}
+		if (checkAll()) {
+			$("#chkAll1").attr("checked", true);
+		} else {
+			$("#chkAll1").attr("checked", false);
+		}
+	});
+	$("#chkAll").live("click",function(event) {
+		var cked = $("input[name='ids']");
+		if ($("#chkAll").attr("checked")) {
+			cked.attr("checked", true);
+			for (var i = 0; i < cked.length; i++) {
+				addSysNameCheck($(cked[i]).val());
+			}
+		} else {
+			cked.attr("checked", false);
+			for (var i = 0; i < cked.length; i++) {
+				delSysNameCheck($(cked[i]).val());
+			}
+		}
+	});
+	$("#chkAll1").live("click",function(event) {
+		var cked = $("input[name='softs']");
+		if ($("#chkAll1").attr("checked")) {
+			cked.attr("checked", true);
+			for (var i = 0; i < cked.length; i++) {
+				addResNameCheck($(cked[i]).val());
+			}
+		} else {
+			cked.attr("checked", false);
+			for (var i = 0; i < cked.length; i++) {
+				delResNameCheck($(cked[i]).val());
+			}
+		}
+	});
+	//所属信息系统
+	$("#dialog-employee").dialog({
+		autoOpen: false,
+		minWidth: 600,
+		minHeight: 460,
+		buttons: {
+			"确定[Enter]": function() {
+				if (sysNameTemp != ";") {
+					$("input[name='sysName']").val(sysNameTemp.substring(1, sysNameTemp.length - 1));
+				} else {
+					$("input[name='sysName']").val("");
+				}
+				action = "";
+				sysNameTemp = ";";
+				$(this).dialog("close");
+			},
+			
+			"取消[Esc]": function() {
+				action = "";
+				resetCheckBox();
+				sysNameTemp = ";";
+				$(this).dialog("close"); 
+			} 
+		}
+	});	
+	
+	
+	//业务应用软件
+	$("#dialog-softUse").dialog({
+		autoOpen: false,
+		minWidth: 600,
+		minHeight: 460,
+		buttons: {
+			"确定[Enter]": function() {
+				if (resNameTemp != ";") {
+					$("input[name='resName']").val(resNameTemp.substring(1, resNameTemp.length - 1));
+				} else {
+					$("input[name='resName']").val("");
+				}
+				action = "";
+				resNameTemp = ";";
+				$(this).dialog("close"); 
+			},
+			
+			"取消[Esc]": function() { 
+				resetCheckBox();
+				action = "";
+				resNameTemp = ";";
+				$(this).dialog("close");
+			} 
+		}
+	});	
+	});
+ 	
+  	function employeeDlg() {
+  	action = "sysname";
+  	$("#dlg-keyword-sysName").val();
+  	if(!$("#chkAll-sysName").hasClass('not-checked-sysName'))
+  	{
+  		$("#chkAll-sysName").addClass('not-checked-sysName');
+  		$("#chkAll-sysName").attr('checked',true);
+  	}
+  	else
+  	{
+  		$("#chkAll-sysName").addClass('not-checked-sysName');
+  		$("#chkAll-sysName").attr('checked',false);
+  	}
+  	
+  	goSearch(0);
+  	$("#dialog-employee").dialog("open");
+}
+
+function jsonForAjax(url){
+		var htmlStr = "";	
+		var htmlPage = "";
+		var sysN = "";
+		var sysId = "";
+		var busDescription = "";
+		var rowNum = 0;
+ 		if (sysNameTemp == ";" && $("#sysName").val() != "") {
+ 			sysNameTemp += $("#sysName").val() + ";";
+ 		}
+		$.getJSON(url ,function(result){
+			$("#table-sysName tr:not(:first)").remove();
+			$.each(result.processLog, function(i,item) {
+			 	rowNum = $("#table-sysName tr").length-1;
+			 	if(item.id != null){
+		 			sysN = item.sysName;
+		 			sysId = item.sysId;
+		 			busDescription = item.busDescription;
+			 		htmlStr = "";
+			 		htmlStr += "<tr>";
+			 		htmlStr += "<td align=\"center\">";
+			 		var regex = new RegExp(";" + sysN + ";");
+			 		if (regex.test(sysNameTemp)) {
+			 			addSysNameCheck(sysN);
+				 		htmlStr += "<input name=\"ids\" type=\"checkbox\"  class=\"check-box\" checked=\"checked\"  value=\""+ sysN+"\"/>";
+			 		} else {
+			 			htmlStr += "<input name=\"ids\" type=\"checkbox\"  class=\"check-box\" value=\""+ sysN+"\"/>";
+					 			
+			 		}
+			 			htmlStr += "</td>";
+			 			htmlStr += "<td  align=\"center\">";
+			 				htmlStr += (sysN == null ? "" : sysN);
+			 			htmlStr += "</td>";
+			 			 htmlStr += "<td  align=\"center\">";
+			 				htmlStr += (sysId == null ? "" : sysId);			 			
+			 			htmlStr += "</td>"; 
+			 			 htmlStr += "<td  align=\"center\"><xmp>";
+			 				htmlStr += (busDescription == null ? "" : busDescription);	
+			 			htmlStr += "</xmp></td>"; 
+			 		htmlStr += "</tr>";
+			 	}
+			 	$(htmlStr).insertAfter($("#table-sysName tr:eq("+rowNum+")"));
+			 });				
+			if(result.page.startIndex != null){		
+				rowNum =  $("#table-sysName tr").size()-1;
+			    htmlPage += "<tr>";
+			    	htmlPage +="<td colspan=\"4\" width=\"100%\">";
+					htmlPage +="<table width='100%' border='0' cellspacing='1' cellpadding='0' class='tab2' >";
+					htmlPage +="<tr>";
+						htmlPage +="<td>";
+							htmlPage +="<table align='right' >";
+								htmlPage +="<tr>";
+								htmlPage +="<td>";
+								htmlPage +="共"+ result.page.totalCount +"记录";
+								htmlPage +="<input type='hidden' name='startIndex'  value='0'>";
+								htmlPage +="<input type='hidden' name='lastIndex'  value="+ result.page.lastIndex + ">";
+								htmlPage +="</td>";
+								htmlPage +="<td>";
+								if(result.page.startIndex != 0){
+									htmlPage +="<a href=" +"javascript:goSearch('0')"+" >首页</a>";
+								}else{
+									htmlPage +="首页";
+								}																							
+								htmlPage +="</td>";
+								htmlPage +="<td>";
+								if(result.page.startIndex != 0){
+									htmlPage +="<a href=" + "javascript:goSearch(" + result.page.previousIndex + ") "+ " >上一页</a>";
+								}else{
+									htmlPage +="上一页";
+								}
+								htmlPage +="</td>";
+								htmlPage +="<td>";
+								if(result.page.nextIndex > result.page.startIndex){
+									htmlPage +="<a href=" + "javascript:goSearch(" + result.page.nextIndex + ")" + " >下一页</a>";
+								}else{
+									htmlPage +="下一页";
+								}	
+								htmlPage +="</td>";
+								htmlPage +="<td>";
+								if(result.page.lastIndex == result.page.startIndex){
+									htmlPage +="末页";
+								}else{
+									htmlPage +="<a href=" + "javascript:goSearch(" + result.page.lastIndex + ")" + " >末页</a>";
+								}									
+								htmlPage +="</td>";
+								htmlPage +="<td>";
+								htmlPage +=" <input type='text' style='width: 30px' name='page' id='page'  size='3' onkeyup=\"this.value=this.value.replace(/[^\\d]/g,'')\"value=''>";
+								htmlPage +="<input type='button' value='GO' class='btn1' onclick=" + "goToPage(" + result.page.lastIndex + ")" + ">";
+								if(result.page.currentPage==0||result.page.pageCount){
+									htmlPage +=" 当前第" + 1+ "/" + 1 + "页";
+								}else{
+								htmlPage +=" 当前第" + result.page.currentPage + "/" + result.page.pageCount + "页";
+								}														
+								htmlPage +="</td>";								htmlPage +="</tr>";
+							htmlPage +="</table>";
+						htmlPage +="</td>";
+					htmlPage +="</tr>";
+				htmlPage +="</table>";
+				htmlPage +="</td>";
+			htmlPage +="</tr>";
+			$(htmlPage).insertAfter($("#table-sysName tr:eq("+rowNum+")"));	
+			}
+			if (checkAll()) {
+				$("#chkAll").attr("checked", true);
+			} else {
+				$("#chkAll").attr("checked", false);
+			}
+		});
+	}
+	
+  
+function goToPage(lastnum) {
+	var page = $("#page").val();
+	var num = parseInt(page * 5) - parseInt(5);
+
+	if (num > lastnum) {
+		alert("错误页数");
+		return false;
+	}
+	if (num < 0)
+		num = 0;
+	$("#startIndex").value = num;
+		goSearch(num);
+}	
+
+function softToPage(lastnum) {
+	resetCheckBox();
+	var page = $("#softpage").val();
+	var num = parseInt(page * 5) - parseInt(5);
+
+	if (num > lastnum) {
+		alert("错误页数");
+		return false;
+	}
+	if (num < 0)
+		num = 0;
+	$("#softstartIndex").value = num;
+		softSearch(num);
+}
+function goSearch(num) {
+	resetCheckBox();
+	var keyword = document.getElementById("goToSearch").value;
+	if (keyword != '' || num != '') {
+		jsonForAjax("${ctx}/softUse/queryAjaxSystem.action?keyword="+encodeURI(encodeURI(keyword,"UTF-8"))+"&pageSize=5&startIndex="+encodeURI(num,"UTF-8")+"&t="+new Date());
+	} else {
+	
+		jsonForAjax("${ctx}/softUse/queryAjaxSystem.action?keyword="+encodeURI(encodeURI(keyword,"UTF-8"))+"&pageSize=5&t="+ new Date());
+	}
+}
+
+function jsonForAjaxSoft(url){
+
+		var htmlStr = "";	
+		var htmlPage = "";
+ 		if (resNameTemp == ";" && $("#resName").val() != "") {
+ 			resNameTemp += $("#resName").val() + ";";
+ 		}	
+		$.getJSON(url ,function(result){
+			$("#table-softUse tr:not(:first)").remove();
+			$.each(result.processLog, function(i,item) {
+			 	var rowNum = $("#table-softUse tr").length-1;
+			
+			 	if(item.id != null){
+			 		htmlStr = "";
+			 		htmlStr += "<tr>";
+			 			htmlStr += "<td align=\"center\">";
+			 			
+			 			var resN=item.resName;
+			 			var sysN=item.sysName;
+			 			var resMain=item.mianFun;
+			 			var resD=item.impDegree;
+				 		var regex = new RegExp(";" + resN + ";");
+				 		if (regex.test(resNameTemp)) {
+				 			addResNameCheck(resN);
+				 			htmlStr += "<input name=\"softs\" type=\"checkbox\"  class=\"check-box\" checked=\"checked\"  value=\""+ resN+"\"/>";
+		 				} else {
+		 					htmlStr += "<input name=\"softs\" type=\"checkbox\"  class=\"check-box\" value=\""+ resN+"\"/>";
+		 				}		
+			 			htmlStr += "</td>";
+			 			htmlStr += "<td  align=\"center\">";
+			 				htmlStr += (resN == null ? "" : resN);
+			 			htmlStr += "</td>";
+			 			 htmlStr += "<td  align=\"center\">";
+			 				htmlStr += (sysN == null ? "" : sysN);			 			
+			 			htmlStr += "</td>"; 
+			 			 htmlStr += "<td  align=\"center\"><xmp>";
+			 				htmlStr += (resMain == null ? "" : resMain);	
+			 			htmlStr += "</xmp></td>"; 
+			 			 htmlStr += "<td  align=\"center\">";
+			 				htmlStr += (resD == null ? "" : resD);	
+			 			htmlStr += "</td>"; 
+			 		htmlStr += "</tr>";
+			 	}
+			 	$(htmlStr).insertAfter($("#table-softUse tr:eq("+rowNum+")"));
+			 
+			 });				
+			if(result.page.startIndex != null){		
+				rowNum =  $("#table-softUse tr").size()-1;
+			    htmlPage += "<tr>";
+			    	htmlPage +="<td colspan=\"5\" width=\"30%\">";
+					htmlPage +="<table width='100%' border='0' cellspacing='1' cellpadding='0' class='tab2' >";
+					htmlPage +="<tr>";
+						htmlPage +="<td>";
+							htmlPage +="<table align='right' >";
+								htmlPage +="<tr>";
+								htmlPage +="<td>";
+								htmlPage +="共"+ result.page.totalCount +"记录";
+								htmlPage +="<input type='hidden' name='startIndex'  value='0'>";
+								htmlPage +="<input type='hidden' name='lastIndex'  value="+ result.page.lastIndex + ">";
+								htmlPage +="</td>";
+								htmlPage +="<td>";
+								if(result.page.startIndex != 0){
+									htmlPage +="<a href=" +"javascript:softSearch('0')"+" >首页</a>";
+								}else{
+									htmlPage +="首页";
+								}																							
+								htmlPage +="</td>";
+								htmlPage +="<td>";
+								if(result.page.startIndex != 0){
+									htmlPage +="<a href=" + "javascript:softSearch(" + result.page.previousIndex + ") "+ " >上一页</a>";
+								}else{
+									htmlPage +="上一页";
+								}
+								htmlPage +="</td>";
+								htmlPage +="<td>";
+								if(result.page.nextIndex > result.page.startIndex){
+									htmlPage +="<a href=" + "javascript:softSearch(" + result.page.nextIndex + ")" + " >下一页</a>";
+								}else{
+									htmlPage +="下一页";
+								}	
+								htmlPage +="</td>";
+								htmlPage +="<td>";
+								if(result.page.lastIndex == result.page.startIndex){
+									htmlPage +="末页";
+								}else{
+									htmlPage +="<a href=" + "javascript:softSearch(" + result.page.lastIndex + ")" + " >末页</a>";
+								}									
+								htmlPage +="</td>";
+								htmlPage +="<td>";
+								htmlPage +=" <input type='text' style='width: 30px' name='page' id='softpage'  size='3' onkeyup=\"this.value=this.value.replace(/[^\\d]/g,'')\"value=''>";
+								htmlPage +="<input type='button' value='GO' class='btn1' onclick=" + "softToPage(" + result.page.lastIndex + ")" + ">";
+								if(result.page.currentPage==0||result.page.pageCount){
+									htmlPage +=" 当前第" + 1+ "/" + 1 + "页";
+								}else{
+								htmlPage +=" 当前第" + result.page.currentPage + "/" + result.page.pageCount + "页";
+								}														
+								htmlPage +="</td>";
+								htmlPage +="</tr>";
+							htmlPage +="</table>";
+						htmlPage +="</td>";
+					htmlPage +="</tr>";
+				htmlPage +="</table>";
+				htmlPage +="</td>";
+			htmlPage +="</tr>";
+			$(htmlPage).insertAfter($("#table-softUse tr:eq("+rowNum+")"));	
+			}
+			if (checkAll()) {
+				$("#chkAll1").attr("checked", true);
+			} else {
+				$("#chkAll1").attr("checked", false);
+			}
+		});
+	}
+function sysUseDlg() {
+	action = "resname";
+  	softSearch('0');
+  	$("#dialog-softUse").dialog("open");
+}
+
+function softSearch(num) {
+
+	 var keyword = document.getElementById("softUseId").value;
+	
+	if (num != '' || keyword != '') {
+	
+		jsonForAjaxSoft("${ctx}/softUse/jsonAjaxSoft.action?keyword="+encodeURI(encodeURI(keyword,"UTF-8"))+"&pageSize=5&startIndex="+encodeURI(num,"UTF-8")+"&t="+new Date());
+	} else {
+		
+		jsonForAjaxSoft("${ctx}/softUse/jsonAjaxSoft.action?keyword="+encodeURI(encodeURI(keyword,"UTF-8"))+"&pageSize=5&t="+ new Date());
+	} 
+}
+function back()
+{
+	location.href="${ctx}/pages/dbPage/basic/assets/dataassets.jsp";
+}
+
+function save(){
+	var btnSub=document.getElementById("btnSub");
+    btnSub.disabled="disabled";
+	if(""==$.trim($("#sysName").val())){
+		alert("请选择所属系统名称!");
+		btnSub.disabled="";
+		return false;
+	}else if(""==$.trim($("#dateType").val())){
+		alert("数据类别不能为空!");
+		btnSub.disabled="";
+		$("#dateType").focus();
+		return false;
+	}else if(""==$.trim($("#resName").val())){
+		alert("请选择业务应用软件!");
+		btnSub.disabled="";
+		return false;
+	}else if(""==$.trim($("#impDegree").val())){
+		alert("重要程度不能为空!");
+		btnSub.disabled="";
+		$("#impDegree").focus();
+		return false;
+	}else{
+		$("#dataAssets").submit();
+	}
+}
+
+   //验证所属系统名称，只能输入字母、汉字、字母汉字组合，禁止输入特殊字符 否则则清空
+      function ChooseName()
+      {
+          var reg=/^([\u0391-\uFFE5A-Za-z\d])+$/;
+          if(reg.test($.trim($("#dateType").val())) || $.trim($("#dateType").val())=="")
+          {
+            return true;
+          }else
+          {
+             alert("输入字符不符合,只能输入数字、字母、汉字、字母汉字组合，禁止输入特殊字符");
+             document.getElementById("dateType").value="";
+          }
+      }
+         //验证重要程度
+     function ChooseImpDegree()
+      {
+          var regs=/^([\u0391-\uFFE5A-Za-z\d])+$/;
+          
+          if(regs.test($.trim($("#impDegree").val())) ||$.trim($("#impDegree").val())=="" )
+          {
+            return true;
+          }else
+          {
+             alert("输入字符不符合,只能输入数字、字母、汉字、字母汉字组合，禁止输入特殊字符");
+             document.getElementById("impDegree").value="";
+          }
+          
+      }
+
+</script>
+
+  </head>
+  
+  <body style="margin: 0">
+  
+ <s:form action="add" method="post" namespace="/dataAssets" theme="simple" id="dataAssets">
+      <table  width="99%" border="0" cellspacing="0" cellpadding="0"
+			style="margin-left: 4px; margin-top: 0px"  >
+	  	<tr>
+				<td width="100%" valign="top">
+							<input type="hidden" name="id" value="${dataAssets.id}">
+							<!-- information area -->
+							<div class="framDiv">
+							<table width="100%" border="0" cellspacing="1" cellpadding="0"   >
+                                 <tr>
+									<td colspan="4" class='r2titler' style="font-size: 12px">关键数据类别编辑</td>
+								</tr>
+								<tr>
+									<td class="td_detail_separator"></td>
+								</tr>
+								<tr>
+									<td class="tdleft">资产种类：&nbsp;</td>
+									<td style="text-align:left;">关键数据类别
+									</td>
+									</tr>
+									<tr>
+										<td class="td_detail_separator"></td>
+								</tr>
+									<tr>
+									<td class="tdleft">所属系统名称：<font color="#ff0000">*</font></td>
+									<td style="text-align:left">
+										<input type="text" style="width:250px"  id="sysName" width="99%" name="sysName"  maxlength="500" value="${dataAssets.sysName}" readonly="readonly" onclick="$('#goToSearch').val('');employeeDlg()"/>
+									</td>
+								</tr>
+								<tr>
+										<td class="td_detail_separator"></td>
+								</tr>
+								
+									<tr>
+									<td class="tdleft">数据类别：<font color="#ff0000">*</font></td>
+ 
+									<td style="text-align:left">
+										<input type="text" id="dateType" name="dateType"  maxlength="50" value="${dataAssets.dateType}" style="width:250px" onblur="ChooseName(this.value)"/>
+									</td>
+								</tr>
+								<tr>
+										<td class="td_detail_separator"></td>
+								</tr>
+								
+								<tr>
+									<td class="tdleft">业务应用软件：<font color="#ff0000">*</font></td>
+									<td style="text-align:left">
+									<input type="text" style="width:250px" id="resName" maxlength="50" name="resName" value="${dataAssets.resName}" readonly="readonly" onclick="$('#softUseId').val('');sysUseDlg()"/></td>
+								</tr>
+								<tr>
+										<td class="td_detail_separator"></td>
+								</tr>
+								<tr>
+									<td class="tdleft">重要程度：<font color="#ff0000">*</font></td>
+									<td  style="text-align:left">
+									<input type="text" style="width:250px" id="impDegree" maxlength="50" name="impDegree"  value="${dataAssets.impDegree}" onblur="ChooseImpDegree(this.value)"/></td>
+								</tr>
+								
+								<tr>
+										<td class="td_detail_separator"></td>
+								</tr>
+								<tr>
+									<td class="tdleft">关键数据类别描述：&nbsp;</td>
+									<td colspan="3" style="text-align: left;font-size: 12px;">
+									<textarea rows="3"
+												style="width:40%" id="devDescription" name="devDescription">${dataAssets.devDescription}</textarea>
+									</td>
+								</tr>
+								<tr>
+										<td class="td_detail_separator"></td>
+								</tr>
+								<tr>
+									<td class="tdleft">备注：&nbsp;</td>
+									<td colspan="3" style="text-align: left;font-size: 12px"><textarea rows="3"
+												style="width:40%" id="dataRemarks" name="dataRemarks" >${dataAssets.dataRemarks}</textarea>
+										&nbsp;</td>
+								</tr>
+								<tr>
+										<td class="td_detail_separator"></td>
+								</tr>
+								
+							</table>
+							</div>
+					</td>
+			</tr>
+	<tr>
+	  		<td>
+	
+               <div >
+				 
+                   <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr height="30">							 
+									<td align="right"  >
+										<input type="button" value="取消"   class="btnyh"  onclick="back()" />
+										<input type="button"  value="保存"   class="btnyh" id="btnSub" onclick="save()" />
+									</td>
+								</tr>
+                   </table>
+	         </div>
+	 	<!-- toolbar area -->
+	  	</td>
+	 </tr>
+
+</table>
+</s:form>
+<!-- ui-dialog-sysInfo -->
+		<div id="dialog-employee" title="所属信息系统" style="font-size: 12px;">
+			<table width="100%" class="tab2" style="width: 100%" border="0" cellspacing="0" cellpadding="0">
+			<tr align="left" style="width: 100%;">
+				<td align="left" style="float: left;width: 100%;font-size: 12px" >
+				 <div style="float: left;">
+					快速搜索：<input name="dlg-keyword-sysName"  id="goToSearch" onblur="yanzheng1(this)" onkeydown="if(event.keyCode==13)queryEmployee();" />
+					<img src="${ctx}/images/search.jpg" class="hand"  onclick="goSearch(0)" />
+					</div>
+				</td>
+				 
+			</tr>
+			<tr height="5"></tr>
+			<tr>
+				<td>
+					<table width="100%" border="0" cellspacing="1" cellpadding="0" class="tab2" id="table-sysName">
+					<tr height="28">
+						<td width="10%" align="center" class="biaoti">
+							 <input type="checkbox" id="chkAll" class="check-box not_checked"/>
+						</td>
+						<td width="30%" align="center" class="biaoti">
+							系统名称
+						</td>
+						<td width="30%" align="center" class="biaoti">
+							系统编号
+						</td>
+						<td width="30%"  align="center" class="biaoti">
+							业务描述
+						</td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+			
+			</table>
+		</div>
+		
+		<!-- ui-dialog-softInfo -->
+		<div id="dialog-softUse" title="业务应用软件">
+			<table width="97%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td>
+					快速搜索：<input name="dlg-keyword-sysName" id="softUseId" onblur="yanzheng1(this)" onkeydown="if(event.keyCode==13)queryEmployee();" />
+					<img src="${ctx}/images/search.jpg" class="hand"  onclick="softSearch(0)" />
+				</td>
+			</tr>
+			<tr height="5"></tr>
+			<tr>
+				<td>
+					<table width="100%" border="0" cellspacing="1" cellpadding="0" class="tab2" id="table-softUse">
+					<tr height="28">
+						<td width="10%" align="center" class="biaoti">
+							 <input type="checkbox" id="chkAll1" class="check-box not_checked"/>
+						</td>
+						<td width="30%" align="center" class="biaoti">
+							软件名称
+						</td>
+						<td width="20%" align="center" class="biaoti">
+							所属系统名称
+						</td>
+						<td width="20%"  align="center" class="biaoti">
+							软件功能描述
+						</td>
+						<td width="20%"  align="center" class="biaoti">
+							重要程度
+						</td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+			
+			</table>
+		</div>
+	
+  </body>
+</html>

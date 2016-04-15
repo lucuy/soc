@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+   <package name="contrast" extends="struts-default" namespace="/contrast">
+     <!--整改简历系统列表-->
+     <action name="queryTree" class="contrastAction" method="queryTree"/>
+     <!-- 整改建议对比表 -->
+     <action name="queryContrastList" class="contrastAction" method="queryList">
+        <result name="success">/pages/dbPage/cpManage/demand/contrastRectification/ContrastList.jsp</result>
+     </action>
+     <!-- 导出页面数据到excel表格 -->
+     <action name="extoexcel" class="contrastAction" method="exportToExcel">
+     	
+      </action>
+    </package>
+
+</struts>

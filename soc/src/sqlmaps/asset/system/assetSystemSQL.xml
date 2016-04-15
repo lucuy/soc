@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="assetSystemSQL">
+	 <resultMap  id="AssetSystemResult" class="assetSystem">
+   		<result property="assetSystemId" 			column="ASSET_SYSTEM_ID" 		    jdbcType="bigint"/>
+   		<result property="assetSystemName" 			column="ASSET_SYSTEM_NAME" 		    jdbcType="varchar"/>
+   		<result property="assetSystemLvel" 			column="ASSET_SYSTEM_LEVEL" 		jdbcType="bigint"/>
+   		<result property="assetSystemComment" 		column="ASSET_SYSTEM_COMMENT" 		jdbcType="varchar"/>
+		<result property="assetSystemNoLevel" 		column="ASSET_SYSTEM_NOlEVEL" 		jdbcType="bigint" />
+		<result property="versionlist"				column="ASSET_SYSTEM_ID"            select="sqlServerversion.queryAssetSystem"/>
+		<result property="versionnolist"			column="ASSET_SYSTEM_ID"            select="sqlServerversionNo.queryAssetSystem"/>
+		<result property="brandlist"				column="ASSET_SYSTEM_ID"            select="sqlServerbrand.queryAssetSystem"/>
+		   		
+   	</resultMap>
+   	
+   	<resultMap  id="AssetSystemResult1" class="assetSystem">
+   		<result property="assetSystemId" 			column="ASSET_SYSTEM_ID" 		    jdbcType="bigint"/>
+   		<result property="assetSystemName" 			column="ASSET_SYSTEM_NAME" 		    jdbcType="varchar"/>
+   		<result property="assetSystemLvel" 			column="ASSET_SYSTEM_LEVEL" 		jdbcType="bigint"/>
+   		<result property="assetSystemComment" 		column="ASSET_SYSTEM_COMMENT" 		jdbcType="varchar"/>
+		<result property="assetSystemNoLevel" 		column="ASSET_SYSTEM_NOlEVEL" 		jdbcType="bigint" />
+		   		
+   	</resultMap> 
+ 	<resultMap id="AssetSytemBrandResult" class="assetSystemBrand">
+		<result property="assetSystemBrand" 		column="ASSET_SYSTEM_BRAND" 		jdbcType="bigint"/>
+		<result property="assetSystemBrandId" 		column="TBL_ASSET_SYSTEM_BRAND_ID" 		jdbcType="bigint"/>
+		<result property="assetSystemBrandName" 	column="TBL_ASSET_SYSTEM_BRAND_NAME" 	jdbcType="varchar"/>
+	</resultMap>
+	<select id="pgAdminasset.queryAssetSystem" parameterClass="java.util.HashMap"  resultMap="AssetSystemResult"   >
+			SELECT * FROM tbl_asset_system WHERE 1= 1 
+			<isNotEmpty prepend="AND" property="id">
+			  <![CDATA[
+			    ("ASSET_SYSTEM_LEVEL" = #id# )
+			  ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="level">
+			  <![CDATA[
+			    ("ASSET_SYSTEM_NOlEVEL" = #level# )
+			  ]]>
+			</isNotEmpty>
+	</select>
+	<!-- <select id="asset.systemBrands" resultMap="AssetSytemBrandResult" parameterClass="java.util.HashMap">
+			SELECT * FROM tbl_asset_system_brand WHERE 1 = 1
+			<isNotEmpty prepend="AND" property="brandid">
+			  <![CDATA[
+			    ("TBL_ASSET_SYSTEM_BRAND_ID" = #brandid# )
+			  ]]>
+			</isNotEmpty>		
+	</select> -->
+	<select id="pgAdminasset.queryNameById" parameterClass="long" resultClass="java.lang.String">
+		<![CDATA[
+			SELECT "ASSET_SYSTEM_NAME" FROM  tbl_asset_system WHERE "ASSET_SYSTEM_ID" = #value#  
+		]]>
+	</select>
+	<select id="pgAdminasset.queryBrandById" parameterClass="long" resultClass="java.lang.String">
+		<![CDATA[
+			SELECT "TBL_ASSET_SYSTEM_BRAND_NAME" FROM  tbl_asset_system_brand WHERE "ASSET_SYSTEM_BRAND" = #value# 
+		]]>
+	</select>
+	<select id="pgAdminasset.queryIdByName" parameterClass="java.util.HashMap" resultClass="long">
+		<![CDATA[
+			SELECT "ASSET_SYSTEM_ID" FROM  tbl_asset_system WHERE "ASSET_SYSTEM_NAME" = #name# and "ASSET_SYSTEM_LEVEL" = #level# 
+		]]>
+	</select>
+	<select id="pgAdminasset.queryIdByBrand" parameterClass="java.util.HashMap" resultClass="long">
+		<![CDATA[
+			SELECT "ASSET_SYSTEM_BRAND" FROM  tbl_asset_system_brand WHERE "TBL_ASSET_SYSTEM_BRAND_NAME" = #name# and "TBL_ASSET_SYSTEM_BRAND_ID" = #level#
+		]]>
+	</select>
+	<insert id="pgAdmininsert.system" parameterClass="java.util.HashMap">
+			INSERT INTO tbl_asset_system
+				("ASSET_SYSTEM_NAME",
+				 "ASSET_SYSTEM_LEVEL",
+				 "ASSET_SYSTEM_COMMENT",
+				 "ASSET_SYSTEM_NOlEVEL"	
+				)
+			VALUES(
+				#name#,
+				#level#,
+				#comment#,
+				#nolevel#
+				)	 
+		<selectKey resultClass="long" keyProperty="assetSystemId">
+			SELECT
+			currval('tbl_asset_system_seq'::regclass) AS assetSystemId
+		</selectKey>
+	</insert>
+	<insert id="pgAdmininsert.systemBrand" parameterClass="java.util.HashMap">
+			INSERT INTO tbl_asset_system_brand
+				("TBL_ASSET_SYSTEM_BRAND_ID",
+				 "TBL_ASSET_SYSTEM_BRAND_NAME")
+			VALUES(
+				#brandid#,
+				#brandName#
+				) 
+				
+		<selectKey resultClass="long" keyProperty="assetSystemBrand">
+			SELECT
+			currval('tbl_asset_system_brand_seq'::regclass) AS assetSystemBrand
+		</selectKey>
+	</insert>
+
+<!-- ======================== -->
+	<!-- 查询所有系统 -->
+	<select id="pgAdminquery.AssetSystem"  resultMap="AssetSystemResult"   >
+			SELECT * FROM "tbl_asset_system" WHERE "ASSET_SYSTEM_LEVEL" = 0 
+			<isNotEmpty prepend="AND" property="keyword">
+				  <![CDATA[
+				    ("ASSET_SYSTEM_NAME" LIKE '%$keyword$%' )
+				  ]]>
+			</isNotEmpty>
+			ORDER BY
+			"ASSET_SYSTEM_ID" desc
+	</select>
+	<!-- 查询总记录数 -->
+	<select id="pgAdminselect.assetSystemCount" resultClass="int" parameterClass="java.util.HashMap">
+			SELECT COUNT(*) FROM "tbl_asset_system" WHERE "ASSET_SYSTEM_LEVEL" = 0 
+			<isNotEmpty prepend="AND" property="keyword">
+				  <![CDATA[
+				    ("ASSET_SYSTEM_NAME" LIKE '%$keyword$%' )
+				  ]]>
+			</isNotEmpty>
+	</select>
+	<select id="pgAdminversion.queryAssetSystem" parameterClass="long"  resultMap="AssetSystemResult">
+			SELECT *
+			FROM "tbl_asset_system" WHERE "ASSET_SYSTEM_LEVEL" = #value# AND "ASSET_SYSTEM_NOlEVEL" = 1 
+			ORDER BY
+			"ASSET_SYSTEM_ID" desc
+	</select>
+	<select id="pgAdminversionNo.queryAssetSystem" parameterClass="long"  resultMap="AssetSystemResult">
+			SELECT *
+			FROM "tbl_asset_system" WHERE "ASSET_SYSTEM_LEVEL" = #value# AND "ASSET_SYSTEM_NOlEVEL" = 2 
+			ORDER BY
+			"ASSET_SYSTEM_ID" desc
+	</select>
+	<select id="pgAdminbrand.queryAssetSystem" parameterClass="long"  resultMap="AssetSystemResult">
+			SELECT *
+			FROM "tbl_asset_system" WHERE "ASSET_SYSTEM_LEVEL" = #value# AND "ASSET_SYSTEM_NOlEVEL" = 3 
+			ORDER BY
+			"ASSET_SYSTEM_ID" desc
+	</select>
+	<!-- 根据id查询单条系统记录 -->
+	<select id="pgAdminasset.queryAssetSystemById"  resultMap="AssetSystemResult" parameterClass="long" >
+			SELECT * FROM "tbl_asset_system" WHERE "ASSET_SYSTEM_ID" = #value#  
+	</select>
+	
+	
+	<!-- 根据AssetSystemName查询单条系统记录 -->
+	<select id="pgAdminasset.queryAssetSystemByAssetSystemName"  resultMap="AssetSystemResult" parameterClass="java.lang.String" >
+			SELECT * FROM "tbl_asset_system" WHERE "ASSET_SYSTEM_NAME" = #value#   and "ASSET_SYSTEM_LEVEL" =0
+	</select>
+	<!-- 根据id删除单条记录 -->
+	<delete id="pgAdmindelete.assetSystemById" parameterClass="long">
+			DELETE FROM "tbl_asset_system" WHERE "ASSET_SYSTEM_ID" = #value#
+	</delete>
+	
+	<delete id="pgAdmindelete.assetSystemByLevel" parameterClass="long">
+			DELETE FROM "tbl_asset_system" WHERE "ASSET_SYSTEM_LEVEL" = #value#
+	</delete>
+	
+	<!-- 根据字段模糊查询系统对象 -->
+	<select id="pgAdminquery.assetSystemByString" parameterClass="java.util.Map" resultMap="AssetSystemResult">
+	        SELECT * FROM  "tbl_asset_system" WHERE "ASSET_SYSTEM_LEVEL" = 0 
+	        <isNotEmpty prepend="and" property="parameter0">
+	            "ASSET_SYSTEM_NAME" like '%$parameter0$%'
+	        </isNotEmpty>
+	         <isNotEmpty prepend="or" property="parameter1">
+	             "ASSET_SYSTEM_NAME" like '%$parameter1$%'
+	        </isNotEmpty>
+	         <isNotEmpty prepend="or" property="parameter2">
+	              "ASSET_SYSTEM_NAME" like '%$parameter2$%'
+	        </isNotEmpty>
+	</select>
+	
+	<!--  sqlserver  -->
+	
+	<select id="sqlServerasset.queryAssetSystem" parameterClass="java.util.HashMap"  resultMap="AssetSystemResult"   >
+			SELECT * FROM tbl_asset_system WHERE 1= 1 
+			<isNotEmpty prepend="AND" property="id">
+			  <![CDATA[
+			    ("ASSET_SYSTEM_LEVEL" = #id# )
+			  ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="level">
+			  <![CDATA[
+			    ("ASSET_SYSTEM_NOlEVEL" = #level# )
+			  ]]>
+			</isNotEmpty>
+	</select>
+	<!-- <select id="asset.systemBrands" resultMap="AssetSytemBrandResult" parameterClass="java.util.HashMap">
+			SELECT * FROM tbl_asset_system_brand WHERE 1 = 1
+			<isNotEmpty prepend="AND" property="brandid">
+			  <![CDATA[
+			    ("TBL_ASSET_SYSTEM_BRAND_ID" = #brandid# )
+			  ]]>
+			</isNotEmpty>		
+	</select> -->
+	<select id="sqlServerasset.queryNameById" parameterClass="long" resultClass="java.lang.String">
+		<![CDATA[
+			SELECT "ASSET_SYSTEM_NAME" FROM  tbl_asset_system WHERE "ASSET_SYSTEM_ID" = #value#  
+		]]>
+	</select>
+	<select id="sqlServerasset.queryBrandById" parameterClass="long" resultClass="java.lang.String">
+		<![CDATA[
+			SELECT "TBL_ASSET_SYSTEM_BRAND_NAME" FROM  tbl_asset_system_brand WHERE "ASSET_SYSTEM_BRAND" = #value# 
+		]]>
+	</select>
+	<select id="sqlServerasset.queryIdByName" parameterClass="java.util.HashMap" resultClass="long">
+		<![CDATA[
+			SELECT "ASSET_SYSTEM_ID" FROM  tbl_asset_system WHERE "ASSET_SYSTEM_NAME" = #name# and "ASSET_SYSTEM_LEVEL" = #level# 
+		]]>
+	</select>
+	<select id="sqlServerasset.queryIdByBrand" parameterClass="java.util.HashMap" resultClass="long">
+		<![CDATA[
+			SELECT "ASSET_SYSTEM_BRAND" FROM  tbl_asset_system_brand WHERE "TBL_ASSET_SYSTEM_BRAND_NAME" = #name# and "TBL_ASSET_SYSTEM_BRAND_ID" = #level#
+		]]>
+	</select>
+	<insert id="sqlServerinsert.system" parameterClass="java.util.HashMap">
+			INSERT INTO tbl_asset_system
+				("ASSET_SYSTEM_NAME",
+				 "ASSET_SYSTEM_LEVEL",
+				 "ASSET_SYSTEM_COMMENT",
+				 "ASSET_SYSTEM_NOlEVEL"	
+				)
+			VALUES(
+				#name#,
+				#level#,
+				#comment#,
+				#nolevel#
+				)	 
+		<selectKey resultClass="long" keyProperty="assetSystemId">
+			SELECT @@IDENTITY AS assetSystemId
+		</selectKey>
+	</insert>
+	<insert id="sqlServerinsert.systemBrand" parameterClass="java.util.HashMap">
+			INSERT INTO tbl_asset_system_brand
+				("TBL_ASSET_SYSTEM_BRAND_ID",
+				 "TBL_ASSET_SYSTEM_BRAND_NAME")
+			VALUES(
+				#brandid#,
+				#brandName#
+				) 
+				
+		<selectKey resultClass="long" keyProperty="assetSystemBrand">
+			SELECT @@IDENTITY AS assetSystemBrand
+		</selectKey>
+	</insert>
+
+<!-- ======================== -->
+	<!-- 查询所有系统 -->
+	<select id="sqlServerquery.AssetSystem"  resultMap="AssetSystemResult"   >
+			SELECT * FROM "tbl_asset_system" WHERE "ASSET_SYSTEM_LEVEL" = 0 
+			<isNotEmpty prepend="AND" property="keyword">
+				  <![CDATA[
+				    ("ASSET_SYSTEM_NAME" LIKE '%$keyword$%' )
+				  ]]>
+			</isNotEmpty>
+			ORDER BY
+			"ASSET_SYSTEM_ID" desc
+	</select>
+	<!-- 查询总记录数 -->
+	<select id="sqlServerselect.assetSystemCount" resultClass="int" parameterClass="java.util.HashMap">
+			SELECT COUNT(*) FROM "tbl_asset_system" WHERE "ASSET_SYSTEM_LEVEL" = 0 
+			<isNotEmpty prepend="AND" property="keyword">
+				  <![CDATA[
+				    ("ASSET_SYSTEM_NAME" LIKE '%$keyword$%' )
+				  ]]>
+			</isNotEmpty>
+	</select>
+	<select id="sqlServerversion.queryAssetSystem" parameterClass="long"  resultMap="AssetSystemResult">
+			SELECT *
+			FROM "tbl_asset_system" WHERE "ASSET_SYSTEM_LEVEL" = #value# AND "ASSET_SYSTEM_NOlEVEL" = 1 
+			ORDER BY
+			"ASSET_SYSTEM_ID" desc
+	</select>
+	<select id="sqlServerversionNo.queryAssetSystem" parameterClass="long"  resultMap="AssetSystemResult">
+			SELECT *
+			FROM "tbl_asset_system" WHERE "ASSET_SYSTEM_LEVEL" = #value# AND "ASSET_SYSTEM_NOlEVEL" = 2 
+			ORDER BY
+			"ASSET_SYSTEM_ID" desc
+	</select>
+	<select id="sqlServerbrand.queryAssetSystem" parameterClass="long"  resultMap="AssetSystemResult">
+			SELECT *
+			FROM "tbl_asset_system" WHERE "ASSET_SYSTEM_LEVEL" = #value# AND "ASSET_SYSTEM_NOlEVEL" = 3 
+			ORDER BY
+			"ASSET_SYSTEM_ID" desc
+	</select>
+	<!-- 根据id查询单条系统记录 -->
+	<select id="sqlServerasset.queryAssetSystemById"  resultMap="AssetSystemResult" parameterClass="long" >
+			SELECT * FROM "tbl_asset_system" WHERE "ASSET_SYSTEM_ID" = #value#  
+	</select>
+	
+	<!-- 根据AssetSystemName查询单条系统记录 -->
+	<select id="sqlServerasset.queryAssetSystemByAssetSystemName"  resultMap="AssetSystemResult" parameterClass="java.lang.String" >
+			SELECT * FROM "tbl_asset_system" WHERE "ASSET_SYSTEM_NAME" = #value#  and "ASSET_SYSTEM_LEVEL" =0
+	</select>
+	
+	<!-- 根据id删除单条记录 -->
+	<delete id="sqlServerdelete.assetSystemById" parameterClass="long">
+			DELETE FROM "tbl_asset_system" WHERE "ASSET_SYSTEM_ID" = #value#
+	</delete>
+	
+	<delete id="sqlServerdelete.assetSystemByLevel" parameterClass="long">
+			DELETE FROM "tbl_asset_system" WHERE "ASSET_SYSTEM_LEVEL" = #value#
+	</delete>
+	
+	<!-- 根据字段模糊查询系统对象 -->
+	<select id="sqlServerquery.assetSystemByString" parameterClass="java.util.Map" resultMap="AssetSystemResult">
+	        SELECT * FROM  "tbl_asset_system" WHERE "ASSET_SYSTEM_LEVEL" = 0 
+	        <isNotEmpty prepend="AND" property="parameter0">
+	            "ASSET_SYSTEM_NAME" like '%$parameter0$%'
+	        </isNotEmpty>
+	         <isNotEmpty prepend="OR" property="parameter1">
+	             "ASSET_SYSTEM_NAME" like '%$parameter1$%'
+	        </isNotEmpty>
+	         <isNotEmpty prepend="OR" property="parameter2">
+	              "ASSET_SYSTEM_NAME" like '%$parameter2$%'
+	        </isNotEmpty>
+	</select>
+	
+	
+</sqlMap>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="recordHistory" extends="struts-default" namespace="/recordHistory">
+		<action name="query" class="RecordHistoryAction" method="query">
+			<result name="success">/pages/dbPage/score/recordHistory.jsp </result>
+			<result name="input">/pages/dbPage/login.jsp</result> 
+		</action>
+		 <action name="jsonForAjax" class="RecordHistoryAction" method="jsonForAjax">
+		</action>
+		<!--<action name="createDoc" class="sysRecordAction" method="createDoc">
+		<result name="success" type="redirect">query.action</result>
+		</action>-->
+		<action name="recordLoad" class="RecordHistoryAction" method="recordLoad">
+		</action> 
+		<!-- 高级搜索备案历史 -->
+		<action name="extqueryhistory" class="RecordHistoryAction" method="precisequeryrecord">
+		</action>
+		
+	</package>
+</struts>

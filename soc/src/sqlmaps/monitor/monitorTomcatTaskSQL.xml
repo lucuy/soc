@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="monitorTomcatTaskSQL">
+	<resultMap class="TomTask" id="tomTaskResult">
+		<result property="tomId"  		column="TOM_ID"  			jdbcType="bigint"/>
+		<result property="tomName"  	column="TOM_NAME"  		    jdbcType="varchar"/>
+		<result property="tomIp"  		column="TOM_IP"  		    jdbcType="varchar"/>
+		<result property="tomPort"  	column="TOM_PORT"  	        jdbcType="int"/>
+		<result property="tomUserName"  column="TOM_USERNAME"       jdbcType="varchar"/>
+		<result property="tomUserPass"  column="TOM_USERPASS"       jdbcType="varchar"/>
+		<result property="tomContacts"  column="TOM_CONTACTS"       jdbcType="varchar"/>
+		<result property="tomAddress"  	column="TOM_ADDRESS"  	    jdbcType="varchar"/>
+		<result property="tomTaskDesc"  column="TOM_TASK_DESC"  	jdbcType="text"/>
+		<result property="tomIsOnline"  column="TOM_IS_ONLINE"  	jdbcType="int"/>
+		<result property="tomTaskStatus" column="TOM_TASK_STATUS"  	jdbcType="int"/>
+		<result property="regTime"      column="REG_TIME"           jdbcType="datetime"/>
+		<result property="tomIsDelete"  column="TOM_IS_DELETE"      jdbcType="int"/>
+		<result property="tomUrl"  		column="TOM_URL"  		    jdbcType="varchar"/>
+	</resultMap>
+	<!-- 根据条件查询数据库监控 列表-->
+	<select id="pgAdminmtt.queryAll" resultMap="tomTaskResult" parameterClass="java.util.HashMap">
+		select * from "tbl_monitor_tomcat_task" where 1=1
+		<isNotEmpty prepend="AND" property="keyword">
+	<![CDATA[
+		"TOM_NAME" like '%$keyword$%' OR "TOM_IP" like '%$keyword$%' 
+	]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="tomName">
+			<![CDATA[
+				"TOM_NAME" like '%$tomName$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="tomIp">
+			<![CDATA[
+				"TOM_IP" = #tomIp#
+			]]>
+		</isNotEmpty>
+		ORDER BY "REG_TIME" desc
+	</select>
+	<!-- 根据条件查询数据库监控总数 -->
+	<select id="pgAdminmtt.count" resultClass="int" parameterClass="java.util.HashMap">
+		select count("TOM_ID") from "tbl_monitor_tomcat_task" where 1=1
+		<isNotEmpty prepend="AND" property="keyword">
+	<![CDATA[
+		"TOM_NAME" like '%$keyword$%' OR "TOM_IP" like '%$keyword$%' 
+	]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="tomName">
+			<![CDATA[
+				"TOM_NAME" like '%$tomName$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="tomIp">
+			<![CDATA[
+				"TOM_IP" = #tomIp#
+			]]>
+		</isNotEmpty>
+	</select>
+	<!-- 新增数据库监控 -->
+		<insert id="pgAdminmtt.insert" parameterClass="tomTask" >
+			INSERT INTO "tbl_monitor_tomcat_task"
+			(
+             "TOM_NAME", "TOM_IP", "TOM_PORT", 
+            "TOM_USERNAME", "TOM_USERPASS", "TOM_CONTACTS", 
+            "TOM_ADDRESS", "TOM_TASK_DESC", "TOM_IS_ONLINE", 
+            "TOM_TASK_STATUS", "REG_TIME", "TOM_IS_DELETE","TOM_URL")
+    VALUES ( #tomName#, #tomIp#, #tomPort#, 
+            #tomUserName#, #tomUserPass#, #tomContacts#, 
+            #tomAddress#, #tomTaskDesc#, #tomIsOnline#, 
+            1, #regTime#, #tomIsDelete#,#tomUrl#)
+		
+		
+		<selectKey resultClass="java.lang.Long" keyProperty="tomId" >
+            SELECT currval('tbl_monitor_tomcat_task_seq'::regclass) AS tomId
+      	</selectKey>
+      	
+      	
+		</insert>
+	<!-- 修改数据库监控 -->
+	<update id="pgAdminmtt.update" parameterClass="tomTask">
+	UPDATE tbl_monitor_tomcat_task
+   		SET "TOM_NAME"=#tomName#, "TOM_IP"=#tomIp#, "TOM_PORT"=#tomPort#, 
+       "TOM_USERNAME"=#tomUserName#, "TOM_USERPASS"=#tomUserPass#, "TOM_CONTACTS"=#tomContacts#, 
+       "TOM_ADDRESS"=#tomAddress#, "TOM_TASK_DESC"=#tomTaskDesc#, "TOM_IS_ONLINE"=#tomIsOnline#, 
+       "REG_TIME"=#regTime#, "TOM_IS_DELETE"=#tomIsDelete#,"TOM_URL"=#tomUrl#
+ WHERE "TOM_ID" = #tomId#
+	</update>
+	<!-- 删除数据库监控 -->
+	<delete id="pgAdminmtt.delete" parameterClass="long">
+		DELETE FROM "tbl_monitor_tomcat_task"
+ WHERE "TOM_ID" = #tomId#
+	</delete>
+	<!-- 根据id查询数据库监控 -->
+	<select id="pgAdminmtt.queryDetailById" resultMap="tomTaskResult" parameterClass="long">
+		select * from "tbl_monitor_tomcat_task" where "TOM_ID" = #tomId#
+	</select>
+	<!-- 根据任务名称查询数据库监控 -->
+	<select id="pgAdminmtt.queryDetailByName" resultClass="java.lang.String" parameterClass="java.lang.String">
+		select "TOM_NAME" from "tbl_monitor_tomcat_task" where "TOM_NAME" like '%$tomName$%'
+	</select>
+	<!-- 启停数据库监控 -->
+	<update id="pgAdminmtt.updateStatus" parameterClass="java.util.HashMap">
+	<!-- UPDATE tbl_monitor_tomcat_task
+   		SET 
+   		"TOM_TASK_STATUS" = #tomTaskStatus#,"TOM_IS_ONLINE"=#tomIsOnline#
+ 		WHERE "TOM_ID" = #tomId# -->
+ 		UPDATE tbl_monitor_tomcat_task
+   		SET 
+   		"TOM_TASK_STATUS" = #tomTaskStatus#
+ 		WHERE "TOM_ID" = #tomId#
+	</update>
+</sqlMap>

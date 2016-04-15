@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    
+       <sqlMap>
+        <resultMap class="MsaApp" id="msaResult">
+          <result property="msaId" column="PK_MSA" jdbcType="int" />
+		  <result property="msaDate" column="MSA_Date" jdbcType="varchar" />
+		  <result property="msaSort" column="MSA_Sort" jdbcType="varchar" />
+		  <result property="msaA" column="MSA_A" jdbcType="varchar" />
+	      <result property="msaB" column="MSA_B" jdbcType="varchar" />
+	      <result property="msaC" column="MSA_C" jdbcType="varchar" />
+	      <result property="msaD" column="MSA_D" jdbcType="varchar" />
+	      <result property="msaE" column="MSA_E" jdbcType="varchar" />
+	      <result property="msaF" column="MSA_F" jdbcType="varchar" />
+	      <result property="msaG" column="MSA_G" jdbcType="varchar" />
+	      <result property="msaH" column="MSA_H" jdbcType="varchar" />
+	      <result property="msaI" column="MSA_I" jdbcType="varchar" />
+	      <result property="msaJ" column="MSA_J" jdbcType="varchar" />
+		  <result property="msaAssessResult" column="MSA_AssessResult" jdbcType="varchar" />
+		  <result property="msaMainProbDes" column="MSA_MainProbDes" jdbcType="varchar" />
+        </resultMap>
+        <insert id="pgAdminmsa.insert" parameterClass="MsaApp">
+       INSERT INTO "tb_msa"("MSA_Date","MSA_Sort","MSA_A","MSA_B","MSA_C","MSA_D","MSA_E","MSA_F","MSA_G","MSA_H","MSA_I","MSA_J","MSA_AssessResult","MSA_MainProbDes")
+		VALUES(#msaDate#,#msaSort#,#msaA#,#msaB#,#msaC#,#msaD#,#msaE#,#msaF#,#msaG#,#msaH#,#msaI#,#msaJ#,#msaAssessResult#,#msaMainProbDes#)
+        </insert>
+        
+        <!-- 查询最新评估时间 -->
+        <select id="pgAdminmsa.queryLastTime" resultClass="java.util.Date">
+           SELECT MAX("MSA_Date") FROM "tb_msa"  
+        </select>   
+        
+         <!--统计最新时间个数-->
+         <select id="pgAdminmsa.queryNum" resultClass="int">
+         SELECT COUNT(*)  FROM "tb_msa" WHERE "MSA_Date" = (SELECT MAX("MSA_Date") FROM "tb_msa" )
+        </select>  
+        
+        <!--根据时间与 编号查询评估单元的评估结果 -->
+        <select id="pgAdminmsa.queryResultByTimeAndSort" parameterClass="java.util.HashMap" resultMap="msaResult" >
+          SELECT * FROM "tb_msa" WHERE
+          
+             "MSA_Date"=#MSA_Date#
+         AND
+        
+          	"MSA_Sort"=#MSA_Sort#
+      
+        </select>
+        
+        <!--修改一个评估单元的评估结果  -->
+        <update id="pgAdminmsa.updata" parameterClass="MsaApp">
+             <![CDATA[
+			UPDATE "tb_msa"  SET 
+			  "MSA_Date"=#msaDate#,
+			  "MSA_Sort"=#msaSort#,
+			  "MSA_A"=#msaA#,
+			  "MSA_B"=#msaB#,
+			  "MSA_C"=#msaC#,
+			  "MSA_D"=#msaD#,
+			  "MSA_E"=#msaE#,
+			  "MSA_F"=#msaF#,
+			  "MSA_G"=#msaG#,
+			  "MSA_H"=#msaH#,
+			  "MSA_I"=#msaI#,
+			  "MSA_J"=#msaJ#,
+			  "MSA_AssessResult"=#msaAssessResult#,
+			  "MSA_MainProbDes"=#msaMainProbDes#
+			WHERE 
+				"PK_MSA"=#msaId#
+		]]>
+        
+        </update>
+        
+        <!-- sqlserver  -->
+        <insert id="sqlServermsa.insert" parameterClass="MsaApp">
+       INSERT INTO "tb_msa"("MSA_Date","MSA_Sort","MSA_A","MSA_B","MSA_C","MSA_D","MSA_E","MSA_F","MSA_G","MSA_H","MSA_I","MSA_J","MSA_AssessResult","MSA_MainProbDes")
+		VALUES(#msaDate#,#msaSort#,#msaA#,#msaB#,#msaC#,#msaD#,#msaE#,#msaF#,#msaG#,#msaH#,#msaI#,#msaJ#,#msaAssessResult#,#msaMainProbDes#)
+        </insert>
+        
+        <!-- 查询最新评估时间 -->
+        <select id="sqlServermsa.queryLastTime" resultClass="java.util.Date">
+           SELECT MAX("MSA_Date") FROM "tb_msa"  
+        </select>   
+        
+         <!--统计最新时间个数-->
+         <select id="sqlServermsa.queryNum" resultClass="int">
+         SELECT COUNT(*)  FROM "tb_msa" WHERE "MSA_Date" = (SELECT MAX("MSA_Date") FROM "tb_msa" )
+        </select>  
+        
+        <!--根据时间与 编号查询评估单元的评估结果 -->
+        <select id="sqlServermsa.queryResultByTimeAndSort" parameterClass="java.util.HashMap" resultMap="msaResult" >
+          SELECT * FROM "tb_msa" WHERE
+          
+             "MSA_Date"=#MSA_Date#
+         AND
+        
+          	"MSA_Sort"=#MSA_Sort#
+      
+        </select>
+        
+        <!--修改一个评估单元的评估结果  -->
+        <update id="sqlServermsa.updata" parameterClass="MsaApp">
+             <![CDATA[
+			UPDATE "tb_msa"  SET 
+			  "MSA_Date"=#msaDate#,
+			  "MSA_Sort"=#msaSort#,
+			  "MSA_A"=#msaA#,
+			  "MSA_B"=#msaB#,
+			  "MSA_C"=#msaC#,
+			  "MSA_D"=#msaD#,
+			  "MSA_E"=#msaE#,
+			  "MSA_F"=#msaF#,
+			  "MSA_G"=#msaG#,
+			  "MSA_H"=#msaH#,
+			  "MSA_I"=#msaI#,
+			  "MSA_J"=#msaJ#,
+			  "MSA_AssessResult"=#msaAssessResult#,
+			  "MSA_MainProbDes"=#msaMainProbDes#
+			WHERE 
+				"PK_MSA"=#msaId#
+		]]>
+        
+        </update>
+        
+    </sqlMap>

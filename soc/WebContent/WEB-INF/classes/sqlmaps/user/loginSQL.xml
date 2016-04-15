@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="loginSQL">
+	
+	<resultMap id="userResult" class="user">
+   		<result property="userId" 				    column="USER_ID" 				    jdbcType="bigint"/>
+   		<result property="userLoginName"            column="USER_LOGIN_NAME"            jdbcType="varchar"/>
+   		<result property="userRealName"             column="USER_REAL_NAME"             jdbcType="varchar"/>
+   		<result property="userPassword"             column="USER_PASSWORD"              jdbcType="varchar"/>
+   		<result property="userStatus"               column="USER_STATUS"                jdbcType="int"/>
+   		<result property="userAuthType"             column="USER_AUTH_TYPE"             jdbcType="int"/>
+   		<result property="userChangePassword"       column="USER_CHANGE_PASSWORD"       jdbcType="int"/>
+   		
+   		<result property="userEmail"                column="USER_EMAIL"                 jdbcType="varchar"/>
+   		<result property="userMobile"               column="USER_MOBILE"                jdbcType="varchar"/>
+   		<result property="userTelephone"            column="USER_TELEPHONE"             jdbcType="varchar"/>
+   		<result property="userAddress"              column="USER_ADDRESS"               jdbcType="varchar"/>
+   		
+   		<result property="userCreatorIp"            column="USER_CREATOR_IP"            jdbcType="varchar"/>
+   		<result property="userCreateDateTime"       column="USER_CREATE_DATE_TIME"      jdbcType="datetime"/>
+   		<result property="userUpdateDateTime"       column="USER_UPDATE_DATE_TIME"      jdbcType="datetime"/>
+   		<result property="userDisplay"              column="USER_DISPLAY"               jdbcType="int"/>
+   		<result property="userMemo"                 column="USER_MEMO"                  jdbcType=""/>
+   		<result property="userSavedSecret"          column="USER_SAVEDSECRET"       jdbcType="varchar"/>
+   		<!-- <result property=""                     column=""                       	jdbcType=""/> -->
+   		<result property="assetGroupid" column="ASSET_GROUP_ID" jdbcType="bigint"/>
+   	</resultMap>
+   	<!-- 登录验证 -->
+	<select id="pgAdminlogin.check"  parameterClass="java.util.HashMap" resultMap="userResult">
+		<![CDATA[
+			SELECT * FROM "tbl_user" WHERE 
+				"USER_LOGIN_NAME" = #loginName# AND "USER_PASSWORD" = #password#  AND "USER_STATUS" <> 2 AND "USER_IS_DELETE" = 0
+		]]>
+	</select>
+	
+	<!-- 用户名验证 -->
+	<select id="pgAdminlogin.checkUserName"  parameterClass="java.util.HashMap" resultMap="userResult">
+		<![CDATA[
+			SELECT * FROM "tbl_user" WHERE 
+				"USER_LOGIN_NAME" = #loginName# AND "USER_IS_DELETE" = 0
+		]]>
+	</select>
+	<!-- sqlserver -->
+	<!-- 登录验证 -->
+	<select id="sqlServerlogin.check"  parameterClass="java.util.HashMap" resultMap="userResult">
+		<![CDATA[
+			SELECT * FROM "tbl_user" WHERE 
+				"USER_LOGIN_NAME" = #loginName# AND "USER_PASSWORD" = #password#  AND "USER_STATUS" <> 2 AND "USER_IS_DELETE" = 0
+		]]>
+	</select>
+	
+	<!-- 用户名验证 -->
+	<select id="sqlServerlogin.checkUserName"  parameterClass="java.util.HashMap" resultMap="userResult">
+		<![CDATA[
+			SELECT * FROM "tbl_user" WHERE 
+				"USER_LOGIN_NAME" = #loginName# AND "USER_IS_DELETE" = 0
+		]]>
+	</select>
+</sqlMap>

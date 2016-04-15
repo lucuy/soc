@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    <sqlMap >
+    
+    <resultMap class="SysAbolish"  id="sysAbolishResult">
+		<result property="sysAbolishId" 						column="PK_SYSABOLISH"/>
+		<result property="pkSysInfo" 							column="FK_SYSINFO"/>
+		<result property="sysDescription" 						column="SYSABOLISH_sysDescription"/>
+		<result property="sysAccess" 							column="SYSABOLISH_sysAccess"/>
+		<result property="devDescription" 						column="SYSABOLISH_devDescription"/> 
+		<result property="devAccess" 							column="SYSABOLISH_devAccess"/> 
+		<result property="storDescription" 						column="SYSABOLISH_storDescription"/> 
+		<result property="storAccess"							column="SYSABOLISH_storAccess"/>
+		<!-- 2013-12-10添加重命名列，解决centOS文件名乱码问题 -->
+		<result property="reSysAccess" 							column="SYSABOLISH_reSysAccess"/>
+		<result property="reDevAccess" 							column="SYSABOLISH_reDevAccess"/>
+		<result property="reStorAccess"							column="SYSABOLISH_reStorAccess"/>
+    </resultMap>
+    <select id="pgAdminsysAbolish.queryBySysInfo" parameterClass="int" resultMap="sysAbolishResult">
+    	select * from "tb_sysabolish"  where  "FK_SYSINFO" = #pkSysInfo# 
+    </select>  
+ 
+     <update id="pgAdminsysAbolish.update" parameterClass="SysAbolish">
+    	update "tb_sysabolish"
+    	set
+    	    "FK_SYSINFO" = #pkSysInfo#,
+    		"SYSABOLISH_sysDescription" = #sysDescription#,
+    		"SYSABOLISH_sysAccess" = #sysAccess#,
+    		"SYSABOLISH_devDescription" = #devDescription#,
+    		"SYSABOLISH_devAccess" = #devAccess#,
+    		"SYSABOLISH_storDescription" = #storDescription#,
+    		"SYSABOLISH_storAccess" = #storAccess#,
+    		
+    		"SYSABOLISH_reSysAccess" = #reSysAccess#,
+    		"SYSABOLISH_reDevAccess" = #reDevAccess#,
+    		"SYSABOLISH_reStorAccess" = #reStorAccess#
+    		
+			where "PK_SYSABOLISH" = #sysAbolishId#    
+    </update>   
+    
+ 	<insert id="pgAdminsysAbolish.insert"  parameterClass="SysAbolish">
+ 		insert into "tb_sysabolish"("FK_SYSINFO","SYSABOLISH_sysDescription","SYSABOLISH_sysAccess",
+		 "SYSABOLISH_devDescription","SYSABOLISH_devAccess","SYSABOLISH_storDescription",
+ 		 "SYSABOLISH_storAccess","SYSABOLISH_reSysAccess","SYSABOLISH_reDevAccess","SYSABOLISH_reStorAccess")
+ 		 values(#pkSysInfo#,#sysDescription#,#sysAccess#,#devDescription#,
+ 		#devAccess#,#storDescription#,#storAccess#,#reSysAccess#,#reDevAccess#,#reStorAccess#)
+ </insert>   
+    
+    <!-- sqlserver -->
+   <select id="sqlServersysAbolish.queryBySysInfo" parameterClass="int" resultMap="sysAbolishResult">
+    	select * from "tb_sysabolish"  where  "FK_SYSINFO" = #pkSysInfo# 
+    </select>  
+ 
+     <update id="sqlServersysAbolish.update" parameterClass="SysAbolish">
+    	update "tb_sysabolish"
+    	set
+    	    "FK_SYSINFO" = #pkSysInfo#,
+    		"SYSABOLISH_sysDescription" = #sysDescription#,
+    		"SYSABOLISH_sysAccess" = #sysAccess#,
+    		"SYSABOLISH_devDescription" = #devDescription#,
+    		"SYSABOLISH_devAccess" = #devAccess#,
+    		"SYSABOLISH_storDescription" = #storDescription#,
+    		"SYSABOLISH_storAccess" = #storAccess#,
+    		
+    		"SYSABOLISH_reSysAccess" = #reSysAccess#,
+    		"SYSABOLISH_reDevAccess" = #reDevAccess#,
+    		"SYSABOLISH_reStorAccess" = #reStorAccess#
+    		
+			where "PK_SYSABOLISH" = #sysAbolishId#    
+    </update>   
+    
+ 	<insert id="sqlServersysAbolish.insert"  parameterClass="SysAbolish">
+ 		insert into "tb_sysabolish"("FK_SYSINFO","SYSABOLISH_sysDescription","SYSABOLISH_sysAccess",
+		 "SYSABOLISH_devDescription","SYSABOLISH_devAccess","SYSABOLISH_storDescription",
+ 		 "SYSABOLISH_storAccess","SYSABOLISH_reSysAccess","SYSABOLISH_reDevAccess","SYSABOLISH_reStorAccess")
+ 		 values(#pkSysInfo#,#sysDescription#,#sysAccess#,#devDescription#,
+ 		#devAccess#,#storDescription#,#storAccess#,#reSysAccess#,#reDevAccess#,#reStorAccess#)
+ </insert>   
+    
+     
+    
+</sqlMap>

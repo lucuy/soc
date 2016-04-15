@@ -1,0 +1,297 @@
+/* CSS Document */
+
+
+body {
+	background-color: #FFFFFF;
+}
+ #main {
+	width: 100%;
+	height: 100%;
+	border: 1px solid  #44AEFD;
+} *
+
+#up_title {
+	width: 100%;
+	height: 25px;
+	line-height: 25px;
+	overflow: hidden;
+	background: url("/soc/images/tdBg.jpg") repeat-x scroll 0 0 transparent;
+	height: 28px;
+	color: black;
+	font-weight: bold;
+	text-align: center;
+}
+
+#up_head {
+	margin-left: 15px;
+	margin-top: 10px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 24px
+}
+
+#center_contents {
+	width: 100%;
+	height: 40%;
+	border: 1px solid #FFFFFF;
+}
+
+.nav{height:20px;
+     line-height:20px;
+     width:98%;
+     margin:2px auto
+     }  
+.nav span.active {border-bottom:1px solid #fff;
+                  position:relative;
+                  }  
+                  
+.nav span{padding:0 10px;
+          float:left;
+          border:1px solid #dcdcdc;
+          border-left:0;
+          cursor:pointer;
+          margin-bottom:-1px;
+          color:"#FFFFFF"
+          }  
+.sho{clear:both;
+     width:98%;
+     border-left:0;
+     border:1px solid #dcdcdc;
+     border-left:0;
+     display:none;
+     height:240px;
+     color:"#FFFFFF";
+     margin:2px auto
+     }  
+ 
+#autoChangeBtn{
+               margin-left:10px
+              }
+
+/*安全日志css*/
+#safetytitle{
+	        width:100%;
+	        height:50px;
+	        background: #DBF1FE;
+	        border-bottom: 2px solid #CFCFD1;
+            }
+#mainsafety{
+	        width:100%;
+            height:100%;
+            border: 1px solid #44AEFD;
+           }			 
+		 
+.horizontallayer{
+	            width:100%;
+	            height:360px;
+                margin-top:3%
+                }  
+                /*修改过*/                                   
+#firstpicshow{
+	         width:70%;
+	         height:360px;
+	         border:2px solid #ACC2CF;
+	         float:center;
+	         margin-left:25%;
+	         background-color: #FBFBF9
+             }     
+      
+#secondpicshow{
+	         width:40%;
+	         height:360px;
+	         border:2px solid #ACC2CF;
+	         float:right;
+	         margin-right:7%;
+	         background-color: #FBFBF9
+             }    
+               /*修改过*/                    
+#thirdpicshow{
+	         width:70%;
+	         height:360px;
+	         border:2px solid #ACC2CF;
+	         float:center;
+	         margin-left:25%;
+	         background-color: #FBFBF9
+             }
+#fourthpicshow{
+	         width:40%;
+	         height:360px;
+	         border:2px solid #ACC2CF;
+	         float:right;
+	         margin-right:7%;
+	         background-color: #FBFBF9
+             }
+
+.windowtitle{
+	        width:100%;
+	        height:22px;
+	        line-height:22px;
+	        margin-top: 4px
+            }
+
+.titleinfo{
+	      margin-left:10px;
+	      font-size:12px;
+	      font-weight:bold;
+	      float:left	  
+           }
+#magnifypagepng{
+	              height:22px;
+	              float:right;
+	              margin-right:5px
+               }       
+a img{
+	  border:none
+     }               
+                   
+  
+.nav {
+	height: 20px;
+	line-height: 20px;
+	width: 98%;
+	margin: 2px auto
+}
+
+.nav span.active {
+	border-bottom: 1px solid #fff;
+	position: relative
+}
+
+.nav span {
+	padding: 0 10px;
+	float: left;
+	border: 1px solid #dcdcdc;
+	border-left: 0;
+	cursor: pointer;
+	margin-bottom: -1px;
+	color: "#FFFFFF"
+}
+
+.sho {
+	clear: both;
+	width: 98%;
+	border-left: 0;
+	border: 1px solid #dcdcdc;
+	border-left: 0;
+	display: none;
+	height: 240px;
+	color: "#FFFFFF";
+	margin: 2px auto
+}
+
+#autoChangeBtn {
+	margin-left: 10px
+}
+
+#bottom_date {
+	width:100%;
+	align: center;
+	height: 400px;
+	margin-top: 0px;
+	border: 1px solid #dcdcdc;
+}
+
+#branchjq{
+	      width:100%;
+	      height:335px;
+	      display:block
+         }      
+             
+#bigreportpicturejp{
+	            width:100%;
+	            height:750px;
+	            display:block;
+	            margin: 4% auto;
+	            border:2px solid #ACC2CF;
+                   }         
+#tendencyjq{
+	      width:100%;
+	      height:335px;
+	      display:block
+           }      
+#bigriskjq {
+	        width:100%;
+	        height:750px;
+	        display:block;
+	        margin: 4% auto;
+	        border: 2px solid #ACC2CF;
+           }              
+           
+#statisticsjq{
+	          width:100%;
+	          height:335px;
+	          display:block
+	         
+	          
+              }
+              
+#bigstatisticsjq{
+	            width:100%;
+	            height:750px;
+	            display:block;
+	            margin: 4% auto;
+	            border:2px solid #ACC2CF;
+                }     
+#changetendencyjq{
+	              width:100%;
+	              height:335px;
+	              display:block
+                 }                              
+                           
+#initchangetendencyjqChart{
+	                       width:100%;
+	                       height:210px;
+	                       display:block
+                          }
+                          
+                          
+#reportpicturejq {
+	             
+	             width:400px;
+	             height:600px;
+	             margin:50px auto
+                }  
+               /*修改过*/                         
+#maincontent {
+	          width:100%;
+	         /*  height:100%; */
+	          margin: 0px auto;
+	         align: center;
+	          background-color: #F8FCFF
+              }             
+              
+.screentable {
+    background: none repeat scroll 0 0 #D2E8FA;
+}
+
+.screentable td {
+    background: none repeat scroll 0 0 #FFFFFF;
+    line-height: 28px;
+    text-align: center;
+}
+.screentable .td_t {
+    background: none repeat scroll 0 0 #ffffff;
+    line-height: 28px;
+    text-align: left;
+    padding-left: 20px;
+}
+
+#screentable2{
+	scrollbar-face-color: #FFFFFF;
+	scrollbar-shadow-color: #D2E5F4;
+	scrollbar-highlight-color: #D2E5F4;
+	scrollbar-3dlight-color: #FFFFFF;
+	scrollbar-darkshadow-color: #FFFFFF;
+	scrollbar-track-color: #FFFFFF;
+	scrollbar-arrow-color: #D2E5F4
+}
+              
+.screentable3{
+	scrollbar-face-color: #FFFFFF;
+	scrollbar-shadow-color: #D2E5F4;
+	scrollbar-highlight-color: #D2E5F4;
+	scrollbar-3dlight-color: #FFFFFF;
+	scrollbar-darkshadow-color: #FFFFFF;
+	scrollbar-track-color: #FFFFFF;
+	scrollbar-arrow-color: #D2E5F4
+}
+                           

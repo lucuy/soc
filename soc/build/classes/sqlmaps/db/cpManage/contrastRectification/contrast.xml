@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+	<resultMap class="contrast" id="contrastResult">
+		<result property="PK_CORRRECOM"                  column="PK_CORRRECOM" />
+		<result property="CORRRECOM_ControlDomainSort"   column="CORRRECOM_ControlDomainSort" />
+		<result property="CORRRECOM_ControlDomainName"   column="CORRRECOM_ControlDomainName" />
+		<result property="CORRRECOM_ControlUnitSort"     column="CORRRECOM_ControlUnitSort" />
+		<result property="CORRRECOM_ControlUnitName"     column="CORRRECOM_ControlUnitName" />
+		<result property="CORRRECOM_ItemNumber"          column="CORRRECOM_ItemNumber" />
+		<result property="CORRRECOM_Content"             column="CORRRECOM_Content" />
+		<result property="CORRRECOM_Advise"              column="CORRRECOM_Advise" />
+		<result property="CORRRECOM_SysName"             column="CORRRECOM_SysName" />
+		<result property="CORRRECOM_SysId"               column="CORRRECOM_SysId" />
+		<result property="CORRRECOM_Date"                column="CORRRECOM_Date"/>
+		<result property="CORRRECOM_AssessResult"        column="CORRRECOM_AssessResult"/>
+		<result property="CORRRECOM_AssessType"           column="CORRRECOM_AssessType"/>
+	</resultMap>
+	<!-- 查询整改建议历史表中的系统列表 -->
+<!-- 	<select id="pgAdmincontrast.querySysList" resultMap="contrastResult">
+	    SELECT * FROM  "tb_corrrecom" GROUP BY "CORRRECOM_SysName"
+	</select> -->
+		<select id="pgAdmincontrast.querySysList" resultMap="contrastResult">
+	    SELECT * FROM "tb_corrrecom" WHERE "PK_CORRRECOM" IN( select MAX("PK_CORRRECOM") AS "PK_CORRRECOM"  FROM "tb_corrrecom" GROUP BY "CORRRECOM_SysName" )
+	</select>
+	
+	<!-- 查询统计 -->
+	<select id="pgAdmincontrast.count" resultClass="int" parameterClass="java.util.HashMap">
+		SELECT  COUNT(*) FROM (SELECT * FROM "tb_corrrecom" GROUP BY "CORRRECOM_ControlUnitSort") subQuery
+	</select>
+	
+	<!--查询控制单元列表-->
+<!-- 	<select id="pgAdmincontrast.queryUnitList"  parameterClass="java.util.HashMap"  resultMap="contrastResult">
+        SELECT * FROM "tb_corrrecom"   where 1=1
+        <isNotEmpty prepend="AND" property="CORRRECOM_SysName">
+        <![CDATA[
+         "CORRRECOM_SysName"=#CORRRECOM_SysName#
+        ]]>
+        </isNotEmpty>
+        
+        <isNotEmpty prepend="AND" property="CORRRECOM_AssessResult">
+        <![CDATA[
+        "CORRRECOM_AssessResult"=#CORRRECOM_AssessResult#
+        ]]>
+        </isNotEmpty>
+         GROUP BY "CORRRECOM_ControlUnitSort"   
+    </select> -->
+    <select id="pgAdmincontrast.queryUnitList"  parameterClass="java.util.HashMap"  resultMap="contrastResult">
+        SELECT * FROM "tb_corrrecom"   where 1=1
+        <isNotEmpty prepend="AND" property="CORRRECOM_SysName">
+        <![CDATA[
+         "CORRRECOM_SysName"=#CORRRECOM_SysName#
+        ]]>
+        </isNotEmpty>
+        
+        <isNotEmpty prepend="AND" property="CORRRECOM_AssessResult">
+        <![CDATA[
+        "CORRRECOM_AssessResult"=#CORRRECOM_AssessResult#
+        ]]>
+        </isNotEmpty>
+        and "CORRRECOM_ControlUnitSort"  in( SELECT "CORRRECOM_ControlUnitSort" FROM "tb_corrrecom" GROUP BY "CORRRECOM_ControlUnitSort" )   
+    </select>
+    
+	<!--根据系统名称与控制单元编号查询整改建议列表  -->
+	<select id="pgAdmincontrast.queryItemListBySysIdAndUnitNum" parameterClass="java.util.HashMap" resultMap="contrastResult">
+	  SELECT  * FROM "tb_corrrecom"   WHERE 1=1
+	<isNotEmpty prepend="AND" property="CORRRECOM_SysName">
+	<![CDATA[
+	"CORRRECOM_SysName"=#CORRRECOM_SysName#
+	]]>
+	</isNotEmpty> 
+	<isNotEmpty prepend="AND" property="CORRRECOM_ControlUnitSort">
+	<![CDATA[
+	"CORRRECOM_ControlUnitSort"=#CORRRECOM_ControlUnitSort#
+	]]>
+	</isNotEmpty>
+	ORDER BY "CORRRECOM_ItemNumber" ASC  
+	 
+	</select>
+	<!-- sqlserver -->
+	<!-- 查询整改建议历史表中的系统列表 -->
+<!-- 	<select id="sqlServercontrast.querySysList" resultMap="contrastResult">
+	    SELECT * FROM  "tb_corrrecom" GROUP BY "CORRRECOM_SysName"
+	</select> -->
+		<select id="sqlServercontrast.querySysList" resultMap="contrastResult">
+	    SELECT * FROM "tb_corrrecom" WHERE "PK_CORRRECOM" IN( select MAX("PK_CORRRECOM") AS "PK_CORRRECOM"  FROM "tb_corrrecom" GROUP BY "CORRRECOM_SysName" )
+	</select>
+	
+	<!-- 查询统计 -->
+	<select id="sqlServercontrast.count" resultClass="int" parameterClass="java.util.HashMap">
+		SELECT  COUNT(*) FROM (SELECT * FROM "tb_corrrecom" GROUP BY "CORRRECOM_ControlUnitSort") subQuery
+	</select>
+	
+	<!--查询控制单元列表-->
+<!-- 	<select id="sqlServercontrast.queryUnitList"  parameterClass="java.util.HashMap"  resultMap="contrastResult">
+        SELECT * FROM "tb_corrrecom"   where 1=1
+        <isNotEmpty prepend="AND" property="CORRRECOM_SysName">
+        <![CDATA[
+         "CORRRECOM_SysName"=#CORRRECOM_SysName#
+        ]]>
+        </isNotEmpty>
+        
+        <isNotEmpty prepend="AND" property="CORRRECOM_AssessResult">
+        <![CDATA[
+        "CORRRECOM_AssessResult"=#CORRRECOM_AssessResult#
+        ]]>
+        </isNotEmpty>
+         GROUP BY "CORRRECOM_ControlUnitSort"   
+    </select> -->
+    <select id="sqlServercontrast.queryUnitList"  parameterClass="java.util.HashMap"  resultMap="contrastResult">
+        SELECT * FROM "tb_corrrecom"   where 1=1
+        <isNotEmpty prepend="AND" property="CORRRECOM_SysName">
+        <![CDATA[
+         "CORRRECOM_SysName"=#CORRRECOM_SysName#
+        ]]>
+        </isNotEmpty>
+        
+        <isNotEmpty prepend="AND" property="CORRRECOM_AssessResult">
+        <![CDATA[
+        "CORRRECOM_AssessResult"=#CORRRECOM_AssessResult#
+        ]]>
+        </isNotEmpty>
+        and "CORRRECOM_ControlUnitSort"  in( SELECT "CORRRECOM_ControlUnitSort" FROM "tb_corrrecom" GROUP BY "CORRRECOM_ControlUnitSort" )   
+    </select>
+    
+	<!--根据系统名称与控制单元编号查询整改建议列表  -->
+	<select id="sqlServercontrast.queryItemListBySysIdAndUnitNum" parameterClass="java.util.HashMap" resultMap="contrastResult">
+	  SELECT  * FROM "tb_corrrecom"   WHERE 1=1
+	<isNotEmpty prepend="AND" property="CORRRECOM_SysName">
+	<![CDATA[
+	"CORRRECOM_SysName"=#CORRRECOM_SysName#
+	]]>
+	</isNotEmpty> 
+	<isNotEmpty prepend="AND" property="CORRRECOM_ControlUnitSort">
+	<![CDATA[
+	"CORRRECOM_ControlUnitSort"=#CORRRECOM_ControlUnitSort#
+	]]>
+	</isNotEmpty>
+	ORDER BY "CORRRECOM_ItemNumber" ASC  
+	 
+	</select>
+</sqlMap>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="mailServersInstanceSQL">
+
+	<!-- <typeAlias alias="" type="mailserversInstance" /> -->
+	
+	<resultMap id="mailServerInstanceResult" class="mailServerInstance">
+   		<result property="msiId" column="msi_id" jdbcType="int"/>
+   		<result property="msiServername" column="msi_servername" jdbcType="varchar"/>
+   		<result property="msiPop3name" column="msi_pop3name" jdbcType="varchar"/>
+   		<result property="msiPop3port" column="msi_pop3port" jdbcType="varchar"/>
+   		<result property="msiPop3ssl" column="msi_pop3ssl" jdbcType="int"/>
+   		<result property="msiPop3entireaddress" column="msi_pop3entireaddress" jdbcType="int"/>	
+   		<result property="msiSmtpname" column="msi_smtpname" jdbcType="varchar"/>
+   		<result property="msiSmtpport" column="msi_smtpport" jdbcType="varchar"/>
+   		<result property="msiSmtpssl" column="msi_smtpssl" jdbcType="int"/>	
+   		<result property="msiImapname" column="msi_imapname" jdbcType="varchar"/>
+   		<result property="msiImapport" column="msi_imapport" jdbcType="varchar"/>
+   		<result property="msiImapssl" column="msi_imapssl" jdbcType="int"/>
+   		<result property="msiImapentireaddress" column="msi_imapentireaddress" jdbcType="int"/>
+   		<result property="msiImapmovetosentbox" column="msi_imapmovetosentbox" jdbcType="int"/>	
+   		
+   		<result property="msiHttpname" column="msi_httpname" jdbcType="varchar"/>
+   		<result property="msiHttpentireaddress" column="msi_httpentireaddress" jdbcType="int"/>		
+   	</resultMap>
+	
+	<!-- 根据ID查询 -->
+	<select id="pgAdminmailservers_instance.queryByName"  parameterClass="java.util.HashMap" resultMap="mailServerInstanceResult">
+		<![CDATA[
+			SELECT * FROM "mail_servers_instance" WHERE "msi_servername" = '$msiServername$'
+		]]>
+	</select>
+		<!-- 根据ID查询 -->
+	<select id="sqlServermailservers_instance.queryByName"  parameterClass="java.util.HashMap" resultMap="mailServerInstanceResult">
+		<![CDATA[
+			SELECT * FROM "mail_servers_instance" WHERE "msi_servername" = '$msiServername$'
+		]]>
+	</select>
+</sqlMap>

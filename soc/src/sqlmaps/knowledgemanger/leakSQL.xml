@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="leakSQL">
+	<resultMap class="leak" id="leakResultAll">
+		<result property="leakId" column="LEAK_ID" jdbcType="bigint" />
+		<result property="leakName" column="LEAK_NAME" jdbcType="varchar" />
+		<result property="leakType" column="LEAK_TYPE" jdbcType="varchar" />
+		<result property="leakLevel" column="LEAK_LEVEL" jdbcType="varchar" />
+		<result property="CNCVENO" column="LEAK_CNLEAK_CVENO" jdbcType="varchar" />
+		<result property="CVENO" column="LEAK_CVENO" jdbcType="varchar" />
+		<result property="BUGTRAQNO" column="LEAK_BUGTRAQNO" jdbcType="varchar" />
+		<result property="sDES" column="LEAK_S_DESC" jdbcType="text" />
+		<result property="lDes" column="LEAK_L_DESC" jdbcType="text" />
+		<result property="advice" column="LEAK_ADVICE" jdbcType="text" />
+
+	</resultMap>
+
+	<resultMap class="leak" id="leakResult">
+		<result property="leakId" column="LEAK_ID" jdbcType="integer" />
+		<result property="leakName" column="LEAK_NAME" jdbcType="varchar" />
+		<result property="leakLevel" column="LEAK_LEVEL" jdbcType="varchar" />
+		<result property="sDES" column="LEAK_S_DESC" jdbcType="text" />
+	</resultMap>
+
+	<!-- selectLeakById -->
+	<select id="pgAdminleakSQL.selectLeakById" resultClass="leak"
+		resultMap="leakResultAll" parameterClass="int">
+		select * from "tbl_leak"
+		where "LEAK_ID" = #id#
+	</select>
+
+	<!-- queryLeak -->
+	<select id="pgAdminleakSQL.queryLeak" resultClass="leak" resultMap="leakResult"
+		parameterClass="java.util.HashMap">
+		select * from "tbl_leak"
+		<dynamic prepend="where">
+			<isNotEmpty prepend="AND" property="keyword">
+		  <![CDATA[
+		  ("LEAK_NAME") like '%$keyword$%'
+			  ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="leakLevel">
+		  <![CDATA[
+		  ("LEAK_LEVEL") = #leakLevel#
+			  ]]>
+			</isNotEmpty>
+			
+			
+
+		</dynamic>
+
+
+	</select>
+
+
+
+
+
+	<!-- 计算总条数 -->
+	<select id="pgAdminleakSQL.selectCount" resultClass="int"
+		parameterClass="java.util.HashMap">
+		select count(*) from tbl_leak
+		<dynamic prepend="where">
+			<isNotEmpty prepend="AND" property="keyword">
+		  <![CDATA[
+		  ("LEAK_NAME") like '%$keyword$%'
+			  ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="leakLevel">
+		  <![CDATA[
+		  ("LEAK_LEVEL") =#leakLevel#
+			  ]]>
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	<select id="pgAdminleakSQL.queryByName" parameterClass="String"
+		resultMap="leakResultAll" resultClass="leak">
+		select * from "tbl_leak" where
+		"LEAK_NAME" = #leakName#
+
+	</select>
+	<insert id="pgAdminleakSQL.insertLeak" parameterClass="leak">
+		insert into "tbl_leak"
+		("LEAK_NAME","LEAK_TYPE","LEAK_LEVEL","LEAK_CNLEAK_CVENO","LEAK_CVENO","LEAK_BUGTRAQNO","LEAK_S_DESC","LEAK_L_DESC","LEAK_ADVICE")
+		values
+		(#leakName#,#leakType#,#leakLevel#,#CNCVENO#,#CVENO#,#BUGTRAQNO#,#sDES#,#lDes#,#advice#)
+		<selectKey resultClass="int" keyProperty="leakId">
+			SELECT
+			currval('tbl_leak_seq'::regclass) AS LEAK_ID
+		</selectKey>
+
+
+	</insert>
+	<!-- 漏洞 导出成excel -->
+	<select id="pgAdminleakSQL.export" parameterClass="java.util.HashMap"
+		resultClass="java.util.HashMap">
+		SELECT * FROM "tbl_leak" WHERE 1 =1 
+		<isNotEmpty prepend="AND" property="ids">
+			"LEAK_ID" in($ids$)
+		</isNotEmpty>
+	</select>
+	<!-- sqlserver -->
+	<!-- selectLeakById -->
+	<select id="sqlServerleakSQL.selectLeakById" resultClass="leak"
+		resultMap="leakResultAll" parameterClass="int">
+		select * from "tbl_leak"
+		where "LEAK_ID" = #id#
+	</select>
+
+	<!-- queryLeak -->
+	<select id="sqlServerleakSQL.queryLeak" resultClass="leak" resultMap="leakResult"
+		parameterClass="java.util.HashMap">
+		select * from "tbl_leak"
+		<dynamic prepend="where">
+			<isNotEmpty prepend="AND" property="keyword">
+		  <![CDATA[
+		  ("LEAK_NAME") like '%$keyword$%'
+			  ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="leakLevel">
+		  <![CDATA[
+		  ("LEAK_LEVEL") = #leakLevel#
+			  ]]>
+			</isNotEmpty>
+			
+			
+
+		</dynamic>
+
+
+	</select>
+
+
+
+
+
+	<!-- 计算总条数 -->
+	<select id="sqlServerleakSQL.selectCount" resultClass="int"
+		parameterClass="java.util.HashMap">
+		select count(*) from tbl_leak
+		<dynamic prepend="where">
+			<isNotEmpty prepend="AND" property="keyword">
+		  <![CDATA[
+		  ("LEAK_NAME") like '%$keyword$%'
+			  ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="leakLevel">
+		  <![CDATA[
+		  ("LEAK_LEVEL") =#leakLevel#
+			  ]]>
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	<select id="sqlServerleakSQL.queryByName" parameterClass="String"
+		resultMap="leakResultAll" resultClass="leak">
+		select * from "tbl_leak" where
+		"LEAK_NAME" = #leakName#
+
+	</select>
+	<insert id="sqlServerleakSQL.insertLeak" parameterClass="leak">
+		insert into "tbl_leak"
+		("LEAK_NAME","LEAK_TYPE","LEAK_LEVEL","LEAK_CNLEAK_CVENO","LEAK_CVENO","LEAK_BUGTRAQNO","LEAK_S_DESC","LEAK_L_DESC","LEAK_ADVICE")
+		values
+		(#leakName#,#leakType#,#leakLevel#,#CNCVENO#,#CVENO#,#BUGTRAQNO#,#sDES#,#lDes#,#advice#)
+		<selectKey resultClass="int" keyProperty="leakId">
+			SELECT
+			currval('tbl_leak_seq'::regclass) AS LEAK_ID
+		</selectKey>
+
+
+	</insert>
+	<!-- 漏洞 导出成excel -->
+	<select id="sqlServerleakSQL.export" parameterClass="java.util.HashMap"
+		resultClass="java.util.HashMap">
+		SELECT * FROM "tbl_leak" WHERE 1 =1 
+		<isNotEmpty prepend="AND" property="ids">
+			"LEAK_ID" in($ids$)
+		</isNotEmpty>
+	</select>
+</sqlMap>

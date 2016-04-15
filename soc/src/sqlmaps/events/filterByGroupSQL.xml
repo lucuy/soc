@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="filterByGroupSQL">
+
+	<resultMap id="filterByGroupResult" class="filterByGroup">
+   		<result property="filterByGroupId" 				column="FILTER_BY_GROUP_ID" 		    	jdbcType="varchar"/>
+   		<result property="filterByGroupName"            column="FILTER_BY_GROUP_NAME"           	jdbcType="varchar"/>
+   		<result property="filterByGroupCondition"     	column="FILTER_BY_GROUP_CONDITION"       	jdbcType="varchar"/>
+   		<result property="filterByGroupDescription"    	column="FILTER_BY_GROUP_DESCRIPTION"     	jdbcType="text"/>
+   		<result property="filterByGroupMapping"     	column="FILTER_BY_GROUP_MAPPING"     		jdbcType="varchar"/>
+   	</resultMap>
+   		<select id="pgAdminquery.filterByGroup" resultMap="filterByGroupResult">
+	   SELECT * FROM "tbl_filter_by_group"
+	</select>
+	
+	<select id="pgAdminquery.filterByGroupById" parameterClass="java.lang.String" resultMap="filterByGroupResult">
+	   SELECT * FROM "tbl_filter_by_group" WHERE "FILTER_ID" = #value#
+	</select>
+	
+	<!-- sqlserver用的 sql语句 -->
+		<select id="sqlServerquery.filterByGroup" resultMap="filterByGroupResult">
+	   SELECT * FROM "tbl_filter_by_group"
+	</select>
+	
+	<select id="sqlServerquery.filterByGroupById" parameterClass="java.lang.String" resultMap="filterByGroupResult">
+	   SELECT * FROM "tbl_filter_by_group" WHERE "FILTER_ID" = #value#
+	</select>
+	
+   
+
+	
+</sqlMap>

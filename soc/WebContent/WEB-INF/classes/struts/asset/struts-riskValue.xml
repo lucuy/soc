@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="assetRiskValue" extends="struts-default" namespace="/assetRiskValue">
+	<global-results>
+	 <!--  <result name="errorMessage" type="chain">
+		     <param name="namespace">/assetRiskGroup</param>
+		     <param name="actionName">queryAssetRiskEvaluation</param>
+		     <param name="errorMessageflg">1</param>
+		   </result>  -->
+		   <result name="errorMessage" type="redirectAction">queryRisk?errorMessageflg=1
+		   </result> 
+	</global-results>
+	   <!-- 查询资产 -->
+	   <action name="queryRisk" class="assetRisk"  method="queryRisk">
+	      <result name="success">/pages/risk/asset_riskInfo.jsp</result>
+	   </action> 
+	   
+	   <action name="importRisk" class="assetRisk"  method="importRisk">
+	       <result name="success" type="chain">
+	      <param name="actionName">queryRisk</param>
+	           <param name="namespace">/assetRiskValue</param>
+	           <param name="info">${info}</param>
+	           </result>
+	   </action> 
+	   
+	   <action name="deleteRisk" class="assetRisk"  method="deleteRisk">
+	      <result name="success" type="chain">
+	      	<param name="namespace">/assetRiskValue</param>
+	      	<param name="actionName">queryRisk</param>
+	      </result>
+	   </action> 
+	   <!-- 排序 -->
+	   <action name="sort" class="assetRisk"  method="sort">
+	      <result name="success">/pages/risk/asset_riskInfo.jsp</result>
+	   </action>
+	   <action name="queryRiskId" class="assetRisk"  method="queryRiskValueId">
+	      <result name="success">/pages/risk/asset_risk_update.jsp</result>
+	   </action>
+	   
+	    <action name="updateRisk" class="assetRisk"  method="updateRiskValue">
+	     <interceptor-ref name="defaultStack"/><!-- 需要注意拦截器栈的配置顺序-->  
+            <interceptor-ref name="token"/><!-- 这就是用来防止表单重复提交的拦截器-->  
+            <result name="invalid.token" type="redirectAction">
+            <param name="namespace">/assetRiskValue</param>
+		       <param name="actionName">queryRisk</param>
+            
+            </result><!-- 需要注意的是名字必须为invalid.token--> 
+	     
+	     <result name="success" type="chain">
+	        <param name="namespace">/assetRiskValue</param>
+	        <param name="actionName">queryRisk</param>
+	     </result>
+	   </action>
+	   <!-- 导出威胁信息 -->
+	   <action name="export" class="assetRisk" method="exportExcel"></action>
+	    <!-- 导出威胁信息模板 -->
+	   <action name="exportMould" class="assetRisk" method="exportMould"></action>
+	</package>
+	
+</struts>	

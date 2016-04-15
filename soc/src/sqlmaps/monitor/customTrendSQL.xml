@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="customTrendSQL">
+	<resultMap id="customTrendResult" class="customTrend">
+		<result property="trendId" column="TREND_ID" jdbcType="bigint" />
+		<result property="trendName" column="TREND_NAME" jdbcType="varchar" />
+		<result property="parentId" column="TREND_PARENT_ID" jdbcType="bigint" />
+		<result property="days" column="DAYS" jdbcType="bigint" />
+		<result property="startTime" column="START_TIME" jdbcType="varchar" />
+		<result property="endTime" column="END_TIME" jdbcType="varchar" />
+		<result property="trendIp" column="TREND_IP" jdbcType="text" />
+		<result property="trendCreateDateTime" column="TREND_CREATE_DATE_TIME"
+			jdbcType="datetime" />
+		<result property="trendUpdateDateTime" column="TREND_UPDATE_DATE_TIME"
+			jdbcType="datetime" />
+		<result property="trendDelete" column="TREND_IS_DELETE"
+			jdbcType="bigint" />
+		<result property="trendCreateUser" column="TREND_CREATE_USER_NAME"
+			jdbcType="varchar" />
+		<result property="trendUpdateUser" column="TREND_UPDATE_USER_NAME"
+			jdbcType="varchar" />
+		<result property="trendCustom1" column="TREND_CUSTOMS1"
+			jdbcType="varchar" />
+		<result property="trendCustom2" column="TREND_CUSTOMS2"
+			jdbcType="varchar" />
+		<result property="trendCustom3" column="TREND_CUSTOMS3"
+			jdbcType="varchar" />
+		<result property="trendCustom4" column="TREND_CUSTOMS4"
+			jdbcType="varchar" />
+		<result property="trendCustom5" column="TREND_CUSTOMS5"
+			jdbcType="varchar" />
+	</resultMap>
+	<!-- 自定义查询数据 -->
+	<select id="pgAdmincustomTrend.queryEvents" resultClass="java.util.HashMap"
+		parameterClass="java.lang.String">
+		$sql$
+	</select>
+	<!-- 自定义数量 -->
+	<select id="pgAdmincustomTrend.count" resultClass="int" parameterClass="java.util.HashMap">
+		select count(*) from "tbl_custom_trend" where "TREND_IS_DELETE" =0
+		<isNotEmpty prepend="AND" property="keyword">
+	<![CDATA[
+		"TREND_NAME" like '%$keyword$%' OR "TREND_IP" like '%$keyword$%'
+	]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="parentId">
+	<![CDATA[
+		"TREND_PARENT_ID" = #parentId#
+	]]>
+		</isNotEmpty>
+	</select>
+	<!-- 查询自定义 -->
+	<select id="pgAdmincustomTrend.query" resultMap="customTrendResult"
+		parameterClass="java.util.HashMap">
+		select * from "tbl_custom_trend" where "TREND_IS_DELETE" =0
+		<isNotEmpty prepend="AND" property="keyword">
+	<![CDATA[
+		"TREND_NAME" like '%$keyword$%' OR "TREND_IP" like '%$keyword$%' OR "TREND_CREATE_USER_NAME" like '%$keyword$%' 
+		OR "TREND_UPDATE_USER_NAME" like '%$keyword$%'
+	]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="parentId">
+	<![CDATA[
+		"TREND_PARENT_ID" = #parentId#
+	]]>
+		</isNotEmpty>
+		 ORDER BY "TREND_UPDATE_DATE_TIME" DESC
+	</select>
+	<!-- 按照id查询 -->
+	<select id="pgAdmincustomTrend.queryById" resultMap="customTrendResult"
+		parameterClass="long">
+		select * from "tbl_custom_trend" where "TREND_IS_DELETE" =0 AND "TREND_ID" =
+		#value#
+	</select>
+	<!-- 按名称查询 -->
+	<select id="pgAdmincustomTrend.queryByName" resultMap="customTrendResult"
+		parameterClass="java.lang.String">
+		select * from "tbl_custom_trend" where "TREND_IS_DELETE" =0 AND "TREND_NAME" =
+		#value#
+	</select>
+	<!-- 新增 -->
+	<insert id="pgAdmincustomTrend.insert" parameterClass="customTrend">
+		INSERT INTO "tbl_custom_trend"
+		(
+		"TREND_NAME",
+		"TREND_PARENT_ID",
+		"TREND_CREATE_DATE_TIME",
+		"TREND_UPDATE_DATE_TIME", 
+		"TREND_IS_DELETE", 
+		"TREND_CREATE_USER_NAME",
+		"TREND_UPDATE_USER_NAME", 
+		"TREND_CUSTOMS1", 
+		"TREND_CUSTOMS2",
+		"TREND_CUSTOMS3", 
+		"TREND_CUSTOMS4", 
+		"TREND_CUSTOMS5", 
+		"TREND_IP",
+		"DAYS", 
+		"START_TIME", 
+		"END_TIME")
+		VALUES 
+		( 
+		#trendName#, 
+		1, 
+		#trendCreateDateTime#,
+		#trendUpdateDateTime#,
+		 0, 
+		 #trendCreateUser#,
+		#trendUpdateUser#, 
+		#trendCustom1#, 
+		#trendCustom2#,
+		#trendCustom3#, 
+		#trendCustom4#, 
+		#trendCustom5#, 
+		#trendIp#,
+		#days#,
+		 #startTime#, 
+		 #endTime#);
+	</insert>
+	<!-- 修改 -->
+	<update id="pgAdmincustomTrend.update" parameterClass="customTrend">
+	UPDATE "tbl_custom_trend"
+   SET "TREND_NAME"=#trendName#,  
+       "TREND_UPDATE_DATE_TIME"=#trendUpdateDateTime#, 
+        "TREND_CUSTOMS1" = #trendCustom1#, 
+        "TREND_CUSTOMS5" =#trendCustom5#, 
+       "TREND_UPDATE_USER_NAME"=#trendUpdateUser#, 
+        "TREND_IP"=#trendIp#, 
+       "DAYS"=#days#, 
+       "START_TIME"=#startTime#, 
+       "END_TIME"=#endTime#
+ WHERE "TREND_ID"=#trendId#
+	</update>
+	<!-- 删除 -->
+	<update id="pgAdmincustomTrend.delete" parameterClass="long">
+	UPDATE "tbl_custom_trend" SET "TREND_IS_DELETE"=1 where "TREND_ID"=#value#
+	</update>
+	<!-- sqlserver -->
+	<!-- 自定义查询数据 -->
+	<select id="sqlServercustomTrend.queryEvents" resultClass="java.util.HashMap"
+		parameterClass="java.lang.String">
+		$sql$
+	</select>
+	<!-- 自定义数量 -->
+	<select id="sqlServercustomTrend.count" resultClass="int" parameterClass="java.util.HashMap">
+		select count(*) from "tbl_custom_trend" where "TREND_IS_DELETE" =0
+		<isNotEmpty prepend="AND" property="keyword">
+	<![CDATA[
+		"TREND_NAME" like '%$keyword$%' OR "TREND_IP" like '%$keyword$%'
+	]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="parentId">
+	<![CDATA[
+		"TREND_PARENT_ID" = #parentId#
+	]]>
+		</isNotEmpty>
+	</select>
+	<!-- 查询自定义 -->
+	<select id="sqlServercustomTrend.query" resultMap="customTrendResult"
+		parameterClass="java.util.HashMap">
+		select * from "tbl_custom_trend" where "TREND_IS_DELETE" =0
+		<isNotEmpty prepend="AND" property="keyword">
+	<![CDATA[
+		"TREND_NAME" like '%$keyword$%' OR "TREND_IP" like '%$keyword$%' OR "TREND_CREATE_USER_NAME" like '%$keyword$%' 
+		OR "TREND_UPDATE_USER_NAME" like '%$keyword$%'
+	]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="parentId">
+	<![CDATA[
+		"TREND_PARENT_ID" = #parentId#
+	]]>
+		</isNotEmpty>
+		 ORDER BY "TREND_UPDATE_DATE_TIME" DESC
+	</select>
+	<!-- 按照id查询 -->
+	<select id="sqlServercustomTrend.queryById" resultMap="customTrendResult"
+		parameterClass="long">
+		select * from "tbl_custom_trend" where "TREND_IS_DELETE" =0 AND "TREND_ID" =
+		#value#
+	</select>
+	<!-- 按名称查询 -->
+	<select id="sqlServercustomTrend.queryByName" resultMap="customTrendResult"
+		parameterClass="java.lang.String">
+		select * from "tbl_custom_trend" where "TREND_IS_DELETE" =0 AND "TREND_NAME" =
+		#value#
+	</select>
+	<!-- 新增 -->
+	<insert id="sqlServercustomTrend.insert" parameterClass="customTrend">
+		INSERT INTO "tbl_custom_trend"
+		(
+		"TREND_NAME",
+		"TREND_PARENT_ID",
+		"TREND_CREATE_DATE_TIME",
+		"TREND_UPDATE_DATE_TIME", 
+		"TREND_IS_DELETE", 
+		"TREND_CREATE_USER_NAME",
+		"TREND_UPDATE_USER_NAME", 
+		"TREND_CUSTOMS1", 
+		"TREND_CUSTOMS2",
+		"TREND_CUSTOMS3", 
+		"TREND_CUSTOMS4", 
+		"TREND_CUSTOMS5", 
+		"TREND_IP",
+		"DAYS", 
+		"START_TIME", 
+		"END_TIME")
+		VALUES 
+		( 
+		#trendName#, 
+		1, 
+		#trendCreateDateTime#,
+		#trendUpdateDateTime#,
+		 0, 
+		 #trendCreateUser#,
+		#trendUpdateUser#, 
+		#trendCustom1#, 
+		#trendCustom2#,
+		#trendCustom3#, 
+		#trendCustom4#, 
+		#trendCustom5#, 
+		#trendIp#,
+		#days#,
+		 #startTime#, 
+		 #endTime#);
+	</insert>
+	<!-- 修改 -->
+	<update id="sqlServercustomTrend.update" parameterClass="customTrend">
+	UPDATE "tbl_custom_trend"
+   SET "TREND_NAME"=#trendName#,  
+       "TREND_UPDATE_DATE_TIME"=#trendUpdateDateTime#, 
+        "TREND_CUSTOMS1" = #trendCustom1#, 
+        "TREND_CUSTOMS5" =#trendCustom5#, 
+       "TREND_UPDATE_USER_NAME"=#trendUpdateUser#, 
+        "TREND_IP"=#trendIp#, 
+       "DAYS"=#days#, 
+       "START_TIME"=#startTime#, 
+       "END_TIME"=#endTime#
+ WHERE "TREND_ID"=#trendId#
+	</update>
+	<!-- 删除 -->
+	<update id="sqlServercustomTrend.delete" parameterClass="long">
+	UPDATE "tbl_custom_trend" SET "TREND_IS_DELETE"=1 where "TREND_ID"=#value#
+	</update>
+</sqlMap>

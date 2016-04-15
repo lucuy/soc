@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="msaRect" extends="struts-default" namespace="/msaRect">
+	
+		<action name="queryTree" class="MsaRectAction" method="queryTree">
+		</action>
+		<action name="msaRectList" class="MsaRectAction" method="msaRectList">
+		<result name="success">/pages/dbPage/cpManage/msahShow/msaRect.jsp</result>
+		</action>		
+		<action name="msaRectUpdate" class="MsaRectAction" method="msaRectUpdate">
+		<result name="success" type="redirectAction" >
+			<param name="actionName">msaRectList</param>
+			<param name="msaDate">${mpaDateUpdate}</param>
+			<param name="type">${typeUpdate}</param> 
+		 </result> 
+		</action>	
+	  <action name="msaRectInsert" class="MsaRectAction" method="msaRectInsert">
+		  <result name="success" type="redirectAction" >
+		   	    <param name="actionName">msaRectList</param>
+				<param name="msaDate">${mpaDateinsert}</param>
+			    <param name="type">${typeinsert}</param> 
+			</result> 
+		</action>  
+		<action name="msaRectDelete" class="MsaRectAction" method="msaRectDelete">
+			<result name="success" type="redirectAction" >
+		   	    <param name="actionName">msaRectList</param>
+				<param name="msaDate">${mpaDateDelete}</param>
+			    <param name="type">${typeDelete}</param> 
+			</result> 
+		</action>	
+		<action name="queryHistoryTree" class="MsaRectAction" method="queryHistoryTree">
+		</action>	
+		<action name="queryMsaReHistory" class="MsaRectAction" method="queryMsaReHistory">
+		</action>		
+		<action name="msaRectDocCreate" class="MsaRectAction" method="msaRectDocCreate">
+		</action>	
+		<!-- 导出excel表格	 -->
+		<action name="msaexportexcel" class="MsaRectAction" method="msaexportexcel">
+		</action>		
+					
+			
+		
+	</package>
+
+</struts>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="gpaRect" extends="struts-default" namespace="/gpaRect">
+	
+		<action name="queryTree" class="GpaRectAction" method="queryTree">
+		</action>
+		<action name="gpaRectList" class="GpaRectAction" method="gpaRectList">
+		<result name="success">/pages/dbPage/cpManage/gpaShow/gpaRect.jsp</result>
+		</action>
+		
+		<action name="gpaRectListInsert" class="GpaRectAction" method="gpaRectList">
+		<result name="success">/pages/dbPage/cpManage/gpaShow/gpaRect.jsp</result>
+		</action>
+				
+		<action name="gpaRectUpdate" class="GpaRectAction" method="gpaRectUpdate">
+		  	    <!-- <result name="success">/pages/cpManage/gpaShow/gpaRect.jsp</result>  -->
+		     <result name="success" type="redirectAction" >
+				<param name="actionName">gpaRectListInsert</param>
+				<param name="gpaDate">${gpaDateUpdate}</param>
+				<param name="type">${typeUpdate}</param> 
+			 </result> 
+		</action>	
+		<action name="gpaRectInsert" class="GpaRectAction" method="gpaRectInsert">
+		<result name="success" type="redirectAction" >
+			<param name="actionName">gpaRectListInsert</param>
+			<param name="gpaDate">${gpaDateinsert}</param>
+			<param name="type">${typeinsert}</param> 
+		 </result> 
+		</action>
+		<action name="gpaRectDelete" class="GpaRectAction" method="gpaRectDelete">
+		
+		<result name="success" type="redirectAction" >
+			<param name="actionName">gpaRectListInsert</param>
+			<param name="gpaDate">${gpaDateDelete}</param>
+			<param name="type">${typeDelete}</param> 
+		 </result> 
+		</action>	
+		<action name="queryHistoryTree" class="GpaRectAction" method="queryHistoryTree">
+		</action>	
+		<action name="queryGpaReHistory" class="GpaRectAction" method="queryGpaReHistory">
+		</action>			
+		<action name="gpaRectDocCreate" class="GpaRectAction" method="gpaRectDocCreate">
+		</action>
+		<!-- 导出excel -->
+		<action name="gapexportexcel" class="GpaRectAction" method="gapexportexcel">
+		</action>	
+					
+			
+		
+	</package>
+
+</struts>

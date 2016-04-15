@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+	<package name="login" extends="struts-default" namespace="/login">
+	
+		<action name="check" class="loginAction" method="check">
+			<result name="success">/pages/redirect.jsp<!-- ?display=${display} --></result>
+			<result name="input">/pages/login.jsp</result>
+			<result name="upgrade">/pages/commons/603.jsp</result>
+			 <result name="personalSetting" type="chain">
+				<param name="namespace">/user</param>
+				<param name="actionName">personSeting</param>
+			</result>	 	
+		</action>
+		<!-- <action name="fingerLogin" class="loginAction" method="fingerLogin">
+			<result name="success">/pages/redirect.jsp?display=${display}</result>
+			<result name="input">/pages/login.jsp</result>
+		</action> -->
+		<action name="logout" class="loginAction" method="logout">
+			<result name="success">/pages/logout.jsp</result>
+		</action>
+		
+		<!-- <action name="resetFinger" class="loginAction" method="resetFinger">
+			<result name="success">/pages/employee/resetFinger.jsp</result>
+			<result name="input">/pages/login.jsp</result>
+		</action> -->
+		<!-- <action name="fingerInfo" class="loginAction" method="fingerInfo">
+		</action>
+		<action name="figerUpdate" class="loginAction" method="figerUpdate">
+		</action> -->
+		<action name="changePassword" class="loginAction" method="changePassword">
+			<result name="success">/pages/redirect.jsp</result>
+			<result name="input">/pages/user/changePwd.jsp</result>
+		</action>
+		
+		<!-- 判断单一用户登录 -->
+		<action name="checkSingle" class="loginAction" method="checkSingle"/>
+		
+		<action name="adminLogin" class="loginAction" method="adminLogin">
+			<result name="success">/pages/redirect.jsp<!-- ?display=${display} --></result>
+			<result name="input" type="redirect">/pages/login.jsp</result>
+			<result name="personalSetting" type="chain">
+				<param name="actionName">personSeting</param>
+				<param name="namespace">/user</param>
+			</result>
+		</action>
+		
+		<!--验证密码策略 -->
+		<action name="checkPwdPolicy" class="userPwdPolicyAction" method="checkPwdPolicy"/> 
+	</package>
+	
+</struts>	

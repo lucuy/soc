@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+	<package name="assetGroup" extends="struts-default" namespace="/assetGroup">
+	   <!-- 查询资产组 -->
+	   <action name="editAssetGroup" class="assetGroupAction"  method="displayManagetree">
+	      <result name="success">/pages/asset/asset_group_manage.jsp</result>
+	   </action>
+	   <!-- 显示左侧资产组树 -->
+	   <action name="showGroupTree" class="assetGroupAction" method="displayLeftManagetree">
+	      <result name="success">/pages/asset/asset_menu.jsp</result>
+	   </action>
+	   
+	   <!-- 添加资产组 -->
+	   <action name="insert" class="assetGroupAction" method="insert">
+	      <result name="success">/pages/asset/groupManage_iframe.jsp</result>
+	   </action>
+	   
+	   <!-- 进入编辑资产组 -->
+	   <action name="edit" class="assetGroupAction" method="edit">
+	      <result name="success">/pages/asset/groupManage_iframe.jsp</result>
+	   </action>
+	   
+	   <!-- 编辑资产组 -->
+	   <action name="updateAssetGroup" class="assetGroupAction" method="updateAssetGroup">  
+	      
+	   </action>
+	   
+	   <!-- 删除资产组 -->
+	   <action name="deleteAssetGroup" class="assetGroupAction" method="deleteAssetGroup">
+	   
+	   </action> 
+	   
+	    <!-- 编辑资产组 -->
+	   <action name="querySon" class="assetGroupAction" method="querySon">     
+	   </action>
+	   <!-- 验证组内是否有资产 -->
+	   <action name="checkAssetGroup" class="assetGroupAction" method="checkAssets">
+	   
+	   </action>
+<!-- 验证资产组名称是否是唯一 -->
+	   	<action name="checkAssetGroupName" class="assetGroupAction" method="checkAssetGroupName"></action>
+	</package>
+	
+</struts>	

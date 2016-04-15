@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    <sqlMap namespace="systemSQL">
+    
+
+	<resultMap class="Sys_info" id="SystemResult">
+	  <result property="id"              column="PK_SYSINFO"              jdbcType="int"></result>
+	   <result property="sysName"        column="SYSINFO_Name"         jdbcType="varchar"></result>
+	   <result property="sysId"          column="SYSINFO_Id"           jdbcType="varchar"></result>
+	   <result property="busType"        column="SYSINFO_BusType"         jdbcType="varchar"></result>
+	   <result property="otherBusType"   column="SYSINFO_OtherBusType"    jdbcType="varchar"></result>
+	   <result property="busDescription" column="SYSINFO_BusDescription"  jdbcType="varchar"></result>
+	   <result property="otherArea"     column="SYSINFO_OtherArea"       jdbcType="varchar"></result>
+	   <result property="serArea"        column="SYSINFO_SerArea"         jdbcType="varchar"></result>
+	    
+	   <result property="proTotal"       column="SYSINFO_ProTotal"        jdbcType="varchar"></result>
+	   <result property="cityTotal"      column="SYSINFO_CityTotal"       jdbcType="varchar"></result>
+	   <result property="serObj"         column="SYSINFO_SerObj"          jdbcType="varchar"></result>
+	  
+	   <result property="gplot"          column="SYSINFO_Gplot"           jdbcType="varchar"></result>
+	   <result property="relAccess"      column="SYSINFO_RelAccess"       jdbcType="varchar"></result>
+	    <result property="otherObj"       column="SYSINFO_OtherObj"        jdbcType="varchar"></result>
+	   <result property="status"		 column="SYSINFO_Status"		  jdbcType="varchar"></result>
+	</resultMap>
+	<insert id="pgAdminsystem.insert" parameterClass="Sys_info">
+	   insert into "tb_sysinfo"
+("SYSINFO_Name","SYSINFO_Id","SYSINFO_BusType","SYSINFO_OtherBusType","SYSINFO_BusDescription",
+"SYSINFO_OtherArea","SYSINFO_SerArea","SYSINFO_ProTotal","SYSINFO_CityTotal","SYSINFO_SerObj",
+"SYSINFO_Gplot","SYSINFO_RelAccess","SYSINFO_OtherObj","SYSINFO_Status")
+values(#sysName#,#sysId#,#busType#,#otherBusType#,#busDescription#,
+#otherArea#,#serArea#,#proTotal#,#cityTotal#,#serObj#,#gplot#,#relAccess#,#otherObj#,#status#)
+	</insert> 
+	<!--  根据系统名称，系统编号，业务描述查询信息系统记录  -->
+	<select id="pgAdminsystem.query" parameterClass="java.util.HashMap" resultMap="SystemResult">
+	  select * from "tb_sysinfo"   where 1=1
+	  <isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				 "SYSINFO_Name" LIKE '%$keyword$%' OR "SYSINFO_Id" like '%$keyword$%' OR "SYSINFO_BusDescription" like '%$keyword$%'
+			]]>
+		</isNotEmpty>
+		
+		 order by "PK_SYSINFO" desc
+	 </select>
+	<!--  根据id查询 -->
+	 <select id="pgAdminsystem.queryById" parameterClass="int" resultMap="SystemResult">
+	  select * from "tb_sysinfo"   where "PK_SYSINFO"=#id#
+	 </select>
+	<!--  根据id删除相关记录 -->
+	<delete id="pgAdminsystem.deleteref" parameterClass="int">
+	  delete from "tb_sysref" where "SYSINFO_Name"=(select "SYSINFO_Name" from "tb_sysinfo" where "PK_SYSINFO"=#id#)
+	</delete>
+	<delete id="pgAdminsystem.delete" parameterClass="int">
+	  delete from "tb_sysinfo" where "PK_SYSINFO"=#id#
+	</delete>
+	<!--  根据系统名称,系统编号，业务描述模糊查询数据的条数--> 
+	<select id="pgAdminsystem.querycountByName" parameterClass="java.util.Map" resultClass="int">
+	  select count(*) from "tb_sysinfo"    where 1=1
+	  <isNotEmpty prepend="AND" property="keyword">
+	  <![CDATA[
+				 "SYSINFO_Name" like '%$keyword$%' OR "SYSINFO_Id" like '%$keyword$%' OR "SYSINFO_BusDescription" like '%$keyword$%'
+			]]>
+	  </isNotEmpty>
+	   
+	</select>
+	<!-- 根据系统名称及系统编号精确查询 -->
+	<select id="pgAdminsystem.precisequery" parameterClass="java.util.Map" resultMap="SystemResult">
+	  select * from "tb_sysinfo"    where 1=1
+	  <isNotEmpty prepend="AND" property="keyword1">
+	  <![CDATA[
+				 "SYSINFO_Name" =#keyword1# 
+			]]>
+	  </isNotEmpty>
+	  <isNotEmpty prepend="AND" property="keyword2">
+	  <![CDATA[
+				"SYSINFO_Id" =#keyword2#
+			]]>
+	  </isNotEmpty>
+	   order by "PK_SYSINFO" desc
+	</select>
+	<!--  高级搜索信息系统条数 -->
+	 <select id="pgAdminsysPreciseCount" parameterClass="java.util.Map" resultClass="int">
+	 	select count(*) from "tb_sysinfo"    where 1=1
+	 	<isNotEmpty prepend="AND" property="keyword1">
+	  		<![CDATA[
+				 "SYSINFO_Name" =#keyword1# 
+			]]>
+	  </isNotEmpty>
+	  <isNotEmpty prepend="AND" property="keyword2">
+	  		<![CDATA[
+				"SYSINFO_Id" =#keyword2#
+			]]>
+	  </isNotEmpty>
+	 
+	 </select>  
+	<!--  修改信息系统 -->
+	 <update id="pgAdminsystem.update" parameterClass="Sys_info">
+	   <![CDATA[
+			UPDATE "tb_sysinfo"   SET 
+			  "SYSINFO_Name"=#sysName#,
+			  "SYSINFO_Id"=#sysId#,
+			  "SYSINFO_BusType"=#busType#,
+			  "SYSINFO_OtherBusType"=#otherBusType#,
+			  "SYSINFO_BusDescription"=#busDescription#,
+			  "SYSINFO_OtherArea"=#otherArea#,
+			  "SYSINFO_SerArea"=#serArea#,
+			  "SYSINFO_ProTotal"=#proTotal#,
+			  "SYSINFO_CityTotal"=#cityTotal#,
+			   "SYSINFO_SerObj"=#serObj#,
+			  "SYSINFO_Gplot"=#gplot#,
+			  "SYSINFO_RelAccess"=#relAccess#,
+			  "SYSINFO_OtherObj"=#otherObj#,
+			  "SYSINFO_Status"=#status#
+			WHERE 
+				"PK_SYSINFO"=#id#
+		]]>
+	 </update> 
+	 <!--  根据信息系统修改其他系统名称 -->
+	 <update id="pgAdminsystem.updateOther1" parameterClass="Sys_info">
+	   <![CDATA[
+			update "tb_rank"   set 
+			   "SYSINFO_Name"=#sysName#,
+			   "SYSINFO_BusDescription"=#busDescription#
+			where  "SYSINFO_Id"=#sysId# 
+		]]>
+	 </update>
+	 <!--  根据信息系统修改其他系统名称 -->
+	 <update id="pgAdminsystem.updateOther2" parameterClass="Sys_info">
+	   <![CDATA[
+			update "tb_sysrecord"  set 
+			  "SYSINFO_Name"=#sysName#,
+			  "SYSINFO_BusDescription"=#busDescription#
+			where  "SYSINFO_Id"=#sysId# 
+		]]>
+	 </update>  
+	<!--  根据系统编号查询信息系统 -->
+	<!--  根据id查询 -->
+	 <select id="pgAdminsystem.queryBySysId" parameterClass="String" resultMap="SystemResult">
+	  select * from "tb_sysinfo"   where "SYSINFO_Id"=#sysId#
+	 </select>
+	<!--sqlserver -->
+	<!-- <resultMap class="pro_line" id="sqlServerscoreManager">
+	 <result property="id"             column="id"></result>
+	 <result property="grade"          column="grade"></result>
+     <result property="sysId"          column="s.sysId"></result>
+     <result property="busDescription" column="s.busDescription"></result>
+	 <result property="sysName"        column="s.sysName"></result>
+	</resultMap> -->
+	<!--  添加信息系统信息  -->
+	 <insert id="sqlServersystem.insert" parameterClass="Sys_info">
+	   insert into "tb_sysinfo"
+("SYSINFO_Name","SYSINFO_Id","SYSINFO_BusType","SYSINFO_OtherBusType","SYSINFO_BusDescription",
+"SYSINFO_OtherArea","SYSINFO_SerArea","SYSINFO_ProTotal","SYSINFO_CityTotal","SYSINFO_SerObj",
+"SYSINFO_Gplot","SYSINFO_RelAccess","SYSINFO_OtherObj","SYSINFO_Status")
+values(#sysName#,#sysId#,#busType#,#otherBusType#,#busDescription#,
+#otherArea#,#serArea#,#proTotal#,#cityTotal#,#serObj#,#gplot#,#relAccess#,#otherObj#,#status#)
+	</insert> 
+	<!--  根据系统名称，系统编号，业务描述查询信息系统记录  -->
+	<select id="sqlServersystem.query" parameterClass="java.util.HashMap" resultMap="SystemResult">
+	  select * from "tb_sysinfo"   where 1=1
+	  <isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				 "SYSINFO_Name" LIKE '%$keyword$%' OR "SYSINFO_Id" like '%$keyword$%' OR "SYSINFO_BusDescription" like '%$keyword$%'
+			]]>
+		</isNotEmpty>
+		
+		 order by "PK_SYSINFO" desc
+	 </select>
+	<!--  根据id查询 -->
+	 <select id="sqlServersystem.queryById" parameterClass="int" resultMap="SystemResult">
+	  select * from "tb_sysinfo"   where "PK_SYSINFO"=#id#
+	 </select>
+	<!--  根据id删除相关记录 -->
+	<delete id="sqlServersystem.deleteref" parameterClass="int">
+	  delete from "tb_sysref" where "SYSINFO_Name"=(select "SYSINFO_Name" from "tb_sysinfo" where "PK_SYSINFO"=#id#)
+	</delete>
+	<delete id="sqlServersystem.delete" parameterClass="int">
+	  delete from "tb_sysinfo" where "PK_SYSINFO"=#id#
+	</delete>
+	<!--  根据系统名称,系统编号，业务描述模糊查询数据的条数--> 
+	<select id="sqlServersystem.querycountByName" parameterClass="java.util.Map" resultClass="int">
+	  select count(*) from "tb_sysinfo"    where 1=1
+	  <isNotEmpty prepend="AND" property="keyword">
+	  <![CDATA[
+				 "SYSINFO_Name" like '%$keyword$%' OR "SYSINFO_Id" like '%$keyword$%' OR "SYSINFO_BusDescription" like '%$keyword$%'
+			]]>
+	  </isNotEmpty>
+	   
+	</select>
+	<!-- 根据系统名称及系统编号精确查询 -->
+	<select id="sqlServersystem.precisequery" parameterClass="java.util.Map" resultMap="SystemResult">
+	  select * from "tb_sysinfo"    where 1=1
+	  <isNotEmpty prepend="AND" property="keyword1">
+	  <![CDATA[
+				 "SYSINFO_Name" =#keyword1# 
+			]]>
+	  </isNotEmpty>
+	  <isNotEmpty prepend="AND" property="keyword2">
+	  <![CDATA[
+				"SYSINFO_Id" =#keyword2#
+			]]>
+	  </isNotEmpty>
+	   order by "PK_SYSINFO" desc
+	</select>
+	<!--  高级搜索信息系统条数 -->
+	 <select id="sqlServersysPreciseCount" parameterClass="java.util.Map" resultClass="int">
+	 	select count(*) from "tb_sysinfo"    where 1=1
+	 	<isNotEmpty prepend="AND" property="keyword1">
+	  		<![CDATA[
+				 "SYSINFO_Name" =#keyword1# 
+			]]>
+	  </isNotEmpty>
+	  <isNotEmpty prepend="AND" property="keyword2">
+	  		<![CDATA[
+				"SYSINFO_Id" =#keyword2#
+			]]>
+	  </isNotEmpty>
+	 
+	 </select>  
+	<!--  修改信息系统 -->
+	 <update id="sqlServersystem.update" parameterClass="Sys_info">
+	   <![CDATA[
+			UPDATE "tb_sysinfo"   SET 
+			  "SYSINFO_Name"=#sysName#,
+			  "SYSINFO_Id"=#sysId#,
+			  "SYSINFO_BusType"=#busType#,
+			  "SYSINFO_OtherBusType"=#otherBusType#,
+			  "SYSINFO_BusDescription"=#busDescription#,
+			  "SYSINFO_OtherArea"=#otherArea#,
+			  "SYSINFO_SerArea"=#serArea#,
+			  "SYSINFO_ProTotal"=#proTotal#,
+			  "SYSINFO_CityTotal"=#cityTotal#,
+			   "SYSINFO_SerObj"=#serObj#,
+			  "SYSINFO_Gplot"=#gplot#,
+			  "SYSINFO_RelAccess"=#relAccess#,
+			  "SYSINFO_OtherObj"=#otherObj#,
+			  "SYSINFO_Status"=#status#
+			WHERE 
+				"PK_SYSINFO"=#id#
+		]]>
+	 </update> 
+	 <!--  根据信息系统修改其他系统名称 -->
+	 <update id="sqlServersystem.updateOther1" parameterClass="Sys_info">
+	   <![CDATA[
+			update "tb_rank"   set 
+			   "SYSINFO_Name"=#sysName#,
+			   "SYSINFO_BusDescription"=#busDescription#
+			where  "SYSINFO_Id"=#sysId# 
+		]]>
+	 </update>
+	 <!--  根据信息系统修改其他系统名称 -->
+	 <update id="sqlServersystem.updateOther2" parameterClass="Sys_info">
+	   <![CDATA[
+			update "tb_sysrecord"  set 
+			  "SYSINFO_Name"=#sysName#,
+			  "SYSINFO_BusDescription"=#busDescription#
+			where  "SYSINFO_Id"=#sysId# 
+		]]>
+	 </update>  
+	<!--  根据系统编号查询信息系统 -->
+	<!--  根据id查询 -->
+	 <select id="sqlServersystem.queryBySysId" parameterClass="String" resultMap="SystemResult">
+	  select * from "tb_sysinfo"   where "SYSINFO_Id"=#sysId#
+	 </select>
+</sqlMap>

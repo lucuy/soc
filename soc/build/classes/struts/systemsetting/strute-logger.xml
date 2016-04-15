@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="settingLogger" extends="struts-default" namespace="/settingLogger">
+		<action name="logger" class="SettingLogge" method="logger">
+			<result name="success">/pages/systemsetting/setting_logger.jsp</result>
+		</action>
+		<action name="saveLogger" class="SettingLogge" method="saveLogger">
+		<interceptor-ref name="defaultStack"/><!-- 需要注意拦截器栈的配置顺序-->  
+            <interceptor-ref name="token"/><!-- 这就是用来防止表单重复提交的拦截器-->  
+            <result name="invalid.token" type="redirectAction">
+            <param name="namespace">/settingLogger</param>
+		       <param name="actionName">logger</param>
+            
+            </result><!-- 需要注意的是名字必须为invalid.token-->  
+		    <result name="success" type="chain">
+		    	<param name="namespace">/settingLogger</param>
+		    	<param name="actionName">logger</param>
+		    </result>
+		</action>
+		<action name="queryMenu" class="SettingLogge" method="queryMenu">
+			<result name="success">/pages/systemsetting/setting_menu.jsp</result>
+		</action>
+		<action name="queryId" class="SettingLogge" method="queryId">
+			<result name="success">/pages/systemsetting/setting_loggerEdit.jsp</result>
+		</action>
+		<action name="updateId" class="SettingLogge" method="updateId">
+			 <result name="success" type="chain">
+		    	<param name="namespace">/settingLogger</param>
+		    	<param name="actionName">logger</param>
+		    </result>
+		</action>
+		<action name="register" class="SettingLogge" method="register">
+			<result name="success">/pages/systemsetting/setting_register.jsp</result>
+		</action>
+		<action name="delId" class="SettingLogge" method="delId">
+			 <result name="success" type="chain">
+		    	<param name="namespace">/settingLogger</param>
+		    	<param name="actionName">logger</param>
+		    </result>
+		</action>
+		<action name="selectMac" class="SettingLogge" method="selectMac">
+		</action>
+		<action name="updateLoggerStatus" class="SettingLogge" method="updateLoggerStatus">
+		 <result name="success" type="chain">
+		    	<param name="namespace">/settingLogger</param>
+		    	<param name="actionName">logger</param>
+		    </result>
+		</action>
+		<action name="search" class="SettingLogge" method="search">
+		<result name="success">/pages/systemsetting/setting_logger.jsp</result>
+		</action>
+		<action name="selectAsset" class="SettingLogge" method="selectAsset">
+		</action>
+		
+	</package>
+</struts>

@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="AssetRiskValueSQL">
+
+	<resultMap id="RiskValue" class="AssetRiskValue">
+   		<result property="riskId" 				column="RISK_ID" 		    		jdbcType="bigint"/>
+   		<result property="riskName"       		column="RISK_NAME"       	    	jdbcType="varchar"/>
+   		<result property="riskPossibility"      column="RISK_POSSIBILITY"          	jdbcType="bigint"/>
+   		<result property="riskInfluence"      	column="RISK_INFLUENCE"          	jdbcType="bigint"/>
+   		<result property="riskResult"      		column="RISK_RESULT"	          	jdbcType="bigint"/>
+   		<result property="riskThreatValue"      column="RISK_THREATVALUE"          	jdbcType="bigint"/>
+   		<result property="riskAssetId"  	    	column="RISK_ASSET_ID"     	     	jdbcType="bigint"/>
+   		<result property="isdelete" column="IS_DELETE" jdbcType="bigint"/>
+   	</resultMap>
+   	<!-- 新增 -->
+   	<insert id="pgAdmininsert.riskValue" parameterClass="AssetRiskValue">
+		INSERT INTO "tbl_risk_value" 
+				( 
+				  "RISK_NAME", 
+				  "RISK_POSSIBILITY", 
+				  "RISK_INFLUENCE",
+				  "RISK_RESULT",
+				  "RISK_THREATVALUE",
+				  "RISK_ASSET_ID","IS_DELETE")	
+				  
+				  VALUES 
+				( 
+				  #riskName#, 
+				  #riskPossibility#, 
+				  #riskInfluence#,
+				  #riskResult#,
+				  0,
+				  #riskAssetId#,1)
+	</insert>
+   	
+   	<select id="pgAdminquery.RiskValuebyname" parameterClass="java.lang.String" resultMap="RiskValue">
+	   SELECT * FROM "tbl_risk_value" WHERE "RISK_NAME" = #riskName#
+	</select>
+	
+	<select id="pgAdminquery.RiskValue"  parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+		SELECT "RISK_ID" as "riskId","RISK_NAME" as "riskName",  "RISK_POSSIBILITY" as "riskPossibility", "RISK_INFLUENCE" as "riskInfluence", 
+		"RISK_RESULT" as "riskResult" , "risk"."RISK_THREATVALUE" as "riskThreatValue" ,"ASSET_NAME" as "assetName","RISK_ASSET_ID" as "riskAssetId"
+		FROM "tbl_risk_value" as "risk" ,"tbl_asset" as "asset"  where  1=1 and "RISK_ASSET_ID" = "ASSET_ID" and "risk"."IS_DELETE"=1
+ 		
+		<isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				"risk"."RISK_NAME" LIKE '%$keyword$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="assetGroupId">
+		    <![CDATA[
+		       "risk"."RISK_ASSET_ID" in(SELECT "ASSET_ID"  FROM "tbl_asset" WHERE "ASSET_ID" in (select distinct("ASSET_ID") from "tbl_asset_group_asset" where "ASSET_GROUP_ID" in ($assetGroupId$)))
+		    ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="riskName">
+			<![CDATA[
+				"risk"."RISK_NAME" LIKE '%$riskName$%'
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend= "AND"  property="riskResult">
+			<![CDATA[
+				"risk"."RISK_RESULT"=#riskResult#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="riskAssetId">
+			<![CDATA[
+				"risk"."RISK_ASSET_ID" = #riskAssetId#
+			]]>
+		</isNotEmpty>
+			
+	</select>
+	
+	<select id="pgAdmincountPage.RiskValue"  parameterClass="java.util.HashMap" resultClass="int">
+		SELECT COUNT("rv".*) FROM "tbl_risk_value" as "rv" ,"tbl_asset" where  1=1 and "RISK_ASSET_ID" = "ASSET_ID"
+		and "rv"."IS_DELETE"=1
+		<isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				"rv"."RISK_NAME" LIKE '%$keyword$%'
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend= "AND"  property="riskName">
+			<![CDATA[
+				"rv"."RISK_NAME" LIKE '%$riskName$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="assetGroupId">
+		    <![CDATA[
+		       "rv"."RISK_ASSET_ID" in(SELECT "ASSET_ID"  FROM "tbl_asset" WHERE "ASSET_ID" in (select distinct("ASSET_ID") from "tbl_asset_group_asset" where "ASSET_GROUP_ID" in ($assetGroupId$)))
+		    ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="riskResult">
+			<![CDATA[
+				"rv"."RISK_RESULT"=#riskResult#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="riskAssetId">
+			<![CDATA[
+				"rv"."RISK_ASSET_ID" = #riskAssetId#
+			]]>
+		</isNotEmpty>
+	</select>
+	
+	<delete id="pgAdmindelete.RiskValue" parameterClass="java.util.HashMap">
+	   <![CDATA[
+	       DELETE FROM  "tbl_risk_value" WHERE "RISK_ID" = #riskId#
+	   ]]>
+	</delete>
+   	
+   	<select id="pgAdminriskValue.sort" parameterClass="java.lang.String" resultMap="RiskValue">
+   	   SELECT * FROM "tbl_risk_value" where 1=1 ORDER BY $str$
+   	</select>
+   	
+   	<select id="pgAdminquery.riskValueId" parameterClass="long" resultMap="RiskValue">
+   		<![CDATA[
+   			SELECT * FROM "tbl_risk_value" WHERE "RISK_ID" = #riskId#
+   		]]>
+   	</select>
+   	
+   	<update id="pgAdminupdate.riskValue" parameterClass="java.util.HashMap">
+   		<![CDATA[
+   			UPDATE "tbl_risk_value"
+   			SET
+   				 
+				 "RISK_POSSIBILITY" = #riskPossibility#, 
+				 "RISK_INFLUENCE" = #riskInfluence#,
+				 "RISK_RESULT" =  #riskResult#,
+				 "RISK_ASSET_ID" = #riskAssetId#,
+				 "RISK_NAME"  =	#riskName#
+			WHERE "RISK_ID" = #riskId#  
+				  
+   		]]>
+   	</update>
+   	
+   	<!-- 导出 -->
+   	<select id="pgAdminriskSQL.export" resultClass="java.util.HashMap" parameterClass="java.util.HashMap">
+	      SELECT "RISK_ID" as "riskId","RISK_NAME" as "riskName",  "RISK_POSSIBILITY" as "riskPossibility", "RISK_INFLUENCE" as "riskInfluence", 
+		"RISK_RESULT" as "riskResult" , "risk"."RISK_THREATVALUE" as "riskThreatValue" ,"ASSET_NAME" as "assetName","RISK_ASSET_ID" as "riskAssetId"
+		FROM "tbl_risk_value" as "risk" ,"tbl_asset"  where  1=1 and "RISK_ASSET_ID" = "ASSET_ID"
+	      	<isNotEmpty prepend= "AND"  property="ids">
+				"risk"."RISK_ID" in($ids$)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="keyword">
+				<![CDATA[
+					"risk"."RISK_NAME" like '%$keyword$%'
+				]]>
+			</isNotEmpty>
+			<isNotEmpty prepend= "AND"  property="riskName">
+			<![CDATA[
+				"risk"."RISK_NAME" LIKE '%$riskName$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="riskResult">
+			<![CDATA[
+				"risk"."RISK_RESULT"=#riskResult#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="riskAssetId">
+			<![CDATA[
+				"risk"."RISK_ASSET_ID" = #riskAssetId#
+			]]>
+		</isNotEmpty>
+			<isNotEmpty prepend="AND" property="assetGroupId">
+		    <![CDATA[
+		     "risk"."RISK_ASSET_ID" in(SELECT "ASSET_ID"  FROM "tbl_asset" WHERE "ASSET_ID" in (select distinct("ASSET_ID") from "tbl_asset_group_asset" where "ASSET_GROUP_ID" in ($assetGroupId$)))
+		    ]]>
+		</isNotEmpty>
+	</select>
+   	<!-- 导出模板，默认只有资产名字 -->
+	<select id="pgAdminriskSQL.exportMould" 
+		resultClass="java.util.HashMap" parameterClass="java.util.HashMap">
+		SELECT * FROM "tbl_asset" WHERE 1=1 and "ASSET_IS_DELETE" = 0
+		<isNotEmpty prepend="AND" property="assetGroupId">
+		    <![CDATA[
+		       "ASSET_ID" in (select distinct("ASSET_ID") from "tbl_asset_group_asset" where "ASSET_GROUP_ID" in ($assetGroupId$)) 
+		    ]]>
+		</isNotEmpty>
+		ORDER BY "ASSET_UPDATE_DATE_TIME" DESC
+	</select>
+	<!-- 根据资产id修改关联的威胁值状态 -->
+   		<update id="pgAdminupdate.riskValueStates" parameterClass="java.util.HashMap">
+   		<![CDATA[
+   			UPDATE "tbl_risk_value"
+   			SET
+				 "IS_DELETE" = #assetStatus#	
+			WHERE "RISK_ASSET_ID" = #assetId#  
+				  
+   		]]>
+   	</update>
+   	<!-- sqlserver -->
+   	<!-- 新增 -->
+   	<insert id="sqlServerinsert.riskValue" parameterClass="AssetRiskValue">
+		INSERT INTO "tbl_risk_value" 
+				( 
+				  "RISK_NAME", 
+				  "RISK_POSSIBILITY", 
+				  "RISK_INFLUENCE",
+				  "RISK_RESULT",
+				  "RISK_THREATVALUE",
+				  "RISK_ASSET_ID","IS_DELETE")	
+				  
+				  VALUES 
+				( 
+				  #riskName#, 
+				  #riskPossibility#, 
+				  #riskInfluence#,
+				  #riskResult#,
+				  0,
+				  #riskAssetId#,1)
+	</insert>
+   	
+   	<select id="sqlServerquery.RiskValuebyname" parameterClass="java.lang.String" resultMap="RiskValue">
+	   SELECT * FROM "tbl_risk_value" WHERE "RISK_NAME" = #riskName#
+	</select>
+	
+	<select id="sqlServerquery.RiskValue"  parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+		SELECT "RISK_ID" as "riskId","RISK_NAME" as "riskName",  "RISK_POSSIBILITY" as "riskPossibility", "RISK_INFLUENCE" as "riskInfluence", 
+		"RISK_RESULT" as "riskResult" , "risk"."RISK_THREATVALUE" as "riskThreatValue" ,"ASSET_NAME" as "assetName","RISK_ASSET_ID" as "riskAssetId"
+		FROM "tbl_risk_value" as "risk" ,"tbl_asset" as "asset"  where  1=1 and "RISK_ASSET_ID" = "ASSET_ID" and "risk"."IS_DELETE"=1
+ 		
+		<isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				"risk"."RISK_NAME" LIKE '%$keyword$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="assetGroupId">
+		    <![CDATA[
+		       "risk"."RISK_ASSET_ID" in(SELECT "ASSET_ID"  FROM "tbl_asset" WHERE "ASSET_ID" in (select distinct("ASSET_ID") from "tbl_asset_group_asset" where "ASSET_GROUP_ID" in ($assetGroupId$)))
+		    ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="riskName">
+			<![CDATA[
+				"risk"."RISK_NAME" LIKE '%$riskName$%'
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend= "AND"  property="riskResult">
+			<![CDATA[
+				"risk"."RISK_RESULT"=#riskResult#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="riskAssetId">
+			<![CDATA[
+				"risk"."RISK_ASSET_ID" = #riskAssetId#
+			]]>
+		</isNotEmpty>
+			
+	</select>
+	
+	<select id="sqlServercountPage.RiskValue"  parameterClass="java.util.HashMap" resultClass="int">
+		SELECT COUNT(*) FROM "tbl_risk_value" as "rv" ,"tbl_asset" where  1=1 and "RISK_ASSET_ID" = "ASSET_ID"
+		and "rv"."IS_DELETE"=1
+		<isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				"rv"."RISK_NAME" LIKE '%$keyword$%'
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend= "AND"  property="riskName">
+			<![CDATA[
+				"rv"."RISK_NAME" LIKE '%$riskName$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="assetGroupId">
+		    <![CDATA[
+		       "rv"."RISK_ASSET_ID" in(SELECT "ASSET_ID"  FROM "tbl_asset" WHERE "ASSET_ID" in (select distinct("ASSET_ID") from "tbl_asset_group_asset" where "ASSET_GROUP_ID" in ($assetGroupId$)))
+		    ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="riskResult">
+			<![CDATA[
+				"rv"."RISK_RESULT"=#riskResult#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="riskAssetId">
+			<![CDATA[
+				"rv"."RISK_ASSET_ID" = #riskAssetId#
+			]]>
+		</isNotEmpty>
+	</select>
+	
+	<delete id="sqlServerdelete.RiskValue" parameterClass="java.util.HashMap">
+	   <![CDATA[
+	       DELETE FROM  "tbl_risk_value" WHERE "RISK_ID" = #riskId#
+	   ]]>
+	</delete>
+   	
+   	<select id="sqlServerriskValue.sort" parameterClass="java.lang.String" resultMap="RiskValue">
+   	   SELECT * FROM "tbl_risk_value" where 1=1 ORDER BY $str$
+   	</select>
+   	
+   	<select id="sqlServerquery.riskValueId" parameterClass="long" resultMap="RiskValue">
+   		<![CDATA[
+   			SELECT * FROM "tbl_risk_value" WHERE "RISK_ID" = #riskId#
+   		]]>
+   	</select>
+   	
+   	<update id="sqlServerupdate.riskValue" parameterClass="java.util.HashMap">
+   		<![CDATA[
+   			UPDATE "tbl_risk_value"
+   			SET
+   				 
+				 "RISK_POSSIBILITY" = #riskPossibility#, 
+				 "RISK_INFLUENCE" = #riskInfluence#,
+				 "RISK_RESULT" =  #riskResult#,
+				 "RISK_ASSET_ID" = #riskAssetId#,
+				 "RISK_NAME"  =	#riskName#
+			WHERE "RISK_ID" = #riskId#  
+				  
+   		]]>
+   	</update>
+   	
+   	<!-- 导出 -->
+   	<select id="sqlServerriskSQL.export" resultClass="java.util.HashMap" parameterClass="java.util.HashMap">
+	      SELECT "RISK_ID" as "riskId","RISK_NAME" as "riskName",  "RISK_POSSIBILITY" as "riskPossibility", "RISK_INFLUENCE" as "riskInfluence", 
+		"RISK_RESULT" as "riskResult" , "risk"."RISK_THREATVALUE" as "riskThreatValue" ,"ASSET_NAME" as "assetName","RISK_ASSET_ID" as "riskAssetId"
+		FROM "tbl_risk_value" as "risk" ,"tbl_asset"  where  1=1 and "RISK_ASSET_ID" = "ASSET_ID"
+	      	<isNotEmpty prepend= "AND"  property="ids">
+				"risk"."RISK_ID" in($ids$)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="keyword">
+				<![CDATA[
+					"risk"."RISK_NAME" like '%$keyword$%'
+				]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="assetGroupId">
+		    <![CDATA[
+		     "risk"."RISK_ASSET_ID" in(SELECT "ASSET_ID"  FROM "tbl_asset" WHERE "ASSET_ID" in (select distinct("ASSET_ID") from "tbl_asset_group_asset" where "ASSET_GROUP_ID" in ($assetGroupId$)))
+		    ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="riskName">
+			<![CDATA[
+				"risk"."RISK_NAME" LIKE '%$riskName$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="riskResult">
+			<![CDATA[
+				"risk"."RISK_RESULT"=#riskResult#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="riskAssetId">
+			<![CDATA[
+				"risk"."RISK_ASSET_ID" = #riskAssetId#
+			]]>
+		</isNotEmpty>
+	</select>
+   	<!-- 导出模板，默认只有资产名字 -->
+	<select id="sqlServerriskSQL.exportMould" 
+		resultClass="java.util.HashMap" parameterClass="java.util.HashMap">
+		SELECT * FROM "tbl_asset" WHERE 1=1 and "ASSET_IS_DELETE" = 0
+		<isNotEmpty prepend="AND" property="assetGroupId">
+		    <![CDATA[
+		       "ASSET_ID" in (select distinct("ASSET_ID") from "tbl_asset_group_asset" where "ASSET_GROUP_ID" in ($assetGroupId$)) 
+		    ]]>
+		</isNotEmpty>
+		ORDER BY "ASSET_UPDATE_DATE_TIME" DESC
+	</select>
+	<!-- 根据资产id修改关联的威胁值状态 -->
+   		<update id="sqlServerupdate.riskValueStates" parameterClass="java.util.HashMap">
+   		<![CDATA[
+   			UPDATE "tbl_risk_value"
+   			SET
+				 "IS_DELETE" = #assetStatus#	
+			WHERE "RISK_ASSET_ID" = #assetId#  
+				  
+   		]]>
+   	</update>
+</sqlMap>

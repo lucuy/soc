@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="divisionSQL">
+	<resultMap class="Division" id="DivisionResult">
+		<result property="id" 					column="id" 					jdbcType="int"/>
+		<result property="depName" 				column="depName" 				jdbcType="varchar"/>
+		<result property="depDescription" 		column="depDescription" 		jdbcType="varchar"/>
+		<result property="depEmp" 				column="depEmp" 				jdbcType="varchar"/>
+		<result property="depHead" 				column="depHead" 				jdbcType="varchar"/>
+		<result property="parentId" 			column="parentId" 				jdbcType="int"/>
+	 	<result property="parentDepEmp" 		column="parentDepEmp" 			jdbcType="varchar"/>
+	 	<result property="parentDepHead" 		column="parentDepHead" 			jdbcType="varchar"/>
+	</resultMap>
+	<!-- 添加组织部门信息 -->
+	 <insert id="pgAdmindivision.insert" parameterClass="Division">
+	   insert into "department"
+		("depName","depDescription","depEmp","depHead","parentId","parentDepEmp","parentDepHead")
+		values(#depName#,#depDescription#,#depEmp#,#depHead#,#parentId#,#parentDepEmp#,#parentDepHead#)
+		<selectKey resultClass="java.lang.Integer" keyProperty="id" >
+            SELECT @@IDENTITY AS "id"
+      	</selectKey>
+	 </insert>
+
+	<!-- 根据id删除相关记录 -->
+	<delete id="pgAdmindivision.delete" parameterClass="int">
+	  delete from "department" where "id"=#id#
+	</delete>
+
+	<!--查询组织部门信息  -->
+	<select id="pgAdmindivision.query"  resultMap="DivisionResult">
+		select * from "department" 
+	</select>
+	 
+	 <!-- 根据id查询 -->
+	 <select id="pgAdmindivision.queryById" parameterClass="int" resultMap="DivisionResult">
+	  	select * from "department"  where "id"=#id#
+	 </select>
+	  <!-- 根据父类id查询 -->
+	 <select id="pgAdmindivision.queryByParentId" parameterClass="int" resultMap="DivisionResult">
+	  select * from "department" where "parentId"=#parentId#
+	 </select>
+	  <!-- 根据名称查询 -->
+	 <select id="pgAdmindivision.queryByDepName" parameterClass="String" resultMap="DivisionResult">
+	  select * from "department" where "depName"=#depName#
+	 </select>
+	 
+	 
+	   
+	 
+	 <!--修改该条记录 -->
+	 <update id="pgAdmindivision.update" parameterClass="Division">
+	   <![CDATA[
+			UPDATE "department"  SET 
+				"depName" = #depName#,
+				"depDescription" = #depDescription#,
+				"depEmp" = #depEmp#,
+				"depHead" = #depHead#,
+				"parentId" = #parentId#,
+				"parentDepEmp" = #parentDepEmp#,
+				"parentDepHead" = #parentDepHead#
+			WHERE 
+				"id"=#id#
+		]]>
+	 </update>
+	 
+	  <!--修改人员的组织部门 -->
+	 <update id="pgAdmindivision.updateEmp" parameterClass="java.util.HashMap">
+			 UPDATE "tb_user"   
+         <isNotEmpty prepend="set" property="keyword1">
+           <![CDATA[
+             "USER_DepName"= '$keyword1$'
+           ]]>
+       </isNotEmpty>
+       <isNotEmpty prepend="where" property="keyword2">
+           <![CDATA[
+             "USER_DepName" = '$keyword2$'
+           ]]>
+       </isNotEmpty>
+	 </update>
+	<!-- sqlserver -->
+	<!-- 添加组织部门信息 -->
+	 <insert id="sqlServerdivision.insert" parameterClass="Division">
+	   insert into "department"
+		("depName","depDescription","depEmp","depHead","parentId","parentDepEmp","parentDepHead")
+		values(#depName#,#depDescription#,#depEmp#,#depHead#,#parentId#,#parentDepEmp#,#parentDepHead#)
+		<selectKey resultClass="java.lang.Integer" keyProperty="id" >
+            SELECT @@IDENTITY AS "id"
+      	</selectKey>
+	 </insert>
+
+	<!-- 根据id删除相关记录 -->
+	<delete id="sqlServerdivision.delete" parameterClass="int">
+	  delete from "department" where "id"=#id#
+	</delete>
+
+	<!--查询组织部门信息  -->
+	<select id="sqlServerdivision.query"  resultMap="DivisionResult">
+		select * from "department" 
+	</select>
+	 
+	 <!-- 根据id查询 -->
+	 <select id="sqlServerdivision.queryById" parameterClass="int" resultMap="DivisionResult">
+	  	select * from "department"  where "id"=#id#
+	 </select>
+	  <!-- 根据父类id查询 -->
+	 <select id="sqlServerdivision.queryByParentId" parameterClass="int" resultMap="DivisionResult">
+	  select * from "department" where "parentId"=#parentId#
+	 </select>
+	  <!-- 根据名称查询 -->
+	 <select id="sqlServerdivision.queryByDepName" parameterClass="String" resultMap="DivisionResult">
+	  select * from "department" where "depName"=#depName#
+	 </select>
+	 
+	 
+	   
+	 
+	 <!--修改该条记录 -->
+	 <update id="sqlServerdivision.update" parameterClass="Division">
+	   <![CDATA[
+			UPDATE "department"  SET 
+				"depName" = #depName#,
+				"depDescription" = #depDescription#,
+				"depEmp" = #depEmp#,
+				"depHead" = #depHead#,
+				"parentId" = #parentId#,
+				"parentDepEmp" = #parentDepEmp#,
+				"parentDepHead" = #parentDepHead#
+			WHERE 
+				"id"=#id#
+		]]>
+	 </update>
+	 
+	  <!--修改人员的组织部门 -->
+	 <update id="sqlServerdivision.updateEmp" parameterClass="java.util.HashMap">
+			 UPDATE "tb_user"   
+         <isNotEmpty prepend="set" property="keyword1">
+           <![CDATA[
+             "USER_DepName"= '$keyword1$'
+           ]]>
+       </isNotEmpty>
+       <isNotEmpty prepend="where" property="keyword2">
+           <![CDATA[
+             "USER_DepName" = '$keyword2$'
+           ]]>
+       </isNotEmpty>
+	 </update>
+</sqlMap>

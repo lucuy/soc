@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="gapReportDocument" extends="struts-default"
+		namespace="/gapReportDocument">
+		<action name="gapReportDocument" class="getGapReportDocumentAction"
+			method="getGapReportDocument">
+			<result name="success">/pages/dbPage/ensure/chajubaogao.jsp</result>
+		</action>
+ 
+		<action name="safeField2" class="getGapReportDocumentAction"
+			method="getSafeField">
+			<result name="success">/pages/dbPage/ensure/chajubaogaoC.jsp</result>
+		</action>
+ 
+		<action name="safeField" class="getGapReportDocumentAction"
+			method="getSafeField">
+			<result name="success">/pages/dbPage/ensure/chajubaogao.jsp</result>
+		</action>
+ 
+		<action name="safeField3" class="importGapReportDocumentAction" method="getSafeField">
+  
+ 
+			<result name="success" type="chain">
+				<param name="namespace">/gapReportDocument</param>
+				<param name="actionName">download</param>
+			</result>
+		</action>
+		<action name="download" class="importGapReportDocumentAction"
+			method="Download">
+		</action>
+		<action name="exportJsp" class="exportJspToWordAction" method="getExportJsp">
+			<result name="success">/pages/dbPage/ensure/chajubaogao.jsp</result>
+		</action>
+
+	</package>
+</struts>

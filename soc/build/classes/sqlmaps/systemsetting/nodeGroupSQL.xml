@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="nodeGroupSQL">
+	<resultMap class="nodeGroup" id="nodeGroupResult">
+		<result property="nodeGroupId" column="NODE_GROUP_ID" jdbcType="bigint" />
+		<result property="nodeGroupName" column="NODE_GROUP_NAME"
+			jdbcType="varchar" />
+		<result property="nodeGroupParentId" column="NODE_GROUP_PARENT_ID"
+			jdbcType="bigint" />
+		<result property="nodeGroupCreateDateTime" column="NODE_GROUP_CREATE_DATE_TIME"
+			jdbcType="datetime" />
+		<result property="nodeGroupUpdateDateTime" column="NODE_GROUP_UPDATE_DATE_TIME"
+			jdbcType="datetime" />
+		<result property="nodeGroupIsDelete" column="NODE_GROUP_IS_DELETE"
+			jdbcType="bigint" />
+		<result property="nodeGroupMemo" column="NODE_MEMO" jdbcType="text" />
+		<result property="parentGroup" column="NODE_GROUP_PARENT_ID"
+			select="pgAdminnodeGroup.queryParent" />
+		<result property="nodeIp" column="NODE_IP" jdbcType="varchar" />
+		<result property="nodePort" column="NODE_PORT" jdbcType="varchar" />
+		<result property="loginName" column="LOGIN_NAME" jdbcType="varchar" />
+		<result property="url" column="URL" jdbcType="varchar" />
+		<result property="top" column="TOP" jdbcType="int" />
+		<result property="left" column="LEFT" jdbcType="int" />
+		<result property="customs5" column="NODE_CUSTOMS5" jdbcType="varchar" />
+	</resultMap>
+
+	<resultMap class="nodeGroup" id="nodeGroupResult1">
+		<result property="nodeGroupId" column="NODE_GROUP_ID" jdbcType="bigint" />
+		<result property="nodeGroupName" column="NODE_GROUP_NAME"
+			jdbcType="varchar" />
+		<result property="nodeGroupParentId" column="NODE_GROUP_PARENT_ID"
+			jdbcType="bigint" />
+		<result property="nodeGroupCreateDateTime" column="NODE_GROUP_CREATE_DATE_TIME"
+			jdbcType="datetime" />
+		<result property="nodeGroupUpdateDateTime" column="NODE_GROUP_UPDATE_DATE_TIME"
+			jdbcType="datetime" />
+		<result property="nodeGroupIsDelete" column="NODE_GROUP_IS_DELETE"
+			jdbcType="bigint" />
+		<result property="nodeGroupMemo" column="NODE_MEMO" jdbcType="text" />
+		<result property="nodeIp" column="NODE_IP" jdbcType="varchar" />
+		<result property="nodePort" column="NODE_PORT" jdbcType="bigint" />
+		<result property="loginName" column="LOGIN_NAME" jdbcType="varchar" />
+		<result property="url" column="URL" jdbcType="varchar" />
+		<result property="top" column="TOP" jdbcType="int" />
+		<result property="left" column="LEFT" jdbcType="int" />
+		<result property="customs5" column="NODE_CUSTOMS5" jdbcType="varchar" />
+	</resultMap>
+
+	<!-- 查询父亲组 -->
+	<select id="pgAdminnodeGroup.queryParent" parameterClass="long"
+		resultMap="nodeGroupResult1">
+		SELECT * FROM "tbl_node_group" WHERE "NODE_GROUP_IS_DELETE" = 0 AND
+		"NODE_GROUP_ID" = #value#
+	</select>
+	<!-- 按照上级id查询 -->
+	<select id="pgAdminnodeGroup.queryByParentId" parameterClass="java.util.HashMap"
+		resultMap="nodeGroupResult">
+		SELECT * FROM "tbl_node_group" where 1=1 and "NODE_GROUP_IS_DELETE" =
+		0
+		<isNotEmpty prepend="AND" property="nodeGroupParentId">
+    <![CDATA[
+    	"NODE_GROUP_PARENT_ID" = #nodeGroupParentId#
+    ]]>
+			order by "NODE_GROUP_ID"
+		</isNotEmpty>
+	</select>
+	<!-- 新增 -->
+	<insert id="pgAdminnodeGroup.insert" parameterClass="nodeGroup">
+		INSERT INTO "tbl_node_group"
+		(
+		"NODE_GROUP_NAME",
+		"NODE_GROUP_PARENT_ID",
+		"NODE_GROUP_CREATE_DATE_TIME" ,
+		"NODE_GROUP_UPDATE_DATE_TIME" ,
+		"NODE_GROUP_IS_DELETE" ,
+		"NODE_MEMO" ,
+		"NODE_IP" ,
+		"NODE_PORT" ,
+		"LOGIN_NAME",
+		"URL" ,
+		"TOP",
+		"LEFT",
+		"NODE_CUSTOMS5"
+		)VALUES
+
+		(
+		#nodeGroupName#,
+		#nodeGroupParentId#,
+		#nodeGroupCreateDateTime#,
+		#nodeGroupUpdateDateTime#,
+		0,
+		#nodeGroupMemo#,
+		#nodeIp#,
+		#nodePort#,
+		#loginName#,
+		#url#,
+		#top#,
+		#left#,
+		#customs5#
+		)
+	</insert>
+
+	<!-- 刪除組及下級组 -->
+	<delete id="pgAdminnodeGroup.delete" parameterClass="long">
+	update "tbl_node_group" set "NODE_GROUP_IS_DELETE"=1 where "NODE_GROUP_ID"=#value# OR "NODE_GROUP_PARENT_ID"=#value#
+	
+	</delete>
+	<!-- 修改 -->
+	<update id="pgAdminnodeGroup.update" parameterClass="nodeGroup">
+	update "tbl_node_group" set 
+		"NODE_GROUP_NAME" = #nodeGroupName#,
+		"NODE_GROUP_UPDATE_DATE_TIME" =#nodeGroupUpdateDateTime# ,
+		"NODE_MEMO" =#nodeGroupMemo#,
+		"NODE_IP" = #nodeIp#,
+		"NODE_PORT" =#nodePort#,
+		"LOGIN_NAME" = #loginName#
+	where "NODE_GROUP_ID"=#nodeGroupId#
+	</update>
+<!-- 按照本id查询 -->
+<select id="pgAdminnodeGroup.queryByid" parameterClass="long" resultMap="nodeGroupResult">
+SELECT * FROM "tbl_node_group" WHERE "NODE_GROUP_IS_DELETE" = 0 AND
+		"NODE_GROUP_ID" = #value#
+</select>
+<!-- 查询所有 -->
+<select id="pgAdminnodeGroup.queryAll" parameterClass="long" resultMap="nodeGroupResult1">
+SELECT * FROM "tbl_node_group" WHERE "NODE_GROUP_IS_DELETE" = 0
+</select>
+	<update id="pgAdminnodeGroup.updatePositionById" parameterClass="java.util.HashMap">
+		UPDATE "tbl_node_group"
+		SET
+		"LEFT" = #left#,
+		"TOP" = #top#
+		WHERE
+		"NODE_GROUP_ID" = #id#
+	</update>
+<!--sqlServer  -->
+<!-- 查询父亲组 -->
+	<select id="sqlServernodeGroup.queryParent" parameterClass="long"
+		resultMap="nodeGroupResult1">
+		SELECT * FROM "tbl_node_group" WHERE "NODE_GROUP_IS_DELETE" = 0 AND
+		"NODE_GROUP_ID" = #value#
+	</select>
+	<!-- 按照上级id查询 -->
+	<select id="sqlServernodeGroup.queryByParentId" parameterClass="java.util.HashMap"
+		resultMap="nodeGroupResult">
+		SELECT * FROM "tbl_node_group" where 1=1 and "NODE_GROUP_IS_DELETE" =
+		0
+		<isNotEmpty prepend="AND" property="nodeGroupParentId">
+    <![CDATA[
+    	"NODE_GROUP_PARENT_ID" = #nodeGroupParentId#
+    ]]>
+			order by "NODE_GROUP_ID"
+		</isNotEmpty>
+	</select>
+	<!-- 新增 -->
+	<insert id="sqlServernodeGroup.insert" parameterClass="nodeGroup">
+		INSERT INTO "tbl_node_group"
+		(
+		"NODE_GROUP_NAME",
+		"NODE_GROUP_PARENT_ID",
+		"NODE_GROUP_CREATE_DATE_TIME" ,
+		"NODE_GROUP_UPDATE_DATE_TIME" ,
+		"NODE_GROUP_IS_DELETE" ,
+		"NODE_MEMO" ,
+		"NODE_IP" ,
+		"NODE_PORT" ,
+		"LOGIN_NAME",
+		"URL" ,
+		"TOP",
+		"LEFT",
+		"NODE_CUSTOMS5"
+		)VALUES
+
+		(
+		#nodeGroupName#,
+		#nodeGroupParentId#,
+		#nodeGroupCreateDateTime#,
+		#nodeGroupUpdateDateTime#,
+		0,
+		#nodeGroupMemo#,
+		#nodeIp#,
+		#nodePort#,
+		#loginName#,
+		#url#,
+		#top#,
+		#left#,
+		#customs5#
+		)
+	</insert>
+
+	<!-- 刪除組及下級组 -->
+	<delete id="sqlServernodeGroup.delete" parameterClass="long">
+	update "tbl_node_group" set "NODE_GROUP_IS_DELETE"=1 where "NODE_GROUP_ID"=#value# OR "NODE_GROUP_PARENT_ID"=#value#
+	
+	</delete>
+	<!-- 修改 -->
+	<update id="sqlServernodeGroup.update" parameterClass="nodeGroup">
+	update "tbl_node_group" set 
+		"NODE_GROUP_NAME" = #nodeGroupName#,
+		"NODE_GROUP_UPDATE_DATE_TIME" =#nodeGroupUpdateDateTime# ,
+		"NODE_MEMO" =#nodeGroupMemo#,
+		"NODE_IP" = #nodeIp#,
+		"NODE_PORT" =#nodePort#,
+		"LOGIN_NAME" = #loginName#
+	where "NODE_GROUP_ID"=#nodeGroupId#
+	</update>
+<!-- 按照本id查询 -->
+<select id="sqlServernodeGroup.queryByid" parameterClass="long" resultMap="nodeGroupResult">
+SELECT * FROM "tbl_node_group" WHERE "NODE_GROUP_IS_DELETE" = 0 AND
+		"NODE_GROUP_ID" = #value#
+</select>
+<!-- 查询所有 -->
+<select id="sqlServernodeGroup.queryAll" parameterClass="long" resultMap="nodeGroupResult1">
+SELECT * FROM "tbl_node_group" WHERE "NODE_GROUP_IS_DELETE" = 0
+		
+</select>
+<update id="sqlServernodeGroup.updatePositionById" parameterClass="java.util.HashMap">
+		UPDATE "tbl_node_group"
+		SET
+		"LEFT" = #left#,
+		"TOP" = #top#
+		WHERE
+		"NODE_GROUP_ID" = #id#
+	</update>
+</sqlMap>

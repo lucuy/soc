@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    
+    <sqlMap>
+        <resultMap class="gpa" id="gpaResult">
+           <result property="gpaId" 		  column="PK_PSA" />
+           <result property="gpaDate" 		  column="PSA_Date" />
+           <result property="gpaSort" 		  column="PSA_Sort" />
+           <result property="gpaA" 		      column="PSA_A" />
+           <result property="gpaB"            column="PSA_B" />
+           <result property="gpaC"            column="PSA_C" />
+           <result property="gpaD"            column="PSA_D" />
+           <result property="gpaE"            column="PSA_E" />
+           <result property="gpaF"            column="PSA_F" />
+           <result property="gpaG"            column="PSA_G" />
+           <result property="gpaH"            column="PSA_H" />
+           <result property="gpaI" 			  column="PSA_I" />
+           <result property="gpaJ" 			  column="PSA_J" />
+           <result property="gpaAssessResult" column="PSA_AssessResult" />
+           <result property="gpaMainProbDes"  column="PSA_MainProbDes" />
+        </resultMap>
+        
+        <resultMap class="gpa" id="gpaResultSoleDate">
+           <result property="gpaDate" column="PSA_Date" />
+        </resultMap>
+         <!--查询-->
+        <select id="pgAdmingpa.needConnect" parameterClass="java.util.HashMap" resultMap="gpaResult">
+          select * from "tb_psa" where 1=1
+          <isNotEmpty prepend="AND" property="gpaDate">
+           <![CDATA[
+               ("PSA_Date"=#gpaDate#)
+           ]]>
+         </isNotEmpty> 
+           <isNotEmpty prepend="AND" property="gpaAssessResult">
+           <![CDATA[
+               ("PSA_AssessResult"=#gpaAssessResult#)
+           ]]>
+         </isNotEmpty>         
+        </select>
+        
+        
+        <!--查询评估项个数-->
+        <select id="pgAdmingpa.rectCount" parameterClass="java.util.HashMap" resultClass="int">
+          select count(*) from "tb_psa" where 1=1
+          <isNotEmpty prepend="AND" property="gpaDate">
+           <![CDATA[
+               ("PSA_Date"=#gpaDate#)
+           ]]>
+         </isNotEmpty> 
+           <isNotEmpty prepend="AND" property="gpaAssessResult">
+           <![CDATA[
+               ("PSA_AssessResult"=#gpaAssessResult#)
+           ]]>
+         </isNotEmpty>         
+        </select>
+        
+         <!--查询不同日期-->
+        <select id="pgAdmingpa.querySoleDate" resultMap="gpaResultSoleDate">
+          select DISTINCT "PSA_Date" from "tb_psa" where "PSA_AssessResult" is not null and "PSA_AssessResult"!='0'
+        </select>
+        
+        <!-- sqlserver -->
+        <!--查询-->
+        <select id="sqlServergpa.needConnect" parameterClass="java.util.HashMap" resultMap="gpaResult">
+          select * from "tb_psa" where 1=1
+          <isNotEmpty prepend="AND" property="gpaDate">
+           <![CDATA[
+               ("PSA_Date"=#gpaDate#)
+           ]]>
+         </isNotEmpty> 
+           <isNotEmpty prepend="AND" property="gpaAssessResult">
+           <![CDATA[
+               ("PSA_AssessResult"=#gpaAssessResult#)
+           ]]>
+         </isNotEmpty>         
+        </select>
+        
+        
+        <!--查询评估项个数-->
+        <select id="sqlServergpa.rectCount" parameterClass="java.util.HashMap" resultClass="int">
+          select count(*) from "tb_psa" where 1=1
+          <isNotEmpty prepend="AND" property="gpaDate">
+           <![CDATA[
+               ("PSA_Date"=#gpaDate#)
+           ]]>
+         </isNotEmpty> 
+           <isNotEmpty prepend="AND" property="gpaAssessResult">
+           <![CDATA[
+               ("PSA_AssessResult"=#gpaAssessResult#)
+           ]]>
+         </isNotEmpty>         
+        </select>
+        
+         <!--查询不同日期-->
+        <select id="sqlServergpa.querySoleDate" resultMap="gpaResultSoleDate">
+          select DISTINCT "PSA_Date" from "tb_psa" where "PSA_AssessResult" is not null and "PSA_AssessResult"!='0'
+        </select>
+        
+                
+    </sqlMap>

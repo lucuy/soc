@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="settingCollector">
+	<resultMap id="settingcollectorq" class="settingcollector">
+   		<result property="collectorId" 				column="COLLECTOR_ID" 					jdbcType="bigint"/>
+   		<result property="collectorIp" 				column="COLLECTOR_IP" 					jdbcType="varchar"/>
+   		<result property="collectorWalkPort" 		column="COLLECTOR_WALK_PORT" 			jdbcType="varchar"/>
+   		<result property="collectorGroup" 			column="COLLECTOR_GROUP" 				jdbcType="varchar"/>
+   		<result property="collectorTime" 			column="COLLECTOR_TIME" 				jdbcType="varchar"/>
+   		<result property="collectorEnter" 			column="COLLECTOR_ENTER" 				jdbcType="varchar"/>
+   		<result property="collectorTrip" 			column="COLLECTOR_TRIP" 				jdbcType="varchar"/>
+   		<result property="collectorLog" 			column="COLLECTOR_LOG" 					jdbcType="varchar"/>
+   		<result property="collectorAgentPort" 		column="COLLECTOR_AGENTPORT" 			jdbcType="varchar"/>
+   		<result property="collectorUpTime" 			column="COLLECTOR_UPTIME" 				jdbcType="varchar"/>
+   		<result property="collectorIntervalTime" 	column="COLLECTOR_INTERVALTIME" 		jdbcType="varchar"/>
+   		<result property="collectorPattern" 		column="COLLECTOR_PATTERN" 				jdbcType="varchar"/>
+   		<result property="collectorBasic" 			column="COLLECTOR_BASIC" 				jdbcType="varchar"/>
+   		<result property="collectorMac" 			column="COLLECTOR_MAC" 					jdbcType="varchar"/>
+   		<result property="collectorOid" 			column="COLLECTOR_OID" 					jdbcType="varchar"/>
+   		<result property="collectorIsOnline"        column="COLLECTOR_IS_ONLINE"            jdbcType="smallint"/>
+   		<result property="collectorIsSafe"          column="COLLECTOR_IS_SAFE"              jdbcType="smallint"/>
+   		<result property="collectorReceiveEvents"   column="COLLECTOR_RECEIVE_EVENTS_COUNT" jdbcType="bigint" />
+   		<result property="collectorStatus" 			column="COLLECTOR_STATUS" 				jdbcType="bigint"/>
+   		<result property="collectNetwork" 			column="COLLECTOR_NETWORK" 				jdbcType="bigint"/>
+   		<result property="collectorDisplay"         column="COLLECTOR_DISPLAY"              jdbcType="smallint"/>
+   	</resultMap>
+   	
+   	<!-- 新增 -->
+   	<insert id="pgAdminsettingcollector.insert" parameterClass="settingcollector">
+		INSERT INTO "tbl_system_collector" 
+				( 
+				  "COLLECTOR_IP", 
+				  "COLLECTOR_WALK_PORT", 
+				  "COLLECTOR_GROUP",
+				  "COLLECTOR_TIME",
+				  "COLLECTOR_ENTER",
+				  "COLLECTOR_TRIP",
+				  "COLLECTOR_LOG",
+				  "COLLECTOR_AGENTPORT",
+				  "COLLECTOR_UPTIME",
+				  "COLLECTOR_INTERVALTIME",
+				  "COLLECTOR_PATTERN",
+				  "COLLECTOR_BASIC",
+				  "COLLECTOR_MAC",
+				  "COLLECTOR_OID",
+				  "COLLECTOR_STATUS",
+				  "COLLECTOR_NETWORK")	
+				  
+				  VALUES 
+				( 
+				  #collectorIp#, 
+				  #collectorWalkPort#, 
+				  #collectorGroup#,
+				  #collectorTime#,
+				  #collectorEnter#,
+				  #collectorTrip#,
+				  #collectorLog#,
+				  #collectorAgentPort#,
+				  #collectorUpTime#,
+				  #collectorIntervalTime#,
+				  #collectorPattern#,
+				  #collectorBasic#,
+				  #collectorMac#,
+				  #collectorOid#,
+				  #collectorStatus#,
+				  #collectNetwork# )
+	</insert>
+	
+	<!-- 查询数据  修改WHERE "COLLECTOR_STATUS" = 1 更新根据用户关联的资产组查询到资产然后查询采集器-->
+	<select id="pgAdminqueryCollector.query" parameterClass="java.util.HashMap" resultMap="settingcollectorq" >
+
+		SELECT * FROM tbl_system_collector where 1=1
+		<isNotEmpty prepend= "AND"  property="collectorStatus">
+			<![CDATA[
+				"COLLECTOR_STATUS" = #collectorStatus#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="collectorBasic">
+			<![CDATA[
+				"COLLECTOR_BASIC" LIKE '%$collectorBasic$%' 
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend= "AND"  property="collectNetwork">
+			<![CDATA[
+				"COLLECTOR_NETWORK" = #collectNetwork#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="collectorId">
+			<![CDATA[
+				"COLLECTOR_ID"  in ($collectorId$)
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				"COLLECTOR_BASIC" LIKE '%$keyword$%' 
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="display">
+			<![CDATA[
+				"COLLECTOR_DISPLAY" = 1 
+			]]>
+		</isNotEmpty>		
+
+	</select>
+	
+	<!-- 查询数据 -->
+	<select id="pgAdminqueryCollectorTree.query" resultMap="settingcollectorq" >
+		SELECT * FROM "tbl_system_collector" WHERE "COLLECTOR_ID" IN(SELECT "ASSET_COLLECTOR_ID" FROM "tbl_asset")
+	</select>
+	
+	<!-- 树——查询数据 -->
+	<select id="pgAdminqueryCollector.queryTree" resultMap="settingcollectorq" parameterClass="java.util.HashMap">
+		SELECT * FROM tbl_system_collector where 1 = 1
+		<isNotEmpty prepend= "AND" property="querytreeeid">
+         "COLLECTOR_ID" = #querytreeeid#;
+         </isNotEmpty>
+	</select>
+	
+	
+	<!-- 更新数据 -->
+   <statement id="pgAdminupdateCollectorCount.update" parameterClass="java.lang.String">
+    $sql$
+   </statement>
+    
+	<!-- 更新采集器在线状态 -->
+	<statement id="pgAdminupdateCollectorIsOnline.update" parameterClass="java.lang.String">
+   	 $sql$
+	</statement>
+	
+	<!-- 更新数据 -->
+	<update id="pgAdminupdateCollector.update" parameterClass="settingcollector" >
+			UPDATE "tbl_system_collector"
+			SET 
+					"COLLECTOR_IP" = #collectorIp#,
+					"COLLECTOR_WALK_PORT" = #collectorWalkPort#,
+					"COLLECTOR_GROUP" = #collectorGroup#,
+					"COLLECTOR_TIME" = #collectorTime#,
+					"COLLECTOR_ENTER" = #collectorEnter#,
+					"COLLECTOR_TRIP" = #collectorTrip#,
+					"COLLECTOR_LOG" = #collectorLog#,
+					"COLLECTOR_AGENTPORT" = #collectorAgentPort#,
+					"COLLECTOR_UPTIME" = #collectorUpTime#,
+					"COLLECTOR_INTERVALTIME" = #collectorIntervalTime#,
+					"COLLECTOR_PATTERN" = #collectorPattern#,
+					"COLLECTOR_BASIC" = #collectorBasic#,
+					"COLLECTOR_MAC" = #collectorMac#,
+					"COLLECTOR_OID" = #collectorOid#,
+					"COLLECTOR_RECEIVE_EVENTS_COUNT" = #collectorReceiveEvents#
+			 	WHERE 
+			 		"COLLECTOR_ID" = #collectorId#
+	</update>
+	
+	<delete id="pgAdmindelcollector.del" parameterClass="java.util.HashMap">
+	   <![CDATA[
+	       DELETE FROM  "tbl_system_collector" WHERE "COLLECTOR_ID" = #collectorId#
+	   ]]>
+	</delete>
+	
+	<select id="pgAdmincountPage.query"  parameterClass="java.util.HashMap" resultClass="int">
+
+		SELECT COUNT(*) FROM "tbl_system_collector" 
+		 where 1=1
+		 <isNotEmpty prepend= "AND"  property="collectorStatus">
+			<![CDATA[
+				"COLLECTOR_STATUS" = #collectorStatus#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="collectorBasic">
+			<![CDATA[
+				"COLLECTOR_BASIC" LIKE '%$collectorBasic$%' 
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="collectNetwork">
+			<![CDATA[
+				"COLLECTOR_NETWORK" = #collectNetwork#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				"COLLECTOR_BASIC" LIKE '%$keyword$%' 
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="display">
+			<![CDATA[
+				"COLLECTOR_DISPLAY" = 1 
+			]]>
+		</isNotEmpty>
+		
+
+	</select>
+	
+	<select id="pgAdmincollector.queryById"  parameterClass="long" resultMap="settingcollectorq" >
+		<![CDATA[
+			SELECT * FROM "tbl_system_collector" WHERE "COLLECTOR_ID" = #collectorId#
+		]]>
+	</select>
+	<select id="pgAdminquery.mac" parameterClass="java.lang.String" resultMap="settingcollectorq">
+	  <![CDATA[
+	      SELECT * FROM "tbl_system_collector" WHERE "COLLECTOR_MAC" = #collectorMac#
+	  ]]>
+	</select>
+	
+	<!-- 更新数据 -->
+	<update id="pgAdminupdateLoggerStatus.update" parameterClass="settingcollector" >
+			UPDATE "tbl_system_collector"
+			SET 
+					"COLLECTOR_STATUS" = #collectorStatus#
+			 	WHERE 
+			 		"COLLECTOR_ID" = #collectorId#
+	</update>
+	
+	<!-- sqlServer用的sql语句 -->
+	
+	<!-- 新增 -->
+   	<insert id="sqlServersettingcollector.insert" parameterClass="settingcollector">
+		INSERT INTO "tbl_system_collector" 
+				( 
+				  "COLLECTOR_IP", 
+				  "COLLECTOR_WALK_PORT", 
+				  "COLLECTOR_GROUP",
+				  "COLLECTOR_TIME",
+				  "COLLECTOR_ENTER",
+				  "COLLECTOR_TRIP",
+				  "COLLECTOR_LOG",
+				  "COLLECTOR_AGENTPORT",
+				  "COLLECTOR_UPTIME",
+				  "COLLECTOR_INTERVALTIME",
+				  "COLLECTOR_PATTERN",
+				  "COLLECTOR_BASIC",
+				  "COLLECTOR_MAC",
+				  "COLLECTOR_OID",
+				  "COLLECTOR_STATUS",
+				  "COLLECTOR_NETWORK")	
+				  
+				  VALUES 
+				( 
+				  #collectorIp#, 
+				  #collectorWalkPort#, 
+				  #collectorGroup#,
+				  #collectorTime#,
+				  #collectorEnter#,
+				  #collectorTrip#,
+				  #collectorLog#,
+				  #collectorAgentPort#,
+				  #collectorUpTime#,
+				  #collectorIntervalTime#,
+				  #collectorPattern#,
+				  #collectorBasic#,
+				  #collectorMac#,
+				  #collectorOid#,
+				  #collectorStatus#,
+				  #collectNetwork# )
+	</insert>
+	<!-- 查询数据  修改WHERE "COLLECTOR_STATUS" = 1 更新根据用户关联的资产组查询到资产然后查询采集器-->
+	<select id="sqlServerqueryCollector.query" parameterClass="java.util.HashMap" resultMap="settingcollectorq" >
+
+		SELECT * FROM tbl_system_collector where 1=1
+		<isNotEmpty prepend= "AND"  property="collectorStatus">
+			<![CDATA[
+				"COLLECTOR_STATUS" = #collectorStatus#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="collectorBasic">
+			<![CDATA[
+				"COLLECTOR_BASIC" LIKE '%$collectorBasic$%' 
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend= "AND"  property="collectNetwork">
+			<![CDATA[
+				"COLLECTOR_NETWORK" = #collectNetwork#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="collectorId">
+			<![CDATA[
+				"COLLECTOR_ID"  in ($collectorId$)
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				"COLLECTOR_BASIC" LIKE '%$keyword$%' 
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="display">
+			<![CDATA[
+				"COLLECTOR_DISPLAY" = 1 
+			]]>
+		</isNotEmpty>		
+
+	</select>
+
+	
+	<!-- 查询数据 -->
+	<select id="sqlServerqueryCollectorTree.query" resultMap="settingcollectorq" >
+		SELECT * FROM "tbl_system_collector" WHERE "COLLECTOR_ID" IN(SELECT "ASSET_COLLECTOR_ID" FROM "tbl_asset")
+	</select>
+	
+	<!-- 树——查询数据 -->
+	<select id="sqlServerqueryCollector.queryTree" resultMap="settingcollectorq" parameterClass="java.util.HashMap">
+		SELECT * FROM tbl_system_collector where 1 = 1
+		<isNotEmpty prepend= "AND" property="querytreeeid">
+         "COLLECTOR_ID" = #querytreeeid#;
+         </isNotEmpty>
+	</select>
+	
+	
+	<!-- 更新数据 -->
+   <statement id="sqlServerupdateCollectorCount.update" parameterClass="java.lang.String">
+    $sql$
+   </statement>
+    
+	<!-- 更新采集器在线状态 -->
+	<statement id="sqlServerupdateCollectorIsOnline.update" parameterClass="java.lang.String">
+   	 $sql$
+	</statement>
+	
+	<!-- 更新数据 -->
+	<update id="sqlServerupdateCollector.update" parameterClass="settingcollector" >
+			UPDATE "tbl_system_collector"
+			SET 
+					"COLLECTOR_IP" = #collectorIp#,
+					"COLLECTOR_WALK_PORT" = #collectorWalkPort#,
+					"COLLECTOR_GROUP" = #collectorGroup#,
+					"COLLECTOR_TIME" = #collectorTime#,
+					"COLLECTOR_ENTER" = #collectorEnter#,
+					"COLLECTOR_TRIP" = #collectorTrip#,
+					"COLLECTOR_LOG" = #collectorLog#,
+					"COLLECTOR_AGENTPORT" = #collectorAgentPort#,
+					"COLLECTOR_UPTIME" = #collectorUpTime#,
+					"COLLECTOR_INTERVALTIME" = #collectorIntervalTime#,
+					"COLLECTOR_PATTERN" = #collectorPattern#,
+					"COLLECTOR_BASIC" = #collectorBasic#,
+					"COLLECTOR_MAC" = #collectorMac#,
+					"COLLECTOR_OID" = #collectorOid#,
+					"COLLECTOR_RECEIVE_EVENTS_COUNT" = #collectorReceiveEvents#
+			 	WHERE 
+			 		"COLLECTOR_ID" = #collectorId#
+	</update>
+	
+	<delete id="sqlServerdelcollector.del" parameterClass="java.util.HashMap">
+	   <![CDATA[
+	       DELETE FROM  "tbl_system_collector" WHERE "COLLECTOR_ID" = #collectorId#
+	   ]]>
+	</delete>
+	
+	<select id="sqlServercountPage.query"  parameterClass="java.util.HashMap" resultClass="int">
+
+		SELECT COUNT(*) FROM "tbl_system_collector" 
+		 where 1=1
+		 <isNotEmpty prepend= "AND"  property="collectorStatus">
+			<![CDATA[
+				"COLLECTOR_STATUS" = #collectorStatus#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="collectorBasic">
+			<![CDATA[
+				"COLLECTOR_BASIC" LIKE '%$collectorBasic$%' 
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="collectNetwork">
+			<![CDATA[
+				"COLLECTOR_NETWORK" = #collectNetwork#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				"COLLECTOR_BASIC" LIKE '%$keyword$%' 
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="display">
+			<![CDATA[
+				"COLLECTOR_DISPLAY" = 1 
+			]]>
+		</isNotEmpty>
+		
+
+	</select>
+	
+	<select id="sqlServercollector.queryById"  parameterClass="long" resultMap="settingcollectorq" >
+		<![CDATA[
+			SELECT * FROM "tbl_system_collector" WHERE "COLLECTOR_ID" = #collectorId#
+		]]>
+	</select>
+	<select id="sqlServerquery.mac" parameterClass="java.lang.String" resultMap="settingcollectorq">
+	  <![CDATA[
+	      SELECT * FROM "tbl_system_collector" WHERE "COLLECTOR_MAC" = #collectorMac#
+	  ]]>
+	</select>
+	
+	<!-- 更新数据 -->
+	<update id="sqlServerupdateLoggerStatus.update" parameterClass="settingcollector" >
+			UPDATE "tbl_system_collector"
+			SET 
+					"COLLECTOR_STATUS" = #collectorStatus#
+			 	WHERE 
+			 		"COLLECTOR_ID" = #collectorId#
+	</update>
+	
+</sqlMap>

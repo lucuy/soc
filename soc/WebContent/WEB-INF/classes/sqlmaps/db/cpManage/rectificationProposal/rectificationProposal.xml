@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+  <resultMap class="rectificationProposal" id="rectificationProposalResult">
+      <result property="PK_CORRRECOM"  					column="PK_CORRRECOM"/>
+      <result property="CORRRECOM_ControlDomainSort" 	column="CORRRECOM_ControlDomainSort"/>
+      <result property="CORRRECOM_ControlDomainName" 	column="CORRRECOM_ControlDomainName"/>
+      <result property="CORRRECOM_ControlUnitSort" 		column="CORRRECOM_ControlUnitSort"/>
+      <result property="CORRRECOM_ControlUnitName"		column="CORRRECOM_ControlUnitName"/>
+      <result property="CORRRECOM_ItemNumber"           column="CORRRECOM_ItemNumber"/>
+      <result property="CORRRECOM_Content" 				column="CORRRECOM_Content"/>
+      <result property="CORRRECOM_Advise" 				column="CORRRECOM_Advise"/>
+      <result property="CORRRECOM_SysName"			    column="CORRRECOM_SysName"/>
+      <result property="CORRRECOM_SysId"			    column="CORRRECOM_SysId"/>
+      <result property="CORRRECOM_Date" 				column="CORRRECOM_Date"/>
+      <result property="CORRRECOM_AssessResult" 		column="CORRRECOM_AssessResult"/>
+      <result property="CORRRECOM_AssessType" 			column="CORRRECOM_AssessType"/>
+  </resultMap>
+  <!--查询评估项个数-->
+<select id="pgAdminrectificationProposal.queryRectNum" parameterClass="java.util.HashMap" resultClass="int">
+   SELECT count("CIA_Sort") from "tb_cia"  WHERE 1=1
+   
+   <isNotEmpty prepend="AND" property="FK_CA">
+    	"FK_CA"=#FK_CA#
+   </isNotEmpty>
+   <isNotEmpty prepend="AND" property="CIA_AssessResult">
+     <![CDATA[
+     	"CIA_AssessResult"=#CIA_AssessResult#
+     ]]>
+   </isNotEmpty>
+   
+</select>
+  
+  
+<!--根据已评估结束系统id，评估结果不符合项编号进行查找-->
+<select id="pgAdminrectificationProposal.queryBySysIdAndIteamNum" parameterClass="java.util.HashMap" resultClass="java.lang.String">
+   SELECT "CORRRECOM_Advise" FROM  "tb_corrrecom" WHERE 1=1
+   <isNotEmpty prepend="AND" property="CORRRECOM_SysId">
+     <![CDATA[
+     	"CORRRECOM_SysId"=#CORRRECOM_SysId#
+     ]]>
+   </isNotEmpty>
+   <isNotEmpty prepend="AND" property="CORRRECOM_ItemNumber">
+   		"CORRRECOM_ItemNumber"=#CORRRECOM_ItemNumber#
+   </isNotEmpty>
+</select>
+<!--查询id-->
+<select id="pgAdminrectificationProposal.queryIDBySysIdAndIteamNum" parameterClass="java.util.HashMap" resultClass="int">
+   SELECT "PK_CORRRECOM" FROM  "tb_corrrecom"  WHERE 1=1
+   <isNotEmpty prepend="AND" property="CORRRECOM_SysId">
+     <![CDATA[
+     	"CORRRECOM_SysId"=#CORRRECOM_SysId#
+     ]]>
+   </isNotEmpty>
+   <isNotEmpty prepend="AND" property="CORRRECOM_ItemNumber">
+    	"CORRRECOM_ItemNumber"=#CORRRECOM_ItemNumber#
+   </isNotEmpty>
+</select>
+<!--根据已评估结束系统id，评估结果不符合项编号进行查找创建时间--> 
+<select id="pgAdminrectificationProposal.queryCreatDateBySysIdAndIteamNum" parameterClass="java.util.HashMap" resultClass="java.lang.String">
+ SELECT "CORRRECOM_Date" FROM  "tb_corrrecom"  WHERE 1=1
+   <isNotEmpty prepend="AND" property="CORRRECOM_SysId">
+     <![CDATA[
+     	"CORRRECOM_SysId"=#CORRRECOM_SysId#
+     ]]>
+   </isNotEmpty>
+   <isNotEmpty prepend="AND" property="CORRRECOM_ItemNumber">
+       "CORRRECOM_ItemNumber"=#CORRRECOM_ItemNumber#
+   </isNotEmpty>
+</select>
+
+<!--添加评估结果 -->
+<insert id="pgAdminrectificationProposal.inster" parameterClass="rectificationProposal">
+    INSERT INTO "tb_corrrecom" ("CORRRECOM_ControlDomainSort","CORRRECOM_ControlDomainName","CORRRECOM_ControlUnitSort","CORRRECOM_ControlUnitName","CORRRECOM_ItemNumber","CORRRECOM_Content","CORRRECOM_Advise","CORRRECOM_SysName","CORRRECOM_SysId","CORRRECOM_Date","CORRRECOM_AssessResult","CORRRECOM_AssessType")
+VALUES(#CORRRECOM_ControlDomainSort#,#CORRRECOM_ControlDomainName#,#CORRRECOM_ControlUnitSort#,#CORRRECOM_ControlUnitName#,#CORRRECOM_ItemNumber#,#CORRRECOM_Content#,#CORRRECOM_Advise#,#CORRRECOM_SysName#,#CORRRECOM_SysId#,#CORRRECOM_Date#,#CORRRECOM_AssessResult#,#CORRRECOM_AssessType#)
+</insert>
+<!--修改整改建议-->
+ <update id="pgAdminrectificationProposal.updata"  parameterClass="rectificationProposal">
+    UPDATE "tb_corrrecom" set
+     		 "CORRRECOM_Advise"=#CORRRECOM_Advise#,
+    		 "CORRRECOM_Date"=#CORRRECOM_Date#
+     where 1=1
+     <isNotNull prepend="AND" >
+     		"CORRRECOM_ItemNumber"=#CORRRECOM_ItemNumber#
+     </isNotNull>
+      <isNotNull prepend="AND" >
+       		"CORRRECOM_SysId"=#CORRRECOM_SysId#
+     </isNotNull>
+</update>  
+<!--删除整改建议-->
+<delete id="pgAdminrectificationProposal.delete" parameterClass="java.util.HashMap">
+   DELETE FROM "tb_corrrecom" where 1=1
+    <isNotEmpty prepend="AND" property="CORRRECOM_SysId">
+     <![CDATA[
+     	"CORRRECOM_SysId"=#CORRRECOM_SysId#
+     ]]>
+   </isNotEmpty>
+   <isNotEmpty prepend="AND" property="CORRRECOM_ItemNumber">
+     "CORRRECOM_ItemNumber"=#CORRRECOM_ItemNumber#
+   </isNotEmpty>
+</delete>
+  <!-- sqlserver
+   -->
+  <!--查询评估项个数-->
+<select id="sqlServerrectificationProposal.queryRectNum" parameterClass="java.util.HashMap" resultClass="int">
+   SELECT count("CIA_Sort") from "tb_cia"  WHERE 1=1
+   
+   <isNotEmpty prepend="AND" property="FK_CA">
+    	"FK_CA"=#FK_CA#
+   </isNotEmpty>
+   <isNotEmpty prepend="AND" property="CIA_AssessResult">
+     <![CDATA[
+     	"CIA_AssessResult"=#CIA_AssessResult#
+     ]]>
+   </isNotEmpty>
+   
+</select>
+  
+  
+<!--根据已评估结束系统id，评估结果不符合项编号进行查找-->
+<select id="sqlServerrectificationProposal.queryBySysIdAndIteamNum" parameterClass="java.util.HashMap" resultClass="java.lang.String">
+   SELECT "CORRRECOM_Advise" FROM  "tb_corrrecom" WHERE 1=1
+   <isNotEmpty prepend="AND" property="CORRRECOM_SysId">
+     <![CDATA[
+     	"CORRRECOM_SysId"=#CORRRECOM_SysId#
+     ]]>
+   </isNotEmpty>
+   <isNotEmpty prepend="AND" property="CORRRECOM_ItemNumber">
+   		"CORRRECOM_ItemNumber"=#CORRRECOM_ItemNumber#
+   </isNotEmpty>
+</select>
+<!--查询id-->
+<select id="sqlServerrectificationProposal.queryIDBySysIdAndIteamNum" parameterClass="java.util.HashMap" resultClass="int">
+   SELECT "PK_CORRRECOM" FROM  "tb_corrrecom"  WHERE 1=1
+   <isNotEmpty prepend="AND" property="CORRRECOM_SysId">
+     <![CDATA[
+     	"CORRRECOM_SysId"=#CORRRECOM_SysId#
+     ]]>
+   </isNotEmpty>
+   <isNotEmpty prepend="AND" property="CORRRECOM_ItemNumber">
+    	"CORRRECOM_ItemNumber"=#CORRRECOM_ItemNumber#
+   </isNotEmpty>
+</select>
+<!--根据已评估结束系统id，评估结果不符合项编号进行查找创建时间--> 
+<select id="sqlServerrectificationProposal.queryCreatDateBySysIdAndIteamNum" parameterClass="java.util.HashMap" resultClass="java.lang.String">
+ SELECT "CORRRECOM_Date" FROM  "tb_corrrecom"  WHERE 1=1
+   <isNotEmpty prepend="AND" property="CORRRECOM_SysId">
+     <![CDATA[
+     	"CORRRECOM_SysId"=#CORRRECOM_SysId#
+     ]]>
+   </isNotEmpty>
+   <isNotEmpty prepend="AND" property="CORRRECOM_ItemNumber">
+       "CORRRECOM_ItemNumber"=#CORRRECOM_ItemNumber#
+   </isNotEmpty>
+</select>
+
+<!--添加评估结果 -->
+<insert id="sqlServerrectificationProposal.inster" parameterClass="rectificationProposal">
+    INSERT INTO "tb_corrrecom" ("CORRRECOM_ControlDomainSort","CORRRECOM_ControlDomainName","CORRRECOM_ControlUnitSort","CORRRECOM_ControlUnitName","CORRRECOM_ItemNumber","CORRRECOM_Content","CORRRECOM_Advise","CORRRECOM_SysName","CORRRECOM_SysId","CORRRECOM_Date","CORRRECOM_AssessResult","CORRRECOM_AssessType")
+VALUES(#CORRRECOM_ControlDomainSort#,#CORRRECOM_ControlDomainName#,#CORRRECOM_ControlUnitSort#,#CORRRECOM_ControlUnitName#,#CORRRECOM_ItemNumber#,#CORRRECOM_Content#,#CORRRECOM_Advise#,#CORRRECOM_SysName#,#CORRRECOM_SysId#,#CORRRECOM_Date#,#CORRRECOM_AssessResult#,#CORRRECOM_AssessType#)
+</insert>
+<!--修改整改建议-->
+ <update id="sqlServerrectificationProposal.updata"  parameterClass="rectificationProposal">
+    UPDATE "tb_corrrecom" set
+     		 "CORRRECOM_Advise"=#CORRRECOM_Advise#,
+    		 "CORRRECOM_Date"=#CORRRECOM_Date#
+     where 1=1
+     <isNotNull prepend="AND" >
+     		"CORRRECOM_ItemNumber"=#CORRRECOM_ItemNumber#
+     </isNotNull>
+      <isNotNull prepend="AND" >
+       		"CORRRECOM_SysId"=#CORRRECOM_SysId#
+     </isNotNull>
+</update>  
+<!--删除整改建议-->
+<delete id="sqlServerrectificationProposal.delete" parameterClass="java.util.HashMap">
+   DELETE FROM "tb_corrrecom" where 1=1
+    <isNotEmpty prepend="AND" property="CORRRECOM_SysId">
+     <![CDATA[
+     	"CORRRECOM_SysId"=#CORRRECOM_SysId#
+     ]]>
+   </isNotEmpty>
+   <isNotEmpty prepend="AND" property="CORRRECOM_ItemNumber">
+     "CORRRECOM_ItemNumber"=#CORRRECOM_ItemNumber#
+   </isNotEmpty>
+</delete>
+</sqlMap>

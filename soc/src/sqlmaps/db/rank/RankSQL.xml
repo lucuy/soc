@@ -1,0 +1,588 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+	<resultMap id="rankResult" class="Rank">
+		<result property="rankId" column="PK_RANK" />
+		<result property="sysInfoId" column="SYSINFO_Id" />
+		<result property="sysInfoName" column="SYSINFO_Name" />
+		<result property="sysInfoBusDescription" column="SYSINFO_BusDescription" />
+		<result property="rankEvalUnitName" column="RANK_EvalUnitName" />
+		<result property="rankUseDate" column="RANK_UseDate" />
+		<result property="rankFlag" column="RANK_Flag" />
+		<result property="rankParentSysName" column="RANK_ParentSysName" />
+		<result property="rankParentUnitName" column="RANK_ParentUnitName" />
+		<result property="rankEvalRelAccess" column="RANK_EvalRelAccess" />
+		<result property="rankCoveArea" column="RANK_CoveArea" />
+		<result property="rankOthArea" column="RANK_OthArea" />
+		<result property="rankNetworkProp" column="RANK_NetworkProp" />
+		<result property="rankOthNetworkProp" column="RANK_OthNetworkProp" />
+		<result property="rankSysConn" column="RANK_SysConn" />
+		<result property="rankOtherSysConn" column="RANK_OtherSysConn" />
+		<result property="rankSecCount" column="RANK_SecCount" />
+		<result property="rankSecUse" column="RANK_SecUse" />
+		<result property="partRankSecUse" column="RANK_PartRankSecUse" />
+		<result property="rankNetCount" column="RANK_NetCount" />
+		<result property="rankNetUse" column="RANK_NetUse" />
+		<result property="partRankNetUse" column="RANK_PartNetUse" />
+		<result property="rankSysCount" column="RANK_SysCount" />
+		<result property="rankSysUse" column="RANK_SysUse" />
+		<result property="partRankSysUse" column="RANK_PartSysUse" />
+		<result property="rankSqlCount" column="RANK_SqlCount" />
+		<result property="rankSqlUse" column="RANK_SqlUse" />
+		<result property="partRankSqlUse" column="RANK_PartSqlUse" />
+		<result property="rankSerCount" column="RANK_SerCount" />
+		<result property="rankSerUse" column="RANK_SerUse" />
+		<result property="partRankSerUse" column="RANK_PartSerUse" />
+		<result property="rankOthProd" column="RANK_OthProd" />
+		<result property="rankOthProdCount" column="RANK_OthProdCount" />
+		<result property="rankOthProdUse" column="RANK_OthProdUse" />
+		<result property="partRankOthProdUse" column="RANK_PartOthProdUse" />
+		<result property="rankIfGradeEval" column="RANK_IfGradeEval" />
+		<result property="rankSerGradeType" column="RANK_SerGradeType" />
+		<result property="rankIfRiskEval" column="RANK_IfRiskEval" />
+		<result property="rankSerRiskType" column="RANK_SerRiskType" />
+		<result property="rankIfSuffReco" column="RANK_IfSuffReco" />
+		<result property="rankIfSuffRecoType" column="RANK_IfSuffRecoType" />
+		<result property="rankIfResponse" column="RANK_IfResponse" />
+		<result property="rankResponseType" column="RANK_ResponseType" />
+		<result property="rankIfSysInte" column="RANK_IfSysInte" />
+		<result property="rankSysInteType" column="RANK_SysInteType" />
+		<result property="rankIfSecCon" column="RANK_IfSecCon" />
+		<result property="rankSecConypeType" column="RANK_SecConypeType" />
+		<result property="rankIfSecTrain" column="RANK_IfSecTrain" />
+		<result property="rankSecTrainType" column="RANK_SecTrainType" />
+		<result property="rankOthSerName" column="RANK_OthSerName" />
+		<result property="rankIfOthSer" column="RANK_IfOthSer" />
+		<result property="rankOthUseType" column="RANK_OthUseType" />
+		<result property="rankOrganType" column="RANK_OrganType" />
+		<result property="rankOrganArea" column="RANK_OrganArea" />
+		<result property="rankBusinessType" column="RANK_BusinessType" />
+		<result property="rankInfoSysIntr" column="RANK_InfoSysIntr" />
+		<result property="rankGrade" column="RANK_Grade" />
+		<result property="rankTime" column="RANK_RankTime" />
+		<result property="rankJudge" column="RANK_Judge" />
+		<result property="rankIsDep" column="RANK_IsDep" />
+		<result property="rankDepName" column="RANK_DepName" />
+		<result property="rankDepJudge" column="RANK_DepJudge" />
+		<result property="rankDoc" column="RANK_RankDoc" />
+		<result property="rankAccess" column="RANK_RankAccess" />
+		<result property="rankInformant" column="RANK_Informant" />
+		<result property="rankDate" column="RANK_Date" />
+		<result property="rankTopStruct" column="RANK_TopStruct" />
+		<result property="rankTopRelAcc" column="RANK_TopRelAcc" />
+		<result property="rankSysManage" column="RANK_SysManage" />
+		<result property="rankSysManRel" column="RANK_SysManRel" />
+		<result property="rankSysPlan" column="RANK_SysPlan" />
+		<result property="rankSysPlanRel" column="RANK_SysPlanRel" />
+		<result property="rankSysLicense" column="RANK_SysLicense" />
+		<result property="rankSysLiceRel" column="RANK_SysLiceRel" />
+		<result property="rankSysReport" column="RANK_SysReport" />
+		<result property="rankSysReportRel" column="RANK_SysReportRel" />
+		<result property="rankPeerRev" column="RANK_PeerRev" />
+		<result property="rankPeerRevRel" column="RANK_PeerRevRel" />
+		<result property="rankSuperOpinRel" column="RANK_SuperOpinRel" />
+		<result property="rankSuperOpin" column="RANK_SuperOpin" />
+		<result property="rankCount" column="RANK_RankCount" />
+		<!-- 2013-12-10附加文件上传重命名列，解决centOS文件名乱码问题 -->
+		<result property="reRankEvalRelAccess" column="RANK_ReEvalRelAccess" />
+		<result property="reRankAccess" column="RANK_ReRankAccess" />
+		<result property="reRankTopRelAcc" column="RANK_ReTopRelAcc" />
+		<result property="reRankSysManRel" column="RANK_ReSysManRel" />
+		<result property="reRankSysPlanRel" column="RANK_ReSysPlanRel" />
+		<result property="reRankSysLiceRel" column="RANK_ReSysLiceRel" />
+		<result property="reRrankSysReportRel" column="RANK_ReSysReportRel" />
+		<result property="reRankPeerRevRel" column="RANK_RePeerRevRel" />
+		<result property="reRankSuperOpinRel" column="RANK_ReSuperOpinRel" />
+	</resultMap>
+
+<!-- 查询定级信息 -->
+	<select id="pgAdminqueryRank" resultMap="rankResult">
+		select * from "tb_rank"
+	</select>
+
+	<!--查询定级条数 -->
+	<select id="pgAdminrank.cont" resultClass="int" parameterClass="java.util.HashMap">
+		SELECT count(*) from "tb_rank"  where 1=1
+		<isNotEmpty prepend="AND" property="keyword">
+           <![CDATA[
+               ("SYSINFO_Name" LIKE'%$keyword$%' OR  "SYSINFO_Id" LIKE'%$keyword$%' OR "RANK_Grade" LIKE'%$keyword$%' )
+           ]]>
+		</isNotEmpty>
+	</select>
+
+	<!--查找定级 -->
+	<select id="pgAdminrank.query" parameterClass="java.util.HashMap"
+		resultMap="rankResult">
+		select * from "tb_rank" where 1=1
+		<isNotEmpty prepend="AND" property="keyword">
+         <![CDATA[
+             ("SYSINFO_Name" LIKE'%$keyword$%' OR  "SYSINFO_Id" LIKE'%$keyword$%'  OR  "RANK_Grade" LIKE'%$keyword$%')
+         ]]>
+		</isNotEmpty>
+		order by "PK_RANK" desc
+	</select>
+
+
+	<!--查询已定级条数 -->
+	<select id="pgAdminrank.contRankFinish" resultClass="int"
+		parameterClass="java.util.HashMap">
+		SELECT count(*) from "tb_rank"  where "RANK_Grade" is null
+		<isNotEmpty prepend="AND" property="keyword">
+           <![CDATA[
+               ("SYSINFO_Name" LIKE'%$keyword$%' OR  "SYSINFO_Id" LIKE'%$keyword$%' OR "RANK_Grade" LIKE'%$keyword$%' )
+           ]]>
+		</isNotEmpty>
+	</select>
+
+	<!--查找已定级 -->
+	<select id="pgAdminrank.queryRankFinish" parameterClass="java.util.HashMap"
+		resultMap="rankResult">
+		select * from "tb_rank" where "RANK_Grade" is null
+		<isNotEmpty prepend="AND" property="keyword">
+         <![CDATA[
+             ("SYSINFO_Name" LIKE'%$keyword$%' OR  "SYSINFO_Id" LIKE'%$keyword$%'  OR  "RANK_Grade" LIKE'%$keyword$%')
+         ]]>
+		</isNotEmpty>
+		order by "PK_RANK" desc
+	</select>
+
+
+	<!--查找所有定级 -->
+	<select id="pgAdminrank.queryAll" resultMap="rankResult">
+		select * from "tb_rank" order by "PK_RANK" desc
+	</select>
+	<!--根据级别查询所有定级个数 -->
+	<select id="pgAdminrank.queryByGrade" resultClass="int" parameterClass="String">
+		select count(*) from "tb_rank" where "RANK_Grade"=#rankGrade#
+	</select>
+
+	<!--根据定级的主键查询定级信息 -->
+	<select id="pgAdminrank.queryById" parameterClass="int" resultMap="rankResult">
+		select * from "tb_rank" where "PK_RANK"=#rankId#
+	</select>
+
+	<!--查询已经定过级的定级信息 -->
+	<select id="pgAdminrank.queRankFinish" resultMap="rankResult">
+		select * from "tb_rank"
+		where "RANK_Grade" is not null
+	</select>
+
+	<select id="pgAdminrank.queryBySysId" parameterClass="String"
+		resultMap="rankResult">
+		select * from "tb_rank" where "SYSINFO_Id"=#sysInfoId#
+	</select>
+
+
+	<!-- 添加定级信息 -->
+	<insert id="pgAdminrank.insert" parameterClass="rank">
+		INSERT INTO "tb_rank"("SYSINFO_Id","SYSINFO_Name","SYSINFO_BusDescription")
+		VALUES(#sysInfoId#,#sysInfoName#,#sysInfoBusDescription#)
+	</insert>
+
+	<update id="pgAdminrank.update" parameterClass="rank">
+		update "tb_rank" set
+		"SYSINFO_Id"=#sysInfoId#,
+		"SYSINFO_Name"=#sysInfoName#,
+		"SYSINFO_BusDescription"=#sysInfoBusDescription#,
+		"RANK_EvalUnitName"=#rankEvalUnitName# ,
+		"RANK_UseDate"=#rankUseDate# ,
+		"RANK_Flag"=#rankFlag# ,
+		"RANK_ParentSysName"=#rankParentSysName# ,
+		"RANK_ParentUnitName"=#rankParentUnitName# ,
+		"RANK_EvalRelAccess"=#rankEvalRelAccess# ,
+		"RANK_CoveArea"=#rankCoveArea# ,
+		"RANK_OthArea"=#rankOthArea# ,
+		"RANK_NetworkProp"=#rankNetworkProp# ,
+		"RANK_OthNetworkProp"=#rankOthNetworkProp# ,
+		"RANK_SysConn"=#rankSysConn# ,
+		"RANK_OtherSysConn"=#rankOtherSysConn# ,
+		"RANK_SecCount"=#rankSecCount#,
+		"RANK_SecUse"=#rankSecUse# ,
+		"RANK_NetCount"=#rankNetCount# ,
+		"RANK_NetUse"=#rankNetUse# ,
+		"RANK_SysCount"=#rankSysCount# ,
+		"RANK_SysUse"=#rankSysUse# ,
+		"RANK_SqlCount"=#rankSqlCount# ,
+		"RANK_SqlUse"=#rankSqlUse# ,
+		"RANK_SerCount"=#rankSerCount# ,
+		"RANK_SerUse"=#rankSerUse# ,
+		"RANK_OthProd"=#rankOthProd# ,
+		"RANK_OthProdCount"=#rankOthProdCount# ,
+		"RANK_OthProdUse"=#rankOthProdUse# ,
+		"RANK_IfGradeEval"=#rankIfGradeEval# ,
+		"RANK_SerGradeType"=#rankSerGradeType# ,
+		"RANK_IfRiskEval"=#rankIfRiskEval# ,
+		"RANK_SerRiskType"=#rankSerRiskType# ,
+		"RANK_IfSuffReco"=#rankIfSuffReco# ,
+		"RANK_IfSuffRecoType"=#rankIfSuffRecoType# ,
+		"RANK_IfResponse"=#rankIfResponse# ,
+		"RANK_ResponseType"=#rankResponseType# ,
+		"RANK_IfSysInte"=#rankIfSysInte# ,
+		"RANK_SysInteType"=#rankSysInteType# ,
+		"RANK_IfSecCon"=#rankIfSecCon# ,
+		"RANK_SecConypeType"=#rankSecConypeType# ,
+		"RANK_IfSecTrain"=#rankIfSecTrain# ,
+		"RANK_SecTrainType"=#rankSecTrainType# ,
+		"RANK_OthSerName"=#rankOthSerName# ,
+		"RANK_IfOthSer"=#rankIfOthSer# ,
+		"RANK_OthUseType"=#rankOthUseType# ,
+		"RANK_OrganType"=#rankOrganType# ,
+		"RANK_OrganArea"=#rankOrganArea# ,
+		"RANK_BusinessType"=#rankBusinessType# ,
+		"RANK_InfoSysIntr"=#rankInfoSysIntr# ,
+		"RANK_Grade"=#rankGrade# ,
+		"RANK_RankTime"=#rankTime#,
+		"RANK_Judge"=#rankJudge# ,
+		"RANK_IsDep"=#rankIsDep# ,
+		"RANK_DepName"=#rankDepName# ,
+		"RANK_DepJudge"=#rankDepJudge# ,
+		"RANK_RankDoc"=#rankDoc# ,
+		"RANK_RankAccess"=#rankAccess# ,
+		"RANK_Informant"=#rankInformant# ,
+		"RANK_Date"=#rankDate# ,
+		"RANK_TopStruct"=#rankTopStruct# ,
+		"RANK_TopRelAcc"=#rankTopRelAcc# ,
+		"RANK_SysManage"=#rankSysManage# ,
+		"RANK_SysManRel"=#rankSysManRel# ,
+		"RANK_SysPlan"=#rankSysPlan# ,
+		"RANK_SysPlanRel"=#rankSysPlanRel# ,
+		"RANK_SysLicense"=#rankSysLicense# ,
+		"RANK_SysLiceRel"=#rankSysLiceRel# ,
+		"RANK_SysReport"=#rankSysReport# ,
+		"RANK_SysReportRel"=#rankSysReportRel# ,
+		"RANK_PeerRev"=#rankPeerRev# ,
+		"RANK_PeerRevRel"=#rankPeerRevRel# ,
+		"RANK_SuperOpinRel"=#rankSuperOpinRel# ,
+		"RANK_SuperOpin"=#rankSuperOpin# ,
+		"RANK_RankCount"=#rankCount# ,
+		"RANK_PartRankSecUse"=#partRankSecUse# ,
+		"RANK_PartNetUse"=#partRankNetUse# ,
+		"RANK_PartSysUse"=#partRankSysUse# ,
+		"RANK_PartSqlUse"=#partRankSqlUse# ,
+		"RANK_PartSerUse"=#partRankSerUse# ,
+		"RANK_PartOthProdUse"=#partRankOthProdUse#,		
+		"RANK_ReEvalRelAccess"=#reRankEvalRelAccess# ,
+		"RANK_ReRankAccess"=#reRankAccess# ,
+		"RANK_ReTopRelAcc"=#reRankTopRelAcc# ,
+		"RANK_ReSysManRel"=#reRankSysManRel# ,
+		"RANK_ReSysPlanRel"=#reRankSysPlanRel# ,
+		"RANK_ReSysLiceRel"=#reRankSysLiceRel# ,
+		"RANK_ReSysReportRel"=#reRrankSysReportRel# ,
+		"RANK_RePeerRevRel"=#reRankPeerRevRel# ,
+		"RANK_ReSuperOpinRel"=#reRankSuperOpinRel#
+		where "PK_RANK"=#rankId#
+	</update>
+	<!-- 按照系统名称，系统编号，当前等级，定级状态高级搜索定级信息，信息条数 -->
+	<select id="pgAdminrank.precisecount" resultClass="int" parameterClass="java.util.HashMap">
+		select count(*) from "tb_rank" where 1=1
+		<isNotEmpty prepend="AND" property="keyword1">
+         <![CDATA[
+             "SYSINFO_Name" =#keyword1#
+         ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword2">
+         <![CDATA[
+             "SYSINFO_Id" =#keyword2#
+         ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword3">
+         <![CDATA[
+            "RANK_Grade"=#keyword3#
+         ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword4">
+         <![CDATA[
+          	"RANK_Grade" is not null
+         ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword5">
+         <![CDATA[
+          	"RANK_Grade" is null
+         ]]>
+		</isNotEmpty>
+		order by "PK_RANK" desc
+	</select>
+	<!-- 按照系统名称，系统编号，当前等级，定级状态高级搜索定级信息,详细信息 -->
+	<select id="pgAdminrank.precisequery" parameterClass="java.util.HashMap"
+		resultMap="rankResult">
+		select * from "tb_rank" where 1=1
+		<isNotEmpty prepend="AND" property="keyword1">
+         <![CDATA[
+             "SYSINFO_Name" =#keyword1#
+         ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword2">
+         <![CDATA[
+             "SYSINFO_Id" =#keyword2#
+         ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword3">
+         <![CDATA[
+            "RANK_Grade" =#keyword3#
+         ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword4">
+         <![CDATA[
+          	"RANK_Grade" is not null
+         ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword5">
+         <![CDATA[
+          	"RANK_Grade" is null
+         ]]>
+		</isNotEmpty>
+		order by "PK_RANK" desc
+	</select>
+	
+	<!--  根据id删除相关记录 -->
+	<delete id="pgAdminrank.delete" parameterClass="int">
+	  delete from "tb_rank" where "PK_RANK"=#id#
+	  
+	</delete>
+<!-- sqlserver -->
+	<!-- 查询定级信息 -->
+	<select id="sqlServerqueryRank" resultMap="rankResult">
+		select * from "tb_rank"
+	</select>
+
+	<!--查询定级条数 -->
+	<select id="sqlServerrank.cont" resultClass="int" parameterClass="java.util.HashMap">
+		SELECT count(*) from "tb_rank"  where 1=1
+		<isNotEmpty prepend="AND" property="keyword">
+           <![CDATA[
+               ("SYSINFO_Name" LIKE'%$keyword$%' OR  "SYSINFO_Id" LIKE'%$keyword$%' OR "RANK_Grade" LIKE'%$keyword$%' )
+           ]]>
+		</isNotEmpty>
+	</select>
+
+	<!--查找定级 -->
+	<select id="sqlServerrank.query" parameterClass="java.util.HashMap"
+		resultMap="rankResult">
+		select * from "tb_rank" where 1=1
+		<isNotEmpty prepend="AND" property="keyword">
+         <![CDATA[
+             ("SYSINFO_Name" LIKE'%$keyword$%' OR  "SYSINFO_Id" LIKE'%$keyword$%'  OR  "RANK_Grade" LIKE'%$keyword$%')
+         ]]>
+		</isNotEmpty>
+		order by "PK_RANK" desc
+	</select>
+
+
+	<!--查询已定级条数 -->
+	<select id="sqlServerrank.contRankFinish" resultClass="int"
+		parameterClass="java.util.HashMap">
+		SELECT count(*) from "tb_rank"  where "RANK_Grade" is null
+		<isNotEmpty prepend="AND" property="keyword">
+           <![CDATA[
+               ("SYSINFO_Name" LIKE'%$keyword$%' OR  "SYSINFO_Id" LIKE'%$keyword$%' OR "RANK_Grade" LIKE'%$keyword$%' )
+           ]]>
+		</isNotEmpty>
+	</select>
+
+	<!--查找已定级 -->
+	<select id="sqlServerrank.queryRankFinish" parameterClass="java.util.HashMap"
+		resultMap="rankResult">
+		select * from "tb_rank" where "RANK_Grade" is null
+		<isNotEmpty prepend="AND" property="keyword">
+         <![CDATA[
+             ("SYSINFO_Name" LIKE'%$keyword$%' OR  "SYSINFO_Id" LIKE'%$keyword$%'  OR  "RANK_Grade" LIKE'%$keyword$%')
+         ]]>
+		</isNotEmpty>
+		order by "PK_RANK" desc
+	</select>
+
+
+	<!--查找所有定级 -->
+	<select id="sqlServerrank.queryAll" resultMap="rankResult">
+		select * from "tb_rank" order by "PK_RANK" desc
+	</select>
+	<!--根据级别查询所有定级个数 -->
+	<select id="sqlServerrank.queryByGrade" resultClass="int" parameterClass="String">
+		select count(*) from "tb_rank" where "RANK_Grade"=#rankGrade#
+	</select>
+
+	<!--根据定级的主键查询定级信息 -->
+	<select id="sqlServerrank.queryById" parameterClass="int" resultMap="rankResult">
+		select * from "tb_rank" where "PK_RANK"=#rankId#
+	</select>
+
+	<!--查询已经定过级的定级信息 -->
+	<select id="sqlServerrank.queRankFinish" resultMap="rankResult">
+		select * from "tb_rank"
+		where "RANK_Grade" is not null
+	</select>
+
+	<select id="sqlServerrank.queryBySysId" parameterClass="String"
+		resultMap="rankResult">
+		select * from "tb_rank" where "SYSINFO_Id"=#sysInfoId#
+	</select>
+
+
+	<!-- 添加定级信息 -->
+	<insert id="sqlServerrank.insert" parameterClass="rank">
+		INSERT INTO "tb_rank"("SYSINFO_Id","SYSINFO_Name","SYSINFO_BusDescription")
+		VALUES(#sysInfoId#,#sysInfoName#,#sysInfoBusDescription#)
+	</insert>
+
+	<update id="sqlServerrank.update" parameterClass="rank">
+		update "tb_rank" set
+		"SYSINFO_Id"=#sysInfoId#,
+		"SYSINFO_Name"=#sysInfoName#,
+		"SYSINFO_BusDescription"=#sysInfoBusDescription#,
+		"RANK_EvalUnitName"=#rankEvalUnitName# ,
+		"RANK_UseDate"=#rankUseDate# ,
+		"RANK_Flag"=#rankFlag# ,
+		"RANK_ParentSysName"=#rankParentSysName# ,
+		"RANK_ParentUnitName"=#rankParentUnitName# ,
+		"RANK_EvalRelAccess"=#rankEvalRelAccess# ,
+		"RANK_CoveArea"=#rankCoveArea# ,
+		"RANK_OthArea"=#rankOthArea# ,
+		"RANK_NetworkProp"=#rankNetworkProp# ,
+		"RANK_OthNetworkProp"=#rankOthNetworkProp# ,
+		"RANK_SysConn"=#rankSysConn# ,
+		"RANK_OtherSysConn"=#rankOtherSysConn# ,
+		"RANK_SecCount"=#rankSecCount#,
+		"RANK_SecUse"=#rankSecUse# ,
+		"RANK_NetCount"=#rankNetCount# ,
+		"RANK_NetUse"=#rankNetUse# ,
+		"RANK_SysCount"=#rankSysCount# ,
+		"RANK_SysUse"=#rankSysUse# ,
+		"RANK_SqlCount"=#rankSqlCount# ,
+		"RANK_SqlUse"=#rankSqlUse# ,
+		"RANK_SerCount"=#rankSerCount# ,
+		"RANK_SerUse"=#rankSerUse# ,
+		"RANK_OthProd"=#rankOthProd# ,
+		"RANK_OthProdCount"=#rankOthProdCount# ,
+		"RANK_OthProdUse"=#rankOthProdUse# ,
+		"RANK_IfGradeEval"=#rankIfGradeEval# ,
+		"RANK_SerGradeType"=#rankSerGradeType# ,
+		"RANK_IfRiskEval"=#rankIfRiskEval# ,
+		"RANK_SerRiskType"=#rankSerRiskType# ,
+		"RANK_IfSuffReco"=#rankIfSuffReco# ,
+		"RANK_IfSuffRecoType"=#rankIfSuffRecoType# ,
+		"RANK_IfResponse"=#rankIfResponse# ,
+		"RANK_ResponseType"=#rankResponseType# ,
+		"RANK_IfSysInte"=#rankIfSysInte# ,
+		"RANK_SysInteType"=#rankSysInteType# ,
+		"RANK_IfSecCon"=#rankIfSecCon# ,
+		"RANK_SecConypeType"=#rankSecConypeType# ,
+		"RANK_IfSecTrain"=#rankIfSecTrain# ,
+		"RANK_SecTrainType"=#rankSecTrainType# ,
+		"RANK_OthSerName"=#rankOthSerName# ,
+		"RANK_IfOthSer"=#rankIfOthSer# ,
+		"RANK_OthUseType"=#rankOthUseType# ,
+		"RANK_OrganType"=#rankOrganType# ,
+		"RANK_OrganArea"=#rankOrganArea# ,
+		"RANK_BusinessType"=#rankBusinessType# ,
+		"RANK_InfoSysIntr"=#rankInfoSysIntr# ,
+		"RANK_Grade"=#rankGrade# ,
+		"RANK_RankTime"=#rankTime#,
+		"RANK_Judge"=#rankJudge# ,
+		"RANK_IsDep"=#rankIsDep# ,
+		"RANK_DepName"=#rankDepName# ,
+		"RANK_DepJudge"=#rankDepJudge# ,
+		"RANK_RankDoc"=#rankDoc# ,
+		"RANK_RankAccess"=#rankAccess# ,
+		"RANK_Informant"=#rankInformant# ,
+		"RANK_Date"=#rankDate# ,
+		"RANK_TopStruct"=#rankTopStruct# ,
+		"RANK_TopRelAcc"=#rankTopRelAcc# ,
+		"RANK_SysManage"=#rankSysManage# ,
+		"RANK_SysManRel"=#rankSysManRel# ,
+		"RANK_SysPlan"=#rankSysPlan# ,
+		"RANK_SysPlanRel"=#rankSysPlanRel# ,
+		"RANK_SysLicense"=#rankSysLicense# ,
+		"RANK_SysLiceRel"=#rankSysLiceRel# ,
+		"RANK_SysReport"=#rankSysReport# ,
+		"RANK_SysReportRel"=#rankSysReportRel# ,
+		"RANK_PeerRev"=#rankPeerRev# ,
+		"RANK_PeerRevRel"=#rankPeerRevRel# ,
+		"RANK_SuperOpinRel"=#rankSuperOpinRel# ,
+		"RANK_SuperOpin"=#rankSuperOpin# ,
+		"RANK_RankCount"=#rankCount# ,
+		"RANK_PartRankSecUse"=#partRankSecUse# ,
+		"RANK_PartNetUse"=#partRankNetUse# ,
+		"RANK_PartSysUse"=#partRankSysUse# ,
+		"RANK_PartSqlUse"=#partRankSqlUse# ,
+		"RANK_PartSerUse"=#partRankSerUse# ,
+		"RANK_PartOthProdUse"=#partRankOthProdUse#,		
+		"RANK_ReEvalRelAccess"=#reRankEvalRelAccess# ,
+		"RANK_ReRankAccess"=#reRankAccess# ,
+		"RANK_ReTopRelAcc"=#reRankTopRelAcc# ,
+		"RANK_ReSysManRel"=#reRankSysManRel# ,
+		"RANK_ReSysPlanRel"=#reRankSysPlanRel# ,
+		"RANK_ReSysLiceRel"=#reRankSysLiceRel# ,
+		"RANK_ReSysReportRel"=#reRrankSysReportRel# ,
+		"RANK_RePeerRevRel"=#reRankPeerRevRel# ,
+		"RANK_ReSuperOpinRel"=#reRankSuperOpinRel#
+		where "PK_RANK"=#rankId#
+	</update>
+	<!-- 按照系统名称，系统编号，当前等级，定级状态高级搜索定级信息，信息条数 -->
+	<select id="sqlServerrank.precisecount" resultClass="int" parameterClass="java.util.HashMap">
+		select count(*) from "tb_rank" where 1=1
+		<isNotEmpty prepend="AND" property="keyword1">
+         <![CDATA[
+             "SYSINFO_Name" =#keyword1#
+         ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword2">
+         <![CDATA[
+             "SYSINFO_Id" =#keyword2#
+         ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword3">
+         <![CDATA[
+            "RANK_Grade"=#keyword3#
+         ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword4">
+         <![CDATA[
+          	"RANK_Grade" is not null
+         ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword5">
+         <![CDATA[
+          	"RANK_Grade" is null
+         ]]>
+		</isNotEmpty>
+		order by "PK_RANK" desc
+	</select>
+	<!-- 按照系统名称，系统编号，当前等级，定级状态高级搜索定级信息,详细信息 -->
+	<select id="sqlServerrank.precisequery" parameterClass="java.util.HashMap"
+		resultMap="rankResult">
+		select * from "tb_rank" where 1=1
+		<isNotEmpty prepend="AND" property="keyword1">
+         <![CDATA[
+             "SYSINFO_Name" =#keyword1#
+         ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword2">
+         <![CDATA[
+             "SYSINFO_Id" =#keyword2#
+         ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword3">
+         <![CDATA[
+            "RANK_Grade" =#keyword3#
+         ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword4">
+         <![CDATA[
+          	"RANK_Grade" is not null
+         ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword5">
+         <![CDATA[
+          	"RANK_Grade" is null
+         ]]>
+		</isNotEmpty>
+		order by "PK_RANK" desc
+	</select>
+	
+	<!--  根据id删除相关记录 -->
+	<delete id="sqlServerrank.delete" parameterClass="int">
+	  delete from "tb_rank" where "PK_RANK"=#id#
+	  
+	</delete>
+</sqlMap>

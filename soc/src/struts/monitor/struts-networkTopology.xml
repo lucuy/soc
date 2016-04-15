@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+	<package name="settingNetworkTopology" extends="json-default" namespace="/settingNetworkTopology">
+
+		<action name="networkTopology" class="mnitorNetworkTopologyAction" method="networkTopology">
+			<result name="success">/pages/monitor/networkTopology.jsp</result>
+		</action>
+		<action name="savePosition" class="mnitorNetworkTopologyAction" method="savePosition">
+		</action>
+		<action name="getAssetById" class="mnitorNetworkTopologyAction" method="getAssetById">
+			<result name="success" type="json">
+				<param name="root">asset</param>
+			</result>
+		</action>
+	</package>
+</struts>

@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    <sqlMap >
+
+    
+    <resultMap class="Record" id="recordResult">
+		<result property="recordId" 			column="PK_SYSRECORD"/>
+		<result property="sysInFoId" 			column="SYSINFO_Id"/>
+		<result property="sysInFoName" 			column="SYSINFO_Name"/>
+		<result property="sysInFoBusDescription" column="SYSINFO_BusDescription"/>
+		<result property="rankGrade" 			column="RANK_Grade"/>
+		<result property="recordDocument" 	    column="SYSRECORD_Document"/> 
+		<result property="recordDate" 			column="SYSRECORD_ProduceDate"/> 
+		<!-- 2013-12-12添加重命名列修改文档名乱码问题 -->
+		<result property="reRecordDocument" 	    column="SYSRECORD_ReDocument"/> 
+    </resultMap>
+     <!-- 查询备案 -->
+    <select id="pgAdminrecord.query" parameterClass="java.util.HashMap" resultMap="recordResult">
+    	select * from "tb_sysrecord"  where 1=1
+    	<isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				(
+					"SYSINFO_Name" LIKE '%$keyword$%' or
+					"SYSINFO_Id" LIKE '%$keyword$%'  or
+				    "SYSRECORD_Document" LIKE '%$keyword$%'  or
+					"RANK_Grade" LIKE '%$keyword$%' 
+				)
+			]]>
+		</isNotEmpty> 
+    	order by "PK_SYSRECORD" desc
+    </select>     
+    
+     <!-- 查询备案条数 -->
+     <select id="pgAdminrecord.count" parameterClass="java.util.HashMap" resultClass="int">
+    	select COUNT(*) from "tb_sysrecord" where 1=1
+    	<isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				(
+					"SYSINFO_Name" LIKE '%$keyword$%' or
+					"SYSINFO_Id" LIKE '%$keyword$%'  or
+				    "SYSRECORD_Document" LIKE '%$keyword$%'  or
+					"RANK_Grade" LIKE '%$keyword$%' 
+				)
+			]]>
+		</isNotEmpty> 
+		 
+    </select>
+
+
+   <!-- 根据备案编号查询备案 -->
+   <select id="pgAdminrecord.queryById" parameterClass="int" resultMap="recordResult">
+   	   select * from "tb_sysrecord" where "PK_SYSRECORD" = #recordId# 
+   </select>
+   	
+   	<!-- 根据系统编号查询备案 -->
+   <select id="pgAdminrecord.queryBySysId" parameterClass="String" resultMap="recordResult">
+   	select * from "tb_sysrecord"  where  "SYSINFO_Id"=#sysInFoId#
+   </select>
+   
+   <!-- 添加备案-->
+   <insert id="pgAdminrecord.insert"  parameterClass="Record">
+     insert into "tb_sysrecord"("SYSINFO_Id","SYSINFO_Name","SYSINFO_BusDescription","RANK_Grade","SYSRECORD_ReDocument") values(#sysInFoId#,#sysInFoName#,#sysInFoBusDescription#,#rankGrade#,#reRecordDocument#);
+   </insert>
+   
+    <!--备案修改-->
+   <update id="pgAdminrecord.update"  parameterClass="Record">
+    UPDATE  "tb_sysrecord" 
+      SET "SYSINFO_Id"=#sysInFoId#, "SYSINFO_Name"=#sysInFoName#, "SYSINFO_BusDescription"=#sysInFoBusDescription#, 
+       "RANK_Grade"=#rankGrade#, "SYSRECORD_Document"=#recordDocument#, "SYSRECORD_ProduceDate"=#recordDate#,"SYSRECORD_ReDocument"=#reRecordDocument#
+     WHERE "PK_SYSRECORD"=#recordId#
+   </update>
+   	<!-- 高级搜索备案条数 -->
+     <select id="pgAdminrecord.precisecount" parameterClass="java.util.HashMap" resultClass="int">
+    	select COUNT(*) from "tb_sysrecord"   where 1=1
+    	<isNotEmpty prepend= "AND"  property="keyword1">
+			<![CDATA[
+					"SYSINFO_Name" = #keyword1# 
+			]]>
+		</isNotEmpty> 
+		<isNotEmpty prepend= "AND"  property="keyword2">
+			<![CDATA[
+					"SYSINFO_Id" = #keyword2#
+			]]>
+		</isNotEmpty> 
+		<isNotEmpty prepend= "AND"  property="keyword3">
+			<![CDATA[
+					"RANK_Grade" =#keyword3#
+			]]>
+		</isNotEmpty> 
+    </select>
+    <!-- 高级搜索备案条数 ,详细信息-->
+     <select id="pgAdminrecord.precisequery" parameterClass="java.util.HashMap" resultMap="recordResult">
+    	select * from "tb_sysrecord"   where 1=1
+    	<isNotEmpty prepend= "AND"  property="keyword1">
+			<![CDATA[
+					"SYSINFO_Name" = #keyword1# 
+			]]>
+		</isNotEmpty> 
+		<isNotEmpty prepend= "AND"  property="keyword2">
+			<![CDATA[
+					"SYSINFO_Id" = #keyword2#
+			]]>
+		</isNotEmpty> 
+		<isNotEmpty prepend= "AND"  property="keyword3">
+			<![CDATA[
+					"RANK_Grade" =#keyword3#
+			]]>
+		</isNotEmpty> 
+		order by "PK_SYSRECORD" desc
+    </select>
+    <!-- sqlserver -->
+    <!-- 查询备案 -->
+    <select id="sqlServerrecord.query" parameterClass="java.util.HashMap" resultMap="recordResult">
+    	select * from "tb_sysrecord"  where 1=1
+    	<isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				(
+					"SYSINFO_Name" LIKE '%$keyword$%' or
+					"SYSINFO_Id" LIKE '%$keyword$%'  or
+				    "SYSRECORD_Document" LIKE '%$keyword$%'  or
+					"RANK_Grade" LIKE '%$keyword$%' 
+				)
+			]]>
+		</isNotEmpty> 
+    	order by "PK_SYSRECORD" desc
+    </select>     
+    
+     <!-- 查询备案条数 -->
+     <select id="sqlServerrecord.count" parameterClass="java.util.HashMap" resultClass="int">
+    	select COUNT(*) from "tb_sysrecord" where 1=1
+    	<isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				(
+					"SYSINFO_Name" LIKE '%$keyword$%' or
+					"SYSINFO_Id" LIKE '%$keyword$%'  or
+				    "SYSRECORD_Document" LIKE '%$keyword$%'  or
+					"RANK_Grade" LIKE '%$keyword$%' 
+				)
+			]]>
+		</isNotEmpty> 
+		 
+    </select>
+
+
+   <!-- 根据备案编号查询备案 -->
+   <select id="sqlServerrecord.queryById" parameterClass="int" resultMap="recordResult">
+   	   select * from "tb_sysrecord" where "PK_SYSRECORD" = #recordId# 
+   </select>
+   	
+   	<!-- 根据系统编号查询备案 -->
+   <select id="sqlServerrecord.queryBySysId" parameterClass="String" resultMap="recordResult">
+   	select * from "tb_sysrecord"  where  "SYSINFO_Id"=#sysInFoId#
+   </select>
+   
+   <!-- 添加备案-->
+   <insert id="sqlServerrecord.insert"  parameterClass="Record">
+     insert into "tb_sysrecord"("SYSINFO_Id","SYSINFO_Name","SYSINFO_BusDescription","RANK_Grade","SYSRECORD_ReDocument") values(#sysInFoId#,#sysInFoName#,#sysInFoBusDescription#,#rankGrade#,#reRecordDocument#);
+   </insert>
+   
+    <!--备案修改-->
+   <update id="sqlServerrecord.update"  parameterClass="Record">
+    UPDATE  "tb_sysrecord" 
+      SET "SYSINFO_Id"=#sysInFoId#, "SYSINFO_Name"=#sysInFoName#, "SYSINFO_BusDescription"=#sysInFoBusDescription#, 
+       "RANK_Grade"=#rankGrade#, "SYSRECORD_Document"=#recordDocument#, "SYSRECORD_ProduceDate"=#recordDate#,"SYSRECORD_ReDocument"=#reRecordDocument#
+     WHERE "PK_SYSRECORD"=#recordId#
+   </update>
+   	<!-- 高级搜索备案条数 -->
+     <select id="sqlServerrecord.precisecount" parameterClass="java.util.HashMap" resultClass="int">
+    	select COUNT(*) from "tb_sysrecord"   where 1=1
+    	<isNotEmpty prepend= "AND"  property="keyword1">
+			<![CDATA[
+					"SYSINFO_Name" = #keyword1# 
+			]]>
+		</isNotEmpty> 
+		<isNotEmpty prepend= "AND"  property="keyword2">
+			<![CDATA[
+					"SYSINFO_Id" = #keyword2#
+			]]>
+		</isNotEmpty> 
+		<isNotEmpty prepend= "AND"  property="keyword3">
+			<![CDATA[
+					"RANK_Grade" =#keyword3#
+			]]>
+		</isNotEmpty> 
+    </select>
+    <!-- 高级搜索备案条数 ,详细信息-->
+     <select id="sqlServerrecord.precisequery" parameterClass="java.util.HashMap" resultMap="recordResult">
+    	select * from "tb_sysrecord"   where 1=1
+    	<isNotEmpty prepend= "AND"  property="keyword1">
+			<![CDATA[
+					"SYSINFO_Name" = #keyword1# 
+			]]>
+		</isNotEmpty> 
+		<isNotEmpty prepend= "AND"  property="keyword2">
+			<![CDATA[
+					"SYSINFO_Id" = #keyword2#
+			]]>
+		</isNotEmpty> 
+		<isNotEmpty prepend= "AND"  property="keyword3">
+			<![CDATA[
+					"RANK_Grade" =#keyword3#
+			]]>
+		</isNotEmpty> 
+		order by "PK_SYSRECORD" desc
+    </select>
+</sqlMap>

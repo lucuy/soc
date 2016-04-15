@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+
+<sqlMapConfig>
+	<settings cacheModelsEnabled="true" enhancementEnabled="true"
+		maxTransactions="12" maxRequests="128" maxSessions="64"/>
+
+	<!-- 基础信息模块开始 -->
+	<typeAlias alias="device" type="com.topo.model.device.Device"/>
+	<typeAlias alias="deviceCategory" type="com.topo.model.deviceCategory.DeviceCategory"/>
+	<typeAlias alias="tempDevice" type="com.topo.model.device.TempDevice"/>
+	<typeAlias alias="deviceCategoryPhoto" type="com.topo.model.deviceCategory.DeviceCategoryPhoto"/>
+	<typeAlias alias="netBackGround" type="com.topo.model.device.NetBackGround"/> 
+	<typeAlias alias="netBackGroundPhoto" type="com.topo.model.device.NetBackGroundPhoto"/>
+	<typeAlias alias="deviceAlertCount" type="com.topo.model.device.DeviceAlertCount"/>
+	<!-- ======================================================================================================================== -->
+
+	<!-- 基础信息开始 -->
+
+ 
+	<!-- 组织部门 -->
+	<sqlMap resource="sqlmaps/topo/device/deviceSQL.xml" />
+	<sqlMap resource="sqlmaps/topo/deviceCategory/deviceCategorySQL.xml"/>
+	<sqlMap resource="sqlmaps/topo/device/tempDeviceSQL.xml"/>
+	<sqlMap resource="sqlmaps/topo/device/netBackGroundPhotoSQL.xml"/>
+	<sqlMap resource="sqlmaps/topo/device/deviceAlertCountSQL.xml"/>
+</sqlMapConfig>
+

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="settingAssociationRules" extends="struts-default" namespace="/settingAssociationRules">
+		<action name="AssociationRules" class="AssociationRulesAction" method="AssociationRules">
+			<result name="success">/pages/systemsetting/rules/setting_associationList.jsp</result>
+		</action>
+		<action name="updateAssociationRules" class="AssociationRulesAction" method="updateAssociationRules">
+		    <result name="success" type="chain">
+		       <param name="namespace">/settingAssociationRules</param>
+		       <param name="actionName">AssociationRules</param>
+		    </result>
+		</action>
+		<action name="sort" class="AssociationRulesAction" method="sort">
+		    <result name="success">/pages/systemsetting/rules/setting_associationList.jsp</result>
+		</action>
+	</package>
+</struts>

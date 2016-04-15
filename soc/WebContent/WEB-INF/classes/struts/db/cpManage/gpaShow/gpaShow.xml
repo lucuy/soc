@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="gpaShow" extends="struts-default" namespace="/gpaShow">
+	
+		<action name="gpaShowNoFit" class="GpaShowAction" method="gpaShowNoFit">
+		   <result name="success">/pages/dbPage/cpManage/gpaShow/gpaShow.jsp</result>
+		</action>
+		<action name="gpaShowNoFitFirst" class="GpaShowAction" method="gpaShowNoFitFirst">
+		   <result name="success">/pages/dbPage/cpManage/gpaShow/gpaShow.jsp</result>
+		</action>
+		
+		
+		<action name="queryTree" class="GpaShowAction" method="queryTree">
+		</action>
+		
+		
+			<action name="jsonForAjax" class="GpaShowAction" method="jsonForAjax">
+		</action>
+		
+		<action name="queryAjaxGpaShowNoFit" class="GpaShowAction" method="queryAjaxGpaShowNoFit">
+		</action>
+		
+		<action name="queryNotKeyAjaxGpaShowNoFit" class="GpaShowAction" method="queryNotKeyAjaxGpaShowNoFit">
+		</action>
+	</package>
+
+</struts>

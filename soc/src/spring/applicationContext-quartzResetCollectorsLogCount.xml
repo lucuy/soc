@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+         xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    
+	<!-- 定义注入的类和参数 -->
+	<bean name="resetCollectorsLogCountTaskTrigger" class="com.soc.webapp.quartz.ResetCollectorsLogCount">
+		<property name="settingLoggerManager" ref="settingLoggerManager"></property>
+	</bean>
+	
+    <!-- 定义定时器，指定执行的类和方法 -->
+    <bean name="resetCollectorsLogCountTaskDetailBean" 
+    		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="resetCollectorsLogCountTaskTrigger" />
+		<property name="targetMethod" value="resetCount"/>
+	</bean>
+
+    <bean id="resetCollectorsLogCountBean"
+        class="org.springframework.scheduling.quartz.CronTriggerBean">  
+        <property name="jobDetail">  
+            <ref bean="resetCollectorsLogCountTaskDetailBean" />  
+        </property>  
+        <property name="cronExpression">  
+            <value>23 10 0 * * ?</value>
+        </property>
+    </bean>
+	
+	<bean name="resetCollectorsLogCountBeanFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		 <property name="triggers">
+			<list>
+				<ref bean="resetCollectorsLogCountBean"/>
+			</list>
+		</property> 
+	</bean> 
+</beans>

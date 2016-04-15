@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="EventCategoryTagSQL">
+
+	<resultMap id="eventcategorytagList" class="eventcategorytag">
+   		<result property="eventcategoryId" 				column="EVENT_CATEGORY_ID" 		    		jdbcType="bigint"/>
+   		<result property="eventcategorykey"       		column="EVENT_CATEGORY_KEY"       	    	jdbcType="varchar"/>
+   		<result property="eventcategoryValue"       	column="EVENT_CATEGORY_VALUE"       	    jdbcType="varchar"/>
+   		
+   	</resultMap>
+   	<select id="pgAdminquery.eventcategorytag" resultMap="eventcategorytagList">
+   	
+	   SELECT * FROM "tbl_eventCategory_define"
+	   
+	</select>
+	
+	<select id="pgAdminquery.eventTagByKeys" resultMap="eventcategorytagList" parameterClass="java.lang.String">
+	     SELECT * FROM "tbl_eventCategory_define" where "EVENT_CATEGORY_KEY" in  ($value$)
+	</select>
+	
+	<select id="pgAdminquery.eventKeyByName" resultClass="java.lang.String" parameterClass="java.lang.String">
+	     SELECT "EVENT_CATEGORY_KEY" FROM "tbl_eventCategory_define" WHERE "EVENT_CATEGORY_VALUE"='$name$' ;
+	</select>
+	
+	<!-- sqlServer用的数据库 -->
+	<select id="sqlServerquery.eventcategorytag" resultMap="eventcategorytagList">
+   	
+	   SELECT * FROM "tbl_eventCategory_define"
+	   
+	</select>
+	
+	<select id="sqlServerquery.eventTagByKeys" resultMap="eventcategorytagList" parameterClass="java.lang.String">
+	     SELECT * FROM "tbl_eventCategory_define" where "EVENT_CATEGORY_KEY" in  ($value$)
+	</select>
+	
+	<select id="sqlServerquery.eventKeyByName" resultClass="java.lang.String" parameterClass="java.lang.String">
+	     SELECT "EVENT_CATEGORY_KEY" FROM "tbl_eventCategory_define" WHERE "EVENT_CATEGORY_VALUE"='$name$' ;
+	</select>
+	
+   	
+	
+</sqlMap>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <constant name="struts.multipart.maxSize" value="307958532"/>
+    
+	<package name="settingOEM" extends="struts-default" namespace="/settingOEM">
+	<action name="toUpdate" class="settingOEMAction" method="toUpdate">
+	<result name="success">/pages/systemsetting/setting_oem.jsp</result>
+	</action>
+	<action name="upOEMTar" class="settingOEMAction" method="upOEMTar">
+			<result name="success" type="chain">
+			 <param name="namespace">/settingOEM</param>
+			 <param name="actionName">toUpdate</param>
+			 <param name="upStatr">${upStatr}</param>
+			 </result>
+		</action>
+	<action name="updateOEMAction" class="settingOEMAction" method="updateOEM"></action>
+	<!-- 查看 功能控制-->
+		<action name="functionColtrolDeail" class="settingOEMAction" method="functionColtrolDeail">
+		<result name="success">/pages/systemsetting/setting_function_control.jsp</result>
+		</action>
+	<!-- 功能控制的action -->
+		<action name="functionColtrolAction" class="settingOEMAction" method="functionColtrolAction"></action>
+	</package>
+</struts>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    
+    <sqlMap>
+        <resultMap class="Msa" id="msaResult">
+           <result property="msaId" column="PK_MSA" />
+           <result property="msaDate" column="MSA_Date" />
+           <result property="msaSort" column="MSA_Sort" />
+           <result property="msaA" column="MSA_A" />
+           <result property="msaB" column="MSA_B" />
+           <result property="msaC" column="MSA_C" />
+           <result property="msaD" column="MSA_D" />
+           <result property="msaE" column="MSA_E" />
+           <result property="msaF" column="MSA_F" />
+           <result property="msaG" column="MSA_G" />
+           <result property="msaH" column="MSA_H" />
+           <result property="msaI" column="MSA_I" />
+           <result property="msaJ" column="MSA_J" />
+           <result property="msaAssessResult" column="MSA_AssessResult" />
+           <result property="msaMainProbDes" column="MSA_MainProbDes" />
+        </resultMap>
+        
+        <resultMap class="Msa" id="msaResultSoleDate">
+           <result property="msaDate" column="MSA_Date" />
+        </resultMap>
+        <!--查询-->
+        <select id="pgAdminmsa.needConnect" parameterClass="java.util.HashMap" resultMap="msaResult">
+          select * from "tb_msa" where 1=1
+          <isNotEmpty prepend="AND" property="msaDate">
+           <![CDATA[
+               ("MSA_Date"='$msaDate$')
+           ]]>
+         </isNotEmpty> 
+           <isNotEmpty prepend="AND" property="msaAssessResult">
+           <![CDATA[
+               ("MSA_AssessResult"='$msaAssessResult$')
+           ]]>
+         </isNotEmpty>         
+        </select>
+        
+         <!--查询评估项个数-->
+        <select id="pgAdminmsa.rectCount" parameterClass="java.util.HashMap" resultClass="int">
+          select count(*) from "tb_msa" where 1=1
+          <isNotEmpty prepend="AND" property="msaDate">
+           <![CDATA[
+               ("MSA_Date"='$msaDate$')
+           ]]>
+         </isNotEmpty> 
+           <isNotEmpty prepend="AND" property="msaAssessResult">
+           <![CDATA[
+               ("MSA_AssessResult"='$msaAssessResult$')
+           ]]>
+         </isNotEmpty>         
+        </select>
+        
+         <!--查询不同日期-->
+        <select id="pgAdminmsa.querySoleDate" resultMap="msaResultSoleDate">
+          select DISTINCT "MSA_Date" from "tb_msa" where "MSA_AssessResult" is not null and "MSA_AssessResult"!='0'
+        </select>                                          
+        
+                
+        <!-- sqlserver -->
+        <!--查询-->
+        <select id="sqlServermsa.needConnect" parameterClass="java.util.HashMap" resultMap="msaResult">
+          select * from "tb_msa" where 1=1
+          <isNotEmpty prepend="AND" property="msaDate">
+           <![CDATA[
+               ("MSA_Date"='$msaDate$')
+           ]]>
+         </isNotEmpty> 
+           <isNotEmpty prepend="AND" property="msaAssessResult">
+           <![CDATA[
+               ("MSA_AssessResult"='$msaAssessResult$')
+           ]]>
+         </isNotEmpty>         
+        </select>
+        
+         <!--查询评估项个数-->
+        <select id="sqlServermsa.rectCount" parameterClass="java.util.HashMap" resultClass="int">
+          select count(*) from "tb_msa" where 1=1
+          <isNotEmpty prepend="AND" property="msaDate">
+           <![CDATA[
+               ("MSA_Date"='$msaDate$')
+           ]]>
+         </isNotEmpty> 
+           <isNotEmpty prepend="AND" property="msaAssessResult">
+           <![CDATA[
+               ("MSA_AssessResult"='$msaAssessResult$')
+           ]]>
+         </isNotEmpty>         
+        </select>
+        
+         <!--查询不同日期-->
+        <select id="sqlServermsa.querySoleDate" resultMap="msaResultSoleDate">
+          select DISTINCT "MSA_Date" from "tb_msa" where "MSA_AssessResult" is not null and "MSA_AssessResult"!='0'
+        </select>                                          
+        
+                
+    </sqlMap>

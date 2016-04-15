@@ -1,0 +1,549 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="devAssetsSQL">
+
+	 <resultMap class="SysAbolish"  id="sysAbolishResult">
+		<result property="sysAbolishId" 						column="PK_SYSABOLISH"/>
+		<result property="pkSysInfo" 							column="FK_SYSINFO"/>
+		<result property="sysDescription" 						column="SYSABOLISH_sysDescription"/>
+		<result property="sysAccess" 							column="SYSABOLISH_sysAccess"/>
+		<result property="devDescription" 						column="SYSABOLISH_devDescription"/> 
+		<result property="devAccess" 							column="SYSABOLISH_devAccess"/> 
+		<result property="storDescription" 						column="SYSABOLISH_storDescription"/> 
+		<result property="storAccess"							column="SYSABOLISH_storAccess"/>
+   	<!-- 2013-12-10添加重命名列，解决centOS文件名乱码问题 -->
+		<result property="reSysAccess" 							column="SYSABOLISH_reSysAccess"/>
+		<result property="reDevAccess" 							column="SYSABOLISH_reDevAccess"/>
+		<result property="reStorAccess"							column="SYSABOLISH_reStorAccess"/>
+    </resultMap>
+	<resultMap id="rankResult" class="Rank">
+		<result property="rankId" column="PK_RANK" />
+		<result property="sysInfoId" column="SYSINFO_Id" />
+		<result property="sysInfoName" column="SYSINFO_Name" />
+		<result property="sysInfoBusDescription" column="SYSINFO_BusDescription" />
+		<result property="rankEvalUnitName" column="RANK_EvalUnitName" />
+		<result property="rankUseDate" column="RANK_UseDate" />
+		<result property="rankFlag" column="RANK_Flag" />
+		<result property="rankParentSysName" column="RANK_ParentSysName" />
+		<result property="rankParentUnitName" column="RANK_ParentUnitName" />
+		<result property="rankEvalRelAccess" column="RANK_EvalRelAccess" />
+		<result property="rankCoveArea" column="RANK_CoveArea" />
+		<result property="rankOthArea" column="RANK_OthArea" />
+		<result property="rankNetworkProp" column="RANK_NetworkProp" />
+		<result property="rankOthNetworkProp" column="RANK_OthNetworkProp" />
+		<result property="rankSysConn" column="RANK_SysConn" />
+		<result property="rankOtherSysConn" column="RANK_OtherSysConn" />
+		<result property="rankSecCount" column="RANK_SecCount" />
+		<result property="rankSecUse" column="RANK_SecUse" />
+		<result property="partRankSecUse" column="RANK_PartRankSecUse" />
+		<result property="rankNetCount" column="RANK_NetCount" />
+		<result property="rankNetUse" column="RANK_NetUse" />
+		<result property="partRankNetUse" column="RANK_PartNetUse" />
+		<result property="rankSysCount" column="RANK_SysCount" />
+		<result property="rankSysUse" column="RANK_SysUse" />
+		<result property="partRankSysUse" column="RANK_PartSysUse" />
+		<result property="rankSqlCount" column="RANK_SqlCount" />
+		<result property="rankSqlUse" column="RANK_SqlUse" />
+		<result property="partRankSqlUse" column="RANK_PartSqlUse" />
+		<result property="rankSerCount" column="RANK_SerCount" />
+		<result property="rankSerUse" column="RANK_SerUse" />
+		<result property="partRankSerUse" column="RANK_PartSerUse" />
+		<result property="rankOthProd" column="RANK_OthProd" />
+		<result property="rankOthProdCount" column="RANK_OthProdCount" />
+		<result property="rankOthProdUse" column="RANK_OthProdUse" />
+		<result property="partRankOthProdUse" column="RANK_PartOthProdUse" />
+		<result property="rankIfGradeEval" column="RANK_IfGradeEval" />
+		<result property="rankSerGradeType" column="RANK_SerGradeType" />
+		<result property="rankIfRiskEval" column="RANK_IfRiskEval" />
+		<result property="rankSerRiskType" column="RANK_SerRiskType" />
+		<result property="rankIfSuffReco" column="RANK_IfSuffReco" />
+		<result property="rankIfSuffRecoType" column="RANK_IfSuffRecoType" />
+		<result property="rankIfResponse" column="RANK_IfResponse" />
+		<result property="rankResponseType" column="RANK_ResponseType" />
+		<result property="rankIfSysInte" column="RANK_IfSysInte" />
+		<result property="rankSysInteType" column="RANK_SysInteType" />
+		<result property="rankIfSecCon" column="RANK_IfSecCon" />
+		<result property="rankSecConypeType" column="RANK_SecConypeType" />
+		<result property="rankIfSecTrain" column="RANK_IfSecTrain" />
+		<result property="rankSecTrainType" column="RANK_SecTrainType" />
+		<result property="rankOthSerName" column="RANK_OthSerName" />
+		<result property="rankIfOthSer" column="RANK_IfOthSer" />
+		<result property="rankOthUseType" column="RANK_OthUseType" />
+		<result property="rankOrganType" column="RANK_OrganType" />
+		<result property="rankOrganArea" column="RANK_OrganArea" />
+		<result property="rankBusinessType" column="RANK_BusinessType" />
+		<result property="rankInfoSysIntr" column="RANK_InfoSysIntr" />
+		<result property="rankGrade" column="RANK_Grade" />
+		<result property="rankTime" column="RANK_RankTime" />
+		<result property="rankJudge" column="RANK_Judge" />
+		<result property="rankIsDep" column="RANK_IsDep" />
+		<result property="rankDepName" column="RANK_DepName" />
+		<result property="rankDepJudge" column="RANK_DepJudge" />
+		<result property="rankDoc" column="RANK_RankDoc" />
+		<result property="rankAccess" column="RANK_RankAccess" />
+		<result property="rankInformant" column="RANK_Informant" />
+		<result property="rankDate" column="RANK_Date" />
+		<result property="rankTopStruct" column="RANK_TopStruct" />
+		<result property="rankTopRelAcc" column="RANK_TopRelAcc" />
+		<result property="rankSysManage" column="RANK_SysManage" />
+		<result property="rankSysManRel" column="RANK_SysManRel" />
+		<result property="rankSysPlan" column="RANK_SysPlan" />
+		<result property="rankSysPlanRel" column="RANK_SysPlanRel" />
+		<result property="rankSysLicense" column="RANK_SysLicense" />
+		<result property="rankSysLiceRel" column="RANK_SysLiceRel" />
+		<result property="rankSysReport" column="RANK_SysReport" />
+		<result property="rankSysReportRel" column="RANK_SysReportRel" />
+		<result property="rankPeerRev" column="RANK_PeerRev" />
+		<result property="rankPeerRevRel" column="RANK_PeerRevRel" />
+		<result property="rankSuperOpinRel" column="RANK_SuperOpinRel" />
+		<result property="rankSuperOpin" column="RANK_SuperOpin" />
+		<result property="rankCount" column="RANK_RankCount" />
+		<!-- 2013-12-10附加文件上传重命名列，解决centOS文件名乱码问题 -->
+		<result property="reRankEvalRelAccess" column="RANK_ReEvalRelAccess" />
+		<result property="reRankAccess" column="RANK_ReRankAccess" />
+		<result property="reRankTopRelAcc" column="RANK_ReTopRelAcc" />
+		<result property="reRankSysManRel" column="RANK_ReSysManRel" />
+		<result property="reRankSysPlanRel" column="RANK_ReSysPlanRel" />
+		<result property="reRankSysLiceRel" column="RANK_ReSysLiceRel" />
+		<result property="reRrankSysReportRel" column="RANK_ReSysReportRel" />
+		<result property="reRankPeerRevRel" column="RANK_RePeerRevRel" />
+		<result property="reRankSuperOpinRel" column="RANK_ReSuperOpinRel" />
+	</resultMap>
+	<!-- 所有定级文档 -->
+	<select id="pgAdminrankfiles.query" resultMap="rankResult" parameterClass="java.util.HashMap">
+		SELECT * FROM tb_rank r where 1=1
+		<isNotEmpty prepend="AND" property="keyword1"> 
+		<![CDATA[ 
+			( 
+				"RANK_EvalRelAccess" != '$keyword1$' 
+			 
+			) 
+		]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword2"> 
+		<![CDATA[ 
+			( 
+				"RANK_RankAccess" != '$keyword2$'  
+			 
+			) 
+		]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword3"> 
+		<![CDATA[ 
+			( 
+				"RANK_TopStruct" = '1'   
+			 
+			) 
+		]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword4"> 
+		<![CDATA[ 
+			( 
+				"RANK_SysManage" = '1' 
+			 
+			) 
+		]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword5"> 
+		<![CDATA[ 
+			( 
+				"RANK_SysPlan" = '1'  
+			 
+			) 
+		]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword6"> 
+		<![CDATA[ 
+			( 
+				"RANK_SysLicense" = '1'   
+			 
+			) 
+		]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword7"> 
+		<![CDATA[ 
+			( 
+				"RANK_SysReport" = '1'
+			 
+			) 
+		]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword8"> 
+		<![CDATA[ 
+			( 
+				"RANK_PeerRev" = '1'  
+			 
+			) 
+		]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword9"> 
+		<![CDATA[ 
+			( 
+				"RANK_SuperOpin" = '1'  
+			 
+			) 
+		]]>
+		</isNotEmpty>
+		
+		order by "PK_RANK" desc
+	</select>
+	<!-- 系统定级文档查询条数 -->
+	<select id="pgAdminrank.count" resultClass="int">
+		SELECT COUNT(*) FROM tb_rank r where 1=1
+		<isNotEmpty prepend="AND" property="keyword1"> 
+		<![CDATA[ 
+			( 
+				"RANK_EvalRelAccess" != '$keyword1$' 
+			 
+			) 
+		]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword2"> 
+		<![CDATA[ 
+			( 
+				"RANK_RankAccess" != '$keyword2$'  
+			 
+			) 
+		]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword3"> 
+		<![CDATA[ 
+			( 
+				"RANK_TopStruct" = '1'  
+			 
+			) 
+		]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword4"> 
+		<![CDATA[ 
+			( 
+				"RANK_SysManage" = '1' 
+			 
+			) 
+		]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword5"> 
+		<![CDATA[ 
+			( 
+				"RANK_SysPlan" = '1'  
+			 
+			) 
+		]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword6"> 
+		<![CDATA[ 
+			( 
+				"RANK_SysLicense" = '1'   
+			 
+			) 
+		]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword7"> 
+		<![CDATA[ 
+			( 
+				"RANK_SysReport" = '1'
+			 
+			) 
+		]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword8"> 
+		<![CDATA[ 
+			( 
+				"RANK_PeerRev" = '1'  
+			 
+			) 
+		]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword9"> 
+		<![CDATA[ 
+			( 
+				"RANK_SuperOpin" = '1'  
+			 
+			) 
+		]]>
+		</isNotEmpty>
+
+	</select>
+	
+	<!-- 所有系统废止文档 -->
+	<select id="pgAdminabolishfiles.query" resultMap="sysAbolishResult" parameterClass="java.util.HashMap">
+		SELECT * FROM tb_sysabolish s where 1=1
+		<isNotEmpty prepend="AND" property="keyword1"> 
+		<![CDATA[ 
+			( 
+				"SYSABOLISH_sysAccess" != '$keyword1$' 
+			 
+			) 
+		]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword2"> 
+		<![CDATA[ 
+			( 
+				"SYSABOLISH_devAccess" != '$keyword2$'
+			 
+			) 
+		]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword3"> 
+		<![CDATA[ 
+			( 
+				"SYSABOLISH_storAccess" != '$keyword3$'  
+			 
+			) 
+		]]>
+		</isNotEmpty>
+		
+		
+		order by "PK_SYSABOLISH" desc
+	</select>
+	<!-- 系统定级文档查询条数 -->
+	<select id="pgAdminsysabolish.count" resultClass="int">
+		SELECT COUNT(*) FROM tb_sysabolish s where 1=1
+		<isNotEmpty prepend="AND" property="keyword1"> 
+		<![CDATA[ 
+			( 
+				"SYSABOLISH_sysAccess" != '$keyword1$'
+			 
+			) 
+		]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword2"> 
+		<![CDATA[ 
+			( 
+				"SYSABOLISH_devAccess" != '$keyword2$'    
+			 
+			) 
+		]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword3"> 
+		<![CDATA[ 
+			( 
+				"SYSABOLISH_storAccess" !='&$keyword3$'
+			 
+			) 
+		]]>
+		</isNotEmpty>
+
+
+	</select>
+	<!-- sqlserver -->
+		<!-- 所有定级文档 -->
+	<select id="sqlServerrankfiles.query" resultMap="rankResult" parameterClass="java.util.HashMap">
+		SELECT * FROM tb_rank r where 1=1
+		<isNotEmpty prepend="AND" property="keyword1"> 
+		<![CDATA[ 
+			( 
+				"RANK_EvalRelAccess" != '$keyword1$' 
+			 
+			) 
+		]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword2"> 
+		<![CDATA[ 
+			( 
+				"RANK_RankAccess" != '$keyword2&$'  
+			 
+			) 
+		]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword3"> 
+		<![CDATA[ 
+			( 
+				"RANK_TopStruct" = '1'   
+			 
+			) 
+		]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword4"> 
+		<![CDATA[ 
+			( 
+				"RANK_SysManage" = '1' 
+			 
+			) 
+		]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword5"> 
+		<![CDATA[ 
+			( 
+				"RANK_SysPlan" = '1'  
+			 
+			) 
+		]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword6"> 
+		<![CDATA[ 
+			( 
+				"RANK_SysLicense" = '1'   
+			 
+			) 
+		]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword7"> 
+		<![CDATA[ 
+			( 
+				"RANK_SysReport" = '1'
+			 
+			) 
+		]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword8"> 
+		<![CDATA[ 
+			( 
+				"RANK_PeerRev" = '1'  
+			 
+			) 
+		]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword9"> 
+		<![CDATA[ 
+			( 
+				"RANK_SuperOpin" = '1'  
+			 
+			) 
+		]]>
+		</isNotEmpty>
+		
+		order by "PK_RANK" desc
+	</select>
+	<!-- 系统定级文档查询条数 -->
+	<select id="sqlServerrank.count" resultClass="int">
+		SELECT COUNT(*) FROM tb_rank r where 1=1
+		<isNotEmpty prepend="AND" property="keyword1"> 
+		<![CDATA[ 
+			( 
+				"RANK_EvalRelAccess" != '$keyword1$' 
+			 
+			) 
+		]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword2"> 
+		<![CDATA[ 
+			( 
+				"RANK_RankAccess" != '$keyword2$'  
+			 
+			) 
+		]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword3"> 
+		<![CDATA[ 
+			( 
+				"RANK_TopStruct" = '1'  
+			 
+			) 
+		]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword4"> 
+		<![CDATA[ 
+			( 
+				"RANK_SysManage" = '1' 
+			 
+			) 
+		]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword5"> 
+		<![CDATA[ 
+			( 
+				"RANK_SysPlan" = '1'  
+			 
+			) 
+		]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword6"> 
+		<![CDATA[ 
+			( 
+				"RANK_SysLicense" = '1'   
+			 
+			) 
+		]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword7"> 
+		<![CDATA[ 
+			( 
+				"RANK_SysReport" = '1'
+			 
+			) 
+		]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword8"> 
+		<![CDATA[ 
+			( 
+				"RANK_PeerRev" = '1'  
+			 
+			) 
+		]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword9"> 
+		<![CDATA[ 
+			( 
+				"RANK_SuperOpin" = '1'  
+			 
+			) 
+		]]>
+		</isNotEmpty>
+
+	</select>
+	
+	<!-- 所有系统废止文档 -->
+	<select id="sqlServerabolishfiles.query" resultMap="sysAbolishResult" parameterClass="java.util.HashMap">
+		SELECT * FROM tb_sysabolish s where 1=1
+		<isNotEmpty prepend="AND" property="keyword1"> 
+		<![CDATA[ 
+			( 
+				"SYSABOLISH_sysAccess" != '$keyword1$' 
+			 
+			) 
+		]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword2"> 
+		<![CDATA[ 
+			( 
+				"SYSABOLISH_devAccess" != '$keyword2$'
+			 
+			) 
+		]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword3"> 
+		<![CDATA[ 
+			( 
+				"SYSABOLISH_storAccess" != '$keyword3$'  
+			 
+			) 
+		]]>
+		</isNotEmpty>
+		
+		
+		order by "PK_SYSABOLISH" desc
+	</select>
+	<!-- 系统定级文档查询条数 -->
+	<select id="sqlServersysabolish.count" resultClass="int">
+		SELECT COUNT(*) FROM tb_sysabolish s where 1=1
+		<isNotEmpty prepend="AND" property="keyword1"> 
+		<![CDATA[ 
+			( 
+				"SYSABOLISH_sysAccess" != '$keyword1$'
+			 
+			) 
+		]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword2"> 
+		<![CDATA[ 
+			( 
+				"SYSABOLISH_devAccess" != '$keyword2$'    
+			 
+			) 
+		]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword3"> 
+		<![CDATA[ 
+			( 
+				"SYSABOLISH_storAccess" !='&$keyword3$'
+			 
+			) 
+		]]>
+		</isNotEmpty>
+
+
+	</select>
+	
+</sqlMap>

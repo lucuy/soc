@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Graph>
+	<Node id="0" type="business" entityName="统一存储备份系统" displayName="统一存储备份系统" pointX="0.0" pointY="0.0" severity="0" eventCount="0" icon="assets/nodes/BirdEyeLogoRaVis75.png"/>
+	<Node id="1" type="storage" entityName="UB1-IBM3584" displayName="UB1-IBM3584" pointX="31.0" pointY="60.0" ip="10.111.13.13" devicetype="DB" icon="assets/nodes/111.png" severity="0" eventCount="0"/>
+	<Node id="2" type="storage" entityName="UB1-NetApp-02A" displayName="UB1-NetApp-02A" pointX="34.0" pointY="56.0" ip="10.111.13.2" devicetype="DB" icon="assets/nodes/111.png" severity="0" eventCount="0"/>
+	<Node id="3" type="storage" entityName="UB1-Isilon-02" displayName="UB1-Isilon-02" pointX="39.0" pointY="113.0" ip="10.111.9.87" devicetype="MID" icon="assets/nodes/111.png" severity="0" eventCount="0"/>
+	<Node id="4" type="storage" entityName="UB1-Isilon-01" displayName="UB1-Isilon-01" pointX="72.0" pointY="123.0" ip="10.111.9.65" devicetype="MID" icon="assets/nodes/111.png" severity="0" eventCount="0"/>
+	<Node id="5" type="storage" entityName="UB1-NetApp-01A" displayName="UB1-NetApp-01A" pointX="72.0" pointY="123.0" ip="10.111.13.1" devicetype="MID" icon="assets/nodes/111.png" severity="0" eventCount="0"/>
+	<Node id="6" type="storage" entityName="EMC CX4-480" displayName="EMC CX4-480" pointX="72.0" pointY="123.0" ip="10.110.10.6" devicetype="MID" icon="assets/nodes/111.png" severity="0" eventCount="0"/>
+	<Node id="7" type="storage" entityName="SBOLTP" displayName="SBOLTP" pointX="72.0" pointY="123.0" ip="10.110.40.20" devicetype="MID" icon="assets/nodes/111.png" severity="0" eventCount="0"/>
+	<Node id="8" type="storage" entityName="UB1-Isilon-01" displayName="UB1-Isilon-01" pointX="72.0" pointY="123.0" ip="10.110.40.97" devicetype="MID" icon="assets/nodes/111.png" severity="0" eventCount="0"/>
+	<Node id="9" type="oracle" entityName="数据库应急服务器03" displayName="数据库应急服务器03" pointX="72.0" pointY="123.0" ip="10.110.40.34" devicetype="MID" icon="assets/nodes/104.png" severity="0" eventCount="0"/>
+	<Node id="10" type="oracle" entityName="数据库应急服务器02" displayName="数据库应急服务器02" pointX="72.0" pointY="123.0" ip="10.110.40.33" devicetype="MID" icon="assets/nodes/104.png" severity="0" eventCount="0"/>
+	<Node id="11" type="oracle" entityName="数据库应急服务器01" displayName="数据库应急服务器01" pointX="72.0" pointY="123.0" ip="10.111.11.131" devicetype="MID" icon="assets/nodes/104.png" severity="0" eventCount="0"/>
+	<Node id="12" type="oracle" entityName="接口服务器" displayName="接口服务器" pointX="72.0" pointY="123.0" ip="10.111.11.130" devicetype="MID" icon="assets/nodes/104.png" severity="0" eventCount="0"/>
+	<Node id="13" type="oracle" entityName="设备管理服务器02" displayName="设备管理服务器02" pointX="72.0" pointY="123.0" ip="10.111.11.129" devicetype="MID" icon="assets/nodes/104.png" severity="0" eventCount="0"/>
+	<Edge id="63" fromID="0" toID="1" lineSeverity="0"/>
+	<Edge id="64" fromID="0" toID="2" lineSeverity="0"/>
+	<Edge id="65" fromID="0" toID="3" lineSeverity="0"/>
+	<Edge id="66" fromID="0" toID="4" lineSeverity="0"/>
+	<Edge id="67" fromID="0" toID="5" lineSeverity="0"/>
+	<Edge id="68" fromID="0" toID="6" lineSeverity="0"/>
+	<Edge id="69" fromID="0" toID="7" lineSeverity="0"/>
+	<Edge id="70" fromID="0" toID="8" lineSeverity="0"/>
+	<Edge id="0" fromID="0" toID="9" lineSeverity="0"/>
+	<Edge id="0" fromID="0" toID="10" lineSeverity="0"/>
+	<Edge id="0" fromID="0" toID="11" lineSeverity="0"/>
+	<Edge id="0" fromID="0" toID="12" lineSeverity="0"/>
+	<Edge id="0" fromID="0" toID="13" lineSeverity="0"/>
+</Graph>

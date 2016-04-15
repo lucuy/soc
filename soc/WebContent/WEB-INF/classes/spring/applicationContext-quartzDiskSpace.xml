@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 定义注入的类和参数 -->
+	<bean name="diskSpaceMonitor" class="com.soc.webapp.quartz.DiskSpaceMonitor">
+			<property name="settingManager" ref="settingManager"></property>
+			<property name="alertMessageManager" ref="alertMessageManager" />
+	</bean>
+
+	<!-- 定义定时器，指定执行的类和方法 -->
+	<bean name="diskSpaceMonitorBean"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="diskSpaceMonitor" />
+		<property name="targetMethod" value="coreMonitor" />
+	</bean>
+
+	<bean id="diskSpaceMonitorTriggerBean" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail">
+			<ref bean="diskSpaceMonitorBean" />
+		</property>
+		<!-- 每个一分钟执行一次 -->
+		<property name="cronExpression">
+			<value> 0 */1 * * * ?</value>
+		</property>
+	</bean>
+<!--  
+	<bean name="diskSpackMonitorFactoryBean"  lazy-init="false" 
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		 <property name="triggers">
+			<list>
+				<ref bean="diskSpaceMonitorTriggerBean" />
+			</list>
+		</property> 
+	</bean>
+-->
+</beans>

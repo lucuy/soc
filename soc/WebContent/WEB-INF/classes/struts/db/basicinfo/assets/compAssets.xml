@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+    <struts>
+    	<package name="compAssets" extends="struts-default" namespace="/compAssets">
+    
+		<!-- 查询主机安全设备信息 -->
+		<action name="query" class="compAssetsAction" method="query">
+			<result name="success">/pages/dbPage/basic/assets/compassets.jsp</result>
+		</action>	
+		<action name="kquery" class="compAssetsAction" method="queryCompAssets">
+			<result name="success">/pages/dbPage/basic/assets/compassets.jsp</result>
+		</action>
+		<!-- 修改主机安全设备信息 -->
+		<action name="edit" class="compAssetsAction" method="edit">
+			<result name="success">/pages/dbPage/basic/assets/addcompassets.jsp</result>
+		</action>
+		<!-- 添加主机安全设备信息 -->
+		<action name="add" class="compAssetsAction" method="addCompAssets">
+			<result name="success"  type="redirect">/pages/dbPage/basic/assets/compassets.jsp</result>
+			
+		</action>
+		<!-- 删除主机安全设备信息 -->
+		<action name="delete" class="compAssetsAction" method="delete">
+			<result name="success" type="redirect">/pages/dbPage/basic/assets/compassets.jsp</result>
+		</action> 
+		 <!--模糊查询json分页-->
+		<action name="queryAjaxCompAssets"   class="compAssetsAction" method="queryAjaxCompAssets"></action>
+		 <!--高级搜索json分页-->
+		<action name="extQuery"   class="compAssetsAction" method="queryAjaxPreciseCompAssets"></action>
+    	</package>
+    </struts>

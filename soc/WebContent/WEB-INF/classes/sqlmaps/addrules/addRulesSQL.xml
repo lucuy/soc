@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="addRulesSQL">
+
+	<resultMap id="analysis" class="analysisRules">
+   		<result property="analysisId" 				column="ANALYSIS_ID" 		    			jdbcType="varchar"/>
+   		<result property="analysisName"           	column="ANALYSIS_NAME"           			jdbcType="varchar"/>
+   		<result property="analysisCondition"      	column="ANALYSIS_CONDITION"      			jdbcType="varchar"/>
+   		<result property="analysisDescription"    	column="ANALYSIS_DESCRIPTION"     			jdbcType="text"/>
+   		<result property="analysisCreateTime"     	column="ANALYSIS_CREATE_TIME"     			jdbcType="datetime"/>
+   		<result property="analysisCreator"     		column="ANALYSIS_CREATOR"     				jdbcType="varchar"/>
+   		<result property="analysisUpdateTime"    	column="ANALYSIS_UPDATE_TIME"     			jdbcType="datetime"/>
+   		<result property="analysisType"     		column="ANALYSIS_TYPE"     					jdbcType="int"/>
+   	</resultMap>
+   	
+   	<resultMap id="device" class="device_category">
+   		<result property="ID" 						column="DEVICE_CATEGORY_ID" 				jdbcType="bigint"/>
+   		<result property="name"           			column="DEVICE_CATEGORY_NAME"    			jdbcType="varchar"/>
+   		<result property="higherUpsId"     			column="HIGHER_UPS_ID"       				jdbcType="bigint"/>
+   		<result property="devname"    				column="EVENTS_DEVNAME"     				jdbcType="varchar"/>
+   		<result property="programtype"     			column="EVENTS_PROGRAMTYPE"     			jdbcType="varchar"/>
+   		<result property="customd1"     			column="EVENTS_CUSTOMD1"     				jdbcType="integer"/>
+   		<result property="rawid"     				column="EVENTS_RAWID"     					jdbcType="integer"/>
+   		<result property="code"     				column="DEVICE_CATEGORY_CODE"   			jdbcType="varchar"/>
+   	</resultMap>
+
+   	<resultMap id="group" class="queryevents_group">
+   		<result property="id" 						column="QUERY_EVENTS_GROUP_ID" 		    	jdbcType="varchar"/>
+   		<result property="name"           			column="QUERY_EVENTS_GROUP_NAME"           	jdbcType="varchar"/>
+   		<result property="parent_id"      			column="QUERY_EVENTS_GROUP_PARENT_ID"       jdbcType="varchar"/>
+   		<result property="type"    					column="QUERY_EVENTS_GROUP_TYPE"     		jdbcType="text"/>
+   		<result property="conditions"     			column="QUERY_EVENTS_CONDITIONS"     		jdbcType="datetime"/>
+   	</resultMap>
+   	<!-- 为tbl_analysis表添加数据 -->
+   	<insert id="pgAdmininsert.analysisForAddRules" parameterClass="analysisRules">
+   		INSERT INTO "tbl_analysis"(
+            "ANALYSIS_ID", "ANALYSIS_NAME", "ANALYSIS_CONDITION", "ANALYSIS_DESCRIPTION", 
+            "ANALYSIS_CREATE_TIME", "ANALYSIS_CREATOR", "ANALYSIS_UPDATE_TIME", 
+            "ANALYSIS_TYPE")
+    	VALUES (#analysisId#, #analysisName#, #analysisCondition#, #analysisDescription#, 
+            #analysisCreateTime#, #analysisCreator#, #analysisUpdateTime#, 
+            #analysisType#);
+   	</insert>
+   	
+   	<!-- 为tbl_device_category表添加数据 -->
+   	<insert id="pgAdmininsert.deviceForAddRules">
+   		INSERT INTO "tbl_device_category"(
+            "DEVICE_CATEGORY_ID", "DEVICE_CATEGORY_NAME", "HIGHER_UPS_ID", 
+            "EVENTS_DEVNAME", "EVENTS_PROGRAMTYPE", "EVENTS_CUSTOMD1", "EVENTS_RAWID", 
+            "DEVICE_CATEGORY_CODE")
+    	VALUES (#ID#, #name#, #higherUpsId#, 
+            #devname#, #programtype#, #customd1#, #rawid#, 
+            #code#);
+   	</insert>
+   	
+   	<!-- 为tbl_queryEvents_group表添加数据 -->
+   	<insert id="pgAdmininsert.groupForAddRules">
+   		INSERT INTO "tbl_queryEvents_group"(
+            "QUERY_EVENTS_GROUP_ID", "QUERY_EVENTS_GROUP_NAME", "QUERY_EVENTS_GROUP_PARENT_ID", 
+            "QUERY_EVENTS_GROUP_TYPE", "QUERY_EVENTS_CONDITIONS")
+		VALUES (#id#, #name#, #parent_id#, 
+            #type#, #conditions#);
+   	</insert>
+   	
+   	<select id="pgAdminselect.allAnalysisName" resultClass="java.lang.String" parameterClass="java.util.HashMap">
+   		SELECT "ANALYSIS_NAME" FROM "tbl_analysis" WHERE "ANALYSIS_NAME" = #keyword# ;
+   	</select>
+   	
+   	<!-- sqlServer -->
+   	<!-- 为tbl_analysis表添加数据 -->
+   	<insert id="sqlServerinsert.analysisForAddRules" parameterClass="analysisRules">
+   		INSERT INTO "tbl_analysis"(
+            "ANALYSIS_ID", "ANALYSIS_NAME", "ANALYSIS_CONDITION", "ANALYSIS_DESCRIPTION", 
+            "ANALYSIS_CREATE_TIME", "ANALYSIS_CREATOR", "ANALYSIS_UPDATE_TIME", 
+            "ANALYSIS_TYPE")
+    	VALUES (#analysisId#, #analysisName#, #analysisCondition#, #analysisDescription#, 
+            #analysisCreateTime#, #analysisCreator#, #analysisUpdateTime#, 
+            #analysisType#);
+   	</insert>
+   	
+   	<!-- 为tbl_device_category表添加数据 -->
+   	<insert id="sqlServerinsert.deviceForAddRules">
+   		INSERT INTO "tbl_device_category"(
+            "DEVICE_CATEGORY_ID", "DEVICE_CATEGORY_NAME", "HIGHER_UPS_ID", 
+            "EVENTS_DEVNAME", "EVENTS_PROGRAMTYPE", "EVENTS_CUSTOMD1", "EVENTS_RAWID", 
+            "DEVICE_CATEGORY_CODE")
+    	VALUES (#ID#, #name#, #higherUpsId#, 
+            #devname#, #programtype#, #customd1#, #rawid#, 
+            #code#);
+   	</insert>
+   	
+   	<!-- 为tbl_queryEvents_group表添加数据 -->
+   	<insert id="sqlServerinsert.groupForAddRules">
+   		INSERT INTO "tbl_queryEvents_group"(
+            "QUERY_EVENTS_GROUP_ID", "QUERY_EVENTS_GROUP_NAME", "QUERY_EVENTS_GROUP_PARENT_ID", 
+            "QUERY_EVENTS_GROUP_TYPE", "QUERY_EVENTS_CONDITIONS")
+		VALUES (#id#, #name#, #parent_id#, 
+            #type#, #conditions#);
+   	</insert>
+   	
+   	<select id="sqlServerselect.allAnalysisName" resultClass="java.lang.String" parameterClass="java.util.HashMap">
+   		SELECT "ANALYSIS_NAME" FROM "tbl_analysis" WHERE "ANALYSIS_NAME" = #keyword# ;
+   	</select>
+</sqlMap>

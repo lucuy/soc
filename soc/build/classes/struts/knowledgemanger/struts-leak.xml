@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="knowledge" extends="struts-default" namespace="/knowledge">
+		<!-- 显示漏洞信息 -->
+		<action name="queryLeak" class="KnowledgeLeakAction" method="queryLeak">
+			<result name="success">
+				/pages/knowledgemanger/knowledge_leak.jsp
+			</result>
+
+		</action>
+		<!-- 根据id查询漏洞 -->
+		<action name="selectLeakById" class="KnowledgeLeakAction"
+			method="selectLeakById">
+			<result name="success">
+				/pages/knowledgemanger/HoleDescription.jsp
+			</result>
+		</action>
+
+
+
+		<!-- 导入漏洞库 -->
+		<action name="importLeak" class="KnowledgeLeakAction" method="importLeak">
+		   <result name="success" type="chain">
+		      <param name="namespace">/knowledge</param>
+		      <param name="actionName">queryLeak</param>
+		   </result>
+		</action>
+		<!-- 漏洞库导出 -->
+		<action name="export" class="KnowledgeLeakAction" method="export">
+		</action>
+	</package>
+
+</struts>

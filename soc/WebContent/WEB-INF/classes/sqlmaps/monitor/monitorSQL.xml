@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="monitorSQL">
+	<resultMap id="monitorResult" class="monitor">
+		<result property="monitorId" column="MONITOR_ID" jdbcType="bigint" />
+		<result property="monitorName" column="MONITOR_NAME" jdbcType="varchar" />
+		<result property="monitorCreateDatetime" column="MONITOR_CREATE_DATETIME"
+			jdbcType="datetime" />
+
+		<result property="monitorUpdateDatetime" column="MONITOR_UPDATE_DATETIME"
+			jdbcType="datetime" />
+		<result property="monitorCreateUsername" column="MONITOR_CREATE_USERNAME"
+			jdbcType="varchar" />
+		<result property="monitorMemo" column="MONITOR_MEMO" jdbcType="text" />
+		<result property="monitorDataUrl" column="MONITOR_DATA_URL"
+			jdbcType="bigint" />
+		<result property="chart" column="REL_CHART_ID" select="pgAdminmonitor.queryChart" />
+		<result property="relChartLegendTitle" column="REL_CHART_LEGEND_TITLE"
+			jdbcType="varchar" />
+		<!-- <result property="assetParentsFeature" column="ASSET_PARENTS_FEATURE" 
+			jdbcType="text"/> -->
+	</resultMap>
+
+	<resultMap id="monitorResult1" class="monitor">
+		<result property="monitorId" column="MONITOR_ID" jdbcType="bigint" />
+		<result property="monitorName" column="MONITOR_NAME" jdbcType="varchar" />
+		<result property="monitorCreateDatetime" column="MONITOR_CREATE_DATETIME"
+			jdbcType="datetime" />
+
+		<result property="monitorUpdateDatetime" column="MONITOR_UPDATE_DATETIME"
+			jdbcType="datetime" />
+		<result property="monitorCreateUsername" column="MONITOR_CREATE_USERNAME"
+			jdbcType="varchar" />
+		<result property="monitorMemo" column="MONITOR_MEMO" jdbcType="text" />
+		<result property="monitorDataUrl" column="MONITOR_DATA_URL"
+			jdbcType="bigint" />
+		<!-- <result property="chart" column="REL_CHART_ID" select="monitor.queryChart" 
+			/> -->
+		<result property="relChartLegendTitle" column="REL_CHART_LEGEND_TITLE"
+			jdbcType="varchar" />
+		<!-- <result property="assetParentsFeature" column="ASSET_PARENTS_FEATURE" 
+			jdbcType="text"/> -->
+	</resultMap>
+
+	<resultMap id="chartResult" class="chart">
+		<result property="chartId" column="CHART_ID" jdbcType="bigint" />
+		<result property="chartName" column="CHART_NAME" jdbcType="varchar" />
+		<result property="chartType" column="CHART_TYPE" jdbcType="varchar" />
+		<result property="chartLegendVisible" column="CHART_LEGEND_VISIBLE"
+			jdbcType="smallint" />
+		<result property="chartLegendLocation" column="CHART_LEGEND_LOCATION"
+			jdbcType="varchar" />
+		<result property="chartAxesStyle" column="CHART_AXES_STYLE"
+			jdbcType="varchar" />
+		<result property="chartAxesType" column="CHART_AXES_TYPE"
+			jdbcType="varcahr" />
+		<result property="chartAxesLocation" column="CHART_AXES_LOCATION"
+			jdbcType="varchar" />
+		<result property="chartAnimationDuration" column="CHART_ANIMATION_DURATION"
+			jdbcType="smallint" />
+		<result property="chartMinimum" column="CHART_MINIMUM"
+			jdbcType="bigint" />
+		<result property="chartMaximum" column="CHART_MAXIMUM"
+			jdbcType="bigint" />
+		<result property="chartInterval" column="CHART_INTERVAL"
+			jdbcType="varchar" />
+	</resultMap>
+
+	<!--根据REL_CHART_ID查询chart -->
+	<select id="pgAdminmonitor.queryChart" parameterClass="long" resultMap="chartResult">
+		SELECT * FROM "tbl_chart" WHERE "CHART_ID" = #value#
+	</select>
+
+	<!-- 按照上级Id查询 -->
+	<!-- <select id="pgAdminmonitorGroup.queryByParentId" parameterClass="java.util.HashMap" 
+		resultMap="monitorGroupResult"> SELECT * FROM "tbl_monitor_group" WHERE 1=1 
+		and "MONITOR_GROUP_IS_DELETE" = 0 <isNotEmpty prepend="AND" property="monitorGroupParentId"> 
+		<![CDATA[ "MONITOR_GROUP_PARENT_ID" = #monitorGroupParentId# ]]> </isNotEmpty> 
+		</select> -->
+
+	<!-- 根据传递过来的组的id查询关联的图表 -->
+	<!-- <select id="pgAdminmonitor.queryAll" parameterClass="Long" resultMap="monitorResult"> 
+		SELECT * FROM "tbl_monitor" WHERE "MONITOR_ID" in (SELECT "REL_MONITOR_ID" 
+		FROM "tbl_rel_monitorgroup_monitor" WHERE "REL_MONITOR_GROUP_ID" = #value#) 
+		</select> -->
+	<!-- 查询监控表的数量 -->
+	<select id="pgAdminmonitor.count" parameterClass="java.util.HashMap"
+		resultClass="int">
+		SELECT COUNT(*) FROM "tbl_monitor"
+	</select>
+
+	<!--查询所有的监控表 -->
+	<select id="pgAdminmonitor.query" parameterClass="java.util.HashMap"
+		resultMap="monitorResult1">
+		SELECT * FROM "tbl_monitor" ORDER BY "MONITOR_ID" ASC
+	</select>
+	<!--查询所有自定义的监控表 -->
+	<select id="pgAdminmonitor.queryCustom" parameterClass="java.util.HashMap"
+		resultMap="monitorResult1">
+		SELECT * FROM "tbl_monitor"  where "MONITOR_ID">89 
+		<isNotEmpty prepend="AND" property="keyword">
+		  <![CDATA[
+		   ("MONITOR_NAME" LIKE '%$keyword$%' or "MONITOR_MEMO"  LIKE '%$keyword$%' )
+		  ]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend="AND" property="monitorId">
+		  <![CDATA[
+		"MONITOR_ID" = #monitorId#
+		  ]]>
+		</isNotEmpty>
+		
+		
+		ORDER BY "MONITOR_UPDATE_DATETIME" DESC
+	</select>
+	<select id="pgAdminmonitor.queryCustomCount" parameterClass="java.util.HashMap"
+		resultClass="int">
+		SELECT count(*) FROM "tbl_monitor"  where "MONITOR_ID">89 
+		<isNotEmpty prepend="AND" property="keyword">
+		  <![CDATA[
+		  ( "MONITOR_NAME" LIKE '%$keyword$%' or "MONITOR_MEMO"  LIKE '%$keyword$%' )
+		  ]]>
+		</isNotEmpty>
+	</select>
+	<!-- 根据id查询监控表 -->
+	<select id="pgAdminmonitor.queryById" parameterClass="Long" resultMap="monitorResult">
+		SELECT * FROM "tbl_monitor" WHERE "MONITOR_ID" = #value#
+	</select>
+	
+	
+	<!-- 插入自定义监控图表 -->
+	<insert id="pgAdminmonitor.insertChar" parameterClass="monitor">
+				insert into
+		"tbl_monitor"
+		("MONITOR_NAME","MONITOR_DATA_URL","REL_CHART_ID" ,"REL_CHART_LEGEND_TITLE","MONITOR_CREATE_DATETIME","MONITOR_UPDATE_DATETIME","MONITOR_CREATE_USERNAME","MONITOR_MEMO")
+		values
+		(#monitorName#,#monitorDataUrl#,3,#relChartLegendTitle#,#monitorCreateDatetime#,#monitorUpdateDatetime#,#monitorCreateUsername#,#monitorMemo#)
+		<selectKey resultClass="int" keyProperty="monitorId">
+			SELECT
+			currval('tbl_monitor_seq'::regclass) AS monitorId
+		</selectKey>
+	</insert>
+	<!-- 删除自定义监控图表 -->
+	<delete id="pgAdminmonitor.deleteCustom" parameterClass="long" >
+		delete
+		from "tbl_monitor" where "MONITOR_ID"  = #id#
+	</delete>
+	<!-- 更新自定义监控图表信息 -->
+		<update id="pgAdminmonitor.updateCustom" parameterClass="monitor">
+		update
+		"tbl_monitor"
+		set
+		"MONITOR_NAME" =#monitorName#,
+		"MONITOR_DATA_URL"
+		=#monitorDataUrl#,
+		"REL_CHART_LEGEND_TITLE"
+		=#relChartLegendTitle#,
+		"MONITOR_UPDATE_DATETIME"
+		=#monitorUpdateDatetime#,
+		"MONITOR_CREATE_USERNAME"
+		=#monitorCreateUsername#,
+		"MONITOR_MEMO"=#monitorMemo#
+		where "MONITOR_ID" =
+		#monitorId#
+
+	</update>
+	<!--sqlserver  -->
+	
+	<!--根据REL_CHART_ID查询chart -->
+	<select id="sqlServermonitor.queryChart" parameterClass="long" resultMap="chartResult">
+		SELECT * FROM "tbl_chart" WHERE "CHART_ID" = #value#
+	</select>
+
+	<!-- 按照上级Id查询 -->
+	<!-- <select id="sqlServermonitorGroup.queryByParentId" parameterClass="java.util.HashMap" 
+		resultMap="monitorGroupResult"> SELECT * FROM "tbl_monitor_group" WHERE 1=1 
+		and "MONITOR_GROUP_IS_DELETE" = 0 <isNotEmpty prepend="AND" property="monitorGroupParentId"> 
+		<![CDATA[ "MONITOR_GROUP_PARENT_ID" = #monitorGroupParentId# ]]> </isNotEmpty> 
+		</select> -->
+
+	<!-- 根据传递过来的组的id查询关联的图表 -->
+	<!-- <select id="sqlServermonitor.queryAll" parameterClass="Long" resultMap="monitorResult"> 
+		SELECT * FROM "tbl_monitor" WHERE "MONITOR_ID" in (SELECT "REL_MONITOR_ID" 
+		FROM "tbl_rel_monitorgroup_monitor" WHERE "REL_MONITOR_GROUP_ID" = #value#) 
+		</select> -->
+	<!-- 查询监控表的数量 -->
+	<select id="sqlServermonitor.count" parameterClass="java.util.HashMap"
+		resultClass="int">
+		SELECT COUNT(*) FROM "tbl_monitor"
+	</select>
+
+	<!--查询所有的监控表 -->
+	<select id="sqlServermonitor.query" parameterClass="java.util.HashMap"
+		resultMap="monitorResult1">
+		SELECT * FROM "tbl_monitor" ORDER BY "MONITOR_ID" ASC
+	</select>
+	<!--查询所有自定义的监控表 -->
+	<select id="sqlServermonitor.queryCustom" parameterClass="java.util.HashMap"
+		resultMap="monitorResult1">
+		SELECT * FROM "tbl_monitor"  where "MONITOR_ID">89 
+		<isNotEmpty prepend="AND" property="keyword">
+		  <![CDATA[
+		   ("MONITOR_NAME" LIKE '%$keyword$%' or "MONITOR_MEMO"  LIKE '%$keyword$%' )
+		  ]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend="AND" property="monitorId">
+		  <![CDATA[
+		"MONITOR_ID" = #monitorId#
+		  ]]>
+		</isNotEmpty>
+		
+		
+		ORDER BY "MONITOR_UPDATE_DATETIME" DESC
+	</select>
+	<select id="sqlServermonitor.queryCustomCount" parameterClass="java.util.HashMap"
+		resultClass="int">
+		SELECT count(*) FROM "tbl_monitor"  where "MONITOR_ID">89 
+		<isNotEmpty prepend="AND" property="keyword">
+		  <![CDATA[
+		  ( "MONITOR_NAME" LIKE '%$keyword$%' or "MONITOR_MEMO"  LIKE '%$keyword$%' )
+		  ]]>
+		</isNotEmpty>
+	</select>
+	<!-- 根据id查询监控表 -->
+	<select id="sqlServermonitor.queryById" parameterClass="Long" resultMap="monitorResult">
+		SELECT * FROM "tbl_monitor" WHERE "MONITOR_ID" = #value#
+	</select>
+	
+	
+	<!-- 插入自定义监控图表 -->
+	<insert id="sqlServermonitor.insertChar" parameterClass="monitor">
+				insert into
+		"tbl_monitor"
+		("MONITOR_NAME","MONITOR_DATA_URL","REL_CHART_ID" ,"REL_CHART_LEGEND_TITLE","MONITOR_CREATE_DATETIME","MONITOR_UPDATE_DATETIME","MONITOR_CREATE_USERNAME","MONITOR_MEMO")
+		values
+		(#monitorName#,#monitorDataUrl#,3,#relChartLegendTitle#,#monitorCreateDatetime#,#monitorUpdateDatetime#,#monitorCreateUsername#,#monitorMemo#)
+	<!-- 	<selectKey resultClass="int" keyProperty="monitorId">
+			SELECT
+			currval('tbl_monitor_seq'::regclass) AS monitorId
+		</selectKey> -->
+	</insert>
+	<!-- 删除自定义监控图表 -->
+	<delete id="sqlServermonitor.deleteCustom" parameterClass="long" >
+		delete
+		from "tbl_monitor" where "MONITOR_ID"  = #id#
+	</delete>
+	<!-- 更新自定义监控图表信息 -->
+		<update id="sqlServermonitor.updateCustom" parameterClass="monitor">
+		update
+		"tbl_monitor"
+		set
+		"MONITOR_NAME" =#monitorName#,
+		"MONITOR_DATA_URL"
+		=#monitorDataUrl#,
+		"REL_CHART_LEGEND_TITLE"
+		=#relChartLegendTitle#,
+		"MONITOR_UPDATE_DATETIME"
+		=#monitorUpdateDatetime#,
+		"MONITOR_CREATE_USERNAME"
+		=#monitorCreateUsername#,
+		"MONITOR_MEMO"=#monitorMemo#
+		where "MONITOR_ID" =
+		#monitorId#
+
+	</update>
+</sqlMap>

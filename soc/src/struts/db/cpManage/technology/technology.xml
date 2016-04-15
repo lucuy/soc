@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<!-- 技术差距分析 -->
+	<package name="technology" extends="struts-default" namespace="/technology">
+		<!-- 查询某系统定级情况 -->
+		<action name="queryList" class="technologyAction" method="queryList" >
+			<result>/pages/dbPage/cpManage/technology/technology.jsp</result>
+		</action>
+		<!-- 添加评估项时查询某系统定级信息 -->
+		<action name="queryBySysInfoId" class="technologyAction" method="queryBySysInfoId" >
+			<result>/pages/dbPage/cpManage/technology/addTechnology.jsp</result>
+		</action>
+		
+		<!-- 删除评估项-->
+		<action name="deleteById" class="technologyAction" method="deleteById" >
+			<result name="success" type="redirect">queryList.action?sysInfoId=${sysInfoId}</result>
+		</action>
+		<!-- 添加评估项-->
+		<action name="insert" class="technologyAction" method="insert" >
+			<result name="success" type="redirect">queryList.action?sysInfoId=${sysInfoId}</result>
+		</action>
+		<!-- 保存后开始评估 -->
+		<action name="saveAssess" class="technologyAction" method="saveAssess" />
+		<!-- 查询系统定级树 -->
+		<action name="queryTree" class="technologyAction" method="queryTree" />
+	</package>
+</struts>

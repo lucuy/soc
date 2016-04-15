@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="asset" extends="json-default" namespace="/asset">
+	<global-results>
+		   <result name="errorMessage" type="redirectAction">queryAsset?errorMessageflg=1
+		   </result> 
+	</global-results>
+		<!-- 查询资产 -->
+		<action name="queryAsset" class="assetAction" method="query">
+			<result name="success">/pages/asset/asset_list.jsp</result>
+		</action>
+
+		<!-- 删除资产 -->
+		<action name="deleteAsset" class="assetAction" method="deleteAsset">
+			<!-- <result type="redirectAction"> <param name="actionName">queryAsset</param> 
+				<param name="namespace">/asset</param> <param name="collectorId">${colId}</param> 
+				<param name="assetSegMent">${assetSeg}</param> </result> -->
+
+		</action>
+		<!-- 导出模板 -->
+		<action name="exportTEMP" class="assetAction" method="exportTEMP"/>
+		<!-- 进入编辑或者添加页面 -->
+		<action name="editAsset" class="assetAction" method="editAsset">
+			<result name="success">/pages/asset/asset_info.jsp</result>
+		</action>
+
+		<!-- 执行添加或者编辑操作 -->
+		<action name="updateAsset" class="assetAction" method="updateAsset">
+		<interceptor-ref name="defaultStack"/><!-- 需要注意拦截器栈的配置顺序-->  
+            <interceptor-ref name="token"/><!-- 这就是用来防止表单重复提交的拦截器-->  
+            <result name="invalid.token" type="redirectAction">
+            <param name="namespace">/asset</param>
+		       <param name="actionName">queryAsset</param>
+            
+            </result><!-- 需要注意的是名字必须为invalid.token-->  
+			<result name="success" type="chain">
+				<param name="namespace">/asset</param>
+				<param name="actionName">queryAsset</param>
+			</result>
+		</action>
+
+		<!-- 名称唯一性验证 -->
+		<action name="checkAssetName" class="assetAction" method="checkAssetName"></action>
+		<!-- 测试连接 -->
+		<action name="testLinked" class="assetAction" method="testLinked"/>
+		<!-- 查询所有资产 -->
+		<action name="queryAjax" class="assetAction" method="queryAjax">
+		</action>
+		<action name="queryCategory" class="assetAction" method="queryCategory">
+		</action>
+		<!-- 验证mac地址 -->
+		<action name="checkMac" class="assetAction" method="checkMac">
+		</action>
+
+		<!-- <action name="updateAssetStatus" class="assetAction" method="updateStatus"> 
+			<result type="redirectAction">queryAsset</result> </action> -->
+
+		<!-- 更新资产状态 -->
+		<action name="updateAssetStatus" class="assetAction" method="updateStatus">
+			<result name="success" type="json">
+				<param name="root">ids</param>
+			</result>
+		</action>
+
+		<!-- 资产导出 -->
+		<action name="export" class="assetAction" method="export">
+		</action>
+
+		<!-- 导入资产 -->
+		<action name="importAsset" class="assetAction" method="importAsset">
+			<result name="success" type="chain">
+				<param name="actionName">queryAsset</param>
+				<param name="namespace">/asset</param>
+				<param name="info">${info}</param>
+			</result>
+		</action>
+		
+		<!-- 漏扫导入资产 -->
+		<action name="importScanAsset" class="assetAction" method="importScanAsset">
+			<result name="success" type="chain">
+				<param name="actionName">queryAsset</param>
+				<param name="namespace">/asset</param>
+				<param name="info">${info}</param>
+			</result>
+		</action>
+		
+		
+		<!-- 计算资产的风险值 -->
+		<action name="completeAssetValue" class="assetAction" method="completeAssetValue">
+		</action>
+		<action name="systemChange1" class="assetAction" method="systemChangeAjax1">
+		</action>
+		<action name="systemChange2" class="assetAction" method="systemChangeAjax2">
+		</action>
+		<action name="systemChange3" class="assetAction" method="systemChangeAjax3">
+		</action>
+		<action name="insertAssetSystem" class="assetAction" method="insertAssetSystem">
+			<result name="success" type="chain">
+				<param name="namespace">/asset</param>
+				<param name="actionName">queryAsset</param>
+			</result>
+		</action>
+
+		<!-- AJAX查询所有的资产 -->
+		<action name="queryAllAsset" class="assetAction" method="queryAssetByGroupID">
+			<result type="json" name="success">
+				<param name="root">assetList</param>
+			</result>
+		</action>
+
+		<!-- 下发资产查看页面 -->
+		<action name="issuedAsset" class="assetAction" method="query">
+			<result name="success">/pages/asset/asset_issued_list.jsp</result>
+		</action>
+		<!-- 资产下发功能 -->
+		<action name="issued" class="assetAction" method="issuedMethod">
+			<result type="json" name="success">
+				<param name="root">info</param>
+			</result>
+		</action>
+
+		<!-- 根据IP查询资产 -->
+		<action name="queryAssetByIP" class="assetAction" method="query">
+			<result type="json" name="success">
+				<param name="root">info2</param>
+			</result>
+		</action>
+
+		<!-- 修改资产关联规则 -->
+		<action name="updateAnalysisRules" class="assetAction" method="updateAnalysisRules">
+			<result type="json" name="success">
+				<param name="root">info</param>
+			</result>
+		</action>
+		
+		<!-- 根据Asset ID查询资产信息 -->
+		<action name="queryAssetById" class="assetAction" method="queryAssetById">
+		    <result type="json" name="success">
+		      <param name="root">asset</param>
+		    </result>
+		</action>
+		
+		<action name="showTopo" class="assetAction" method="showTopo">
+		    <result name="success">/pages/asset/topo_status.jsp</result>
+		</action>
+		
+		<action name="updateTopo" class="assetAction" method="updateTopo">
+		</action>
+		<!-- 查看所有采集器 -->
+		<action name="queryAllCollector" class="assetAction" method="queryAllCollector">
+		<result type="json" name="success">
+				<param name="root">collectorList</param>
+			</result>
+		</action> 
+	</package>
+
+</struts>	

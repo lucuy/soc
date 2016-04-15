@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="settingCenterip" extends="struts-default" namespace="/settingCenterip">
+		<action name="centerIp" class="SettingCenterIpAction" method="centerIp">
+			<result name="success">/pages/systemsetting/setting_centreList.jsp</result>
+		</action>
+		<action name="centerIpUpdate" class="SettingCenterIpAction" method="centerIpUpdate">
+			<result name="success">/pages/systemsetting/setting_centreList.jsp</result>
+		</action>
+	</package>
+</struts>

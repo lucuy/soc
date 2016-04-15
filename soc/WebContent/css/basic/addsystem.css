@@ -1,0 +1,15 @@
+  .btn{ background:url(/jdsc/images/btnbg.jpg) no-repeat; width:39px; height:28px; border:none; cursor:pointer;}
+      .biaoti
+      {  
+        height:28px;
+        color:black;
+        font-weight:bold;
+        text-align:center;
+        background-image: url("/jdsc/images/tdBg.jpg");
+      }
+    table td
+    {  font-size:12px;
+       line-height:28px;
+       background:none repeat scroll 0px 0px rgb(255,255,255);
+    }
+   

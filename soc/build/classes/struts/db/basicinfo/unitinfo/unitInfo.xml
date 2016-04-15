@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+    <struts>
+    	<package name="unitInfo" extends="struts-default" namespace="/unitInfo">
+    	<!-- 添加单位信息 -->
+		<action name="insert" class="unitInfoAction" method="update">
+			<result name="success">/pages/dbPage/basic/basic.jsp</result>
+		</action>
+		<!-- 查询单位信息 -->
+		<action name="query" class="unitInfoAction" method="query">
+			<result name="success">/pages/dbPage/basic/basic.jsp</result>
+		</action>
+		<!-- 修改单位信息 -->	
+		<action name="edit" class="unitInfoAction" method="edit">
+			<result name="success" >/pages/dbPage/basic/addbasic.jsp</result>
+		</action>
+    	</package>
+    </struts>

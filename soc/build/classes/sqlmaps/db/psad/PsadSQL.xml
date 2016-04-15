@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    
+    <sqlMap>
+        <resultMap class="Psad" id="psadResult">
+           <result property="psadId" column="PK_PSAD" jdbcType="int"/>
+           <result property="psadSort" column="PSAD_Sort" jdbcType="varchar"/>
+           <result property="psadName" column="PSAD_Name" jdbcType="varchar"/>
+           <result property="psadContent" column="PSAD_Content" jdbcType="varchar"/>
+           <result property="psadFatherSort" column="PSAD_FatherSort" jdbcType="varchar"/>
+           <result property="ishave" column="PSAD_Ishave" jdbcType="int" nullValue="-1"/>
+           <result property="haveIf" column="PSAD_HaveIf" jdbcType="int" nullValue="-1"/>
+        </resultMap>
+        <select id="pgAdminpsad.queryPsadByFatherSort" parameterClass="String" resultMap="psadResult">
+          select * from "tb_psad" where "PSAD_FatherSort"=#psadFatherSort# and "PSAD_Content" is not null
+       </select>
+       <!-- 根据排序查询 -->
+       <select id="pgAdminpsad.queryByPsadSortInfo" parameterClass="java.util.HashMap" resultMap="psadResult">
+          select * from "tb_psad"
+		<![CDATA[
+			where length(trim("PSAD_Sort"))=6
+		]]>
+		order by "PSAD_Sort";
+       </select>
+     <select id="pgAdminpsad.queryNextPsadSortInfo" parameterClass="java.util.HashMap" resultClass="int">
+          select COUNT(*) from "tb_psad"
+		<![CDATA[
+			where length(trim("PSAD_Sort"))=6 and "PSAD_Sort" LIKE '%2'
+		]]>
+       </select>
+        <!-- sqlserver -->
+       <select id="sqlServerpsad.queryPsadByFatherSort" parameterClass="String" resultMap="psadResult">
+          select * from "tb_psad" where "PSAD_FatherSort"=#psadFatherSort# and "PSAD_Content" is not null
+       </select>
+       <!-- 根据排序查询 -->
+       <select id="sqlServerpsad.queryByPsadSortInfo" parameterClass="java.util.HashMap" resultMap="psadResult">
+          select * from "tb_psad"
+		<![CDATA[
+			where len(LTRIM(RTRIM("PSAD_Sort")))=6
+		]]>
+		order by "PSAD_Sort";
+       </select>
+     <select id="sqlServerpsad.queryNextPsadSortInfo" parameterClass="java.util.HashMap" resultClass="int">
+          select COUNT(*) from "tb_psad"
+		<![CDATA[
+			where len(LTRIM(RTRIM("PSAD_Sort")))=6 and "PSAD_Sort" LIKE '%2'
+		]]>
+       </select>
+    </sqlMap>

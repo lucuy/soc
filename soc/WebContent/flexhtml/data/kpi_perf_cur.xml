@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Graph>
+	<resource ro_param1="CCTV_DATA" ro_param2="SYSTEM_CPU_PCT_LZ" chart_master_type="BAR" chart_detail_type="GRID" default_threhold="" unit="percent" label_color="2"/>
+</Graph>

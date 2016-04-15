@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="technologySQL">
+	<resultMap class="technology" id="technologyResult">
+		<result property="id" column="PK_CA" jdbcType="int" />
+		<result property="rankId" column="SYSINFO_Id" jdbcType="varchar" />
+		<result property="name" column="CA_Name" jdbcType="varchar" />
+		<result property="describe" column="CA_Describe" jdbcType="varchar" />
+		<result property="sysGrade" column="CA_SysGrade" jdbcType="varchar" />
+		<result property="startTime" column="CA_StartTime" jdbcType="datatime" />
+		<result property="endTime" column="CA_EndTime" jdbcType="datatime" />
+		<result property="currentState" column="CA_CurrentState" jdbcType="varchar" />
+	</resultMap>
+	<!-- 查询统计 -->
+	<select id="pgAdmintechnology.count" resultClass="int" parameterClass="java.util.HashMap">
+		select
+		count(*)
+		from
+		"tb_ca" 
+		where 1 = 1
+		<isNotEmpty prepend="AND" property="sysInfoId">
+			<![CDATA[
+				"SYSINFO_Id" = #sysInfoId#
+			]]>
+		</isNotEmpty>
+	</select>
+
+
+	<!-- 查询 -->
+	<select id="pgAdmintechnology.query" parameterClass="java.util.HashMap" resultMap="technologyResult">
+		select * from "tb_ca"  where 1 = 1
+		<isNotEmpty prepend="AND" property="sysInfoId">
+			<![CDATA[
+				"SYSINFO_Id" = #sysInfoId#
+			]]>
+		</isNotEmpty>
+		order by "PK_CA" desc
+	</select>
+
+	<!-- 查询信息系统最新评估结果列表 -->
+<!-- 	<select id="pgAdmintechnology.queryMaxEndTime" resultMap="technologyResult">
+		select "PK_CA" ,"SYSINFO_Id", "CA_Name", "CA_Describe", "CA_SysGrade", "CA_StartTime", MAX("CA_EndTime") as CA_EndTime,"CA_CurrentState"
+		from "tb_ca" where "CA_CurrentState"='2' GROUP BY "SYSINFO_Id" ;
+	</select> -->
+	<select id="pgAdmintechnology.queryMaxEndTime" resultMap="technologyResult">
+	select "PK_CA" ,"SYSINFO_Id", "CA_Name", "CA_Describe", "CA_SysGrade", "CA_StartTime", "CA_EndTime","CA_CurrentState"
+		from "tb_ca" WHERE "CA_CurrentState"='2' and "CA_EndTime" in (SELECT   MAX("CA_EndTime") as CA_EndTime FROM "tb_ca"
+		WHERE "CA_CurrentState"='2'  GROUP BY "SYSINFO_Id"  );
+	</select> 
+
+	<!-- 根据id查询详细信息 -->
+	<select id="pgAdmintechnology.queryById" parameterClass="int" resultMap="technologyResult">
+		select * from "tb_ca" where "PK_CA" = #id#
+	</select>
+
+	<!-- 根据系统id查询状态为评估结束的列表 -->
+	<select id="pgAdmintechnology.queryByAcIdForCs2" parameterClass="String" resultMap="technologyResult">
+		select * from "tb_ca" where "SYSINFO_Id" = #value# and "CA_CurrentState"='2'
+	</select>
+
+	<!-- 删除 -->
+	<delete id="pgAdmintechnology.deleteById" parameterClass="int">
+		<![CDATA[
+			DELETE FROM "tb_ca" WHERE "PK_CA" = #id#
+		]]>
+	</delete>
+
+	<!-- 添加 -->
+	<insert id="pgAdmintechnology.insert" parameterClass="technology">
+		INSERT INTO "tb_ca"("SYSINFO_Id","CA_Name","CA_Describe","CA_SysGrade","CA_StartTime","CA_EndTime","CA_CurrentState")
+		VALUES(#rankId#,#name#,#describe#,#sysGrade#,#startTime#,#endTime#,#currentState#)
+		
+		<selectKey resultClass="java.lang.Integer" keyProperty="id">
+			SELECT currval('tb_ca_seq'::regclass) AS userId
+		</selectKey>
+	</insert>
+
+	<!-- 更改 -->
+	<update id="pgAdmintechnology.update" parameterClass="technology">
+		UPDATE "tb_ca" set
+		"SYSINFO_Id"=#rankId#,
+		"CA_Name"=#name#,
+		"CA_Describe"=#describe#,
+		"CA_SysGrade"=#sysGrade#,
+		"CA_StartTime"=#startTime#,
+		"CA_EndTime"=#endTime#,
+		"CA_CurrentState"=#currentState#
+		where "PK_CA" = #id#
+	</update>
+
+	<!-- 更改状态 -->
+	<update id="pgAdmintechnology.updateCurrentState" parameterClass="java.util.HashMap">
+		UPDATE "tb_ca" set
+		"CA_CurrentState"=#currentState#
+		where "PK_CA" = #id#
+	</update>
+
+	<!-- 更改结束时间 -->
+	<update id="pgAdmintechnology.updateEndTime" parameterClass="java.util.HashMap">
+		UPDATE "tb_ca" set
+		"CA_EndTime"=#endTime#
+		where "PK_CA" = #id#
+	</update>
+	
+<!-- sqlserver -->
+	<!-- 查询统计 -->
+	<select id="sqlServertechnology.count" resultClass="int" parameterClass="java.util.HashMap">
+		select
+		count(*)
+		from
+		"tb_ca" 
+		where 1 = 1
+		<isNotEmpty prepend="AND" property="sysInfoId">
+			<![CDATA[
+				"SYSINFO_Id" = #sysInfoId#
+			]]>
+		</isNotEmpty>
+	</select>
+
+
+	<!-- 查询 -->
+	<select id="sqlServertechnology.query" parameterClass="java.util.HashMap" resultMap="technologyResult">
+		select * from "tb_ca"  where 1 = 1
+		<isNotEmpty prepend="AND" property="sysInfoId">
+			<![CDATA[
+				"SYSINFO_Id" = #sysInfoId#
+			]]>
+		</isNotEmpty>
+		order by "PK_CA" desc
+	</select>
+
+	<!-- 查询信息系统最新评估结果列表 -->
+<!-- 	<select id="sqlServertechnology.queryMaxEndTime" resultMap="technologyResult">
+		select "PK_CA" ,"SYSINFO_Id", "CA_Name", "CA_Describe", "CA_SysGrade", "CA_StartTime", MAX("CA_EndTime") as CA_EndTime,"CA_CurrentState"
+		from "tb_ca" where "CA_CurrentState"='2' GROUP BY "SYSINFO_Id" ;
+	</select> -->
+	<select id="sqlServertechnology.queryMaxEndTime" resultMap="technologyResult">
+	select "PK_CA" ,"SYSINFO_Id", "CA_Name", "CA_Describe", "CA_SysGrade", "CA_StartTime", "CA_EndTime","CA_CurrentState"
+		from "tb_ca" WHERE "CA_CurrentState"='2' and "CA_EndTime" in (SELECT   MAX("CA_EndTime") as CA_EndTime FROM "tb_ca"
+		WHERE "CA_CurrentState"='2'  GROUP BY "SYSINFO_Id"  );
+	</select> 
+
+	<!-- 根据id查询详细信息 -->
+	<select id="sqlServertechnology.queryById" parameterClass="int" resultMap="technologyResult">
+		select * from "tb_ca" where "PK_CA" = #id#
+	</select>
+
+	<!-- 根据系统id查询状态为评估结束的列表 -->
+	<select id="sqlServertechnology.queryByAcIdForCs2" parameterClass="String" resultMap="technologyResult">
+		select * from "tb_ca" where "SYSINFO_Id" = #value# and "CA_CurrentState"='2'
+	</select>
+
+	<!-- 删除 -->
+	<delete id="sqlServertechnology.deleteById" parameterClass="int">
+		<![CDATA[
+			DELETE FROM "tb_ca" WHERE "PK_CA" = #id#
+		]]>
+	</delete>
+
+	<!-- 添加 -->
+	<insert id="sqlServertechnology.insert" parameterClass="technology">
+		INSERT INTO "tb_ca"("SYSINFO_Id","CA_Name","CA_Describe","CA_SysGrade","CA_StartTime","CA_EndTime","CA_CurrentState")
+		VALUES(#rankId#,#name#,#describe#,#sysGrade#,#startTime#,#endTime#,#currentState#)
+		
+		 <selectKey resultClass="java.lang.Integer" keyProperty="id">
+<!-- 			SELECT currval('tb_ca_seq'::regclass) AS userId -->
+           SELECT @@IDENTITY AS userId
+		</selectKey>
+	</insert>
+
+	<!-- 更改 -->
+	<update id="sqlServertechnology.update" parameterClass="technology">
+		UPDATE "tb_ca" set
+		"SYSINFO_Id"=#rankId#,
+		"CA_Name"=#name#,
+		"CA_Describe"=#describe#,
+		"CA_SysGrade"=#sysGrade#,
+		"CA_StartTime"=#startTime#,
+		"CA_EndTime"=#endTime#,
+		"CA_CurrentState"=#currentState#
+		where "PK_CA" = #id#
+	</update>
+
+	<!-- 更改状态 -->
+	<update id="sqlServertechnology.updateCurrentState" parameterClass="java.util.HashMap">
+		UPDATE "tb_ca" set
+		"CA_CurrentState"=#currentState#
+		where "PK_CA" = #id#
+	</update>
+
+	<!-- 更改结束时间 -->
+	<update id="sqlServertechnology.updateEndTime" parameterClass="java.util.HashMap">
+		UPDATE "tb_ca" set
+		"CA_EndTime"=#endTime#
+		where "PK_CA" = #id#
+	</update>
+
+</sqlMap>

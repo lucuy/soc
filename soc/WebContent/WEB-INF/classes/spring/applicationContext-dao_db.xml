@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans-2.0.xsd" default-lazy-init="true">
+
+	<!-- Transaction manager for a single JDBC DataSource -->
+	<bean id="transactionManager1" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- SqlMap setup for iBATIS Database Layer -->
+	<bean id="sqlMapClient1" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sql-map-db-config.xml" />
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="sqlExecutor1" class="com.soc.dao.ibatis.LimitSqlExecutor">
+		<property name="dialect">
+			<bean class="com.soc.dao.ibatis.MyDialect" />
+		</property>
+	</bean>
+
+	<!--baseDao1 所有service都继承此类 -->
+	<bean id="baseDao1" abstract="true" class="com.compliance.dao.ibatis.BaseDaoiBatis" init-method="initialize">
+		<property name="dataSource" ref="dataSource" />
+		<property name="sqlMapClient" ref="sqlMapClient1" />
+		<property name="sqlExecutor">
+			<ref bean="sqlExecutor1" />
+		</property>
+	</bean>
+
+	<!-- 基础数据—————————————————————————————————————————————————————————————————————————————————————————————————————————————— -->
+	<!--用户管理 -->
+	<!-- <bean id="employeeDao" class="com.compliance.dao.basicinfo.employee.ibatis.EmployeeDaoIbatis" parent="baseDao1"></bean> -->
+	<!--组织部门 -->
+	<bean id="divisionDao" class="com.compliance.dao.basicinfo.division.ibatis.DivisionDaoIbatis" parent="baseDao1"></bean>
+	<!-- 单位信息 -->
+	<bean id="unitInfoDao" class="com.compliance.dao.basicinfo.unitinfo.ibatis.UnitInfoDaoIbatis" parent="baseDao1"></bean>
+	<!-- 信息系统管理 -->
+	<bean id="systemDao" class="com.compliance.dao.basicinfo.system.ibatis.SystemImpl" parent="baseDao1"></bean>
+	<!--信息资产: 业务应用软件 -->
+	<bean id="softUseDao" class="com.compliance.dao.basicinfo.assets.ibatis.SoftUseDaoIbatis" parent="baseDao1"></bean>
+	<!-- 信息资产:关键数据类别 -->
+	<bean id="dataAssetsDao" class="com.compliance.dao.basicinfo.assets.ibatis.DataAssetsDaoIbatis" parent="baseDao1"></bean>
+	<!-- 信息资产:主机存储设备 -->
+	<bean id="compAssetsDao" class="com.compliance.dao.basicinfo.assets.ibatis.CompAssetsDaoIbatis" parent="baseDao1"></bean>
+	<!-- 信息资产:网络互连设备 -->
+	<bean id="netAssetsDao" class="com.compliance.dao.basicinfo.assets.ibatis.NetAssetsDaoIbatis" parent="baseDao1"></bean>
+	<!--信息资产: 安全设备 -->
+	<bean id="devAssetsDao" class="com.compliance.dao.basicinfo.assets.ibatis.DevAssetsDaoIbatis" parent="baseDao1"></bean>
+	<!-- 信息资产:安全相关人员 -->
+	<bean id="empAssetsDao" class="com.compliance.dao.basicinfo.assets.ibatis.EmpAssetsDaoIbatis" parent="baseDao1"></bean>
+	<!-- 信息资产:安全文档管理 -->
+	<bean id="docAssetsDao" class="com.compliance.dao.basicinfo.assets.ibatis.DocAssetsDaoIbatis" parent="baseDao1"></bean>
+	<!--定级备案—————————————————————————————————————————————————————————————————————————————————————————————————————————————————— -->
+	<!-- 定级信息 -->
+	<bean id="rankDao" class="com.compliance.dao.rank.impl.RankDaoImpl" parent="baseDao1"></bean>
+	<!--备案 -->
+	<bean id="recordDao" class="com.compliance.dao.rank.impl.RecordDaoImpl" parent="baseDao1"></bean>
+	<!--备案历史 -->
+	<bean id="recordHistoryDao" class="com.compliance.dao.rank.impl.RecordHistoryDaoImpl" parent="baseDao1"></bean>
+
+	<!--备案集 -->
+	<bean id="recordDocListDao" class="com.compliance.dao.rank.impl.RecordDocListDaoImpl" parent="baseDao1"></bean>
+	<!--系统废止 -->
+	<bean id="sysAbolishDao" class="com.compliance.dao.rank.impl.SysAbolishDaoImpl" parent="baseDao1"></bean>
+	<!-- 统计报表 -->
+	<bean id="rankReportDao" class="com.compliance.dao.rank.impl.RenkReportDaoImpl" parent="baseDao1"></bean>
+
+	<!--合规管理———————————————————————————————————————————————————————————————————————————————————————————————— -->
+	<!-- 技术差距分析 -->
+	<bean id="technologyDao" class="com.compliance.dao.cpManage.technology.impl.TechnologyDaoImpl" parent="baseDao1"></bean>
+	<!--根据排序查找js算法 -->
+	<bean id="arithmeticDao" class="com.compliance.dao.cpManage.demand.ibatis.ArithmeticDaoIbatis" parent="baseDao1"></bean>
+	<!-- 技术差距评估 -->
+	<bean id="assessResultDao" class="com.compliance.dao.cpManage.assessResult.ibatis.AssessResultDaoIbatis" parent="baseDao1"></bean>
+
+
+
+	<!-- 通用物理管理 -->
+	<bean id="psadDao" class="com.compliance.dao.psad.Impl.PsadIbatis" parent="baseDao1"></bean>
+	<!-- 通用物理评估 -->
+	<bean id="psaDao" class="com.compliance.dao.psad.Impl.PsaDaoIbatis" parent="baseDao1"></bean>
+	<!-- 通用管理 -->
+	<bean id="msadDao" class="com.compliance.dao.msad.Impl.MsadDaoIbatis" parent="baseDao1"></bean>
+	<!-- 通用管理评估 -->
+	<bean id="msaAppDao" class="com.compliance.dao.msad.Impl.MsaDaoIbatis" parent="baseDao1"></bean>
+
+
+
+	<!--整改需求汇总 -->
+	<bean id="demandColletDao" class="com.compliance.dao.cpManage.demand.ibatis.DemandColletDaoIbatis" parent="baseDao1"></bean>
+	<!-- 通用管理安全测评 -->
+	<bean id="msaDao" class="com.compliance.dao.cpManage.msaShow.impl.MsaDaoImpl" parent="baseDao1"></bean>
+	<!-- 通用管理安全测评整改需求汇总 -->
+	<bean id="msaShowDao" class="com.compliance.dao.cpManage.msaShow.impl.MsaShowDaoImpl" parent="baseDao1"></bean>
+	<!-- 通用物理测评 -->
+	<bean id="gpaDao" class="com.compliance.dao.cpManage.gpaShow.impl.GpaDaoImpl" parent="baseDao1"></bean>
+	<!-- 通用物理测评整改需求汇总 -->
+	<bean id="gpaShowDao" class="com.compliance.dao.cpManage.gpaShow.impl.GpaShowDaoImpl" parent="baseDao1"></bean>
+
+	<!--整改建议 -->
+	<bean id="rectificationProposalDao" class="com.compliance.dao.cpManage.rectificationProposal.ibatis.RectificationProposalDaoIbatis" parent="baseDao1"></bean>
+	<!--通用物理整改建议 -->
+	<bean id="gpaRectDao" class="com.compliance.dao.cpManage.gpaShow.impl.GpaRectDaoImpl" parent="baseDao1"></bean>
+	<!--通用管理整改建议 -->
+	<bean id="msaRectDao" class="com.compliance.dao.cpManage.msaShow.impl.MsaRectDaoImpl" parent="baseDao1"></bean>
+
+
+	<!-- 差距分析报告 -->
+	<!-- 差距分析进度 -->
+	<bean id="gapScheduleDao" class="com.compliance.dao.cpManage.gapAnalysisSchedule.ibatis.GapScheduleDaoIbatis" parent="baseDao1"></bean>
+
+
+	<!-- 差距分析报告导出文档 -->
+	<bean id="gapReportDocumentDao" class="com.compliance.dao.cpManage.gapReportDocument.ibatis.GapReportDocumentIbatis" parent="baseDao1"></bean>
+	<bean id="generalPhysicalDao" class="com.compliance.dao.cpManage.generalPhysical.ibatis.GeneralPhysicalDaoIbatis" parent="baseDao1"></bean>
+	<bean id="securityTableDao" class="com.compliance.dao.cpManage.securityTable.ibatis.SecurityTableDaoIbatis" parent="baseDao1"></bean>
+	<bean id="gapStatisticsUnitDao" class="com.compliance.dao.cpManage.gapStatisticsUnit.ibatis.GapStatisticsUnitDaoIbatis" parent="baseDao1"></bean>
+
+	<!--整改建议历史对比 -->
+	<bean id="contrastDao" class="com.compliance.dao.cpManage.contrastRectification.impl.ContrastDaoIbatis" parent="baseDao1">
+	</bean>
+
+	<!-- 汇总分析 -->
+
+	<!-- 安全差距分析 -->
+
+	<bean id="securityGapDao" class="com.compliance.dao.cpManage.summaryAnalysis.ibatis.SecurityGapDaoIbatis" parent="baseDao1"></bean>
+
+	<!--安全控制分析报告 -->
+	<bean id="securityControlDao" class="com.compliance.dao.cpManage.securityControl.ibatis.SecurityControlDaoIbatis" parent="baseDao1"></bean>
+
+	<!-- 审计模块 -->
+	<!-- <bean id="auditDao" class="com.compliance.dao.audit.ibatis.AuditDaoIbatis" parent="baseDao1"></bean> -->
+	
+	<!-- 文件下载 -->
+	<bean id="filesDao" class="com.compliance.dao.files.ibatis.FilesDaoIbatis" parent="baseDao1">
+	</bean>	
+
+</beans>
+
+
+
+
+
+
+
+

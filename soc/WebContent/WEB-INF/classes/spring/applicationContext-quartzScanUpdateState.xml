@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 定义注入的类和参数 -->
+	<bean name="scanUpdateStateTaskTrigger" class="com.soc.webapp.quartz.ScanUpdateState">
+		<property name="scanTaskManager" ref="scanTaskManager"></property>
+	</bean>
+
+	<!-- 定义定时器，指定执行的类和方法 -->
+	<bean name="scanUpdateStateTaskDetailBean"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="scanUpdateStateTaskTrigger" />
+		<property name="targetMethod" value="checkFiles" />
+
+	</bean>
+
+	<bean name="scanUpdateStateBean"
+		class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		<property name="jobDetail" ref="scanUpdateStateTaskDetailBean" />
+		<property name="repeatInterval" value="120000" />
+		<property name="startDelay" value="60000" /><!-- 启动延时5秒启动 -->
+	</bean>
+
+	<bean name="scanUpdateStateBeanFactoryBean"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="scanUpdateStateBean" />
+			</list>
+		</property>
+	</bean>
+</beans>

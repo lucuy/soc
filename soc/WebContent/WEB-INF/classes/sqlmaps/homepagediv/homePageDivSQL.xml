@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="homePageDivSQL">
+	<resultMap id="homePageDivResult" class="homePageDiv">
+		<result	property="status"		column="STATUS"		jdbcType="int" />
+		<result	property="id"			column="ID"			jdbcType="vachar" />
+   		<result	property="x"			column="X"			jdbcType="int" />
+  		<result	property="y"			column="Y"			jdbcType="int" />
+   	</resultMap>
+<select id="pgAdminhomePageDiv.query" resultMap="homePageDivResult" parameterClass="long">
+	select "STATUS"	,"ID","X"	,"Y"	   from "tbl_home_page_div" where "STATUS" =1 and "USER_ID" = #userId# order by "X"+"Y","X"-"Y" desc 
+</select>
+
+<update id="pgAdminhomePageDiv.update" parameterClass="java.util.HashMap">
+    update  "tbl_home_page_div" set "STATUS"=#status# where "ID"=#id# and "USER_ID" = #userId# 
+</update>
+<update id="pgAdminhomePageDiv.updateHomePageDiv" parameterClass="java.util.HashMap">
+    update  "tbl_home_page_div" set  "X"=#x#, "Y"=#y# , "STATUS"=#status#
+	 
+     where 1= 1 
+      <isNotEmpty prepend="AND" property="id">
+	       <![CDATA[ 
+	        "ID"= #id#
+	       ]]>
+	   </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="userId">
+	       <![CDATA[ 
+	         "USER_ID" = #userId# 
+	       ]]>
+	   </isNotEmpty>
+</update>
+<!-- 插入div -->
+<insert id="pgAdminhomePageDiv.insertHomePageDiv" parameterClass="homePageDiv">
+		INSERT INTO tbl_home_page_div(
+		"ID",
+		"STATUS",
+		"USER_ID",
+		"X",
+		"Y"
+		)
+		VALUES
+		(#id#,#status#,#userId#,#x#,#y#);
+	</insert>
+	<delete id="pgAdminhomePageDiv.deleteDivByUserId" parameterClass="int">
+	DELETE FROM  "tbl_home_page_div" WHERE "USER_ID" = #userId#
+	
+	</delete>
+<!-- sqlServer -->
+<select id="sqlServerhomePageDiv.query" resultMap="homePageDivResult" parameterClass="long">
+	select "STATUS"	,"ID","X"	,"Y"	   from "tbl_home_page_div" where "STATUS" =1 and "USER_ID" = #userId# order by "X"+"Y","X"-"Y" desc 
+</select>
+
+<update id="sqlServerhomePageDiv.update" parameterClass="java.util.HashMap">
+    update  "tbl_home_page_div" set "STATUS"=#status# where "ID"=#id# and "USER_ID" = #userId# 
+</update>
+<update id="sqlServerhomePageDiv.updateHomePageDiv" parameterClass="java.util.HashMap">
+    update  "tbl_home_page_div" set  "X"=#x#, "Y"=#y# , "STATUS"=#status#
+	 
+     where 1= 1 
+      <isNotEmpty prepend="AND" property="id">
+	       <![CDATA[ 
+	        "ID"= #id#
+	       ]]>
+	   </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="userId">
+	       <![CDATA[ 
+	         "USER_ID" = #userId# 
+	       ]]>
+	   </isNotEmpty>
+</update>
+<!-- 插入div -->
+<insert id="sqlServerhomePageDiv.insertHomePageDiv" parameterClass="homePageDiv">
+		INSERT INTO tbl_home_page_div(
+		"ID",
+		"STATUS",
+		"USER_ID",
+		"X",
+		"Y"
+		)
+		VALUES
+		(#id#,#status#,#userId#,#x#,#y#);
+	</insert>
+	<delete id="sqlServerhomePageDiv.deleteDivByUserId" parameterClass="int">
+	DELETE FROM  "tbl_home_page_div" WHERE "USER_ID" = #userId#
+	
+	</delete>
+
+
+</sqlMap>

@@ -1,0 +1,777 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="alertMessageSQL">
+	<resultMap id="alertMessageResult" class="alertMessage">
+		<result property="alertId"                  column="ALARM_ID"                   jdbcType="bigint" />
+		<result property="alertTitle"               column="ALARM_TITLE"                jdbcType="varchar" />
+		<result property="alertRank"                column="ALARM_RANK"                 jdbcType="smallint" />
+		<result property="userRealName"             column="ALARM_RECEIVER"             jdbcType="varchar" />
+		<result property="sendMode"                 column="ALARM_SEND_WAY"             jdbcType="varchar" />
+		<result property="alertCreateDatetime"      column="ALARM_CREATE_DATETIME"      jdbcType="bigint" />
+		<result property="alertState"               column="ALARM_STATE"                jdbcType="smallint" />
+		<result property="alertNumber"              column="ALARM_NUMBER"               jdbcType="bigint" />
+		<result property="relEventsIdentification"  column="REL_LOG_IDENTIFICATION"     jdbcType="bigint" />
+		<result property="alertAssetId"             column="ALARM_ASSET_ID"           	jdbcType="bigint" />
+		<result property="alertAssetName"           column="ALARM_ASSET_NAME"        	jdbcType="varchar" />
+		<result property="alertLogTableName"        column="ALARM_LOG_TABLE_NAME"     	jdbcType="varchar" />
+		<result property="alertEventName"           column="REL_EVENT_NMAE"           	jdbcType="varchar"/>
+		<result property="alertEventType"           column="REL_EVENT_TYPE"            	jdbcType="varchar"/>
+		<result property="alertDeviceIp"            column="REL_DEVICE_IP"             	jdbcType="varchar"/>
+		<result property="alertDeviceType"          column="REL_DEVICE_TYPE"           	jdbcType="varchar"/>
+		<result property="alarmRuleId"         		column="ALARM_RULE_ID"           	jdbcType="bigint"/>
+		<result property="eventsSourcePort" 		column="EVENTS_SOURCEPORT" 			jdbcType="bigint" />
+		<result property="eventsSourceAdd" 			column="EVENTS_SOURCEADD" 			jdbcType="bigint" />
+		<result property="eventsTargetAdd" 			column="EVENTS_TARGETADD" 			jdbcType="bigint" />
+		<result property="eventsTargetPort" 		column="EVENTS_TARGETPORT" 			jdbcType="bigint" />
+		<result property="eventsSourceAddT" 		column="EVENTS_SOURCEADDT" 			jdbcType="varchar" />
+		<result property="eventsTargetAddT" 		column="EVENTS_TARGETADDT" 			jdbcType="varchar" />
+		<result property="workorder" 				column="WORKORDER" 					jdbcType="varchar" />
+		<result property="messageOperateDate" 		column="MESSAGE_OPERATE_DATE" 		jdbcType="varchar" />
+		<result property="alertDeviceName" 			column="ALERT_DEVICE_NAME" 			jdbcType="varchar" />
+		<result property="eventSendTime"            column="EVENTS_SENDTIME"            jdbcType="varchar" />
+		<result property="isClose"            column="ALARM_IS_CLOSE"            jdbcType="int" />
+	</resultMap>
+
+	<resultMap id="alertMessageResult1" class="alertMessage">
+		<result property="alertId" column="ALARM_ID" jdbcType="bigint" />
+	</resultMap>
+	<resultMap id="alertMessageResult2" class="alertMessage">
+		<result property="alertRank"                column="ALARM_RANK"                 jdbcType="smallint" />
+		<result property="alertCreateDatetime"      column="ALARM_CREATE_DATETIME"      jdbcType="bigint" />
+		<result property="alertEventName"           column="REL_EVENT_NMAE"           	jdbcType="varchar"/>
+		<result property="alertEventType"           column="REL_EVENT_TYPE"            	jdbcType="varchar"/>
+		<result property="alertDeviceIp"            column="REL_DEVICE_IP"             	jdbcType="varchar"/>
+		<result property="alertDeviceName" 			column="ALERT_DEVICE_NAME" 			jdbcType="varchar" />
+		<!-- <result property="alertMark" 			column="ALARM_MARK" 			jdbcType="bigint" /> -->
+	</resultMap>
+	<select id="pgAdminalertMessage.count" resultClass="int"
+		parameterClass="java.util.HashMap">
+		SELECT COUNT(*) FROM "tbl_alarm" WHERE 1 = 1
+		<isNotEmpty prepend="AND" property="keyword">
+			("ALARM_ASSET_NAME" LIKE
+			'%$keyword$%' OR "REL_EVENT_TYPE" LIKE '%$keyword$%' OR "REL_DEVICE_TYPE" LIKE '%$keyword$%' OR "REL_DEVICE_IP" LIKE '%$keyword$%'
+			OR "REL_EVENT_NMAE" LIKE '%$keyword$%' OR "EVENTS_SOURCEADDT" LIKE '%$keyword$%' OR "EVENTS_TARGETADDT" LIKE '%$keyword$%'
+			)
+		</isNotEmpty>
+		  
+	<isNotEmpty prepend="AND" property="sendMode">
+			"ALARM_SEND_WAY" LIKE
+			'%$sendMode$%'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="alertRank">
+			"ALARM_RANK" =#alertRank#
+			
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="userRealName">
+			"ALARM_RECEIVER" LIKE
+			'%$userRealName$%'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="rel_assetName">
+			"ALARM_ASSET_NAME" LIKE
+			'%$rel_assetName$%'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="rel_eventType">
+			"REL_EVENT_TYPE" LIKE
+			'%$rel_eventType$%'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="rel_deviceType">
+			<!-- "REL_DEVICE_TYPE" LIKE
+			'%$rel_deviceType$%'  -->
+			
+			"REL_DEVICE_TYPE" SIMILAR TO '(%$rel_deviceType$%)' 
+			
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="ruleId1">
+			"ALARM_RULE_ID" in ($ruleId1$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="timstmp">
+		   "ALARM_CREATE_DATETIME" > #timstmp#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="alertAssetId">
+             "ALARM_ASSET_ID" in  ($alertAssetId$)
+          </isNotEmpty>
+	</select>
+
+	<!-- 查询列表  修改根据用户关联的资产组去查询资产，然后根据资产去查询告警-->
+	<select id="pgAdminalertMessage.query" resultMap="alertMessageResult"
+		parameterClass="java.util.HashMap">
+		SELECT * FROM "tbl_alarm" WHERE 1 = 1
+		<isNotEmpty prepend="AND" property="keyword">
+			("ALARM_ASSET_NAME" LIKE
+			'%$keyword$%' OR "REL_EVENT_TYPE" LIKE '%$keyword$%' OR "REL_DEVICE_TYPE" LIKE '%$keyword$%' OR "REL_DEVICE_IP" LIKE '%$keyword$%'
+			OR "REL_EVENT_NMAE" LIKE '%$keyword$%' OR "EVENTS_SOURCEADDT" LIKE '%$keyword$%' OR "EVENTS_TARGETADDT" LIKE '%$keyword$%'
+			)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="sendMode">
+			"ALARM_SEND_WAY" LIKE
+			'%$sendMode$%'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="alertRank">
+			"ALARM_RANK" =#alertRank#
+			
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="userRealName">
+			"ALARM_RECEIVER" LIKE
+			'%$userRealName$%'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="rel_assetName">
+			"ALARM_ASSET_NAME" LIKE
+			'%$rel_assetName$%'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="rel_eventType">
+			"REL_EVENT_TYPE" LIKE
+			'%$rel_eventType$%'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="rel_deviceType">
+			<!--  "REL_DEVICE_TYPE" LIKE
+			'%$rel_deviceType$%'-->
+			
+			"REL_DEVICE_TYPE" SIMILAR TO '(%$rel_deviceType$%)' 
+			
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="ruleId1">
+			"ALARM_RULE_ID" in ($ruleId1$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="timstmp">
+		   "ALARM_CREATE_DATETIME" > #timstmp#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="ids">
+		   "ALARM_ID" in($ids$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="alertAssetId">
+             "ALARM_ASSET_ID" in  ($alertAssetId$)
+          </isNotEmpty>
+          <isNotEmpty prepend="AND" property="isClose">
+              "ALARM_IS_CLOSE" =#isClose#
+          </isNotEmpty>
+		ORDER BY "ALARM_CREATE_DATETIME" DESC
+	</select>
+	
+	<!-- 插入一条记录 -->
+	<insert id="pgAdminalertMessage.insert" parameterClass="alertMessage">
+		INSERT INTO "tbl_alarm"
+		          ("ALARM_TITLE",
+		           "ALARM_RANK",
+		           "ALARM_RECEIVER",
+		           "ALARM_SEND_WAY",
+		           "ALARM_CREATE_DATETIME",
+		           "ALARM_STATE",
+		           "ALARM_NUMBER",
+		           "REL_LOG_IDENTIFICATION",
+		           "ALARM_ASSET_ID",
+		           "ALARM_ASSET_NAME",
+		           "ALARM_LOG_TABLE_NAME",
+		           "REL_EVENT_NMAE",
+		           "REL_EVENT_TYPE",
+		           "REL_DEVICE_IP",
+		           "REL_DEVICE_TYPE",
+		           "ALARM_RULE_ID",
+		           "EVENTS_SOURCEPORT",
+		           "EVENTS_SOURCEADD",
+		           "EVENTS_TARGETADD",
+		           "EVENTS_TARGETPORT",
+		           "EVENTS_SOURCEADDT",
+		           "EVENTS_TARGETADDT",
+		           "WORKORDER",
+		           "MESSAGE_OPERATE_DATE",
+		           "ALERT_DEVICE_NAME",
+		           "EVENTS_SENDTIME",
+		           "ALARM_IS_CLOSE"
+		           )
+		VALUES 
+				  (#alertTitle# , 
+				   #alertRank#,
+				   #userRealName#,
+				   #sendMode#,
+				   #alertCreateDatetime#,
+				   #alertState#,
+				   #alertNumber#,
+				   #relEventsIdentification#,
+				   #alertAssetId#,
+				   #alertAssetName#,
+				   #alertLogTableName#,
+				   #alertEventName#,
+				   #alertEventType#,
+				   #alertDeviceIp#,
+				   #alertDeviceType#,
+				   #alarmRuleId#,
+				   #eventsSourcePort#,
+				   #eventsSourceAdd#,
+				   #eventsTargetAdd#,
+				   #eventsTargetPort#,
+				   #eventsSourceAddT#,
+				   #eventsTargetAddT#,
+				   '01',
+				   #messageOperateDate#,
+				   #alertDeviceName#,
+				   #eventSendTime#,
+				   1
+				   )
+				  
+	</insert>
+
+	<!-- 查询近期告警时间内的告警次数 -->
+	<select id="pgAdminalertMessage.current" parameterClass="java.util.HashMap"
+		resultClass="int">
+	    <![CDATA[
+	       SELECT COUNT(*) FROM "tbl_alarm" WHERE  1= 1 
+	      
+	    ]]>
+	     <isNotEmpty prepend="AND" property="assetid">
+             "ALARM_ASSET_ID" in  ($assetid$)
+          </isNotEmpty>
+           <isNotEmpty prepend="AND" property="ruleId1">
+	       "ALARM_RULE_ID" in ($ruleId1$)
+          </isNotEmpty>
+	        and "ALARM_IS_CLOSE"=1
+	</select>
+
+	<!-- 查询近期告警事件的列表 -->
+	<select id="pgAdminalertMessage.currentEvent" parameterClass="long"
+		resultMap="alertMessageResult1">
+	    <![CDATA[
+	       SELECT * FROM "tbl_alarm" WHERE "ALARM_CREATE_DATETIME" > #value# 
+	    ]]>
+	</select>
+	
+	<!-- 查询近期的最新10条告警 更新根据用户关联的资产组查询到资产然后查询告警 -->
+	<select id="pgAdminalertMessage.currentMessage" parameterClass="java.util.HashMap" resultMap="alertMessageResult">
+	   <![CDATA[
+	        SELECT * FROM "tbl_alarm" WHERE  1 = 1
+	   ]]>
+	     <isNotEmpty prepend="AND" property="alertAssetId">
+             "ALARM_ASSET_ID" in  ($alertAssetId$)
+          </isNotEmpty>
+	   <isNotEmpty prepend="AND" property="timeHour">
+	       "ALARM_CREATE_DATETIME" >  #timeHour#
+	   </isNotEmpty>
+	   ORDER BY "ALARM_CREATE_DATETIME" DESC
+	   LIMIT #topN# offset 0
+	</select>
+	
+	<!-- 查询近期的事件按照等级分组  更新根据用户关联的资产组查询到资产然后查询告警-->
+	<select id="pgAdminalertMessage.groupByRank" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+          <![CDATA[
+               SELECT "ALARM_RANK" AS "key" , COUNT("ALARM_RANK") AS "count" FROM "tbl_alarm"  WHERE 1= 1        
+          ]]>
+            <isNotEmpty prepend="AND" property="alertAssetId">
+             "ALARM_ASSET_ID" in  ($alertAssetId$)
+          </isNotEmpty>
+          <isNotEmpty prepend="AND" property="timeHour">
+              "ALARM_CREATE_DATETIME" >  #timeHour#
+          </isNotEmpty>
+          GROUP BY "ALARM_RANK"
+          ORDER BY "ALARM_RANK" ASC
+	</select>
+	
+	<!-- 查询近期告警次数最多的十个资产 更新根据用户关联的资产组查询到资产然后查询告警-->
+	<select id="pgAdminalertMessage.countAsset" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	     <![CDATA[
+	        SELECT "ALARM_ASSET_NAME" AS "key",COUNT("ALARM_ASSET_NAME") AS "value" FROM "tbl_alarm"  WHERE 1= 1
+	        
+	      ]]>
+	       <isNotEmpty prepend="AND" property="alertAssetId">
+             "ALARM_ASSET_ID" in  ($alertAssetId$)
+          </isNotEmpty>
+	      <isNotEmpty prepend="AND" property="timeHour">
+              "ALARM_CREATE_DATETIME" >  #timeHour#
+          </isNotEmpty>
+           GROUP BY "ALARM_ASSET_NAME"
+           ORDER BY "value" DESC
+           LIMIT 10 offset 0
+	</select>
+	
+	<select id="pgAdminquertAlertRuleByID.query" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	     SELECT "ALARM_RULE_ID" as "alarm_rule_id" FROM "tbl_alarm_rule" WHERE "CREATE_USER_ID"=#thisUserId#
+	      <isNotEmpty prepend="AND" property="alertAssetId">
+             "ALARM_ASSET_ID" in  ($alertAssetId$)
+          </isNotEmpty>
+	</select>
+	
+	
+	<!-- 修改日期和工单的状态 -->
+	<update id="pgAdminalertMessage.updateAlertMassage" parameterClass="java.util.HashMap">
+		update tbl_alarm set "WORKORDER"='02' ,"ALARM_IS_CLOSE"=0, "MESSAGE_OPERATE_DATE" = (select now()) where "ALARM_ID"=$alertID$ 
+	</update>
+	<!-- 关闭告警 -->
+	<update id="pgAdminalertMessage.closeAlertMassage" parameterClass="java.util.HashMap">
+		update tbl_alarm set "ALARM_IS_CLOSE"=0  where 1=1
+		 <isNotEmpty prepend="AND" property="alertId">
+             "ALARM_ID"=$alertId$
+          </isNotEmpty>
+          <isNotEmpty prepend="AND" property="alertIds">
+             "ALARM_ID"in($alertIds$)
+          </isNotEmpty>
+	</update>
+	
+	<!-- 导出excel的sql 更新根据用户关联的资产组查询到资产然后查询告警-->
+	<select id="pgAdminalertMessage.exportExcel" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+		SELECT
+			"ALARM_ID",
+			"ALARM_TITLE",
+			"ALARM_RANK",
+			"ALARM_RECEIVER",
+			"ALARM_SEND_WAY",
+			"ALARM_CREATE_DATETIME",
+			"ALARM_STATE",
+			"ALARM_NUMBER",
+			"REL_LOG_IDENTIFICATION",
+			"ALARM_ASSET_ID",
+			"ALARM_ASSET_NAME",
+			"ALARM_LOG_TABLE_NAME",
+			"REL_EVENT_NMAE",
+			"REL_EVENT_TYPE",
+			"REL_DEVICE_IP",
+			"REL_DEVICE_TYPE",
+			"ALARM_RULE_ID",
+			"EVENTS_SOURCEADD",
+			"EVENTS_TARGETADD",
+			"EVENTS_SOURCEPORT",
+			"EVENTS_TARGETPORT",
+			"WORKORDER",
+			"ALERT_DEVICE_NAME"
+			FROM "tbl_alarm" where 1=1
+			<isNotEmpty prepend="AND" property="keyword">
+			("ALARM_ASSET_NAME" LIKE
+			'%$keyword$%' OR "REL_EVENT_TYPE" LIKE '%$keyword$%' OR "REL_DEVICE_TYPE" LIKE '%$keyword$%' OR "REL_DEVICE_IP" LIKE '%$keyword$%'
+			OR "REL_EVENT_NMAE" LIKE '%$keyword$%' OR "EVENTS_SOURCEADDT" LIKE '%$keyword$%' OR "EVENTS_TARGETADDT" LIKE '%$keyword$%'
+			)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="sendMode">
+			"ALARM_SEND_WAY" LIKE
+			'%$sendMode$%'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="alertRank">
+			"ALARM_RANK" =#alertRank#
+			
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="userRealName">
+			"ALARM_RECEIVER" LIKE
+			'%$userRealName$%'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="rel_assetName">
+			"ALARM_ASSET_NAME" LIKE
+			'%$rel_assetName$%'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="rel_eventType">
+			"REL_EVENT_TYPE" LIKE
+			'%$rel_eventType$%'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="rel_deviceType">
+			"REL_DEVICE_TYPE" LIKE
+			'%$rel_deviceType$%'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="ruleId1">
+			"ALARM_RULE_ID" in ($ruleId1$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="timstmp">
+		   "ALARM_CREATE_DATETIME" > #timstmp#
+		</isNotEmpty>
+			<isNotEmpty prepend="AND" property="ids">
+				"ALARM_ID" in($ids$)
+			</isNotEmpty>
+			  <isNotEmpty prepend="AND" property="alertAssetId">
+             "ALARM_ASSET_ID" in  ($alertAssetId$)
+          </isNotEmpty>
+	</select>
+	
+	<!-- 根据告警ID查询一条告警信息 -->
+	<select id="pgAdminalertMessage.queryById" resultMap="alertMessageResult" parameterClass="java.util.HashMap">
+		select * from "tbl_alarm" where "ALARM_ID" = $alertID$
+	</select>
+	
+	<!-- 根据资产ID查询告警 -->
+	<select id="pgAdminalertMessage.queryByAssetId" resultMap="alertMessageResult" parameterClass="java.util.HashMap">
+		<isNotEmpty property="ids">
+			select * from "tbl_alarm" where "ALARM_ASSET_ID" in ($ids$)
+			 <isNotEmpty prepend="AND" property="createDate">
+            "ALARM_CREATE_DATETIME" > #createDate#
+          </isNotEmpty>
+			  <isNotEmpty prepend="AND" property="workorder">
+             "WORKORDER" = '01'
+          </isNotEmpty>
+		</isNotEmpty>
+	</select>
+		<!-- 24小时内重复最多的10个告警 -->
+	<select id="pgAdminalertMessage.repetition" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	SELECT  "REL_EVENT_NMAE" as "key",count("REL_EVENT_NMAE") as "count"
+  FROM tbl_alarm where  "ALARM_CREATE_DATETIME" > #time#  
+    <isNotEmpty prepend="AND" property="alertAssetId">
+             "ALARM_ASSET_ID" in  ($alertAssetId$)
+          </isNotEmpty>
+  GROUP BY "key"  order by "count" desc limit 10 offset 0 ;
+	</select>
+	<!-- 查询所有没有派发工单的前20条告警信息（裴秀梅） -->
+	<select id="pgAdminalertMessage.queryAllAlertInfo"  resultMap="alertMessageResult2"  parameterClass="java.util.HashMap">
+		<!-- select * from "tbl_alarm" where "WORKORDER"='01' and "ALARM_CREATE_DATETIME" > #value# order by "ALARM_ID" desc -->
+		select distinct "REL_DEVICE_IP","ALERT_DEVICE_NAME","ALARM_RANK","REL_EVENT_NMAE","REL_EVENT_TYPE","ALARM_CREATE_DATETIME" from "tbl_alarm" where "WORKORDER"='01' 
+		and	"ALARM_MARK"=#alertMark#
+			<!-- 李长红修改，根据用户关联的资产组，查询资产然后显示数据 -->
+			<isNotEmpty prepend=" and " property="alertAssetId">
+			"ALARM_ASSET_ID" in ($alertAssetId$)
+		</isNotEmpty>
+		order by "ALARM_CREATE_DATETIME" desc limit 20 offset 0
+	</select>
+	<!-- 查询下级设备内网产生的没有派发工单的告警数量 (裴秀梅)-->
+	<select id="pgAdminalertMessage.queryCountAlert" resultClass="int">
+		select count(1) from "tbl_alarm" where "WORKORDER"='01' and "ALARM_MARK"=0
+	</select>
+	<!-- 根据事件类型查询告警信息-->
+	<select id="pgAdminalertMessage.queryAlertMessageByEventName" parameterClass="java.util.HashMap" resultMap="alertMessageResult">
+		select * from "tbl_alarm" where 1=1 
+		<isNotEmpty prepend=" and " property="eventName">
+			"REL_EVENT_NMAE" =#eventName#
+		</isNotEmpty>
+		<isNotEmpty prepend=" and " property="assetId">
+			"ALARM_ASSET_ID" =#assetId#
+		</isNotEmpty>
+		<isNotEmpty prepend=" and " property="workorder">
+			"WORKORDER"='01'
+		</isNotEmpty>
+		 
+	</select>
+<!-- sqlServer -->
+	<!-- 查询条数 -->
+	<!-- <select id="rule.count" resultClass="int" parameterClass="java.util.HashMap"> 
+		SELECT COUNT(*) FROM "tbl_alarm_rule" WHERE 1=1 <isNotEmpty prepend= "AND" 
+		property="ruleIdIsDelete"> <![CDATA[ "ALARM_RULE_IS_DELETE" = #ruleIdIsDelete# 
+		]]> </isNotEmpty> <isNotEmpty prepend= "AND" property="ruleName"> <![CDATA[ 
+		"ALARM_RULE_NAME" LIKE '%$ruleName$%' ]]> </isNotEmpty> <isNotEmpty prepend= 
+		"userLoginName" property="userLoginName"> <![CDATA[ "USER_LOGIN_NAME" LIKE 
+		'%$userLoginName$%' ]]> </isNotEmpty> <isNotEmpty prepend= "AND" property="ruleUpdateTime"> 
+		<![CDATA[ "ALARM_RULE_UPDATE_TIME" LIKE '%$ruleUpdateTime$%' ]]> </isNotEmpty> 
+		<isNotEmpty prepend= "AND" property="keyword"> <![CDATA[ ("ALARM_RULE_NAME" 
+		LIKE '%$keyword$%' ) ]]> </isNotEmpty> </select> -->
+	<!-- 查询符合条件的个数  修改根据用户关联的资产组去查询资产，然后根据资产去查询告警-->
+	<select id="sqlServeralertMessage.count" resultClass="int"
+		parameterClass="java.util.HashMap">
+		SELECT COUNT(*) FROM "tbl_alarm" WHERE 1 = 1
+		<isNotEmpty prepend="AND" property="keyword">
+			("ALARM_ASSET_NAME" LIKE
+			'%$keyword$%' OR "REL_EVENT_TYPE" LIKE '%$keyword$%' OR "REL_DEVICE_TYPE" LIKE '%$keyword$%' OR "REL_DEVICE_IP" LIKE '%$keyword$%'
+			OR "REL_EVENT_NMAE" LIKE '%$keyword$%' OR "EVENTS_SOURCEADDT" LIKE '%$keyword$%' OR "EVENTS_TARGETADDT" LIKE '%$keyword$%'
+			)
+		</isNotEmpty>
+		  
+	<isNotEmpty prepend="AND" property="sendMode">
+			"ALARM_SEND_WAY" LIKE
+			'%$sendMode$%'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="alertRank">
+			"ALARM_RANK" =#alertRank#
+			
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="userRealName">
+			"ALARM_RECEIVER" LIKE
+			'%$userRealName$%'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="rel_assetName">
+			"ALARM_ASSET_NAME" LIKE
+			'%$rel_assetName$%'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="rel_eventType">
+			"REL_EVENT_TYPE" LIKE
+			'%$rel_eventType$%'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="rel_deviceType">
+			"REL_DEVICE_TYPE" LIKE
+			'%$rel_deviceType$%'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="ruleId1">
+			"ALARM_RULE_ID" in ($ruleId1$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="timstmp">
+		   "ALARM_CREATE_DATETIME" > #timstmp#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="alertAssetId">
+             "ALARM_ASSET_ID" in  ($alertAssetId$)
+          </isNotEmpty>
+	</select>
+
+	<!-- 查询列表  修改根据用户关联的资产组去查询资产，然后根据资产去查询告警-->
+	<select id="sqlServeralertMessage.query" resultMap="alertMessageResult"
+		parameterClass="java.util.HashMap">
+		SELECT * FROM "tbl_alarm" WHERE 1 = 1
+		<isNotEmpty prepend="AND" property="keyword">
+			("ALARM_ASSET_NAME" LIKE
+			'%$keyword$%' OR "REL_EVENT_TYPE" LIKE '%$keyword$%' OR "REL_DEVICE_TYPE" LIKE '%$keyword$%' OR "REL_DEVICE_IP" LIKE '%$keyword$%'
+			OR "REL_EVENT_NMAE" LIKE '%$keyword$%' OR "EVENTS_SOURCEADDT" LIKE '%$keyword$%' OR "EVENTS_TARGETADDT" LIKE '%$keyword$%'
+			)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="sendMode">
+			"ALARM_SEND_WAY" LIKE
+			'%$sendMode$%'
+		</isNotEmpty>
+		
+		<isNotEmpty prepend="AND" property="alertRank">
+			"ALARM_RANK" =#alertRank#	
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="userRealName">
+			"ALARM_RECEIVER" LIKE
+			'%$userRealName$%'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="rel_assetName">
+			"ALARM_ASSET_NAME" LIKE
+			'%$rel_assetName$%'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="rel_eventType">
+			"REL_EVENT_TYPE" LIKE
+			'%$rel_eventType$%'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="rel_deviceType">
+			"REL_DEVICE_TYPE" LIKE
+			'%$rel_deviceType$%'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="ruleId1">
+			"ALARM_RULE_ID" in ($ruleId1$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="timstmp">
+		   "ALARM_CREATE_DATETIME" > #timstmp#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="ids">
+		   "ALARM_ID" in($ids$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="alertAssetId">
+             "ALARM_ASSET_ID" in  ($alertAssetId$)
+          </isNotEmpty>
+		ORDER BY "ALARM_CREATE_DATETIME" DESC
+	</select>
+	
+	<!-- 插入一条记录 -->
+	<insert id="sqlServeralertMessage.insert" parameterClass="alertMessage">
+		INSERT INTO "tbl_alarm"
+		          ("ALARM_TITLE",
+		           "ALARM_RANK",
+		           "ALARM_RECEIVER",
+		           "ALARM_SEND_WAY",
+		           "ALARM_CREATE_DATETIME",
+		           "ALARM_STATE",
+		           "ALARM_NUMBER",
+		           "REL_LOG_IDENTIFICATION",
+		           "ALARM_ASSET_ID",
+		           "ALARM_ASSET_NAME",
+		           "ALARM_LOG_TABLE_NAME",
+		           "REL_EVENT_NMAE",
+		           "REL_EVENT_TYPE",
+		           "REL_DEVICE_IP",
+		           "REL_DEVICE_TYPE",
+		           "ALARM_RULE_ID",
+		           "EVENTS_SOURCEPORT",
+		           "EVENTS_SOURCEADD",
+		           "EVENTS_TARGETADD",
+		           "EVENTS_TARGETPORT",
+		           "EVENTS_SOURCEADDT",
+		           "EVENTS_TARGETADDT",
+		           "WORKORDER",
+		           "MESSAGE_OPERATE_DATE",
+		           "ALERT_DEVICE_NAME",
+		           "EVENTS_SENDTIME","ALARM_IS_CLOSE"
+		           )
+		VALUES 
+				  (#alertTitle# , 
+				   #alertRank#,
+				   #userRealName#,
+				   #sendMode#,
+				   #alertCreateDatetime#,
+				   #alertState#,
+				   #alertNumber#,
+				   #relEventsIdentification#,
+				   #alertAssetId#,
+				   #alertAssetName#,
+				   #alertLogTableName#,
+				   #alertEventName#,
+				   #alertEventType#,
+				   #alertDeviceIp#,
+				   #alertDeviceType#,
+				   #alarmRuleId#,
+				   #eventsSourcePort#,
+				   #eventsSourceAdd#,
+				   #eventsTargetAdd#,
+				   #eventsTargetPort#,
+				   #eventsSourceAddT#,
+				   #eventsTargetAddT#,
+				   '01',
+				   #messageOperateDate#,
+				   #alertDeviceName#,
+				   #eventSendTime#,1)
+				  
+	</insert>
+
+	<!-- 查询近期告警时间内的告警次数 -->
+	<select id="sqlServeralertMessage.current" parameterClass="java.util.HashMap"
+		resultClass="int">
+	    <![CDATA[
+	       SELECT COUNT(*) FROM "tbl_alarm" WHERE  1= 1 and "ALARM_CREATE_DATETIME" > #timeStmp# and "ALARM_RULE_ID" in ($ruleId1$)
+	       and "ALARM_ASSET_ID" in ($assetid$) and "ALARM_IS_CLOSE"=1
+	    ]]>
+	</select>
+
+	<!-- 查询近期告警事件的列表 -->
+	<select id="sqlServeralertMessage.currentEvent" parameterClass="long"
+		resultMap="alertMessageResult1">
+	    <![CDATA[
+	       SELECT * FROM "tbl_alarm" WHERE "ALARM_CREATE_DATETIME" > #value# 
+	    ]]>
+	</select>
+	
+	<!-- 查询近期的最新10条告警 更新根据用户关联的资产组查询到资产然后查询告警 -->
+	<select id="sqlServeralertMessage.currentMessage" parameterClass="java.util.HashMap" resultMap="alertMessageResult">
+	   <![CDATA[
+	        SELECT TOP $topN$ * FROM "tbl_alarm" WHERE  1 = 1
+	   ]]>
+	     <isNotEmpty prepend="AND" property="alertAssetId">
+             "ALARM_ASSET_ID" in  ($alertAssetId$)
+          </isNotEmpty>
+	   <isNotEmpty prepend="AND" property="timeHour">
+	       "ALARM_CREATE_DATETIME" >  #timeHour#
+	   </isNotEmpty>
+	   ORDER BY "ALARM_CREATE_DATETIME" DESC
+	</select>
+	
+	<!-- 查询近期的事件按照等级分组  更新根据用户关联的资产组查询到资产然后查询告警-->
+	<select id="sqlServeralertMessage.groupByRank" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+          <![CDATA[
+               SELECT "ALARM_RANK" AS 'key' , COUNT("ALARM_RANK") AS "count" FROM "tbl_alarm"  WHERE 1= 1        
+          ]]>
+            <isNotEmpty prepend="AND" property="alertAssetId">
+             "ALARM_ASSET_ID" in  ($alertAssetId$)
+          </isNotEmpty>
+          <isNotEmpty prepend="AND" property="timeHour">
+              "ALARM_CREATE_DATETIME" >  #timeHour#
+          </isNotEmpty>
+          GROUP BY "ALARM_RANK"
+          ORDER BY "ALARM_RANK" ASC
+	</select>
+	
+	<!-- 查询近期告警次数最多的十个资产 更新根据用户关联的资产组查询到资产然后查询告警-->
+	<select id="sqlServeralertMessage.countAsset" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	     <![CDATA[
+	        SELECT top 10 "ALARM_ASSET_NAME" AS 'key',COUNT("ALARM_ASSET_NAME") AS 'value' FROM "tbl_alarm"  WHERE 1= 1
+	        
+	      ]]>
+	       <isNotEmpty prepend="AND" property="alertAssetId">
+             "ALARM_ASSET_ID" in  ($alertAssetId$)
+          </isNotEmpty>
+	      <isNotEmpty prepend="AND" property="timeHour">
+              "ALARM_CREATE_DATETIME" >  #timeHour#
+          </isNotEmpty>
+           GROUP BY "ALARM_ASSET_NAME"
+           ORDER BY 'value' DESC
+	</select>
+	<select id="sqlServerquertAlertRuleByID.query" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	     SELECT "ALARM_RULE_ID" as 'alarm_rule_id' FROM "tbl_alarm_rule" WHERE "CREATE_USER_ID"=#thisUserId#
+	      <isNotEmpty prepend="AND" property="alertAssetId">
+             "ALARM_ASSET_ID" in  ($alertAssetId$)
+          </isNotEmpty>
+	</select>
+	
+	
+	<!-- 修改日期和工单的状态 -->
+	<update id="sqlServeralertMessage.updateAlertMassage" parameterClass="java.util.HashMap">
+		update tbl_alarm set "WORKORDER"='02' ,"ALARM_IS_CLOSE"=0, "MESSAGE_OPERATE_DATE" = (getdate()) where "ALARM_ID"=$alertID$ 
+	</update>
+	<!-- 关闭告警 -->
+	<update id="sqlServeralertMessage.closeAlertMassage" parameterClass="java.util.HashMap">
+		update tbl_alarm set "ALARM_IS_CLOSE"=0 where "ALARM_ID"=$alertID$ 
+	</update>
+	
+	<!-- 导出excel的sql 更新根据用户关联的资产组查询到资产然后查询告警-->
+	<select id="sqlServeralertMessage.exportExcel" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+		SELECT
+			"ALARM_ID",
+			"ALARM_TITLE",
+			"ALARM_RANK",
+			"ALARM_RECEIVER",
+			"ALARM_SEND_WAY",
+			"ALARM_CREATE_DATETIME",
+			"ALARM_STATE",
+			"ALARM_NUMBER",
+			"REL_LOG_IDENTIFICATION",
+			"ALARM_ASSET_ID",
+			"ALARM_ASSET_NAME",
+			"ALARM_LOG_TABLE_NAME",
+			"REL_EVENT_NMAE",
+			"REL_EVENT_TYPE",
+			"REL_DEVICE_IP",
+			"REL_DEVICE_TYPE",
+			"ALARM_RULE_ID",
+			"EVENTS_SOURCEADD",
+			"EVENTS_TARGETADD",
+			"EVENTS_SOURCEPORT",
+			"EVENTS_TARGETPORT",
+			"WORKORDER",
+			"ALERT_DEVICE_NAME"
+			FROM "tbl_alarm" where 1=1
+			<isNotEmpty prepend="AND" property="keyword">
+			("ALARM_ASSET_NAME" LIKE
+			'%$keyword$%' OR "REL_EVENT_TYPE" LIKE '%$keyword$%' OR "REL_DEVICE_TYPE" LIKE '%$keyword$%' OR "REL_DEVICE_IP" LIKE '%$keyword$%'
+			OR "REL_EVENT_NMAE" LIKE '%$keyword$%' OR "EVENTS_SOURCEADDT" LIKE '%$keyword$%' OR "EVENTS_TARGETADDT" LIKE '%$keyword$%'
+			)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="sendMode">
+			"ALARM_SEND_WAY" LIKE
+			'%$sendMode$%'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="alertRank">
+			"ALARM_RANK" =#alertRank#
+			
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="userRealName">
+			"ALARM_RECEIVER" LIKE
+			'%$userRealName$%'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="rel_assetName">
+			"ALARM_ASSET_NAME" LIKE
+			'%$rel_assetName$%'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="rel_eventType">
+			"REL_EVENT_TYPE" LIKE
+			'%$rel_eventType$%'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="rel_deviceType">
+			"REL_DEVICE_TYPE" LIKE
+			'%$rel_deviceType$%'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="ruleId1">
+			"ALARM_RULE_ID" in ($ruleId1$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="timstmp">
+		   "ALARM_CREATE_DATETIME" > #timstmp#
+		</isNotEmpty>
+			<isNotEmpty prepend="AND" property="ids">
+				"ALARM_ID" in($ids$)
+			</isNotEmpty>
+			  <isNotEmpty prepend="AND" property="alertAssetId">
+             "ALARM_ASSET_ID" in  ($alertAssetId$)
+          </isNotEmpty>
+	</select>
+	
+	<!-- 根据告警ID查询一条告警信息 -->
+	<select id="sqlServeralertMessage.queryById" resultMap="alertMessageResult" parameterClass="java.util.HashMap">
+		select * from "tbl_alarm" where "ALARM_ID" = $alertID$
+	</select>
+	
+	<!-- 根据资产ID查询告警 -->
+	<select id="sqlServeralertMessage.queryByAssetId" resultMap="alertMessageResult" parameterClass="java.util.HashMap">
+		<isNotEmpty property="ids">
+			select * from "tbl_alarm" where "ALARM_ASSET_ID" in ($ids$)
+			 <isNotEmpty prepend="AND" property="createDate">
+            "ALARM_CREATE_DATETIME" > #createDate#
+          </isNotEmpty>
+			  <isNotEmpty prepend="AND" property="workorder">
+             "WORKORDER" = "01"
+          </isNotEmpty>
+		</isNotEmpty>
+	</select>
+	<!-- 24小时内重复最多的10个告警 -->
+	<select id="sqlServeralertMessage.repetition" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	SELECT top 10 "REL_EVENT_NMAE" as 'key',count("REL_EVENT_NMAE") as count
+  FROM tbl_alarm where  "ALARM_CREATE_DATETIME" > #time# 
+  	    <isNotEmpty prepend="AND" property="alertAssetId">
+             "ALARM_ASSET_ID" in  ($alertAssetId$)
+          </isNotEmpty>
+  
+   GROUP BY "REL_EVENT_NMAE"  order by count desc ;
+	</select>
+</sqlMap>

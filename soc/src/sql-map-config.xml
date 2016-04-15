@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+
+<sqlMapConfig>
+	<settings cacheModelsEnabled="true" enhancementEnabled="true"
+		maxTransactions="12" maxRequests="128" maxSessions="64" />
+	<!-- Identify all SQL Map XML files to be loaded by this SQL map. Relative 
+		to classpath -->
+
+	<!-- 定义别名 -->
+	<!-- 首页div-->
+	<typeAlias alias="homePageDiv" type="com.soc.model.home.HomePageDiv" />
+	
+	<!-- 用户 -->
+	<typeAlias alias="user" type="com.soc.model.user.User" />
+
+	<!-- 审计 -->
+	<typeAlias alias="audit" type="com.soc.model.audit.Audit" />
+	<!--外部审计 -->
+	<typeAlias alias="auditReport" type="com.soc.model.audit.AuditReport" />
+	<!-- 角色 -->
+	<typeAlias alias="role" type="com.soc.model.role.Role" />
+
+	<!-- 权限 -->
+	<typeAlias alias="permission" type="com.soc.model.role.Permission" />
+
+	<!-- 密码策略 -->
+	<typeAlias alias="passwordPolicy" type="com.soc.model.policy.PasswordPolicy" />
+
+	<!-- 时间策略 -->
+	<typeAlias alias="timePolicy" type="com.soc.model.policy.TimePolicy" />
+
+	<!-- 地址策略 -->
+	<typeAlias alias="addressPolicy" type="com.soc.model.policy.AddressPolicy" />
+
+	<!-- 地址 -->
+	<typeAlias alias="address" type="com.soc.model.policy.Address" />
+
+	<!-- 资产 -->
+	<typeAlias alias="asset" type="com.soc.model.asset.Asset" />
+
+	<!-- 资产组 -->
+	<typeAlias alias="assetGroup" type="com.soc.model.asset.AssetGroup" />
+	<!-- 资产风险 -->
+	<typeAlias alias="AssetRiskGroup" type="com.soc.model.asset.AssetRiskGroup" />
+
+	<typeAlias alias="AssetRiskValue" type="com.soc.model.asset.AssetRiskValue" />
+
+	<typeAlias alias="VulnerabilityAssessment" type="com.soc.model.risk.VulnerabilityAssessment" />
+	
+	<!-- 资产风险赋值 -->
+	<typeAlias alias="assetRiskEvaluation" type="com.soc.model.risk.AssetRiskEvaluation" />
+	
+	<!-- 资产风险 -->
+	<typeAlias alias="AssetRiskGroup" type="com.soc.model.asset.AssetRiskGroup" />
+
+	<typeAlias alias="AssetRiskValue" type="com.soc.model.asset.AssetRiskValue" />
+
+	<typeAlias alias="VulnerabilityAssessment" type="com.soc.model.risk.VulnerabilityAssessment" />
+
+	<!-- 历史资产 -->
+	<typeAlias alias="historyAsset" type="com.soc.model.asset.HistoryAsset" />
+	<!-- 资产任务 -->
+	<typeAlias alias="assetProbeTask" type="com.soc.model.asset.AssetProbeTask" />
+	<!-- 资产信息 -->
+	<typeAlias alias="assetProbe" type="com.soc.model.asset.AssetProbe" />
+	<!-- 资产状态 -->
+	<typeAlias alias="probeState" type="com.soc.model.asset.ProbeState" />
+	<!-- 系统设置 -->
+	<typeAlias alias="setting" type="com.soc.model.systemsetting.Setting" />
+	<!-- 设备类别 -->
+	<typeAlias alias="category" type="com.soc.model.asset.device.Category" />
+
+	<!-- 端口 -->
+	<typeAlias alias="reportFormport" type="com.soc.model.reportform.Port" />
+
+	<!-- 邮箱 -->
+	<typeAlias alias="mailServerInstance" type="com.soc.model.conf.MailserversInstance" />
+
+	<!--cpu -->
+	<typeAlias alias="settingcpu" type="com.soc.model.systemsetting.CpuData" />
+
+	<!--内存 -->
+
+	<typeAlias alias="settingMemory" type="com.soc.model.systemsetting.MemoryData" />
+
+	<!-- 注册采集器 -->
+	<typeAlias alias="settingCollector" type="com.soc.model.systemsetting.Collector" />
+
+	<!-- 关联规则 -->
+	<typeAlias alias="associationRules"
+		type="com.soc.model.systemsetting.rules.AssociationRules" />
+	<!-- 自定义过滤规则 -->
+	<typeAlias alias="filteringRule"
+		type="com.soc.model.systemsetting.rules.FilteringRule" />
+	<!-- 关联规则组 -->
+	<typeAlias alias="relevanceRuleGroup"
+		type="com.soc.model.systemsetting.rules.RelevanceRuleGroup" />
+		<!-- 自定义关联规则 -->
+	<typeAlias alias="relevanceRule"
+		type="com.soc.model.systemsetting.rules.RelevanceRule" />
+	<!-- 解析规则 -->
+	<typeAlias alias="analysisRules"
+		type="com.soc.model.systemsetting.rules.AnalysisRules" />
+	
+	<!-- 增加解析规则 -->
+	<!-- <typeAlias alias="analysisRules" type="com.soc.model.systemsetting.rules.AnalysisRules" /> -->
+	<typeAlias alias="device_category" type="com.soc.model.systemsetting.rules.Device_category" />
+	<typeAlias alias="queryevents_group" type="com.soc.model.systemsetting.rules.QueryEvents_group" />
+
+	<!-- 归档 -->
+	<typeAlias alias="settingArchive" type="com.soc.model.systemsetting.SettingArchive" />
+
+	<!-- 端口范围 -->
+	<typeAlias alias="port" type="com.soc.model.config.Port" />
+
+
+	<!-- 监控管理 -->
+	<typeAlias alias="monitorGroup" type="com.soc.model.monitor.MonitorGroup" />
+	<typeAlias alias="monitor" type="com.soc.model.monitor.Monitor" />
+	<typeAlias alias="chart" type="com.soc.model.monitor.Chart" />
+	<typeAlias alias="monitorAlarm" type="com.soc.model.monitor.MonitorAlarm" />
+	<typeAlias alias="node" type="com.soc.model.monitor.Node" />
+
+	<!-- 事件组 -->
+
+	<!-- 事件树  -->
+	<typeAlias alias="eventTree" type="com.soc.model.events.EventTree" />
+	<!-- 事件库  -->
+	<typeAlias alias="eventLibrary" type="com.soc.model.events.EventLibrary" />
+	
+	
+	<!-- 查询事件组 -->
+
+	<typeAlias alias="queryEventsGroup" type="com.soc.model.events.QueryEventsGroup" />
+
+	<!-- 查询事件 -->
+	<typeAlias alias="queryEvents" type="com.soc.model.events.QueryEvents" />
+
+	<typeAlias alias="events" type="com.soc.model.events.Events" />
+
+	<typeAlias alias="notAnalyticEvents" type="com.soc.model.events.NotAnalyticEvents" />
+
+	<!-- 概要事件 -->
+	<typeAlias alias="summaryEvents" type="com.soc.model.events.SummaryEvents" />
+
+	<!-- 过滤规则 -->
+	<typeAlias alias="filter" type="com.soc.model.events.Filter" />
+
+	<!-- 过滤规则 -->
+	<typeAlias alias="filterByGroup" type="com.soc.model.events.FilterByGroup" />
+
+	<!-- 告警规则 -->
+	<typeAlias alias="alertRule" type="com.soc.model.alert.AlertRule" />
+
+	<!-- 告警信息 -->
+	<typeAlias alias="alertMessage"
+		type="com.soc.model.alert.alertMessage.AlertMessage" />
+
+	<!-- 知识库 -->
+	<typeAlias alias="leak" type="com.soc.model.knowledge.Leak" />
+	<typeAlias alias="security" type="com.soc.model.knowledge.Security" />
+
+
+	<!-- 漏洞管理 -->
+	<typeAlias alias="vulnerability" type="com.soc.model.knowledge.Vulnerability" />
+
+	<!-- 自定义预警 -->
+
+	<typeAlias alias="warn" type="com.soc.model.warn.Warn"></typeAlias>
+	<!-- 工单管理 -->
+	<typeAlias alias="workOrder" type="com.soc.model.workorder.WorkOrder" />
+
+	
+	<!-- 原始日志 -->
+    <typeAlias alias="originalEvent" type="com.soc.model.events.OriginalEvents"/>
+    
+
+	<!-- 事件类型标签 -->
+	<typeAlias alias="eventtypetag" type="com.soc.model.eventtypetag.EventTypeTag"/>
+
+	<!--  -->
+	<typeAlias alias="message" type="com.soc.model.knowledge.MessageCenter"/>
+	
+	<!-- 事件类别标签 -->
+	<typeAlias alias="eventcategorytag" type="com.soc.model.eventtypetag.eventcategorytag"/>
+	
+	<!-- 资产系统标签 -->
+	<typeAlias alias="assetSystem" type="com.soc.model.asset.system.AssetSystem"/>
+	<typeAlias alias="assetSystemBrand" type="com.soc.model.asset.system.AssetSystemBrand"/>
+	
+	<!-- 增加解析规则 -->
+	<typeAlias alias="assetSystemBrand" type="com.soc.model.asset.system.AssetSystemBrand"/>
+	<!-- 级联节点 -->
+	<typeAlias alias="nodeGroup" type="com.soc.model.systemsetting.NodeGroup"/>
+	<!-- 自定义趋势分析 -->
+	<typeAlias alias="customTrend" type="com.soc.model.monitor.CustomTrend"/>
+	
+	<!-- 监控图表使用的对象 -->
+	<typeAlias alias="monitorAlarmAsset" type="com.soc.model.monitor.MonitorAlarmAsset"/>
+	<!-- 直播星事件-->
+	<typeAlias alias="satelliteEvent" type="com.soc.model.satellite.Events"/>
+	<!-- amp信息 -->
+	<typeAlias alias="monitorAlarmHistry" type="com.soc.model.progressmsg.MonitorAlarmHistory"/>
+	<!-- linux进程 -->
+	<typeAlias alias="linuxProgressMsg" type="com.soc.model.progressmsg.LinuxProgressMsg"/>
+	<!-- windows进程 -->
+	<typeAlias alias="winProgressMsg" type="com.soc.model.progressmsg.WinProgressMsg"/>
+	<!-- 软件信息 -->
+	<typeAlias alias="winSoftMsg" type="com.soc.model.progressmsg.WinSoftMsg"/>
+	<!-- LINUX服务 -->
+	<typeAlias alias="linuxServiceMsg" type="com.soc.model.servicemsg.LinuxServiceMsg"/>
+	<!-- WINDOWS服务 -->
+	<typeAlias alias="winServiceMsg" type="com.soc.model.servicemsg.WinServiceMsg"/>
+	<!-- 安全策略管理 -->
+	<typeAlias alias="securityPolicy" type="com.soc.model.securityPolicy.SecurityPolicy" />
+	<!-- 漏扫联动 -->
+	<typeAlias alias="scanTask" type="com.soc.model.ScanTask.ScanTask"/>
+	<!-- 数据库监控 -->
+	<typeAlias alias="dbTask" type="com.soc.model.monitor.MonitorDatabaseTask"/>
+	<!-- Tomcat监控 -->
+	<typeAlias alias="tomTask" type="com.soc.model.monitor.MonitorTomcatTask"/>
+	<!-- windows监控 -->
+	<typeAlias alias="windowsTask" type="com.soc.model.monitor.MonitorWindowsTask"/>
+	
+	
+	
+	
+	<!-- 定义SqlMap -->
+	<!-- 事件类型标签 -->
+	<sqlMap resource="sqlmaps/eventtypetag/EventTypeTagSQL.xml" />
+	
+	<!-- 用户 -->
+	<sqlMap resource="sqlmaps/user/userSQL.xml" />
+
+	<!-- 审计 -->
+	<sqlMap resource="sqlmaps/audit/auditSQL.xml" />
+	<!-- 外部审计 -->
+	<sqlMap resource="sqlmaps/audit/auditReportSQL.xml" />
+	<!-- 角色 -->
+	<sqlMap resource="sqlmaps/role/roleSQL.xml" />
+
+	<!-- 权限 -->
+	<sqlMap resource="sqlmaps/role/permissionSQL.xml" />
+
+	<!-- 登录 -->
+	<sqlMap resource="sqlmaps/user/loginSQL.xml" />
+
+	<!-- 密码策略 -->
+	<sqlMap resource="sqlmaps/policy/passwordPolicySQL.xml" />
+
+	<!-- 时间策略 -->
+	<sqlMap resource="sqlmaps/policy/timePolicySQL.xml" />
+
+	<!-- 地址策略 -->
+	<sqlMap resource="sqlmaps/policy/addressPolicySQL.xml" />
+
+	<!-- 地址 -->
+	<sqlMap resource="sqlmaps/policy/addressSQL.xml" />
+
+	<!-- 资产 -->
+	<sqlMap resource="sqlmaps/asset/assetSQL.xml" />
+
+	<!-- 资产风险 -->
+	<sqlMap resource="sqlmaps/asset/risk/AssetRiskGroupSQL.xml" />
+	<sqlMap resource="sqlmaps/asset/risk/AssetRiskValueSQL.xml" />
+	<sqlMap resource="sqlmaps/risk/VulnerabilityAssessmentSQL.xml" />
+	<sqlMap resource="sqlmaps/risk/AssetRiskEvaluationSQL.xml" />
+	
+	<!-- 资产组 -->
+	<sqlMap resource="sqlmaps/asset/assetGroupSQL.xml" />
+	<!-- 资产任务 -->
+	<sqlMap resource="sqlmaps/asset/assetProbeTaskSQL.xml" />
+	<!-- 资产信息 -->
+	<sqlMap resource="sqlmaps/asset/assetProbeSQL.xml" />
+	<!-- 资产状态 -->
+	<sqlMap resource="sqlmaps/asset/probeStateSQL.xml" />
+
+	<!-- 系统设置 -->
+	<sqlMap resource="sqlmaps/systemsetting/settingSQL.xml" />
+
+	<!-- 邮箱 -->
+	<sqlMap resource="sqlmaps/systemsetting/mailServersInstanceSQL.xml" />
+
+	<!-- cpu -->
+	<sqlMap resource="sqlmaps/systemsetting/settingCPU.xml" />
+
+	<!-- 内存 -->
+	<sqlMap resource="sqlmaps/systemsetting/settingMemory.xml" />
+
+	<!-- 关联规则 -->
+	<sqlMap resource="sqlmaps/systemsetting/rules/associationRulesSQL.xml" />
+
+	<!-- 解析规则 -->
+	<sqlMap resource="sqlmaps/systemsetting/rules/analysisRulesSQL.xml" />
+	
+	<!-- 增加解析规则 -->
+	<sqlMap resource="sqlmaps/addrules/addRulesSQL.xml" />
+	
+	<!-- 自定义过滤规则 -->
+	<sqlMap resource="sqlmaps/systemsetting/rules/filteringRuleSQL.xml" />
+	<!-- 自定义关联规则 -->
+	<sqlMap resource="sqlmaps/systemsetting/rules/relevanceRuleSQL.xml" />
+	<!-- 关联规则组 -->
+	<sqlMap resource="sqlmaps/systemsetting/rules/relevanceRuleGroupSQL.xml" />
+	<!-- 归档 -->
+	<sqlMap resource="sqlmaps/systemsetting/settingArchive.xml" />
+
+	<!-- 监控管理 -->
+	<sqlMap resource="sqlmaps/monitor/monitorGroupSQL.xml" />
+	<sqlMap resource="sqlmaps/monitor/monitorSQL.xml" />
+	<sqlMap resource="sqlmaps/monitor/monitorAlarmSQL.xml" />
+
+	<!-- 自定义趋势分析 -->
+<sqlMap resource="sqlmaps/monitor/customTrendSQL.xml" />
+
+	<sqlMap resource="sqlmaps/monitor/monitorNetworkTopologySQL.xml" />
+
+	<!-- 注册采集器 -->
+	<sqlMap resource="sqlmaps/systemsetting/settingCollector.xml" />
+
+	<!-- 事件 -->
+	<!-- 事件树 -->
+	<sqlMap resource="sqlmaps/events/eventTreeSQL.xml" />
+	<!-- 事件列表  -->
+	<sqlMap resource="sqlmaps/events/eventLibrarySQL.xml" />
+	
+	
+	<!-- 查询事件 -->
+
+	<sqlMap resource="sqlmaps/events/eventsSQL.xml" />
+
+	<!-- 查询事件组 -->
+	<sqlMap resource="sqlmaps/events/eventsGroupSQL.xml" />
+
+	<!-- 事件与日志 -->
+	<sqlMap resource="sqlmaps/events/eventsLogSQL.xml" />
+
+	<!-- 未解析日志 -->
+	<sqlMap resource="sqlmaps/events/notAnalyticEventsSQL.xml" />
+
+	<!-- 原始日志 -->
+	<sqlMap resource="sqlmaps/events/originalLogSQL.xml" />
+
+	<!-- 概要事件 -->
+	<sqlMap resource="sqlmaps/events/summaryEventsSQL.xml" />
+
+	<!-- 过滤规则 -->
+	<sqlMap resource="sqlmaps/events/filterSQL.xml" />
+
+	<!-- 过滤规则 -->
+	<sqlMap resource="sqlmaps/events/filterByGroupSQL.xml" />
+
+	<!-- 警告规则 -->
+	<sqlMap resource="sqlmaps/alert/alertRuleSQL.xml" />
+
+
+	<!-- 告警信息 -->
+	<sqlMap resource="sqlmaps/alert/alertMessageSQL.xml" />
+
+	<!-- 知识库 -->
+	<sqlMap resource="sqlmaps/knowledgemanger/leakSQL.xml" />
+	<sqlMap resource="sqlmaps/knowledgemanger/securitySQL.xml" />
+
+	<!-- 预警发布 -->
+
+	<sqlMap resource="sqlmaps/warn/warnSQL.xml" />
+	
+	<!-- 漏洞库管理 -->
+	<sqlMap resource="sqlmaps/knowledgemanger/vulnerabilitySQL.xml" />
+	
+	<!-- 工单管理 -->
+	<sqlMap resource="sqlmaps/workorder/workOrder.xml" />
+	<!-- 保存首页div显示的情况 -->
+	<sqlMap resource="sqlmaps/homepagediv/homePageDivSQL.xml" />
+	<!-- 原始日志 -->
+	
+	<!-- 大屏展示 -->
+	<sqlMap resource="sqlmaps/screen/screenSQL.xml"/>
+	
+	<!-- 消息中心 -->
+	<sqlMap resource="sqlmaps/knowledgemanger/MessageSQL.xml" />
+	
+	<!-- 事件类别 -->
+	<sqlMap resource="sqlmaps/eventtypetag/EventCategoryTagSQL.xml"/>
+	
+    <sqlMap resource="sqlmaps/asset/device/categorySQL.xml"/>
+    
+    <!-- 资产系统 -->
+    <sqlMap resource="sqlmaps/asset/system/assetSystemSQL.xml"/>
+	
+<!-- 关联后事件 -->
+	  <sqlMap resource="sqlmaps/events/relevanceEventsSQL.xml"/>
+	  <!-- 级联节点 -->
+	  <sqlMap resource="sqlmaps/systemsetting/nodeGroupSQL.xml"/>
+	   <!-- OEM中功能控制的sql -->
+	  <sqlMap resource="sqlmaps/systemsetting/settingFunctionControlSQL.xml"/>
+  <!-- 直播星事件sql-->
+  <sqlMap resource="sqlmaps/satellite/satelliteEventSQL.xml"/>
+  <!-- linxu -->
+  <sqlMap resource="sqlmaps/monitor/linuxSQL.xml"/>
+   <!-- linxu -->
+  <sqlMap resource="sqlmaps/monitor/monitAlarmHistorySQL.xml"/>
+  <!-- windos -->
+    <sqlMap resource="sqlmaps/monitor/windowsSQL.xml"/>
+    <!-- 安全策略管理 -->
+	<sqlMap resource="sqlmaps/securityPolicy/securityPolicySQL.xml" />
+    <!-- 漏扫联动 -->
+    <sqlMap resource="sqlmaps/scanTask/scanTaskSQL.xml" /> 
+    <!-- 数据库监控 -->
+    <sqlMap resource="sqlmaps/monitor/monitorDatabaseTaskSQL.xml"/> 
+    <!-- tomcat监控 -->
+    <sqlMap resource="sqlmaps/monitor/monitorTomcatTaskSQL.xml"/> 
+    <!-- 主机Windows监控 -->
+    <sqlMap resource="sqlmaps/monitor/monitorWindowsTaskSQL.xml"/> 
+</sqlMapConfig>

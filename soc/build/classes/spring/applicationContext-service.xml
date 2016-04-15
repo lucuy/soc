@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd"
+	default-lazy-init="true">
+
+	<!-- baseservice 所有service都继承此类 -->
+	<bean id="baseService" class="com.soc.service.impl.BaseServiceImpl">
+   	</bean>
+
+	<!-- 用户 -->
+	<bean id="userManager" class="com.soc.service.user.impl.UserServiceImpl"
+		parent="baseService">
+		<property name="userDao" ref="userDao" />
+		<property name="homePageDivManager" ref="homePageDivManager"></property>
+		<!-- <property name="auditDao" ref="auditDao" /> -->
+	</bean>
+
+	<!-- 角色 -->
+	<bean id="roleManager" class="com.soc.service.role.impl.RoleServiceImpl"
+		parent="baseService">
+		<property name="roleDao" ref="roleDao" />
+	</bean>
+
+	<!-- 角色-权限 -->
+	<bean id="permissionManager" class="com.soc.service.role.impl.PermissionServiceImpl"
+		parent="baseService">
+		<property name="permissionDao" ref="permissionDao" />
+	</bean>
+
+	<!-- 打印日志 -->
+	<bean id="logManager" class="com.soc.service.systemsetting.impl.LogWriteServiceImpl"
+		parent="baseService">
+		<property name="settingDao" ref="settingDao" />
+	</bean>
+
+	<!-- 登录 -->
+	<bean id="loginManager" class="com.soc.service.user.impl.LoginServiceImpl"
+		parent="baseService">
+		<property name="loginDao" ref="loginDao" />
+		<property name="userDao" ref="userDao" />
+		<property name="auditManager" ref="auditManager"></property>
+	</bean>
+
+	<!-- 密码策略 -->
+	<bean id="passwordPolicyManager" class="com.soc.service.policy.impl.PasswordPolicyServiceImpl"
+		parent="baseService">
+		<property name="passwordPolicyDao" ref="passwordPolicyDao" />
+	</bean>
+
+
+	<!-- 时间策略 -->
+	<bean id="timePolicyManager" class="com.soc.service.policy.impl.TimePolicyServiceImpl"
+		parent="baseService">
+		<property name="timePolicyDao" ref="timePolicyDao"></property>
+	</bean>
+
+	<!-- 地址策略 -->
+	<bean id="addressPolicyManager" class="com.soc.service.policy.impl.AddressPolicyServiceImpl"
+		parent="baseService">
+		<property name="addressPolicyDao" ref="addressPolicyDao"></property>
+		<property name="addressDao" ref="addressDao"></property>
+	</bean>
+
+	<!-- 审计 -->
+	<bean id="auditManager" class="com.soc.service.audit.impl.AuditServiceImpl"
+		parent="baseService">
+		<property name="auditDao" ref="auditDao" />
+		<property name="userDao" ref="userDao" />
+	</bean>
+	<!-- 外部审计 -->
+	<bean id="auditReportManager" class="com.soc.service.audit.impl.AuditReportServiceImpl"
+		parent="baseService">
+		<property name="auditReportDao" ref="auditReportDao" />
+	</bean>
+	<!-- 资产 -->
+	<bean id="assetManager" class="com.soc.service.asset.impl.AssetServiceImpl"
+		parent="baseService">
+		<property name="assetDao" ref="assetDao" />
+		<property name="assetGroupManager" ref="assetGroupManager" />
+		<property name="assetRiskGroupDao" ref="assetRiskGroupDao"></property>
+		<property name="settingCollectorDao" ref="settingCollectorDao" />
+		<property name="analysisDao" ref="analysisDao" />
+		<property name="assetGroupDao" ref="assetGroupDao" />
+		<property name="settingDao" ref="settingDao" />
+		<property name="assetRiskEvaluationManager" ref="assetRiskEvaluationService" />
+		<property ref="deviceDao" name="deviceDao"/>
+	</bean>
+
+	<!-- 资产组 -->
+	<bean id="assetGroupManager" class="com.soc.service.asset.impl.AssetGroupServiceImpl"
+		parent="baseService">
+		<property name="assetGroupDao" ref="assetGroupDao" />
+		<property name="assetDao" ref="assetDao" />
+	</bean>
+
+	<!-- 资产任务 -->
+	<bean id="assetProbeTaskManager" class="com.soc.service.asset.impl.AssetProbeTaskServiceImpl"
+		parent="baseService">
+		<property name="assetProbeTaskDao" ref="assetProbeTaskDao" />
+	</bean>
+	<!-- 资产信息 -->
+	<bean id="assetProbeServiceManager" class="com.soc.service.asset.impl.AssetProbeServiceImpl"
+		parent="baseService">
+		<property name="assetProbeDao" ref="assetProbeDao" />
+	</bean>
+	<!-- 资产状态 -->
+	<bean id="probeStateServiceManager" class="com.soc.service.asset.impl.ProbeStateServiceImpl"
+		parent="baseService">
+		<property name="probeStateDao" ref="probeStateDao" />
+	</bean>
+
+	<!-- 风险管理 -->
+	<bean id="assetRiskManager" class="com.soc.service.asset.impl.risk.AssetRiskServiceImpl"
+		parent="baseService">
+		<property name="assetRiskDao" ref="assetRiskDao" />
+		<property name="assetGroupManager" ref="assetGroupManager" />
+		<property name="assetRiskGroupDao" ref="assetRiskGroupDao" />
+		<property name="assetDao" ref="assetDao" />
+		<property name="assetGroupDao" ref="assetGroupDao" />
+	</bean>
+
+	<bean id="vulnerabilityAssessmentManager"
+		class="com.soc.service.risk.impl.VulnerabilityAssessmentServiceImpl"
+		parent="baseService">
+		<property name="assetManager" ref="assetManager" />
+		<property name="assetGroupManager" ref="assetGroupManager" />
+		<property name="vulnerabilityAssessmentDao" ref="vulnerabilityAssessmentDao" />
+	</bean>
+
+	<bean id="assetRiskGroupManager" class="com.soc.service.risk.impl.AssetRiskGroupServiceImpl"
+		parent="baseService">
+		<property name="assetRiskGroupDao" ref="assetRiskGroupDao" />
+		<property name="assetGroupManager" ref="assetGroupManager"></property>
+	</bean>
+	<!-- 资产风险赋值 -->
+	<bean id="assetRiskEvaluationService"
+		class="com.soc.service.risk.impl.AssetRiskEvaluationServiceImpl"
+		parent="baseService">
+		<property name="assetGroupManager" ref="assetGroupManager" />
+		<property name="assetRiskEvaluationDao" ref="assetRiskEvaluationDao" />
+		<property name="assetRiskGroupDao" ref="assetRiskGroupDao" />
+		<property name="assetDao" ref="assetDao" />
+		<property name="assetGroupDao" ref="assetGroupDao" />
+	</bean>
+
+	<!-- 设置 -->
+	<bean id="settingManager" class="com.soc.service.systemsetting.impl.SettingServiceImpl"
+		parent="baseService">
+		<property name="settingDao" ref="settingDao" />
+
+	</bean>
+
+	<bean id="mailManager"
+		class="com.soc.service.systemsetting.impl.MailServersInstanceServiceImpl"
+		parent="baseService">
+		<property name="mailserversinstancedao" ref="mailserversinstancedao" />
+	</bean>
+
+	<!-- cpu设置 -->
+	<bean id="settingCpuManager"
+		class="com.soc.service.systemsetting.impl.SettingCpuServiceImpl">
+		<property name="settingCpuDao" ref="settingCpuDao" />
+	</bean>
+
+	<bean id="settingMemoryManager"
+		class="com.soc.service.systemsetting.impl.SystemMemoryServiceImpl">
+		<property name="systemMemoryDao" ref="systemMemoryDao" />
+
+	</bean>
+
+
+	<!-- 监控组 设置 -->
+	<bean id="monitorGroupManager" class="com.soc.service.monitor.impl.MonitorGroupServiceImpl">
+		<property name="monitorGroupDao" ref="monitorGroupDao" />
+	</bean>
+	<bean id="monitorManager" class="com.soc.service.monitor.impl.MonitorServiceImpl">
+		<property name="monitorDao" ref="monitorDao" />
+	</bean>
+
+	<bean id="monitorAlarmManager" class="com.soc.service.monitor.impl.MonitorAlarmServiceImpl">
+		<property name="monitorAlarmDao" ref="monitorAlarmDao" />
+		<property name="settingDao" ref="settingDao" />
+		<property name="userDao" ref="userDao" />
+	</bean>
+	<bean id="monitorNetworkTopologyManager"
+		class="com.soc.service.monitor.impl.MonitorNetworkTopologyServiceImpl">
+		<property name="monitorNetworkTopologyDao" ref="monitorNetworkTopologyDao" />
+	</bean>
+	<!-- 注册采集器 -->
+	<bean id="settingLoggerManager"
+		class="com.soc.service.systemsetting.impl.SettingCollectorServiceImpl">
+		<property name="settingCollectorDao" ref="settingCollectorDao" />
+		<property name="assetDao" ref="assetDao" />
+		<property name="analysisDao" ref="analysisDao" />
+		<property name="settingDao" ref="settingDao" />
+	</bean>
+
+	<!-- 关联规则 -->
+	<bean id="associationManager"
+		class="com.soc.service.systemsetting.impl.rules.AssociationRulesServiceImpl">
+		<property name="associationDao" ref="associationDao" />
+	</bean>
+
+	<!-- 关联规则 -->
+	<bean id="analysisManager"
+		class="com.soc.service.systemsetting.impl.rules.AnalysisRulesServiceImpl">
+		<property name="analysisDao" ref="analysisDao" />
+	</bean>
+	<!-- 自定义过滤规则 -->
+	<bean id="filteringRuleManager"
+		class="com.soc.service.systemsetting.impl.rules.FilteringRuleServiceImpl">
+		<property name="filteringRuleDao" ref="filteringRuleDao" />
+	</bean>
+	<!-- 自定义关联规则 -->
+	<bean id="relevanceRuleManager"
+		class="com.soc.service.systemsetting.impl.rules.RelevanceRuleServiceImpl">
+		<property name="relevanceRuleDao" ref="relevanceRuleDao" />
+	</bean>
+	<!-- 自定义关联规则组 -->
+	<bean id="relevanceRuleGroupManager"
+		class="com.soc.service.systemsetting.impl.rules.RelevanceRuleGroupServiceImpl">
+		<property name="relevanceRuleGroupDao" ref="relevanceRuleGroupDao" />
+		<property name="relevanceRuleDao" ref="relevanceRuleDao" />
+	</bean>
+	<!-- 添加解析规则 -->
+	<bean id="addRulesManager" class="com.soc.service.addrules.impl.AddRulesServiceImpl">
+		<property name="addrulesdao" ref="addRulesDao" />
+	</bean>
+
+	<!-- 归档 -->
+	<bean id="archiveManager"
+		class="com.soc.service.systemsetting.impl.SettingArchiveServiceImpl">
+		<property name="archiveDao" ref="archiveDao" />
+		<property name="settingManager" ref="settingManager" />
+	</bean>
+
+	<!-- 查询事件 -->
+	<bean id="queryEeventsManager" class="com.soc.service.events.impl.QueryEventsServiceImp">
+		<property name="eventsDao" ref="eventsDao" />
+		<property name="queryEvevntsDao" ref="queryEvevntsDao" />
+		<property name="summaryEventsDao" ref="summaryEventsDao" />
+		<property name="settingDao" ref="settingDao" />
+		<property name="originalLogDao" ref="originalLogDao"/>
+	</bean>
+	<!-- 查询事件组 -->
+	<bean id="queryEventsGroupManager" class="com.soc.service.events.impl.QueryEventsGroupServiceImpl">
+		<property name="queryEvevtsGroupDao" ref="queryEvevtsGroupDao" />
+	</bean>
+
+	<!-- 概要事件 -->
+	<bean id="summaryEventsManager" class="com.soc.service.events.impl.SummaryEventsServiceImpl">
+		<property name="summaryEventsDao" ref="summaryEventsDao" />
+	</bean>
+
+	<!-- 事件 -->
+	<bean id="eventsManager" class="com.soc.service.events.impl.EventsServiceImpl">
+		<property name="eventsDao" ref="eventsDao" />
+	</bean>
+	<!-- 事件树 -->
+	<bean id="eventTreeService" class="com.soc.service.events.impl.EventTreeServiceImpl"
+		parent="baseService">
+		<property name="eventTreeDao" ref="eventTreeDao" />
+	</bean>
+
+	<!-- 事件库 -->
+	<bean id="eventLibraryService" class="com.soc.service.events.impl.EventLibraryServiceImpl"
+		parent="baseService">
+		<property name="eventLibraryDao" ref="eventLibraryDao" />
+	</bean>
+
+	<!-- 解析失败日志 -->
+	<bean id="notAnalyticEventsManager"
+		class="com.soc.service.events.impl.NotAnalyticEventsServiceImpl">
+		<property name="notAnalyticEventsDao" ref="notAnalyticEventsDao" />
+	</bean>
+
+	<!-- 原始日志 -->
+	<bean id="originalLogManager" class="com.soc.service.events.impl.OriginalLogServiceImpl">
+		<property name="originalLogDao" ref="originalLogDao" />
+	</bean>
+
+	<!-- 过滤规则 -->
+	<bean id="filterManager" class="com.soc.service.events.impl.FilterServiceImpl">
+		<property name="filterDao" ref="filterDao" />
+	</bean>
+
+	<!-- 过滤规则 -->
+	<bean id="filterByGroupManager" class="com.soc.service.events.impl.FilterByGroupServiceImpl">
+		<property name="filterByGroupDao" ref="filterByGroupDao" />
+	</bean>
+
+	<!-- 告警规则 -->
+	<bean id="alertRuleManager" class="com.soc.service.alert.impl.AlertRuleServiceImpl"
+		parent="baseService">
+		<property name="alertRuleDao" ref="alertRuleDao" />
+		<property name="alertMessgeDao" ref="alertMessageDao" />
+		<property name="userDao" ref="userDao" />
+		<property name="settingDao" ref="settingDao" />
+		<property name="assetManager" ref="assetManager" />
+		<property name="securityPolicyManager" ref="securityPolicyManager"/>
+	</bean>
+
+
+	<!--告警信息 -->
+	<bean id="alertMessageManager" class="com.soc.service.alert.impl.AlertMessageServiceImpl"
+		parent="baseService">
+		<property name="alertMessgeDao" ref="alertMessageDao" />
+
+	</bean>
+
+	<!-- 中心IP -->
+	<bean id="systemCenterIpManager"
+		class="com.soc.service.systemsetting.impl.SystemCenterIpServiceImpl"
+		parent="baseService">
+		<property name="assetDao" ref="assetDao" />
+		<property name="settingCollectorDao" ref="settingCollectorDao" />
+		<property name="analysisDao" ref="analysisDao" />
+		<property name="settingDao" ref="settingDao" />
+	</bean>
+
+	<!-- 预警发布 -->
+	<bean id="warnManager" class="com.soc.service.repository.impl.WarnServiceImpl"
+		parent="baseService">
+		<property name="warnDao" ref="warnDao" />
+		<property name="settingDao" ref="settingDao" />
+		<property name="userDao" ref="userDao" />
+	</bean>
+
+	<!-- 知识库 -->
+
+	<!-- 漏洞库 -->
+	<bean id="leakManager" class="com.soc.service.knowledge.impl.LeakServiceImpl">
+		<property name="leakDao" ref="leakDao" />
+	</bean>
+	<bean id="securityManager" class="com.soc.service.knowledge.impl.SecurityServiceImpl">
+		<property name="securityDao" ref="securityDao" />
+	</bean>
+	<bean id="vulnerabilityManager" class="com.soc.service.knowledge.impl.VulnerabilityServiceImpl"
+		parent="baseService">
+		<property name="vulnerabilityDao" ref="vulnerabilityDao"></property>
+	</bean>
+
+	<!-- 工单管理 -->
+	<bean id="workOrderManager" class="com.soc.service.workorder.impl.WorkOrderServiceImpl"
+		parent="baseService">
+		<property name="workOrder" ref="workOrderDao" />
+	</bean>
+
+	<!-- 事件类型 -->
+	<bean id="eventTypeTagManager"
+		class="com.soc.service.eventtypetag.impl.EventTypeTagServiceImpl"
+		parent="baseService">
+		<property name="eventTypeTagDao" ref="eventTypeTagDao" />
+	</bean>
+
+	<!-- 事件类别 -->
+	<bean id="eventCategoryTagManager"
+		class="com.soc.service.eventtypetag.impl.EventCategoryTagServiceImpl"
+		parent="baseService">
+		<property name="eventCategoryTagDao" ref="eventCategoryDao"></property>
+	</bean>
+
+
+	<!-- 大屏展示 -->
+	<bean id="comprehensiveEmergeManager"
+		class="com.soc.service.screen.impl.ComprehensiveEmerServiceImpl"
+		parent="baseService">
+		<property name="comprehensiveEmergeDao" ref="comprehensiveEmergeDao"></property>
+	</bean>
+	<bean id="bigScreenServiceManager" class="com.soc.service.screen.impl.BigScreenServiceImpl"
+		parent="baseService">
+		<property name="assetGroupManager" ref="assetGroupManager" />
+		<property name="bigScreenDao" ref="bigScreenDao"></property>
+	</bean>
+
+	<!-- 首页div的显示情况 -->
+	<bean id="homePageDivManager" class="com.soc.service.homepagediv.impl.HomePageDivServiceImpl"
+		parent="baseService">
+		<property name="homePageDao" ref="homePageDao" />
+	</bean>
+
+	<!-- 消息中心 -->
+	<bean id="messageManager" class="com.soc.service.knowledge.impl.MessageCenterServiceImpl"
+		parent="baseService">
+		<property name="mDao" ref="messageDao" />
+	</bean>
+
+	<!-- 设备类型 -->
+	<bean id="categoryService" class="com.soc.service.asset.impl.device.CategoryServiceImpl"
+		parent="baseService">
+		<property name="cDao" ref="categoryDao" />
+	</bean>
+	<!-- 资产系统 -->
+	<bean id="assetSystemManage"
+		class="com.soc.service.asset.impl.system.AssetSystemServiceImpl"
+		parent="baseService">
+		<property name="asDao" ref="assetSystemDao" />
+	</bean>
+
+	<!-- 资产导入 -->
+	<bean id="importAssetManager" class="com.soc.service.asset.importAsset.ImportAsset">
+		<property name="uService" ref="userManager" />
+		<property name="asService" ref="assetSystemManage" />
+		<property name="categoryService" ref="categoryService"/>
+		<property name="settingLoggerManager" ref="settingLoggerManager"/>
+		<property name="assetManager" ref="assetManager"/>
+	</bean>
+
+	<bean id="systemSettingManager"
+		class="com.soc.service.systemsetting.impl.SystemSettingServiceImpl">
+		<property name="ssDao" ref="systemSettingDao" />
+	</bean>
+
+	<bean id="syncDateManager" class="com.soc.service.systemsetting.impl.SettingSyncDateImpl">
+		<property name="settingDao" ref="settingDao" />
+	</bean>
+	<!-- 关联分析 -->
+	<bean id="relevanceEventsManager" class="com.soc.service.events.impl.RelevanceEventsServiceImpl">
+		<property name="relevanceEventsDao" ref="relevanceEventsDao" />
+	</bean>
+	<!-- 级联节点 -->
+	<bean id="nodeGroupManager" class="com.soc.service.systemsetting.impl.NodeGroupServiceImpl">
+		<property name="nodeGroupDao" ref="nodeGroupDao" />
+	</bean>
+	<!-- 趋势分析 -->
+	<bean id="customTrendManager" class="com.soc.service.monitor.impl.CustomTrendServiceImpl">
+		<property name="customTrendDao" ref="customTrendDao" />
+		<property name="eventsDao" ref="eventsDao" />
+	</bean>
+
+	<!-- 从远程Oracle中获取数据 -->
+	<bean id="eventsUserLogManager" class="com.soc.service.events.impl.EventsUserLogServiceImpl">
+		<property name="eventsUserlogDao" ref="eventsUserLogDao"></property>
+	</bean>
+		<!-- functionControl -->
+	<bean id="settingFunctionControlManager" class="com.soc.service.systemsetting.impl.SettingFunctionControlSeriveImpl">
+		<property name="settingFunctionControlDao" ref="settingFunctionControlDao"></property>
+	</bean>
+		<!-- 直播星 -->
+	<bean id="satelliteEventsManager" class="com.soc.service.satellite.impl.SatelliteEventsServiceImpl">
+		<property name="satelliteEventsDao" ref="satelliteEventsDao"></property>
+	</bean>
+	<!-- 历史APM监控 -->
+	<bean id="monitorHistoryManager" class="com.soc.service.monitor.impl.MonitorHistoryServiceImpl" parent="baseService">
+	<property name="monitorHistoryDao" ref="monitorHistoryDao"/>
+	</bean>
+	<!-- 安全公告导入 -->
+	<bean id="importSecurityExcel" class="com.soc.service.knowledge.importLeak.ImportSecurityExcel">
+		
+	</bean>
+	<!-- 安全策略管理 -->
+	<bean id="securityPolicyManager" class="com.soc.service.securityPolicy.impl.SecurityPolicyServiceImpl"
+		parent="baseService">
+		<property name="securityPolicyDao" ref="securityPolicyDao"></property>
+		<property name="alertRuleDao" ref="alertRuleDao" />
+	</bean>
+	<!-- 漏扫联动 -->
+	<bean id="scanTaskManager" class="com.soc.service.scanTask.impl.ScanTaskServiceImpl" parent="baseService">
+		<property name="scanTaskDao" ref="scanTaskDao"/>
+	</bean>
+	<!-- 数据监控 -->
+	<bean id="mdtManager" class="com.soc.service.monitor.impl.MonitorDatabaseTaskServiceImpl" parent="baseService">
+		<property name="mdtDao" ref="mdtDao"/>
+	</bean>
+	<!-- tomcat监控 -->
+	<bean id="mttManager" class="com.soc.service.monitor.impl.MonitorTomcatTaskServiceImpl" parent="baseService">
+	<property name="mttDao" ref="mttDao"/>
+	</bean>
+	<!-- Windows监控 -->
+	<bean id="mwtManager" class="com.soc.service.monitor.impl.MonitorWindowsTaskServiceImpl" parent="baseService">
+	<property name="mwtDao" ref="mwtDao"/>
+	</bean>
+</beans>

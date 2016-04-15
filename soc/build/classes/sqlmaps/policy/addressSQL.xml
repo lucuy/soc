@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="addressSQL">
+  <typeAlias alias="address" type="com.soc.model.policy.Address" />
+  <!--地址 -->
+	<resultMap class="address" id="addressResult">
+		<result property="addressId" column="ADDRESS_ID" jdbcType="bigint" />
+		<result property="addressStartIp" column="ADDRESS_AREA_START"
+			jdbcType="varchar" />
+		<result property="addressEndIp" column="ADDRESS_AREA_END"
+			jdbcType="varchar" />
+		<result property="relAddressPolicyId" column="ADDRESS_ADDRESS_POLICY_ID"
+			jdbcType="bigint" />
+	</resultMap>
+	
+	<!-- 插入一条地址数据 -->
+	<insert id="pgAdminaddress.insert" parameterClass="address">
+	   <![CDATA[ 
+	    INSERT INTO "tbl_address"
+	           ("ADDRESS_AREA_START",
+	            "ADDRESS_AREA_END",
+	            "ADDRESS_ADDRESS_POLICY_ID")
+	    VALUES
+	           (#addressStartIp#,
+	            #addressEndIp#,
+	            #relAddressPolicyId#)
+	   ]]>
+	</insert>
+	
+	<!-- 删除一条地址数据 -->
+	<delete id="pgAdminaddress.delete" parameterClass="long">
+	   <![CDATA[
+	       DELETE FROM  "tbl_address" WHERE "ADDRESS_ADDRESS_POLICY_ID" = #value#
+	   ]]>
+	</delete>
+	
+	<select id="pgAdminaddress.queryByPolicyId" parameterClass="long" resultMap="addressResult">
+		select * from "tbl_address" where "ADDRESS_ADDRESS_POLICY_ID" = #value#
+	</select>
+	<!-- sqlServer -->
+	<!-- 插入一条地址数据 -->
+	<insert id="sqlServeraddress.insert" parameterClass="address">
+	   <![CDATA[ 
+	    INSERT INTO "tbl_address"
+	           ("ADDRESS_AREA_START",
+	            "ADDRESS_AREA_END",
+	            "ADDRESS_ADDRESS_POLICY_ID")
+	    VALUES
+	           (#addressStartIp#,
+	            #addressEndIp#,
+	            #relAddressPolicyId#)
+	   ]]>
+	</insert>
+	
+	<!-- 删除一条地址数据 -->
+	<delete id="sqlServeraddress.delete" parameterClass="long">
+	   <![CDATA[
+	       DELETE FROM  "tbl_address" WHERE "ADDRESS_ADDRESS_POLICY_ID" = #value#
+	   ]]>
+	</delete>
+	
+	<select id="sqlServeraddress.queryByPolicyId" parameterClass="long" resultMap="addressResult">
+		select * from "tbl_address" where "ADDRESS_ADDRESS_POLICY_ID" = #value#
+	</select>
+</sqlMap>
+
+

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    <sqlMap namespace="monitAlarmHistorySQL">
+    <resultMap class="monitorAlarmHistry" id="monitorAlarmHistryResult">
+    <result property="monitorAlarmIndex" column="MONITOR_ALARM_INDEX" jdbcType="varchar"/>
+    <result property="ip" column="IP" jdbcType="varchar"/>
+    <result property="monitorAlarmCurrentValue" column="MONITOR_ALARM_CURRENT_VALUE" jdbcType="varchar"/>
+	<result property="monitorAlarmTime" column="MONITOR_ALARM_TIME" jdbcType="datetime"/>
+	</resultMap>
+    <!-- 新增 -->
+    <insert id="mah.instert" parameterClass="monitorAlarmHistry">
+    	INSERT INTO "tbl_monitor_alarm_history"
+    	(
+    	"MONITOR_ALARM_INDEX",
+    	"MONITOR_ALARM_TIME",
+    	"IP",
+    	"MONITOR_ALARM_CURRENT_VALUE"
+    	)
+    	VALUES
+    	(
+    	#monitorAlarmIndex#,
+    	#monitorAlarmTime#,
+    	#ip#,
+    	#monitorAlarmCurrentValue#
+    	)
+    </insert>
+    <!-- 根据资产IP查询总数 -->
+    <select id="mah.count" resultClass="int" parameterClass="java.util.HashMap">
+    SELECT count(*) FROM "tbl_monitor_alarm_history" WHERE "IP"=#ip#
+    <isNotEmpty prepend="and" property="startTime">
+   	 "MONITOR_ALARM_TIME" between #startTime# and #endTime#
+    
+    </isNotEmpty>
+    
+    </select>
+     <!-- 根据资产IP查询总数 -->
+    <select id="mah.query" resultMap="monitorAlarmHistryResult" parameterClass="java.util.HashMap">
+    SELECT * FROM "tbl_monitor_alarm_history" WHERE "IP"=#ip#
+     <isNotEmpty prepend="and" property="startTime">
+   	 "MONITOR_ALARM_TIME" between #startTime# and #endTime#
+    </isNotEmpty>
+     ORDER BY "MONITOR_ALARM_TIME" desc
+    </select>
+    
+    
+    
+    </sqlMap>
+    

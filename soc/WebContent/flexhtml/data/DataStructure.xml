@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data>
+	<data1>
+		<resource current="" unConfirmed=""/>
+	</data1>
+	<data2>
+		<resource label="a" value="1" severity=""/>
+		<resource label="b" value="2" severity=""/>
+		<resource label="c" value="3" severity=""/>
+		<resource label="d" value="4" severity=""/>
+	</data2>
+	<data3>
+		<resource label="aa" value="11" severity=""/>
+		<resource label="bb" value="22" severity=""/>
+		<resource label="cc" value="33" severity=""/>
+		<resource label="dd" value="44" severity=""/>
+		<resource label="ee" value="55" severity=""/>
+	</data3>
+</data>

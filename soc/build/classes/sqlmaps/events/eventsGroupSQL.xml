@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="queryEventsGroupSQL">
+	   <resultMap id="queryEventsGroupResult" class="queryEventsGroup">
+        <result property="queryEventsGroupId"            column="QUERY_EVENTS_GROUP_ID"             jdbcType="bigint"/>
+        <result property="queryEventsGroupName"          column="QUERY_EVENTS_GROUP_NAME"           jdbcType="varchar"/>
+        <result property="queryEventsGroupParentId"      column="QUERY_EVENTS_GROUP_PARENT_ID"      jdbcType="bigint"/>
+        <result property="queryEventsGroupType"          column="QUERY_EVENTS_GROUP_TYPE"           jdbcType="int"/>
+        <result property="queryEventsConditions"         column="QUERY_EVENTS_CONDITIONS"           jdbcType="varchar"/>
+       <!--  <result property="queryEventsList"               column="QUERY_EVENTS_GROUP_ID"             select="queryEvents.queryByParentId"/> -->
+    </resultMap>
+   	
+   	<resultMap id="queryEventsResult" class="queryEvents">
+        <result property="queryEventsId"            column="QUERY_EVENTS_ID"            jdbcType="bigint"/>
+        <result property="queryEventsName"           column="QUERY_EVENTS_NAME"           jdbcType="varchar"/>
+        <result property="queryEventsGroupId"        column="QUERY_EVENTS_GROUP_ID"             jdbcType="bigint"/>
+        <result property="queryEventsConditions"     column="QUERY_EVENTS_CONDITIONS"     jdbcType="text"/>
+        <result property="queryEventsType"           column="QUERY_EVENTS_TYPE"     jdbcType="int"/>
+    </resultMap>
+    <!-- 根据父ID查询组 -->
+   	<select id="pgAdminqueryEvents.queryByParentId" resultMap="queryEventsGroupResult" parameterClass="java.util.HashMap"  >
+        SELECT "QUERY_EVENTS_GROUP_ID", "QUERY_EVENTS_GROUP_NAME", "QUERY_EVENTS_GROUP_PARENT_ID", 
+        "QUERY_EVENTS_GROUP_TYPE", "QUERY_EVENTS_CONDITIONS" FROM "tbl_queryEvents_group" WHERE 
+        "QUERY_EVENTS_GROUP_PARENT_ID" IN ($parentId$)  AND "QUERY_EVENTS_GROUP_TYPE" != 404 ORDER BY "QUERY_EVENTS_GROUP_ID" ASC;
+    </select>
+    
+    <!-- 查询所有关联分析-->
+    <select id="pgAdminquery.RelevanceAnalysis" resultMap="queryEventsGroupResult">
+    SELECT "QUERY_EVENTS_GROUP_ID", "QUERY_EVENTS_GROUP_NAME", "QUERY_EVENTS_GROUP_PARENT_ID", 
+       "QUERY_EVENTS_GROUP_TYPE", "QUERY_EVENTS_CONDITIONS"
+        FROM "tbl_queryEvents_group" WHERE "QUERY_EVENTS_GROUP_TYPE" = 2 AND "QUERY_EVENTS_CONDITIONS" IS NOT NULL;
+    </select>
+        <!-- 根据父ID查询组 -->
+    <select id="pgAdminqueryEvents.queryNodeByParentId" resultMap="queryEventsGroupResult" parameterClass="java.util.HashMap" >
+        SELECT "QUERY_EVENTS_GROUP_ID", "QUERY_EVENTS_GROUP_NAME", "QUERY_EVENTS_GROUP_PARENT_ID", 
+       "QUERY_EVENTS_GROUP_TYPE", "QUERY_EVENTS_CONDITIONS" FROM "tbl_queryEvents_group" WHERE 1=1 
+        <isNotEmpty prepend= "AND"  property="parentId">
+            "QUERY_EVENTS_GROUP_PARENT_ID" = #parentId# ORDER BY "QUERY_EVENTS_GROUP_ID" ASC;
+        </isNotEmpty>
+    </select>
+    
+    
+    <!-- 查询一条数据 -->
+    <select id="pgAdminquer.customByID" resultMap="queryEventsGroupResult" parameterClass="long" >
+       <![CDATA[
+           SELECT * FROM "tbl_queryEvents_group" WHERE "QUERY_EVENTS_GROUP_ID" = #queryEventsId#;
+       ]]>
+    </select>
+    
+     
+            <!-- 查询服务器事件查询条件 -->
+    <select id="pgAdminquery.summaryEventsConditions" resultMap="queryEventsGroupResult" parameterClass="long" >
+      SELECT "QUERY_EVENTS_GROUP_ID", "QUERY_EVENTS_GROUP_NAME", "QUERY_EVENTS_GROUP_PARENT_ID", 
+       "QUERY_EVENTS_GROUP_TYPE", "QUERY_EVENTS_CONDITIONS" FROM "tbl_queryEvents_group" WHERE "QUERY_EVENTS_GROUP_ID" = #grpupId#
+    </select>
+    
+    
+    
+    
+    
+    
+    
+    <!--根据组ID查询认证  -->
+        <select id="pgAdminqueryEventsatt.queryByGroupId" parameterClass="java.util.HashMap" resultMap="queryEventsResult" >
+        SELECT "QUERY_EVENTS_ID", "QUERY_EVENTS_NAME", "QUERY_EVENTS_GROUP_ID", "QUERY_EVENTS_CONDITIONS", 
+       "QUERY_EVENTS_TYPE" FROM "tbl_queryEvents_attestation" WHERE 1=1 
+        <isNotEmpty prepend= "AND"  property="groupId">
+         "QUERY_EVENTS_GROUP_ID" = #groupId# ORDER BY "QUERY_EVENTS_ID" ASC;
+         </isNotEmpty>
+    </select>
+    <!--根据组ID配置变更  -->
+        <select id="pgAdminqueryEventscon.queryByGroupId"  parameterClass="java.util.HashMap" resultMap="queryEventsResult" >
+        SELECT "QUERY_EVENTS_ID", "QUERY_EVENTS_NAME", "QUERY_EVENTS_GROUP_ID", "QUERY_EVENTS_CONDITIONS", 
+       "QUERY_EVENTS_TYPE" FROM "tbl_queryEvents_config" WHERE 1=1 
+        <isNotEmpty prepend= "AND"  property="groupId">
+            "QUERY_EVENTS_GROUP_ID" = #groupId# ORDER BY "QUERY_EVENTS_ID" ASC;
+         </isNotEmpty>
+    </select>
+    
+    <!--根据组ID配置操作  -->
+        <select id="pgAdminqueryEvenop.queryByGroupId" parameterClass="java.util.HashMap" resultMap="queryEventsResult" >
+        SELECT "QUERY_EVENTS_ID", "QUERY_EVENTS_NAME", "QUERY_EVENTS_GROUP_ID", "QUERY_EVENTS_CONDITIONS", 
+       "QUERY_EVENTS_TYPE" FROM "tbl_queryEvents_operation" WHERE 1=1 
+        <isNotEmpty prepend= "AND"  property="groupId">
+            "QUERY_EVENTS_GROUP_ID" = #groupId# ORDER BY "QUERY_EVENTS_ID" ASC;
+          </isNotEmpty>
+    </select>
+    
+     <!--根据组ID系统资源  -->
+        <select id="pgAdminqueryEventsre.queryByGroupId" parameterClass="java.util.HashMap" resultMap="queryEventsResult"  >
+        SELECT "QUERY_EVENTS_ID", "QUERY_EVENTS_NAME", "QUERY_EVENTS_GROUP_ID", "QUERY_EVENTS_CONDITIONS", 
+       "QUERY_EVENTS_TYPE" FROM "tbl_queryEvents_resources" WHERE 1=1
+         <isNotEmpty prepend= "AND"  property="groupId">
+            "QUERY_EVENTS_GROUP_ID" = #groupId# ORDER BY "QUERY_EVENTS_ID" ASC;
+         </isNotEmpty>
+    </select>
+    
+     <!--根据组ID查询二级以下组  -->
+        <select id="pgAdminqueryEventGroupNode.queryByGroupId" parameterClass="java.util.HashMap" resultMap="queryEventsGroupResult" >
+        SELECT "QUERY_EVENTS_GROUP_ID", "QUERY_EVENTS_GROUP_NAME", "QUERY_EVENTS_GROUP_PARENT_ID", 
+       "QUERY_EVENTS_GROUP_TYPE" FROM "tbl_queryEvents_group" WHERE  1=1
+        <isNotEmpty prepend= "AND"  property="groupId">
+         "QUERY_EVENTS_GROUP_PARENT_ID" = #groupId# ORDER BY "QUERY_EVENTS_GROUP_ID" ASC;
+          </isNotEmpty>
+    </select>
+    
+    <!-- 根据组ID查询 服务器事件组-->
+    <select id="pgAdminqueryServerEventsNode.queryByGroupId" parameterClass="java.util.HashMap" resultMap="queryEventsResult"  >
+    SELECT "QUERY_EVENTS_ID", "QUERY_EVENTS_NAME", "QUERY_EVENTS_GROUP_ID", "QUERY_EVENTS_CONDITIONS", "QUERY_EVENTS_TYPE"
+  FROM "tbl_queryEvents_serverEvents" WHERE 1=1
+     <isNotEmpty prepend= "AND"  property="groupId">
+        "QUERY_EVENTS_GROUP_ID" = #groupId# ORDER BY "QUERY_EVENTS_ID" ASC;
+    </isNotEmpty>
+    </select>
+    
+        <!--查询自定义节点 -->
+        <select id="pgAdminqueryCustomEventsNode.queryByGroupId" parameterClass="java.util.HashMap" resultMap="queryEventsResult" >
+    SELECT "QUERY_EVENTS_ID", "QUERY_EVENTS_NAME", "QUERY_EVENTS_GROUP_ID", "QUERY_EVENTS_CONDITIONS", "QUERY_EVENTS_TYPE"
+    FROM "tbl_queryEvents_custom" WHERE 1=1
+         <isNotEmpty prepend= "AND"  property="groupId">
+            "QUERY_EVENTS_GROUP_ID" = #groupId# ORDER BY "QUERY_EVENTS_ID" ASC;
+         </isNotEmpty>
+    </select>
+    
+   	<!-- sqlserver -->
+   	<!-- 根据父ID查询组 -->
+   	<select id="sqlServerqueryEvents.queryByParentId" resultMap="queryEventsGroupResult" parameterClass="java.util.HashMap"  >
+        SELECT "QUERY_EVENTS_GROUP_ID", "QUERY_EVENTS_GROUP_NAME", "QUERY_EVENTS_GROUP_PARENT_ID", 
+        "QUERY_EVENTS_GROUP_TYPE", "QUERY_EVENTS_CONDITIONS" FROM "tbl_queryEvents_group" WHERE 
+        "QUERY_EVENTS_GROUP_PARENT_ID" IN ($parentId$)  AND "QUERY_EVENTS_GROUP_TYPE" != 404 ORDER BY "QUERY_EVENTS_GROUP_ID" ASC;
+    </select>
+    
+    <!-- 查询所有关联分析-->
+    <select id="sqlServerquery.RelevanceAnalysis" resultMap="queryEventsGroupResult">
+    SELECT "QUERY_EVENTS_GROUP_ID", "QUERY_EVENTS_GROUP_NAME", "QUERY_EVENTS_GROUP_PARENT_ID", 
+       "QUERY_EVENTS_GROUP_TYPE", "QUERY_EVENTS_CONDITIONS"
+        FROM "tbl_queryEvents_group" WHERE "QUERY_EVENTS_GROUP_TYPE" = 2 AND "QUERY_EVENTS_CONDITIONS" IS NOT NULL;
+    </select>
+        <!-- 根据父ID查询组 -->
+    <select id="sqlServerqueryEvents.queryNodeByParentId" resultMap="queryEventsGroupResult" parameterClass="java.util.HashMap" >
+        SELECT "QUERY_EVENTS_GROUP_ID", "QUERY_EVENTS_GROUP_NAME", "QUERY_EVENTS_GROUP_PARENT_ID", 
+       "QUERY_EVENTS_GROUP_TYPE", "QUERY_EVENTS_CONDITIONS" FROM "tbl_queryEvents_group" WHERE 1=1 
+        <isNotEmpty prepend= "AND"  property="parentId">
+            "QUERY_EVENTS_GROUP_PARENT_ID" = #parentId# ORDER BY "QUERY_EVENTS_GROUP_ID" ASC;
+        </isNotEmpty>
+    </select>
+    
+    
+    <!-- 查询一条数据 -->
+    <select id="sqlServerquer.customByID" resultMap="queryEventsGroupResult" parameterClass="long" >
+       <![CDATA[
+           SELECT * FROM "tbl_queryEvents_group" WHERE "QUERY_EVENTS_GROUP_ID" = #queryEventsId#;
+       ]]>
+    </select>
+    
+     
+            <!-- 查询服务器事件查询条件 -->
+    <select id="sqlServerquery.summaryEventsConditions" resultMap="queryEventsGroupResult" parameterClass="long" >
+      SELECT "QUERY_EVENTS_GROUP_ID", "QUERY_EVENTS_GROUP_NAME", "QUERY_EVENTS_GROUP_PARENT_ID", 
+       "QUERY_EVENTS_GROUP_TYPE", "QUERY_EVENTS_CONDITIONS" FROM "tbl_queryEvents_group" WHERE "QUERY_EVENTS_GROUP_ID" = #grpupId#
+    </select>
+    
+    
+    
+    
+    
+    
+    
+    <!--根据组ID查询认证  -->
+        <select id="sqlServerqueryEventsatt.queryByGroupId" parameterClass="java.util.HashMap" resultMap="queryEventsResult" >
+        SELECT "QUERY_EVENTS_ID", "QUERY_EVENTS_NAME", "QUERY_EVENTS_GROUP_ID", "QUERY_EVENTS_CONDITIONS", 
+       "QUERY_EVENTS_TYPE" FROM "tbl_queryEvents_attestation" WHERE 1=1 
+        <isNotEmpty prepend= "AND"  property="groupId">
+         "QUERY_EVENTS_GROUP_ID" = #groupId# ORDER BY "QUERY_EVENTS_ID" ASC;
+         </isNotEmpty>
+    </select>
+    <!--根据组ID配置变更  -->
+        <select id="sqlServerqueryEventscon.queryByGroupId"  parameterClass="java.util.HashMap" resultMap="queryEventsResult" >
+        SELECT "QUERY_EVENTS_ID", "QUERY_EVENTS_NAME", "QUERY_EVENTS_GROUP_ID", "QUERY_EVENTS_CONDITIONS", 
+       "QUERY_EVENTS_TYPE" FROM "tbl_queryEvents_config" WHERE 1=1 
+        <isNotEmpty prepend= "AND"  property="groupId">
+            "QUERY_EVENTS_GROUP_ID" = #groupId# ORDER BY "QUERY_EVENTS_ID" ASC;
+         </isNotEmpty>
+    </select>
+    
+    <!--根据组ID配置操作  -->
+        <select id="sqlServerqueryEvenop.queryByGroupId" parameterClass="java.util.HashMap" resultMap="queryEventsResult" >
+        SELECT "QUERY_EVENTS_ID", "QUERY_EVENTS_NAME", "QUERY_EVENTS_GROUP_ID", "QUERY_EVENTS_CONDITIONS", 
+       "QUERY_EVENTS_TYPE" FROM "tbl_queryEvents_operation" WHERE 1=1 
+        <isNotEmpty prepend= "AND"  property="groupId">
+            "QUERY_EVENTS_GROUP_ID" = #groupId# ORDER BY "QUERY_EVENTS_ID" ASC;
+          </isNotEmpty>
+    </select>
+    
+     <!--根据组ID系统资源  -->
+        <select id="sqlServerqueryEventsre.queryByGroupId" parameterClass="java.util.HashMap" resultMap="queryEventsResult"  >
+        SELECT "QUERY_EVENTS_ID", "QUERY_EVENTS_NAME", "QUERY_EVENTS_GROUP_ID", "QUERY_EVENTS_CONDITIONS", 
+       "QUERY_EVENTS_TYPE" FROM "tbl_queryEvents_resources" WHERE 1=1
+         <isNotEmpty prepend= "AND"  property="groupId">
+            "QUERY_EVENTS_GROUP_ID" = #groupId# ORDER BY "QUERY_EVENTS_ID" ASC;
+         </isNotEmpty>
+    </select>
+    
+     <!--根据组ID查询二级以下组  -->
+        <select id="sqlServerqueryEventGroupNode.queryByGroupId" parameterClass="java.util.HashMap" resultMap="queryEventsGroupResult" >
+        SELECT "QUERY_EVENTS_GROUP_ID", "QUERY_EVENTS_GROUP_NAME", "QUERY_EVENTS_GROUP_PARENT_ID", 
+       "QUERY_EVENTS_GROUP_TYPE" FROM "tbl_queryEvents_group" WHERE  1=1
+        <isNotEmpty prepend= "AND"  property="groupId">
+         "QUERY_EVENTS_GROUP_PARENT_ID" = #groupId# ORDER BY "QUERY_EVENTS_GROUP_ID" ASC;
+          </isNotEmpty>
+    </select>
+    
+    <!-- 根据组ID查询 服务器事件组-->
+    <select id="sqlServerqueryServerEventsNode.queryByGroupId" parameterClass="java.util.HashMap" resultMap="queryEventsResult"  >
+    SELECT "QUERY_EVENTS_ID", "QUERY_EVENTS_NAME", "QUERY_EVENTS_GROUP_ID", "QUERY_EVENTS_CONDITIONS", "QUERY_EVENTS_TYPE"
+  FROM "tbl_queryEvents_serverEvents" WHERE 1=1
+     <isNotEmpty prepend= "AND"  property="groupId">
+        "QUERY_EVENTS_GROUP_ID" = #groupId# ORDER BY "QUERY_EVENTS_ID" ASC;
+    </isNotEmpty>
+    </select>
+    
+        <!--查询自定义节点 -->
+        <select id="sqlServerqueryCustomEventsNode.queryByGroupId" parameterClass="java.util.HashMap" resultMap="queryEventsResult" >
+    SELECT "QUERY_EVENTS_ID", "QUERY_EVENTS_NAME", "QUERY_EVENTS_GROUP_ID", "QUERY_EVENTS_CONDITIONS", "QUERY_EVENTS_TYPE"
+    FROM "tbl_queryEvents_custom" WHERE 1=1
+         <isNotEmpty prepend= "AND"  property="groupId">
+            "QUERY_EVENTS_GROUP_ID" = #groupId# ORDER BY "QUERY_EVENTS_ID" ASC;
+         </isNotEmpty>
+    </select>
+    
+</sqlMap>

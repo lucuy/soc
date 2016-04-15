@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="netBackGroundPhotoSQL">
+
+		<resultMap class="netBackGroundPhoto" id="netBackGroundPhotoResult">
+       		<result property="photoId" column="PHOTO_ID" jdbcType="long"/>
+       		<result property="photoName" column="PHOTO_NAME" jdbcType="varchar"/>
+       		<result property="photoChecked" column="PHOTO_CHECKED" jdbcType="int"/>
+       		<result property="photoStatus" column="PHOTO_STATUS" jdbcType="int"/>
+       </resultMap>
+
+	<!--根据ID和外网或内网更新图片 -->
+      <update id="updateNetBackGroundPhotoName" parameterClass="netBackGroundPhoto">
+      	update "tbl_netbackgroundphoto" set "PHOTO_CHECKED"=#photoChecked# , "PHOTO_STATUS"=#photoStatus# where "PHOTO_NAME"=#photoName#  
+      </update>
+	<!-- 选择当前用的图片 -->
+	  <select id="queryCurrentPhoto" parameterClass="int" resultClass="String">
+	  	select "PHOTO_NAME" from "tbl_netbackgroundphoto" where "PHOTO_STATUS"=#status# and "PHOTO_CHECKED"=1
+	  </select>
+	  
+	  <!-- 查询所有的图片 -->
+	  <select id="queryAllNBGP" resultMap="netBackGroundPhotoResult">
+	  	select * from "tbl_netbackgroundphoto"
+	  </select>
+	  <!-- 查询正在使用的 -->
+	  <select id="queryCurrentNBGP" parameterClass="java.util.HashMap"  resultMap="netBackGroundPhotoResult">
+	  	select * from "tbl_netbackgroundphoto" where 1=1
+	  	<isNotEmpty prepend="and " property="status">
+	  		"PHOTO_STATUS"=#status# 
+	  		and "PHOTO_CHECKED"=1 
+	  	</isNotEmpty>
+	  	 <isNotEmpty prepend="and " property="name">
+	  	 	"PHOTO_NAME"=#name#
+	  	 </isNotEmpty>
+	  </select>
+	  <!-- 插入 -->
+	  <insert id="insertNBGP" parameterClass="netBackGroundPhoto">
+	  	insert into "tbl_netbackgroundphoto"("PHOTO_NAME","PHOTO_CHECKED","PHOTO_STATUS")values(#photoName#,#photoChecked#,#photoStatus#);
+	  </insert>
+	  <!-- 删除 -->
+	  <delete id="deleteNBGP" parameterClass="String">
+	  	delete from "tbl_netbackgroundphoto" where "PHOTO_NAME"=#name#
+	  </delete>
+</sqlMap>

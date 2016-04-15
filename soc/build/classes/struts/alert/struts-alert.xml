@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="alertRule" extends="struts-default" namespace="/alertRule">
+
+		<!-- 告警规则查询 -->
+		<action name="alertRuleQuery" class="alertRuleAction" method="ruleQuery">
+			<result name="success">/pages/alert/alert_rule_list.jsp</result>
+		</action>
+
+		<!-- 告警规则添加和修改 -->
+		<action name="editRule" class="alertRuleAction" method="ruleEdit">
+			<result name="success">/pages/alert/alert_rule_info.jsp</result>
+		</action>
+		<!-- 刷新列表 -->
+		<action name="updateRule" class="alertRuleAction" method="ruleUpdate">
+		    <result name="success" type="chain">
+		    	<param name="namespace">/alertRule</param>
+		    	<param name="actionName">alertRuleQuery</param>
+		    </result>
+		</action>
+
+		<!-- 删除规则列表 -->
+		<action name="deleteRule" class="alertRuleAction" method="deleteRule">
+		     <result name="success" type="chain">
+		     	<param name="namespace">/alertRule</param>
+		     	<param name="actionName">alertRuleQuery</param>
+		     </result>
+		</action>
+	</package>
+</struts>

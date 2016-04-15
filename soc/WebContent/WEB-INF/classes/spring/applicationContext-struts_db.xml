@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+    	  http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+	<!-- 所有ACTION都继承此类 -->
+	<bean id="baseAction1" class="com.compliance.webapp.action.BaseAction" scope="prototype">
+		<property name="baseService1" ref="baseService1" />
+	</bean>
+	<!-- 框架 -->
+	<!-- <bean id="frameAction" class="com.compliance.webapp.action.layout.FrameAction" scope="prototype" parent="baseAction1"> </bean> -->
+
+	<!-- licence注册 -->
+	<!-- <bean id="serialAction" class="com.compliance.webapp.action.about.SerialAction" scope="prototype" parent="baseAction1"> </bean> -->
+
+	<!--基础信息++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++== -->
+	<!--用户登陆 -->
+	<!-- <bean id="LoginAction" class="com.compliance.webapp.action.basicinfo.employee.LoginAction" scope="prototype" parent="baseAction1"> 
+	<property name="employeeService" ref="employeeService" 
+		/> <property name="auditService" ref="auditService"></property> </bean> -->
+	<!-- 组织部门信息 -->
+	<bean id="divisionAction" class="com.compliance.webapp.action.basicinfo.division.DivisionAction" scope="prototype" parent="baseAction1">
+		<property name="divisionService" ref="divisionService"></property>
+	</bean>
+	<!-- 单位信息 -->
+	<bean id="unitInfoAction" class="com.compliance.webapp.action.basicinfo.unitinfo.UnitInfoAction" scope="prototype" parent="baseAction1">
+		<property name="unitInfoService" ref="unitInfoService"></property>
+		<property name="rankService" ref="rankService"></property>
+		<property name="systemService" ref="systemService"></property>
+		<!-- <property name="auditService" ref="auditService"></property> -->
+	</bean>
+	<!--用户管理 -->
+	<!-- <bean id="EmployeeAction" class="com.compliance.webapp.action.basicinfo.employee.EmployeeAction" scope="prototype" parent="baseAction1"> 
+	<property name="employeeService" 
+		ref="employeeService"></property> <property name="auditService" ref="auditService"></property> </bean> -->
+	<!-- 信息系统 -->
+	<bean id="SystemAction" class="com.compliance.webapp.action.basicinfo.system.SystemAction" scope="prototype" parent="baseAction1">
+		<property name="systemService" ref="systemService"></property>
+		<property name="rankService" ref="rankService"></property>
+		<!-- <property name="auditService" ref="auditService"></property> -->
+	</bean>
+	<!-- 信息资产:业务应用软件 -->
+	<bean id="softUseAction" class="com.compliance.webapp.action.basicinfo.assets.SoftUseAction" scope="prototype" parent="baseAction1">
+		<property name="softUseServiceImpl" ref="softUseService"></property>
+		<property name="sysService" ref="systemService"></property>
+		<!-- <property name="auditService" ref="auditService"></property> -->
+		<!-- <property name="employeeService" ref="employeeService"></property> -->
+
+	</bean>
+
+	<!-- 信息资产:关键数据类别 -->
+	<bean id="dataAssetsAction" class="com.compliance.webapp.action.basicinfo.assets.DataAssetsAction" scope="prototype" parent="baseAction1">
+		<!-- <property name="auditService" ref="auditService"></property> -->
+		<property name="dataAssetsService" ref="dataAssetsService"></property>
+	</bean>
+	<!-- 信息资产:主机存储设备 -->
+	<bean id="compAssetsAction" class="com.compliance.webapp.action.basicinfo.assets.CompAssetsAction" scope="prototype" parent="baseAction1">
+		<!-- <property name="auditService" ref="auditService"></property> -->
+		<property name="compAssetsService" ref="compAssetsService"></property>
+	</bean>
+	<!-- 信息资产:设备安全 -->
+	<bean id="devAssetsAction" class="com.compliance.webapp.action.basicinfo.assets.DevAssetsAction" scope="prototype" parent="baseAction1">
+		<!-- <property name="auditService" ref="auditService"></property> -->
+		<property name="devAssetsService" ref="devAssetsService"></property>
+	</bean>
+	<!-- 信息资产:网络互连设备 -->
+	<bean id="netAssetsAction" class="com.compliance.webapp.action.basicinfo.assets.NetAssetsAction" scope="prototype" parent="baseAction1">
+		<!-- <property name="auditService" ref="auditService"></property> -->
+		<property name="netAssetsService" ref="netAssetsService"></property>
+	</bean>
+	<!-- 信息资产:安全相关人员 -->
+	<bean id="empAssetsAction" class="com.compliance.webapp.action.basicinfo.assets.EmpAssetsAction" scope="prototype" parent="baseAction1">
+		<!-- <property name="auditService" ref="auditService"></property> -->
+		<property name="empAssetsService" ref="empAssetsService"></property>
+	</bean>
+	<!-- 信息资产:安全文档管理 -->
+	<bean id="docAssetsAction" class="com.compliance.webapp.action.basicinfo.assets.DocAssetsAction" scope="prototype" parent="baseAction1">
+		<!-- <property name="auditService" ref="auditService"></property> -->
+		<property name="docAssetsService" ref="docAssetsService"></property>
+	</bean>
+	<!-- 基础信息结束+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++= -->
+
+	<!-- 定级备案————————————————————————————————————————————————————————————————————————————————————————————- -->
+	<!-- 定级 -->
+	<bean id="RankAction" class="com.compliance.webapp.action.rank.RankAction" scope="prototype" parent="baseAction1">
+		<property name="rankService" ref="rankService"></property>
+		<property name="recordService" ref="recordService"></property>
+		<!-- <property name="auditService" ref="auditService"></property> -->
+	</bean>
+
+	<!-- 备案 -->
+	<bean id="RecordAction" class="com.compliance.webapp.action.rank.RecordAction" scope="prototype" parent="baseAction1">
+		<property name="recordService" ref="recordService"></property>
+		<property name="rankService" ref="rankService"></property>
+		<property name="unitInfoService" ref="unitInfoService"></property>
+		<property name="systemService" ref="systemService"></property>
+		<property name="recordHistoryService" ref="recordHistoryService"></property>
+		<property name="recordDocListService" ref="recordDocListService"></property>
+		<!-- <property name="auditService" ref="auditService"></property> -->
+	</bean>
+
+	<!--备案集 -->
+	<bean id="RecordDocListAction" class="com.compliance.webapp.action.rank.RecordDocListAction" scope="prototype" parent="baseAction1">
+		<property name="recordDocListService" ref="recordDocListService"></property>
+		<!-- <property name="auditService" ref="auditService"></property> -->
+
+	</bean>
+	<!--系统废止 -->
+	<bean id="SysAbolishAction" class="com.compliance.webapp.action.rank.SysAbolishAction" scope="prototype" parent="baseAction1">
+		<property name="sysAbolishService" ref="sysAbolishService"></property>
+		<property name="systemService" ref="systemService"></property>
+		<!-- <property name="auditService" ref="auditService"></property> -->
+	</bean>
+	<!-- 统计报表 -->
+	<bean id="rankReportAction" class="com.compliance.webapp.action.rank.RankReportAction" scope="prototype" parent="baseAction1">
+		<property name="rankReportService" ref="rankReportService"></property>
+	</bean>
+	<!--定级备案结束—————————————————————————————————————————————————————————————————————————————————————————————————————— -->
+
+
+	<!-- 合规管理=================================================================================================================== -->
+
+	<!-- 通用物理 -->
+	<bean id="psadAction" class="com.compliance.webapp.action.psad.PsadAction" scope="prototype" parent="baseAction1">
+		<property name="psadService" ref="psadService"></property>
+		<property name="psaService" ref="psaService"></property>
+		<property name="arithmeticService" ref="arithmeticService"></property>
+	</bean>
+	<!-- 通用物理评估 -->
+	<bean id="psaAction" class="com.compliance.webapp.action.psad.PsaAction" scope="prototype" parent="baseAction1">
+		<property name="psaService" ref="psaService"></property>
+		<property name="psadService" ref="psadService"></property>
+		<property name="arithmeticService" ref="arithmeticService"></property>
+		<!-- <property name="auditService" ref="auditService"></property> -->
+	</bean>
+	<!-- 通用管理 -->
+	<bean id="msadAction" class="com.compliance.webapp.action.msad.MsadAction" scope="prototype" parent="baseAction1">
+		<property name="msadService" ref="msadService"></property>
+		<property name="arithmeticService" ref="arithmeticService"></property>
+	</bean>
+	<!-- 通用管理评估 -->
+	<bean id="msaAction" class="com.compliance.webapp.action.msad.MsaAction" scope="prototype" parent="baseAction1">
+		<property name="msaAppService" ref="msaAppService"></property>
+		<property name="arithmeticService" ref="arithmeticService"></property>
+		<!-- <property name="auditService" ref="auditService"></property> -->
+	</bean>
+
+	<!-- 差距分析报告 -->
+	<!-- 差距分析进度 -->
+	<bean id="gapScheduleAction" class="com.compliance.webapp.action.cpManage.gapAnalysisSchedule.GapScheduleAction" scope="prototype" parent="baseAction1">
+		<property name="gapScheduleService" ref="gapScheduleService"></property>
+		<property name="securityGapService" ref="securityGapService"></property>
+	</bean>
+
+	<!-- 差距分析报告导出文档 -->
+	<bean id="getGapReportDocumentAction" class="com.compliance.webapp.action.cpManage.gapReportDocument.GapReportDocumentAction" scope="prototype" parent="baseAction1">
+		<property name="securityGapService" ref="securityGapService"></property>
+		<property name="gapReportDocumentService" ref="gapReportDocumentService"></property>
+		<property name="generalPhysicalService" ref="generalPhysicalService"></property>
+		<property name="securityTableService" ref="securityTableService"></property>
+		<property name="gapStatisticsUnitService" ref="gapStatisticsUnitService"></property>
+
+	</bean>
+	<!-- 差距分析报告导出文档 2 -->
+	<bean id="importGapReportDocumentAction" class="com.compliance.webapp.action.cpManage.gapReportDocument.ImportGapReportDocumentAction" scope="prototype" parent="baseAction1">
+		<property name="securityGapService" ref="securityGapService"></property>
+		<property name="gapReportDocumentService" ref="gapReportDocumentService"></property>
+		<property name="generalPhysicalService" ref="generalPhysicalService"></property>
+		<property name="securityTableService" ref="securityTableService"></property>
+		<property name="gapStatisticsUnitService" ref="gapStatisticsUnitService"></property>
+		<!-- <property name="auditService" ref="auditService"></property> -->
+
+
+	</bean>
+
+	<!-- 差距分析报告导出文档3 -->
+	<bean id="exportJspToWordAction" class="com.compliance.webapp.action.cpManage.gapReportDocument.ExportJspToWord" scope="prototype" parent="baseAction1">
+		<property name="securityGapService" ref="securityGapService"></property>
+		<property name="gapReportDocumentService" ref="gapReportDocumentService"></property>
+		<property name="generalPhysicalService" ref="generalPhysicalService"></property>
+		<property name="securityTableService" ref="securityTableService"></property>
+		<property name="gapStatisticsUnitService" ref="gapStatisticsUnitService"></property>
+
+	</bean>
+	<!-- 技术差距分析 -->
+	<bean id="technologyAction" class="com.compliance.webapp.action.cpManage.technology.TechnologyAction" scope="prototype" parent="baseAction1">
+		<property name="technologyService" ref="technologyService"></property>
+		<property name="rankService" ref="rankService"></property>
+		<!-- <property name="auditService" ref="auditService"></property> -->
+	</bean>
+
+	<!--整改需求汇总 -->
+	<bean id="demandColletAction" class="com.compliance.webapp.action.cpManage.demand.DemandColletAction" scope="prototype" parent="baseAction1">
+		<property name="demandColletService" ref="demandColletService"></property>
+		<property name="arithmeticService" ref="arithmeticService"></property>
+		<property name="technologyService" ref="technologyService"></property>
+		<property name="assessResultService" ref="assessResultService"></property>
+	</bean>
+
+	<!--历史备案 -->
+	<bean id="RecordHistoryAction" class="com.compliance.webapp.action.rank.RecordHistoryAction" scope="prototype" parent="baseAction1">
+		<property name="recordHistoryService" ref="recordHistoryService"></property>
+		<!-- <property name="auditService" ref="auditService"></property> -->
+	</bean>
+
+	<!--通用管理整改需求汇总 -->
+	<bean id="MsaShowAction" class="com.compliance.webapp.action.cpManage.msaShow.MsaShowAction" scope="prototype" parent="baseAction1">
+		<property name="msaService" ref="msaService"></property>
+		<property name="msaShowService" ref="msaShowService"></property>
+	</bean>
+
+	<!--通用物理整改需求汇总 -->
+	<bean id="GpaShowAction" class="com.compliance.webapp.action.cpManage.gpaShow.GpaShowAction" scope="prototype" parent="baseAction1">
+		<property name="gpaService" ref="gpaService"></property>
+		<property name="gpaShowService" ref="gpaShowService"></property>
+	</bean>
+
+
+
+	<!--整改建议 -->
+	<bean id="rectificationProposalAction" class="com.compliance.webapp.action.cpManage.rectificationProposal.RectificationProposalAction" scope="prototype" parent="baseAction1">
+		<property name="rectificationProposalService" ref="rectificationProposalService"></property>
+		<property name="technologyService" ref="technologyService"></property>
+		<!-- <property name="auditService" ref="auditService"></property> -->
+
+	</bean>
+
+	<!--通用物理整改建议 -->
+	<bean id="GpaRectAction" class="com.compliance.webapp.action.cpManage.gpaShow.GpaRectAction" scope="prototype" parent="baseAction1">
+		<property name="gpaRectService" ref="gpaRectService"></property>
+		<property name="gpaService" ref="gpaService"></property>
+		<!-- <property name="auditService" ref="auditService"></property> -->
+	</bean>
+	<!--通用管理整改建议 -->
+	<bean id="MsaRectAction" class="com.compliance.webapp.action.cpManage.msaShow.MsaRectAction" scope="prototype" parent="baseAction1">
+		<property name="msaRectService" ref="msaRectService"></property>
+		<property name="msaService" ref="msaService"></property>
+		<!-- <property name="auditService" ref="auditService"></property> -->
+	</bean>
+
+
+	<!-- 整改建议历史对比 -->
+	<bean id="contrastAction" class="com.compliance.webapp.action.cpManage.contrastRectification.ContrastAction" scope="prototype" parent="baseAction1">
+		<property name="contrastSrivice" ref="contrastSrivice"></property>
+		<property name="technologyService" ref="technologyService"></property>
+		<!-- <property name="auditService" ref="auditService"></property> -->
+
+	</bean>
+	<!-- 汇总分析 -->
+
+	<!-- 安全差距分析 -->
+
+	<bean id="summaryAnalysisAction" class="com.compliance.webapp.action.cpManage.summaryAnalysis.SummaryAnalysisAction" scope="prototype" parent="baseAction1">
+		<property name="securityGapService" ref="securityGapService"></property>
+	</bean>
+
+	<!--安全控制分析报告 -->
+
+	<bean id="securityControlAction" class="com.compliance.webapp.action.cpManage.securityControl.SecurityControlAction" scope="prototype" parent="baseAction1">
+		<property name="securityControlService" ref="securityControlService"></property>
+		<property name="securityGapService" ref="securityGapService"></property>
+	</bean>
+
+	<!--评估结果 -->
+	<bean id="assessResultAction" class="com.compliance.webapp.action.cpManage.assessResult.AssessResultAction" scope="prototype" parent="baseAction1">
+		<property name="rankService" ref="rankService"></property>
+		<property name="systemService" ref="systemService"></property>
+		<property name="unitInfoService" ref="unitInfoService"></property>
+		<property name="assessResultService" ref="assessResultService"></property>
+		<property name="demandColletService" ref="demandColletService"></property>
+		<property name="technologyService" ref="technologyService"></property>
+		<property name="softUseService" ref="softUseService"></property>
+		<property name="dataAssetsService" ref="dataAssetsService"></property>
+		<property name="compAssetsService" ref="compAssetsService"></property>
+		<property name="devAssetsService" ref="devAssetsService"></property>
+		<property name="netAssetsService" ref="netAssetsService"></property>
+		<property name="empAssetsService" ref="empAssetsService"></property>
+		<property name="docAssetsService" ref="docAssetsService"></property>
+		<!-- <property name="auditService" ref="auditService"></property> -->
+	</bean>
+
+	<!-- 审计管理开始—————————————————————————————————————————————————————————————————————————————— -->
+	<!-- <bean id="auditAction" class="com.compliance.webapp.action.audit.AuditAction" parent="baseAction1" scope="prototype"> <property name="auditService" ref="auditService"></property> 
+		</bean> -->
+	<!--审计管理结束———————————————————————————————————————————————————————————————————————————————— -->
+	
+	
+	<!-- 文件管理开始—————————————————————————————————————————————————————————————————————————————— -->
+	<bean id="FilesDownAction" class="com.compliance.webapp.action.files.FilesDownAction" parent="baseAction1" scope="prototype">
+   		<property name="fileservice" ref="filesService"></property>
+   		<property name="systemService" ref="systemService"></property>
+   		<property name="sysAbolishService" ref="sysAbolishService"></property>  
+   		<property name="rankService" ref="rankService"></property>  
+	</bean>
+	<!--文件管理结束————————————————————————————————————————————————————————————————————————————————  -->
+	
+</beans>

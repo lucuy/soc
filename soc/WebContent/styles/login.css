@@ -1,0 +1,304 @@
+@charset "utf-8";
+/* CSS Document */
+
+body{
+	margin:0px auto;
+	padding: 0px 0px;
+	background:url("/soc/images/jetsen/login.jpg") 0% 0% repeat;
+	overflow:hidden;
+	}
+.login_con{
+	margin-top:160px;
+	margin-right:auto;
+	margin-left:auto;
+	padding:0px 0px 0px 100px;
+	width:830px;
+	height:260px;
+	border:none;
+	}
+.logo_top{
+  padding:0px 0px;
+  margin: 0px 0px;
+  position:relative;
+  top:10px;
+  left:20px;
+  border:none;
+  background:url("/soc/images/jetsen/logotop.png");
+  width:267px;
+  height:220px;
+  float:left;
+ }
+
+.maincontent{
+
+left:20px;
+width:560px;
+height:260px;
+float:right;
+border:none;
+
+}
+.login_title{
+	padding:0px 0px;
+	margin:0px 0px;
+	position:relative;
+	left:30px;
+	border:none;
+	width:450px;
+	height:45px;
+	background:url("/soc/images/jetsen/login_title.png");
+    border:none;
+	}
+	
+.login_input{
+	margin:0px 0px;
+	padding:0px 0px;
+	position:relative;
+	top:8px;
+	left:28px;
+	width:450px;
+	border:none;
+	}
+.login_input ul{
+	margin:0px auto;
+	padding:0px 0px;
+	list-style:none;
+	width:450px;
+	border:none;
+	}
+.login_input ul li{
+	margin-left:10px;
+	margin-top:4px;
+	/* margin:1px 0px; */s
+	padding:0px;
+	width:400px;
+	height:47px;
+	border:medium none transparent;
+
+}
+.input{
+	padding: 0px 0px 0px 4px;
+	height:40px;
+	line-height: 40px; 
+	background:none 0% 0% no-repeat transparent; 
+	border:medium none transparent;
+	width:400px;
+	font-family: "幼圆","黑体", "宋体","Comic Sans MS",sans-serif;
+	font-size:17px;
+	color:#999999;
+    font-weight:bold;
+	border:none;
+    }
+.input_code{
+	padding: 0px 0px 0px 4px;
+	height:40px;
+	line-height:40px;
+	background:none 0% 0% no-repeat transparent; 
+	border:none medium transparent;
+	width:220px;
+	font-family: "幼圆","黑体", "宋体","Comic Sans MS",sans-serif;
+	font-size:17px;
+    color:#999999;
+    font-weight:bold ;
+	}
+.login_msg_button{
+	margin:0px 0px;
+	padding:0px 0px;
+	position:relative;
+	top:10px;
+	left:38px;
+	width:100px;
+	height:40px;
+	border:none;
+	}
+.login_button{
+	margin:0px 0px;
+	padding:0px 0px;
+	border:none;
+	width:150px;
+	height:39px;
+	border:none;
+	background:url(/soc/images/jetsen/login.png) 0% 0% no-repeat;}
+
+.login_button_bg{
+	border:none;
+	float:left;
+	margin:0px 0px;
+	padding:0px 0px;
+	width:82px;
+	height:29px;
+	/*background:url(/jetsen/login.png) 0% 0% no-repeat;*/
+	}
+.login_button:hover{
+	cursor:hand ;
+	cursor:pointer;
+	}
+/* .login_help{
+	margin:0px 0px;
+	padding:0xp 0px;
+	color:#FFFFFF;
+	font-size:11px;
+	border:none;
+	height:27px;
+	float:left;} */
+/* .login_input_click_input{
+    margin: 1px 1px 1px 1px;
+    padding: 0px 0px 0px 4px;
+    height:27px;
+    line-height: 25px; 
+    background:url(/jetsen/textinputClick.png) 0% 0%  no-repeat; 
+    border:medium none transparent;
+    width:190px;
+    font-family:"幼圆","黑体", "宋体","Comic Sans MS",sans-serif;
+    font-size:14px;
+    color:#999999;
+    font-weight:bold ;
+	} */
+ .login_input_click_li{
+	margin:0px 0px;
+    padding:0px 0px;
+    width:400px;
+    height:47px;
+    background:url(/soc/images/jetsen/textinputClick1.png) 0% 0% no-repeat;
+	border:none;
+    } 
+.login_input_click_input_code{
+	/* margin: 1px 1px 1px 1px; */
+    padding: 0px 0px 0px 0px;
+    height:27px;
+    line-height: 25px;
+    background:url(/soc/images/jetsen/codeclick.png) 0% 0% no-repeat; 
+    border:none medium  transparent;
+    width:195px;
+    font-family:"幼圆","黑体", "宋体","Comic Sans MS",sans-serif;
+    font-size:17px;
+    color:#999999;
+    font-weight:bold ;
+	}
+.img_code{
+	border:none;
+	position: absolute;
+    top:113px;
+    left:288px;
+}
+.img_code img{
+	cursor:hand ;
+    cursor:pointer;
+}
+.li_bg{
+	background:url(/soc/images/jetsen/textinput.png) 0% 0% no-repeat;
+}
+.li_bg_code{
+	
+	background:url(/soc/images/jetsen/code.png) 0% 0% no-repeat;
+}
+
+.label_input{
+	font-family:"幼圆","黑体", "宋体","Comic Sans MS",sans-serif;
+    font-size:17px;
+    color:#999999;
+    font-weight:bold ;
+}
+#actionmessage
+{
+	margin:0px 0px;
+    padding:5px 0px 0px 0px;
+    font-family:"幼圆","黑体", "宋体","Comic Sans MS",sans-serif;
+    font-size:12px;
+    font-weight:bold ;
+    position:relative;
+    top:-30px;
+    left:140px;
+    width:200px;
+    height:20px;
+	color: red;
+	text-align: center;
+	border:none;
+}
+
+.dynamic_OTP{
+	margin:0px 0px;
+    padding:0px 0px;
+    position:absolute;
+    top:0px;
+    left:0px;
+    width:280px;
+    height:50px;
+    border: 1px solid #4477a6;
+    background: #FFFFFF;
+    display: none;
+    z-index: 10;
+}
+.dynamic_OTP_title
+{
+	margin: 1px 1px;
+	height: 20px;
+	background: #4477a6;
+	color:#FFFFFF;
+	text-align: left;
+}
+.dynamic_OTP_title_t
+{
+    position:relative;
+    top:4px;
+    left:4px;
+}
+.dynamic_OTP_input
+{
+	margin: 5px 0px;
+	padding:0px 0px;
+	font-family: "幼圆","黑体", "宋体","Comic Sans MS",sans-serif;
+	font-size: 14px;
+}
+.dynamic_OTP_input ul{
+	list-style: none;
+	padding:0px 0px;
+	margin:0px 0px;
+}
+.dynamic_OTP_input ul li{
+	float: left;
+	margin:0px 5px;
+	padding:0px 0px;
+}
+.dynamic_OTP_button{
+    margin:5px 0px 5px 0px;
+    padding:5px 0px 0px 0px;
+	border-top: 1px solid #4477a6;
+	text-align: center;
+}
+.dynamic_OTP_button_b
+{
+	margin:0px 0px;
+	padding:0px 0px;
+	border:none;
+	width:58px;
+	height:21px;
+	background: url("/soc/images/dy_button.png") 0% 0% repeat;
+	cursor:hand ;
+    cursor:pointer;
+}
+.galss_overlay{
+	padding:0px 0px;
+	maring:0px 0px;
+    top:0px;
+    left:0px;
+    overflow : hidden;
+    position:absolute; 
+    z-index:1;
+    background:#666666 url("/soc/imagess/ui_40x40.png") repeat scroll 100% 100%;
+    opacity: .50;
+    filter:Alpha(Opacity=50); 
+    display: none;
+    }
+    
+   #footer{
+   /*  margin-left:440px;
+    margin-top:450px; */
+    position:absolute;
+    margin-left:40%;
+    bottom:30px;
+	width:385px;
+	height:33px;
+    background: url(/soc/images/jetsen/logofooter.png) 0% 0% repeat;
+	border:none;
+   }

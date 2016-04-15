@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="tempDeviceSQL">
+
+       <resultMap class="tempDevice" id="deviceResult">
+       		<result property="temp_id" column="TEMP_ID" jdbcType="long"/>
+       		<result property="temp_device_id" column="TEMP_DEVICE_ID" jdbcType="long"/>
+       		<result property="temp_locationx" column="TEMP_DEVICE_LOCATIONX" jdbcType="varchar"/>
+       		<result property="temp_locaitony" column="TEMP_DEVICE_LOCATIONY" jdbcType="varchar"/>
+       </resultMap>
+	<!-- 添加 -->
+	<insert id="addTempDevice" parameterClass="tempDevice">
+		insert into "tbl_device_temp"("TEMP_DEVICE_ID", "TEMP_DEVICE_LOCATIONX", "TEMP_DEVICE_LOCATIONY")
+		values(#temp_device_id#, #temp_locationx#, #temp_locaitony#)
+	</insert>
+	<!-- 根据ID删除-->
+	
+	<delete id="deleteTempDevice">
+    	delete from "tbl_device_temp"
+    </delete>
+	<!-- 更新 -->
+	<update id="updateTempDevice" parameterClass="tempDevice">
+		update "tbl_device_temp" set 
+		"TEMP_DEVICE_ID"=#temp_device_id#,
+		"TEMP_DEVICE_LOCATIONX"=#temp_locationx#,
+		"TEMP_DEVICE_LOCATIONY"=#temp_locaitony#
+		where "TEMP_ID"=#temp_id#
+	</update>
+	<!-- 查询所有的设备信息 -->
+	<select id="tempdeviceAll" resultMap="deviceResult">
+		select * from "tbl_device_temp"
+	</select>
+	<!-- 根据设备ID查询设备信息 -->
+	<select id="queryByDeviceId" parameterClass="long" resultMap="deviceResult">
+		select * from "tbl_device_temp" where "TEMP_DEVICE_ID"=#temp_device_id#
+	</select>
+</sqlMap>

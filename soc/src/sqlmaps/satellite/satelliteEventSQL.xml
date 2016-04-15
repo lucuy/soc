@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="satelliteEvent">
+	<resultMap id="satelliteEventResult" class="satelliteEvent">
+		<result property="eventsId" column="EVENTS_ID" jdbcType="int" />
+		<result property="synCount" column="COUNT_SYN" jdbcType="bigint" />
+		<result property="countSuccess" column="COUNT_SUCCESS"
+			jdbcType="bigint" />
+		<result property="synStartTime" column="SYN_START_TIME"
+			jdbcType="varchar" />
+		<result property="synType" column="SYN_TYPE" jdbcType="varchar" />
+		<result property="synSys" column="SYN_SYS" jdbcType="varchar" />
+		<result property="customs1" column="CUSTOMS1" jdbcType="varchar" />
+		<result property="customs2" column="CUSTOMS2" jdbcType="varchar" />
+		<result property="customs3" column="CUSTOMS3" jdbcType="varchar" />
+		<result property="customs4" column="CUSTOMS4" jdbcType="varchar" />
+		<!-- <result property="customs5" column="CUSTOMS5" jdbcType="int" />
+		<result property="customs6" column="CUSTOMS6" jdbcType="int" />
+		<result property="customs7" column="CUSTOMS7" jdbcType="int" /> -->
+	</resultMap>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- 查询条数 -->
+	<select id="satelliteEvents.count" resultClass="int"
+		parameterClass="java.util.HashMap">
+		SELECT COUNT("EVENTS_ID") FROM "tbl_satellite_events" WHERE 1=1
+		
+	</select>
+<!-- 查询所有 -->
+	<select id="satelliteEvents.queryEvents" resultMap="satelliteEventResult"
+		parameterClass="java.util.HashMap">
+		SELECT "COUNT_SUCCESS", "SYN_START_TIME", "SYN_TYPE", "SYN_SYS", "EVENTS_ID", "CUSTOMS2", "CUSTOMS1", "CUSTOMS3", "CUSTOMS4", "CUSTOMS5", "CUSTOMS7", "CUSTOMS6", "COUNT_SYN" FROM "tbl_satellite_events" WHERE 1=1
+		
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- 查询条数 -->
+	<select id="sqlServersatelliteEvents.count" resultClass="int"
+		parameterClass="java.util.HashMap">
+		SELECT COUNT("EVENTS_ID") FROM "tbl_satellite_events" WHERE 1=1
+		<isNotEmpty prepend="AND" property="eventLibraryType">
+			
+		</isNotEmpty>
+		
+	</select>
+<!-- 查询所有 -->
+	<select id="sqlServersatelliteEvents.queryEvents" resultMap="satelliteEventResult"
+		parameterClass="java.util.HashMap">
+		SELECT "COUNT_SUCCESS", "SYN_START_TIME", "SYN_TYPE", "SYN_SYS", "EVENTS_ID", "CUSTOMS2", "CUSTOMS1", "CUSTOMS3", "CUSTOMS4", "CUSTOMS5", "CUSTOMS7", "CUSTOMS8", "COUNT_SYN" FROM "tbl_satellite_events" WHERE 1=1
+		
+		<isNotEmpty prepend="AND" property="eventLibraryName"> 
+		    
+		</isNotEmpty>
+	</select>
+
+</sqlMap>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    
+    <sqlMap>
+        <resultMap class="GpaShow"   id="gpaShowResult">
+           <result property="gFatherSort"  column="gPSAD_Sort" />
+           <result property="gFatherName"  column="gPSAD_Name" />
+           <result property="fatherSort"   column="fPSAD_Sort" />
+           <result property="fatherName"   column="fPSAD_Name" />
+           <result property="sonSort"      column="sPSAD_Sort" />
+           <result property="sonContent"   column="sPSAD_Content" />
+        </resultMap>
+        
+        <!--   <select id="pgAdmingpaShow.queryAllData"   resultMap="gpaShowResult"  remapResults="true">
+          select distinct "PSAD_Sort","PSAD_Name","PSAD_Sort","PSAD_Name","PSAD_Sort","PSAD_Content" 
+           from "tb_psad" g,"tb_psad" f,"tb_psad" s 
+           where s."PSAD_Content" is not null and g."PSAD_Sort"=f."PSAD_FatherSort" 
+           and f."PSAD_Sort"=s."PSAD_FatherSort" and (f."PSAD_Sort" not like'%3') order by f."PSAD_Sort"
+        </select> -->
+         <select id="pgAdmingpaShow.queryAllData"  resultMap="gpaShowResult">
+          select distinct g."PSAD_Sort" as "gPSAD_Sort" ,g."PSAD_Name" as "gPSAD_Name",f."PSAD_Sort" as "fPSAD_Sort",
+          f."PSAD_Name" as "fPSAD_Name",s."PSAD_Sort" as "sPSAD_Sort",s."PSAD_Content" as "sPSAD_Content"
+           from "tb_psad" g,"tb_psad" f,"tb_psad" s 
+           where s."PSAD_Content" is not null and g."PSAD_Sort"=f."PSAD_FatherSort" and f."PSAD_Sort"=s."PSAD_FatherSort" 
+           and (f."PSAD_Sort" not like'%3')    
+        </select>
+        <!-- 根据排序查询域名 -->
+        <select id="pgAdmingpaShow.querypasdName"  parameterClass="java.lang.String" resultClass="java.lang.String">
+          select "PSAD_Name" FROM "tb_psad"  WHERE "PSAD_Sort"=#value#
+        </select>
+       <!-- sqlserver -->
+          <select id="sqlServergpaShow.queryAllData"  resultMap="gpaShowResult">
+          select distinct g."PSAD_Sort" as "gPSAD_Sort" ,g."PSAD_Name" as "gPSAD_Name",f."PSAD_Sort" as "fPSAD_Sort",
+          f."PSAD_Name" as "fPSAD_Name",s."PSAD_Sort" as "sPSAD_Sort",s."PSAD_Content" as "sPSAD_Content"
+           from "tb_psad" g,"tb_psad" f,"tb_psad" s 
+           where s."PSAD_Content" is not null and g."PSAD_Sort"=f."PSAD_FatherSort" and f."PSAD_Sort"=s."PSAD_FatherSort" 
+           and (f."PSAD_Sort" not like'%3')    
+        </select>
+        <!-- 根据排序查询域名 -->
+        <select id="sqlServergpaShow.querypasdName"  parameterClass="java.lang.String" resultClass="java.lang.String">
+          select "PSAD_Name" FROM "tb_psad"  WHERE "PSAD_Sort"=#value#
+        </select>
+    </sqlMap>

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Graph>
+<Node eventCount="1" severity="3" icon="image/core_switch.png" devicetype="SWITCH" ip="10.10.253.1" pointY="360.0" pointX="564.0" displayName="核心交换机1" entityName="FD_YNKM_CORE_CS01" id="1"/>
+<Node eventCount="0" severity="0" icon="image/core_switch.png" devicetype="SWITCH" ip="10.10.253.2" pointY="352.0" pointX="791.0" displayName="核心交换机2" entityName="FD_YNKM_CORE_CS02" id="2"/>
+<Node eventCount="0" severity="0" icon="image/router.png" devicetype="ROUTER" ip="10.10.253.14" pointY="561.0" pointX="738.0" displayName="同城、地州办公接入汇聚路由器" entityName="FD_YNKM_A_MAN_DR01" id="3"/>
+<Node eventCount="0" severity="0" icon="image/router.png" devicetype="ROUTER" ip="10.10.253.15" pointY="555.0" pointX="589.0" displayName="地州业务接入汇聚路由器主" entityName="FD_YNKM_B_MAN_DR01" id="4"/>
+<Node eventCount="0" severity="0" icon="image/router.png" devicetype="ROUTER" ip="10.10.253.16" pointY="654.0" pointX="588.0" displayName="地州业务接入路由器备" entityName="FD_YNKM_B_MAN_DR02" id="5"/>
+<Node eventCount="0" severity="0" icon="image/router.png" devicetype="ROUTER" ip="10.10.253.17" pointY="655.0" pointX="899.0" displayName="同城业务接入路由器主" entityName="FD_YNKM_B_MAN_DR03" id="6"/>
+<Node eventCount="1" severity="3" icon="image/router.png" devicetype="ROUTER" ip="10.10.253.18" pointY="565.0" pointX="898.0" displayName="同城业务接入路由器备" entityName="FD_YNKM_B_MAN_DR04" id="7"/>
+<Node eventCount="0" severity="0" icon="image/router.png" devicetype="ROUTER" ip="10.10.253.19" pointY="645.0" pointX="739.0" displayName="同城离行ATM接入汇聚路由器" entityName="FD_YNKM_B_MAN_DR05" id="8"/>
+<Node eventCount="0" severity="0" icon="image/router.png" devicetype="ROUTER" ip="10.40.10.3" pointY="283.0" pointX="159.0" displayName="外联电信SDH" entityName="TeleSDH_7204" id="9"/>
+<Node eventCount="0" severity="0" icon="image/router.png" devicetype="ROUTER" ip="10.40.10.4" pointY="329.0" pointX="342.0" displayName="电信DDN接入路由器" entityName="TeleDDN_2611" id="10"/>
+<Node eventCount="0" severity="0" icon="image/firewall.gif" devicetype="FIRE_WALL" ip="10.10.1.10" pointY="144.0" pointX="25.0" displayName="业务接入防火墙" entityName="FD_YNKM_B_SRV_AF01" id="11"/>
+<Node eventCount="0" severity="0" icon="image/switch.png" devicetype="SWITCH" ip="10.10.253.6" pointY="64.0" pointX="368.0" displayName="办公接入交换机-2" entityName="FD_YNKM_A_SRV_AS02" id="15"/>
+<Node eventCount="0" severity="0" icon="image/switch.png" devicetype="SWITCH" ip="10.10.253.5" pointY="63.0" pointX="261.0" displayName="办公接入交换机-1" entityName="FD_YNKM_A_SRV_AS01" id="16"/>
+<Node eventCount="0" severity="0" icon="image/firewall.gif" devicetype="FIRE_WALL" ip="10.10.1.2" pointY="150.0" pointX="364.0" displayName="办公接入防火墙" entityName="FD_YNKM_A_SRV_AF01" id="17"/>
+<Node eventCount="0" severity="0" icon="image/firewall.gif" devicetype="FIRE_WALL" ip="10.10.1.3" pointY="150.0" pointX="267.0" displayName="办公接入防火墙" entityName="FD_YNKM_A_SRV_AF02" id="18"/>
+<Node eventCount="0" severity="0" icon="image/switch.png" devicetype="SWITCH" ip="10.10.253.3" pointY="64.0" pointX="25.0" displayName="业务接入交换机" entityName="FD_YNKM_B_SRV_AS01" id="21"/>
+<Node eventCount="0" severity="0" icon="image/switch.png" devicetype="SWITCH" ip="10.10.253.4" pointY="65.0" pointX="142.0" displayName="业务接入交换机" entityName="FD_YNKM_B_SRV_AS02" id="22"/>
+<Node eventCount="0" severity="0" icon="image/switch.png" devicetype="SWITCH" ip="100.100.99.250" pointY="36.0" pointX="687.0" displayName="开发接入交换机" entityName="FD_YNKM_C_SRV_DS01" id="24"/>
+<Node eventCount="1" severity="3" icon="image/switch.png" devicetype="SWITCH" ip="10.10.253.7" pointY="108.0" pointX="686.0" displayName="开发接入交换机" entityName="FD_YNKM_C_SRV_DS02" id="25"/>
+<Node eventCount="0" severity="0" icon="image/switch.png" devicetype="SWITCH" ip="10.10.253.110" pointY="62.0" pointX="499.0" displayName="特殊应用接入服务器交换机" entityName="FD_YNKM_D_SRV_DS01" id="26"/>
+<Node eventCount="0" severity="0" icon="image/switch.png" devicetype="SWITCH" ip="10.10.253.22" pointY="39.0" pointX="977.0" displayName="网络管理区接入交换机" entityName="FD_YNKM_NMG_AS01" id="27"/>
+<Node eventCount="0" severity="0" icon="image/switch.png" devicetype="SWITCH" ip="10.10.253.21" pointY="43.0" pointX="861.0" displayName="网络管理区接入交换机" entityName="FD_YNKM_NMG_AS02" id="28"/>
+<Node eventCount="0" severity="0" icon="image/router.png" devicetype="ROUTER" ip="10.10.253.9" pointY="166.0" pointX="1139.0" displayName="灾备服务器区汇聚路由器" entityName="Router7206_ZaiBei" id="29"/>
+<Node eventCount="0" severity="0" icon="image/switch.png" devicetype="SWITCH" ip="10.10.253.8" pointY="44.0" pointX="1141.0" displayName="灾备服务器区汇聚交换机" entityName="FD_YNSM_DRE_DS01" id="30"/>
+<Node eventCount="0" severity="0" icon="image/switch.png" devicetype="SWITCH" ip="10.10.253.12" pointY="683.0" pointX="298.0" displayName="互联网接入汇聚交换机" entityName="FD_YNKM_INTER_DS01" id="31"/>
+<Node eventCount="0" severity="0" icon="image/switch.png" devicetype="SWITCH" ip="10.10.253.13" pointY="681.0" pointX="462.0" displayName="互联网接入汇聚交换机" entityName="FD_YNKM_INTER_DS02" id="32"/>
+<Node eventCount="0" severity="0" icon="image/firewall.gif" devicetype="FIRE_WALL" ip="10.10.1.11" pointY="147.0" pointX="142.0" displayName="业务接入防火墙" entityName="FD_YNKM_B_SRV_AF02" id="34"/>
+<Node eventCount="0" severity="0" icon="image/firewall.gif" devicetype="FIRE_WALL" ip="10.10.1.44" pointY="154.0" pointX="507.0" displayName="特殊应用接入服务器防火墙" entityName="FD_YNKM_D_SRV_AF01" id="37"/>
+<Node eventCount="0" severity="0" icon="image/firewall.gif" devicetype="FIRE_WALL" ip="10.10.1.20" pointY="183.0" pointX="690.0" displayName="开发接入防火墙" entityName="FD_YNKM_C_SRV_AF01" id="38"/>
+<Node eventCount="0" severity="0" icon="image/firewall.gif" devicetype="FIRE_WALL" ip="10.10.2.113" pointY="158.0" pointX="863.0" displayName="网络管理区防火墙" entityName="FD_YNKM_NMG_AF01" id="39"/>
+<Node eventCount="0" severity="0" icon="image/firewall.gif" devicetype="FIRE_WALL" ip="10.10.2.114" pointY="156.0" pointX="981.0" displayName="网络管理区防火墙" entityName="FD_YNKM_NMG_AF02" id="40"/>
+<Node eventCount="0" severity="0" icon="image/firewall.gif" devicetype="FIRE_WALL" ip="10.10.1.26" pointY="693.0" pointX="36.0" displayName="外联区防火墙" entityName="FD_YNKM_EXT_AF01" id="41"/>
+<Node eventCount="0" severity="0" icon="image/firewall.gif" devicetype="FIRE_WALL" ip="10.10.1.27" pointY="691.0" pointX="163.0" displayName="外联区防火墙" entityName="FD_YNKM_EXT_AF02" id="42"/>
+<Node eventCount="0" severity="0" icon="image/firewall.gif" devicetype="FIRE_WALL" ip="172.21.7.113" pointY="554.0" pointX="463.0" displayName="互联网防火墙" entityName="FD_YNKM_INTER_AF01" id="43"/>
+<Node eventCount="0" severity="0" icon="image/router.png" devicetype="ROUTER" ip="10.10.253.27" pointY="272.0" pointX="255.0" displayName="帧中继路由器" entityName="FR_1841" id="45"/>
+<Node eventCount="1" severity="5" icon="image/router.png" devicetype="ROUTER" ip="10.10.253.26" pointY="412.0" pointX="339.0" displayName="DDN路由器" entityName="Router3640" id="46"/>
+<Node eventCount="0" severity="0" icon="image/switch.png" devicetype="SWITCH" ip="10.40.10.10" pointY="564.0" pointX="33.0" displayName="外联区汇聚交换机" entityName="DiSanFang_Switch" id="47"/>
+<Node eventCount="0" severity="0" icon="image/router.png" devicetype="ROUTER" ip="10.40.10.5" pointY="385.0" pointX="128.0" displayName="其他运营商" entityName="other_2611" id="49"/>
+<Node eventCount="0" severity="0" icon="image/router.png" devicetype="ROUTER" ip="10.40.10.6" pointY="401.0" pointX="42.0" displayName="玉溪接入路由器" entityName="YuXi_2611" id="50"/>
+<Node eventCount="0" severity="0" icon="image/switch.png" devicetype="SWITCH" ip="10.40.19.4" pointY="559.0" pointX="164.0" displayName="外联区DMZ交换机" entityName="FD_EXT_DMZ_SW01" id="51"/>
+<Node eventCount="0" severity="0" icon="image/router.png" devicetype="ROUTER" ip="10.10.253.25" pointY="275.0" pointX="27.0" displayName="上海接入路由器" entityName="ShangHaiJieRu" id="52"/>
+<Node eventCount="0" severity="0" icon="image/firewall.gif" devicetype="FIRE_WALL" ip="10.10.1.34" pointY="354.0" pointX="1027.0" displayName="TG4324" entityName="TopsecOS" id="143"/>
+<Node eventCount="0" severity="0" icon="image/switch.png" devicetype="SWITCH" ip="10.10.2.43" pointY="468.0" pointX="1021.0" displayName="网银3560-A" entityName="FDWYSW3560-01" id="144"/>
+<Node eventCount="0" severity="0" icon="image/switch.png" devicetype="SWITCH" ip="10.10.2.44" pointY="461.0" pointX="1178.0" displayName="网银3560-B" entityName="FDWYSW3560-02" id="145"/>
+<Node eventCount="0" severity="0" icon="image/firewall.gif" devicetype="FIRE_WALL" ip="172.21.7.121" pointY="583.0" pointX="1023.0" displayName="IP390A" entityName="IP390A" id="146"/>
+<Node eventCount="0" severity="0" icon="image/firewall.gif" devicetype="FIRE_WALL" ip="172.21.7.122" pointY="577.0" pointX="1182.0" displayName="IP390B" entityName="IP390B" id="147"/>
+<Node eventCount="0" severity="0" icon="image/Bank.png" devicetype="F5" ip="10.10.2.59" pointY="684.0" pointX="1026.0" displayName="F5-A" entityName="f51.richdian.com" id="148"/>
+<Node eventCount="0" severity="0" icon="image/Bank.png" devicetype="F5" ip="10.10.2.60" pointY="678.0" pointX="1187.0" displayName="F5-B" entityName="f52.richdian.com" id="149"/>
+<Node eventCount="0" severity="0" icon="image/firewall.gif" devicetype="FIRE_WALL" ip="10.10.3.52" pointY="556.0" pointX="310.0" displayName="业务VPN接入防火墙" entityName="FD_YNKM_YWVPN_AF01" id="150"/>
+<Node eventCount="0" severity="0" icon="image/firewall.gif" devicetype="FIRE_WALL" ip="172.21.7.126" pointY="556.0" pointX="310.0" displayName="互联网接入区下联防火墙" entityName="FD_YNKM_INTER_DF01" id="151"/>
+<Node eventCount="0" severity="0" icon="image/firewall.gif" devicetype="FIRE_WALL" ip="172.21.7.127" pointY="556.0" pointX="310.0" displayName="互联网接入区下联防火墙" entityName="FD_YNKM_INTER_DF02" id="152"/>
+<Node eventCount="0" severity="0" icon="image/router.png" devicetype="ROUTER" ip="10.40.10.2" pointY="283.0" pointX="159.0" displayName="外联联通SDH" entityName="CncSDH_7204" id="153"/>
+
+<Edge id="175" port="G2/4" lineSeverity="0" toID="4" fromID="1"/>
+<Edge id="176" port="G2/5" lineSeverity="0" toID="6" fromID="1"/>
+<Edge id="177" port="G3/7" lineSeverity="0" toID="30" fromID="1"/>
+<Edge id="178" port="G2/3" lineSeverity="0" toID="151" fromID="1"/>
+<Edge id="179" port="G3/2" lineSeverity="0" toID="46" fromID="1"/>
+<Edge id="180" port="G3/47" lineSeverity="0" toID="2" fromID="1"/>
+<Edge id="181" port="G3/48" lineSeverity="0" toID="2" fromID="1"/>
+<Edge id="182" port="G2/48" lineSeverity="0" toID="2" fromID="1"/>
+<Edge id="183" port="G2/47" lineSeverity="0" toID="2" fromID="1"/>
+<Edge id="184" port="G3/3" lineSeverity="0" toID="52" fromID="2"/>
+<Edge id="185" port="G2/3" lineSeverity="0" toID="152" fromID="2"/>
+<Edge id="186" port="G2/5" lineSeverity="0" toID="7" fromID="2"/>
+<Edge id="187" port="G2/4" lineSeverity="0" toID="5" fromID="2"/>
+<Edge id="188" port="G3/7" lineSeverity="0" toID="30" fromID="2"/>
+<Edge id="189" port="G3/8" lineSeverity="0" toID="150" fromID="2"/>
+<Edge id="190" port="G3/0" lineSeverity="0" toID="1" fromID="4"/>
+<Edge id="191" port="G3/0" lineSeverity="0" toID="2" fromID="5"/>
+<Edge id="192" port="G0" lineSeverity="0" toID="1" fromID="6"/>
+<Edge id="193" port="G0" lineSeverity="0" toID="2" fromID="7"/>
+<Edge id="194" port="E4/1" lineSeverity="0" toID="45" fromID="46"/>
+<Edge id="195" port="T1/1" lineSeverity="0" toID="27" fromID="28"/>
+<Edge id="196" port="T1/2" lineSeverity="0" toID="27" fromID="28"/>
+<Edge id="197" port="G1/0" lineSeverity="0" toID="27" fromID="39"/>
+<Edge id="198" port="G1/1" lineSeverity="0" toID="1" fromID="39"/>
+<Edge id="199" port="G1/2" lineSeverity="0" toID="40" fromID="39"/>
+<Edge id="200" port="G1/3" lineSeverity="0" toID="40" fromID="39"/>
+<Edge id="201" port="G1/0" lineSeverity="0" toID="28" fromID="40"/>
+<Edge id="202" port="G1/1" lineSeverity="0" toID="2" fromID="40"/>
+<Edge id="203" port="G1/0" lineSeverity="0" toID="21" fromID="11"/>
+<Edge id="204" port="G1/1" lineSeverity="0" toID="1" fromID="11"/>
+<Edge id="205" port="G1/2" lineSeverity="0" toID="34" fromID="11"/>
+<Edge id="206" port="G1/3" lineSeverity="0" toID="34" fromID="11"/>
+<Edge id="207" port="G1/0" lineSeverity="0" toID="22" fromID="34"/>
+<Edge id="208" port="G1/1" lineSeverity="0" toID="2" fromID="34"/>
+<Edge id="209" port="G1/2" lineSeverity="0" toID="11" fromID="34"/>
+<Edge id="210" port="G1/3" lineSeverity="0" toID="11" fromID="34"/>
+<Edge id="211" port="G2/47" lineSeverity="0" toID="22" fromID="21"/>
+<Edge id="212" port="G2/48" lineSeverity="0" toID="22" fromID="21"/>
+<Edge id="213" port="G4/47" lineSeverity="0" toID="22" fromID="21"/>
+<Edge id="214" port="G4/48" lineSeverity="0" toID="22" fromID="21"/>
+<Edge id="215" port="G2/1" lineSeverity="0" toID="11" fromID="21"/>
+<Edge id="216" port="G2/47" lineSeverity="0" toID="21" fromID="22"/>
+<Edge id="217" port="G2/48" lineSeverity="0" toID="21" fromID="22"/>
+<Edge id="218" port="G4/47" lineSeverity="0" toID="21" fromID="22"/>
+<Edge id="219" port="G4/48" lineSeverity="0" toID="21" fromID="22"/>
+<Edge id="220" port="G2/1" lineSeverity="0" toID="18" fromID="22"/>
+<Edge id="221" port="G2/47" lineSeverity="0" toID="15" fromID="16"/>
+<Edge id="222" port="G2/48" lineSeverity="0" toID="15" fromID="16"/>
+<Edge id="223" port="G3/47" lineSeverity="0" toID="15" fromID="16"/>
+<Edge id="224" port="G3/48" lineSeverity="0" toID="15" fromID="16"/>
+<Edge id="225" port="G2/1" lineSeverity="0" toID="17" fromID="16"/>
+<Edge id="226" port="G2/1" lineSeverity="0" toID="18" fromID="15"/>
+<Edge id="227" port="E0" lineSeverity="0" toID="25" fromID="38"/>
+<Edge id="228" port="E1" lineSeverity="0" toID="2" fromID="38"/>
+<Edge id="229" port="G1/1/3" lineSeverity="0" toID="25" fromID="24"/>
+<Edge id="230" port="G1/1/4" lineSeverity="0" toID="25" fromID="24"/>
+<Edge id="231" port="F1/0/24" lineSeverity="0" toID="38" fromID="25"/>
+<Edge id="232" port="E0" lineSeverity="0" toID="26" fromID="38"/>
+<Edge id="233" port="E1" lineSeverity="0" toID="2" fromID="38"/>
+<Edge id="234" port="F2/41" lineSeverity="0" toID="2" fromID="30"/>
+<Edge id="235" port="F2/47" lineSeverity="0" toID="1" fromID="30"/>
+<Edge id="236" port="F2/43" lineSeverity="0" toID="29" fromID="30"/>
+<Edge id="237" port="G2/1" lineSeverity="0" toID="3" fromID="31"/>
+<Edge id="238" port="G2/47" lineSeverity="0" toID="32" fromID="31"/>
+<Edge id="239" port="G2/48" lineSeverity="0" toID="32" fromID="31"/>
+<Edge id="240" port="G3/47" lineSeverity="0" toID="32" fromID="31"/>
+<Edge id="241" port="G3/48" lineSeverity="0" toID="32" fromID="31"/>
+<Edge id="242" port="G2/3" lineSeverity="0" toID="151" fromID="31"/>
+<Edge id="243" port="G6" lineSeverity="0" toID="1" fromID="151"/>
+<Edge id="244" port="G3/1" lineSeverity="0" toID="43" fromID="31"/>
+<Edge id="245" port="G2/1" lineSeverity="0" toID="3" fromID="32"/>
+<Edge id="246" port="G2/47" lineSeverity="0" toID="31" fromID="32"/>
+<Edge id="247" port="G2/48" lineSeverity="0" toID="31" fromID="32"/>
+<Edge id="248" port="G3/47" lineSeverity="0" toID="31" fromID="32"/>
+<Edge id="249" port="G3/48" lineSeverity="0" toID="31" fromID="32"/>
+<Edge id="250" port="G2/3" lineSeverity="0" toID="152" fromID="32"/>
+<Edge id="251" port="G6" lineSeverity="0" toID="2" fromID="152"/>
+<Edge id="252" port="G0/1" lineSeverity="0" toID="32" fromID="3"/>
+<Edge id="253" port="G0/2" lineSeverity="0" toID="31" fromID="3"/>
+<Edge id="254" port="G0/3" lineSeverity="0" toID="9" fromID="3"/>
+<Edge id="255" port="F1/0/5" lineSeverity="0" toID="10" fromID="47"/>
+<Edge id="256" port="F1/0/3" lineSeverity="0" toID="49" fromID="47"/>
+<Edge id="257" port="F1/0/7" lineSeverity="0" toID="9" fromID="47"/>
+<Edge id="258" port="F1/0/12" lineSeverity="0" toID="50" fromID="47"/>
+<Edge id="259" port="F1/0/9" lineSeverity="0" toID="153" fromID="47"/>
+<Edge id="260" port="G0/1" lineSeverity="0" toID="1" fromID="41"/>
+<Edge id="261" port="G0/2" lineSeverity="0" toID="47" fromID="41"/>
+<Edge id="262" port="G0/3" lineSeverity="0" toID="51" fromID="41"/>
+<Edge id="263" port="G0/4" lineSeverity="0" toID="42" fromID="41"/>
+<Edge id="264" port="G0/1" lineSeverity="0" toID="2" fromID="42"/>
+<Edge id="265" port="G3/5" lineSeverity="0" toID="143" fromID="1"/>
+<Edge id="266" port="E2" lineSeverity="0" toID="144" fromID="143"/>
+<Edge id="267" port="G3/5" lineSeverity="0" toID="145" fromID="2"/>
+<Edge id="268" port="F0/23" lineSeverity="0" toID="145" fromID="144"/>
+<Edge id="269" port="F0/24" lineSeverity="0" toID="145" fromID="144"/>
+<Edge id="270" port="F0/21" lineSeverity="0" toID="146" fromID="144"/>
+<Edge id="271" port="F0/21" lineSeverity="0" toID="147" fromID="145"/>
+<Edge id="272" port="E1" lineSeverity="0" toID="147" fromID="146"/>
+<Edge id="273" port="E3" lineSeverity="0" toID="148" fromID="146"/>
+<Edge id="274" port="E3" lineSeverity="0" toID="149" fromID="147"/>
+<Edge id="275" port="1.4" lineSeverity="0" toID="149" fromID="148"/>
+</Graph>

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="securityPolicySQL">
+	<resultMap id="securityPolicyResult" class="securityPolicy">
+		<result property="id" column="ID" jdbcType="int" />
+		<result property="policyName" column="POLICY_NAME" jdbcType="varchar" />
+		<result property="createUsername" column="CREATE_USERNAME"
+			jdbcType="varchar" />
+		<result property="modifyUsername" column="MODIFY_USERNAME"
+			jdbcType="varchar" />
+		<result property="createTime" column="CREATE_TIME" jdbcType="varchar" />
+		<result property="modifyTime" column="MODIFY_TIME" jdbcType="varchar" />
+		<result property="relPolicyName" column="REL_POLICY_NAME"
+			jdbcType="varchar" />
+		<result property="desc" column="DESC" jdbcType="varchar" />
+	</resultMap>
+	<!-- 查询条数 -->
+	<select id="pgAdminsecurityPolicy.count" resultClass="int"
+	parameterClass="java.util.HashMap">
+		SELECT COUNT(*) FROM "tbl_security_policy" WHERE 0 = 0
+		<isNotEmpty prepend="AND" property="keyword">
+			<![CDATA[
+				("POLICY_NAME" LIKE '%$keyword$%' OR "DESC" LIKE '%$keyword$%')
+			]]>
+		</isNotEmpty>
+		<!-- 高级查询 -->
+		<isNotEmpty prepend="AND" property="policyName">
+		   <![CDATA[
+		     "POLICY_NAME" LIKE '%$policyName$%'
+		   ]]>
+		</isNotEmpty>
+
+		<isNotEmpty prepend="AND" property="policyMemo">
+		   <![CDATA[
+		     "DESC" LIKE '%$policyMemo$%'
+		   ]]>
+		</isNotEmpty>
+	</select>
+	
+		<!-- 根据名字查询条数 -->
+	<select id="pgAdminsecurityPolicy.countOfName" resultClass="int"
+			parameterClass="java.lang.String">
+		SELECT COUNT("ID") FROM "tbl_security_policy" where
+		"POLICY_NAME" = '$name$'
+		
+	</select>
+
+	<!-- 查询结果列表 -->
+	<select id="pgAdminsecurityPolicy.queryPolicy" parameterClass="java.util.HashMap"
+		resultMap="securityPolicyResult">
+		SELECT * FROM "tbl_security_policy" WHERE 0 = 0
+		<isNotEmpty prepend="AND" property="keyword">
+			<![CDATA[
+				("POLICY_NAME" LIKE '%$keyword$%' OR "DESC" LIKE '%$keyword$%')
+			]]>
+		</isNotEmpty>
+		<!-- 高级查询 -->
+		<isNotEmpty prepend="AND" property="policyName">
+		   <![CDATA[
+		     "POLICY_NAME" LIKE '%$policyName$%'
+		   ]]>
+		</isNotEmpty>
+
+		<isNotEmpty prepend="AND" property="policyMemo">
+		   <![CDATA[
+		     "DESC" LIKE '%$policyMemo$%'
+		   ]]>
+		   </isNotEmpty>
+		   order by "ID" desc
+	</select>
+	<!-- 根据Id查询时间策略 -->
+	<select id="pgAdminsecurityPolicy.queryByPolicyId"
+		parameterClass="long" resultMap="securityPolicyResult">
+	     <![CDATA[
+	      SELECT * FROM "tbl_security_policy" WHERE "ID" = #timePolicyId#
+	     ]]>
+	</select>
+
+	<!-- 标记删除 -->
+	<update id="pgAdminsecurityPolicy.deletePolicy" parameterClass="java.util.HashMap">
+	   <![CDATA[
+	   delete  from  "tbl_security_policy" 	       WHERE   
+	               "ID" = #timePolicyTd#
+	   ]]>
+	</update>
+
+	<!-- 更新时间策略 -->
+	<update id="pgAdminsecurityPolicy.updatePolicy" parameterClass="securityPolicy">
+	  
+	         UPDATE "tbl_security_policy" 
+	         SET
+			         "POLICY_NAME" = #policyName#,
+			        
+			         "MODIFY_USERNAME" = #modifyUsername#,
+			     
+			         "MODIFY_TIME" = #modifyTime#,
+			         	<isNotEmpty  property="relPolicyName">
+		   
+		     "REL_POLICY_NAME" = #relPolicyName#,
+		  
+		   </isNotEmpty>
+			         
+			         "DESC" = #desc#
+	         WHERE  "ID" = #id#
+	
+	</update>
+
+	<!-- 插入时间策略 -->
+	<insert id="pgAdminsecurityPolicy.insert" parameterClass="securityPolicy">
+	   <![CDATA[
+	       INSERT INTO "tbl_security_policy" 
+	               ("POLICY_NAME",
+	                "CREATE_USERNAME",
+	                "MODIFY_USERNAME",
+	                "CREATE_TIME",
+	                "MODIFY_TIME",
+	                "REL_POLICY_NAME",
+	                "DESC" )
+	        VALUES
+	               (#policyName#,
+	                #createUsername#,
+	                #modifyUsername#,
+	                #createTime#,
+	                #modifyTime#,
+	                #relPolicyName#,
+	                #desc# )   
+	                
+	   ]]>
+	   <selectKey resultClass="int" keyProperty="id">
+            SELECT currval('tbl_security_policy_seq'::regclass) AS id
+      	</selectKey>
+	</insert>
+
+	
+
+</sqlMap>

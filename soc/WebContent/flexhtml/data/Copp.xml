@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Graph>
+<Node id="90" ip="192.136.25.45" mac="12-12-12-12-12-12" assetId="90" loginName="null" displayName="1" snmpCommunityName="public" memo="" scaling="0.9" type="business" level="business" positionX="147.15" positionY="52.9" severity="0" icon="images/topo/devicecategory/Bladeserver.png"  />
+<Node id="82" ip="192.168.12.56" mac="2E-65-9D-BC-02-1B" assetId="82" loginName="null" displayName="2" snmpCommunityName="public" memo="" scaling="null" type="qsdsd" level="qsdsd" positionX="904.55" positionY="872" severity="0" icon="images/topo/devicecategory/Bladeserver.png"  />
+<Edge fromID="90" toID="82"  />
+</Graph>

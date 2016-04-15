@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+   
+<sqlMap>
+   <resultMap class="employee" id="employeeResult">
+     <result property="userID"       column="PK_USER"        />
+     <result property="userName"     column="USER_Name"          />
+     <result property="trueName"     column="USER_TrueName"     /> 
+     <result property="password"     column="USER_Password"      />
+     <result property="IDCardNum"    column="USER_IdCard"       />
+     <result property="status" column="USER_Status"  />  
+     <result property="userAuthority" column="USER_Authority" />
+     <result property="depName" column="USER_DepName" />
+   </resultMap>
+   <!-- 添加用户信息-->
+   <insert id="pgAdminemployee.inster" parameterClass="employee">
+     INSERT INTO "tb_user"("USER_Name","USER_TrueName","USER_Password","USER_IdCard","USER_Status","USER_Authority","USER_DepName")
+       VALUES(#userName#,#trueName#,#password#,#IDCardNum#,#status#,#userAuthority#,#depName#)
+      
+   </insert>
+   <!--查找所有-->
+   <select id="pgAdminemployee.queryAll"  resultMap="employeeResult">
+       select * from "tb_user" order by "PK_USER" desc
+   </select>
+   
+   <!--根据ID查询用户信息 -->
+     <select id="pgAdminemployee.queryById" parameterClass="int" resultMap="employeeResult">
+         <![CDATA[  
+         select * from "tb_user" where "PK_USER" = #userID#
+         ]]>
+     </select>
+     <!--更改用户信息-->
+   <update id="pgAdminemployee.updata" parameterClass="employee">
+       UPDATE "tb_user"   set
+             "USER_Name"= #userName#,
+             "USER_TrueName"= #trueName#,
+             "USER_Password"= #password#,
+             "USER_IdCard"= #IDCardNum#,
+             "USER_Status"= #status#,
+             "USER_Authority"= #userAuthority#,
+             "USER_DepName"= #depName#
+       where "PK_USER" = #userID#
+   </update>
+   <!--模糊查询数据条数-->
+   <select id="pgAdminemployee.cont" resultClass="int" parameterClass="java.util.HashMap">
+       SELECT count(*) from "tb_user" u where 1=1
+       <isNotEmpty prepend="AND" property="keyword">
+           <![CDATA[
+              ("USER_Name LIKE'%$keyword$%' OR  "USER_TrueName LIKE'%$keyword$%' OR  "USER_IdCard LIKE'%$keyword$%') 
+           ]]>
+       </isNotEmpty>
+       <!-- <isNotEmpty prepend="AND" property="status">
+         <![CDATA[
+            "USER_Status = #status# 
+         ]]>
+       </isNotEmpty>
+       <isNotEmpty prepend="AND" property="userAuthority">
+         <![CDATA[
+            "USER_Authority LIKE '%$userAuthority$%'
+         ]]>
+       </isNotEmpty> -->
+        and "USER_Name != 'admin'
+   </select>
+    <!--模糊查找用户-->
+   <select id="pgAdminemployee.query" parameterClass="java.util.HashMap" resultMap="employeeResult">
+       select * from "tb_user"   where 1=1
+       <isNotEmpty prepend="AND" property="keyword">
+         <![CDATA[
+              ("USER_Name LIKE'%$keyword$%' OR  "USER_TrueName LIKE'%$keyword$%' OR  "USER_IdCard LIKE'%$keyword$%')
+           ]]>
+       </isNotEmpty>
+      <!--  <isNotEmpty prepend="AND" property="status">
+         <![CDATA[
+            "USER_Status = #status# 
+         ]]>
+       </isNotEmpty>
+       <isNotEmpty prepend="AND" property="userAuthority">
+         <![CDATA[
+            "USER_Authority LIKE '%$userAuthority$%'
+         ]]>
+       </isNotEmpty> -->
+         and "USER_Name" != 'admin' order by "PK_USER" desc
+   </select>
+   
+  <!--根据用户名查询用户信息 -->
+     <select id="pgAdminemployee.queryByName" parameterClass="String" resultMap="employeeResult">
+         <![CDATA[  
+         select * from "tb_user" where "USER_Name" = #userName#
+         ]]>
+         order by "PK_USER" desc
+     </select>
+     
+     <!--根据组织部门查询用户信息 -->
+     <select id="pgAdminemployee.queryByDepName" parameterClass="String" resultMap="employeeResult">
+         <![CDATA[  
+         select * from "tb_user" where "USER_DepName" = #depName#
+         ]]>
+         order by "PK_USER" desc
+     </select>
+   <!--删除用户信息-->
+     <delete id="pgAdminemployee.delete" parameterClass="int">
+     DELETE FROM "tb_user" WHERE "PK_USER"=#userID#
+     </delete>
+     <!--高级搜索用户列表-->
+   <select id="pgAdminemployee.queryprecise" parameterClass="java.util.HashMap" resultMap="employeeResult">
+       select * from "tb_user"   where 1=1
+       <isNotEmpty prepend="AND" property="keyword1">
+         <![CDATA[
+            "USER_Name" =#keyword1#
+         ]]>
+       </isNotEmpty>
+       <isNotEmpty prepend="AND" property="keyword2">
+         <![CDATA[
+            "USER_TrueName" = #keyword2# 
+         ]]>
+       </isNotEmpty>
+       <isNotEmpty prepend="AND" property="keyword3">
+         <![CDATA[
+            "USER_IdCard" =#keyword3#
+         ]]>
+       </isNotEmpty>
+       <isNotEmpty prepend="AND" property="keyword4">
+         <![CDATA[
+            "USER_Authority" =#keyword4#
+         ]]>
+       </isNotEmpty>
+       <isNotEmpty prepend="AND" property="keyword5">
+         <![CDATA[
+            "USER_Status" = #keyword5# 
+         ]]>
+       </isNotEmpty>
+        and "USER_Name" != 'admin' order by PK_USER desc
+   </select>
+   <!--高级搜索数据条数-->
+   <select id="pgAdminemployee.countprecise" resultClass="int" parameterClass="java.util.HashMap">
+       SELECT count(*) from "tb_user"   where 1=1
+       <isNotEmpty prepend="AND" property="keyword1">
+         <![CDATA[
+            "USER_Name" =#keyword1#
+         ]]>
+       </isNotEmpty>
+       <isNotEmpty prepend="AND" property="keyword2">
+         <![CDATA[
+            "USER_TrueName" = #keyword2# 
+         ]]>
+       </isNotEmpty>
+       <isNotEmpty prepend="AND" property="keyword3">
+         <![CDATA[
+            "USER_IdCard" =#keyword3#
+         ]]>
+       </isNotEmpty>
+       <isNotEmpty prepend="AND" property="keyword4">
+         <![CDATA[
+            "USER_Authority" =#keyword4#
+         ]]>
+       </isNotEmpty>
+       <isNotEmpty prepend="AND" property="keyword5">
+         <![CDATA[
+            "USER_Status" = #keyword5# 
+         ]]>
+       </isNotEmpty>
+      and "USER_Name" != 'admin'
+   </select>
+   <!-- sqlserver -->
+   <!-- 添加用户信息-->
+   <insert id="sqlServeremployee.inster" parameterClass="employee">
+     INSERT INTO "tb_user"("USER_Name","USER_TrueName","USER_Password","USER_IdCard","USER_Status","USER_Authority","USER_DepName")
+       VALUES(#userName#,#trueName#,#password#,#IDCardNum#,#status#,#userAuthority#,#depName#)
+      
+   </insert>
+   <!--查找所有-->
+   <select id="sqlServeremployee.queryAll"  resultMap="employeeResult">
+       select * from "tb_user" order by "PK_USER" desc
+   </select>
+   
+   <!--根据ID查询用户信息 -->
+     <select id="sqlServeremployee.queryById" parameterClass="int" resultMap="employeeResult">
+         <![CDATA[  
+         select * from "tb_user" where "PK_USER" = #userID#
+         ]]>
+     </select>
+     <!--更改用户信息-->
+   <update id="sqlServeremployee.updata" parameterClass="employee">
+       UPDATE "tb_user"   set
+             "USER_Name"= #userName#,
+             "USER_TrueName"= #trueName#,
+             "USER_Password"= #password#,
+             "USER_IdCard"= #IDCardNum#,
+             "USER_Status"= #status#,
+             "USER_Authority"= #userAuthority#,
+             "USER_DepName"= #depName#
+       where "PK_USER" = #userID#
+   </update>
+   <!--模糊查询数据条数-->
+   <select id="sqlServeremployee.cont" resultClass="int" parameterClass="java.util.HashMap">
+       SELECT count(*) from "tb_user" u where 1=1
+       <isNotEmpty prepend="AND" property="keyword">
+           <![CDATA[
+              ("USER_Name LIKE'%$keyword$%' OR  "USER_TrueName LIKE'%$keyword$%' OR  "USER_IdCard LIKE'%$keyword$%') 
+           ]]>
+       </isNotEmpty>
+       <!-- <isNotEmpty prepend="AND" property="status">
+         <![CDATA[
+            "USER_Status = #status# 
+         ]]>
+       </isNotEmpty>
+       <isNotEmpty prepend="AND" property="userAuthority">
+         <![CDATA[
+            "USER_Authority LIKE '%$userAuthority$%'
+         ]]>
+       </isNotEmpty> -->
+        and "USER_Name != 'admin'
+   </select>
+    <!--模糊查找用户-->
+   <select id="sqlServeremployee.query" parameterClass="java.util.HashMap" resultMap="employeeResult">
+       select * from "tb_user"   where 1=1
+       <isNotEmpty prepend="AND" property="keyword">
+         <![CDATA[
+              ("USER_Name LIKE'%$keyword$%' OR  "USER_TrueName LIKE'%$keyword$%' OR  "USER_IdCard LIKE'%$keyword$%')
+           ]]>
+       </isNotEmpty>
+      <!--  <isNotEmpty prepend="AND" property="status">
+         <![CDATA[
+            "USER_Status = #status# 
+         ]]>
+       </isNotEmpty>
+       <isNotEmpty prepend="AND" property="userAuthority">
+         <![CDATA[
+            "USER_Authority LIKE '%$userAuthority$%'
+         ]]>
+       </isNotEmpty> -->
+         and "USER_Name" != 'admin' order by "PK_USER" desc
+   </select>
+   
+  <!--根据用户名查询用户信息 -->
+     <select id="sqlServeremployee.queryByName" parameterClass="String" resultMap="employeeResult">
+         <![CDATA[  
+         select * from "tb_user" where "USER_Name" = #userName#
+         ]]>
+         order by "PK_USER" desc
+     </select>
+     
+     <!--根据组织部门查询用户信息 -->
+     <select id="sqlServeremployee.queryByDepName" parameterClass="String" resultMap="employeeResult">
+         <![CDATA[  
+         select * from "tb_user" where "USER_DepName" = #depName#
+         ]]>
+         order by "PK_USER" desc
+     </select>
+   <!--删除用户信息-->
+     <delete id="sqlServeremployee.delete" parameterClass="int">
+     DELETE FROM "tb_user" WHERE "PK_USER"=#userID#
+     </delete>
+     <!--高级搜索用户列表-->
+   <select id="sqlServeremployee.queryprecise" parameterClass="java.util.HashMap" resultMap="employeeResult">
+       select * from "tb_user"   where 1=1
+       <isNotEmpty prepend="AND" property="keyword1">
+         <![CDATA[
+            "USER_Name" =#keyword1#
+         ]]>
+       </isNotEmpty>
+       <isNotEmpty prepend="AND" property="keyword2">
+         <![CDATA[
+            "USER_TrueName" = #keyword2# 
+         ]]>
+       </isNotEmpty>
+       <isNotEmpty prepend="AND" property="keyword3">
+         <![CDATA[
+            "USER_IdCard" =#keyword3#
+         ]]>
+       </isNotEmpty>
+       <isNotEmpty prepend="AND" property="keyword4">
+         <![CDATA[
+            "USER_Authority" =#keyword4#
+         ]]>
+       </isNotEmpty>
+       <isNotEmpty prepend="AND" property="keyword5">
+         <![CDATA[
+            "USER_Status" = #keyword5# 
+         ]]>
+       </isNotEmpty>
+        and "USER_Name" != 'admin' order by PK_USER desc
+   </select>
+   <!--高级搜索数据条数-->
+   <select id="sqlServeremployee.countprecise" resultClass="int" parameterClass="java.util.HashMap">
+       SELECT count(*) from "tb_user"   where 1=1
+       <isNotEmpty prepend="AND" property="keyword1">
+         <![CDATA[
+            "USER_Name" =#keyword1#
+         ]]>
+       </isNotEmpty>
+       <isNotEmpty prepend="AND" property="keyword2">
+         <![CDATA[
+            "USER_TrueName" = #keyword2# 
+         ]]>
+       </isNotEmpty>
+       <isNotEmpty prepend="AND" property="keyword3">
+         <![CDATA[
+            "USER_IdCard" =#keyword3#
+         ]]>
+       </isNotEmpty>
+       <isNotEmpty prepend="AND" property="keyword4">
+         <![CDATA[
+            "USER_Authority" =#keyword4#
+         ]]>
+       </isNotEmpty>
+       <isNotEmpty prepend="AND" property="keyword5">
+         <![CDATA[
+            "USER_Status" = #keyword5# 
+         ]]>
+       </isNotEmpty>
+      and "USER_Name" != 'admin'
+   </select>
+</sqlMap>

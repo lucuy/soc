@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<!-- 评估结果 -->
+	<package name="assessResult" extends="struts-default" namespace="/assessResult">
+		<!-- 插入评估结果 -->
+		<action name="insert" class="assessResultAction" method="insert">
+			<result name="success">/pages/dbPage/cpManage/demand/demandCollect/skip.jsp</result>
+		</action>
+		<action name="queryAssessInfo" class="assessResultAction" method="queryAssessInfo">
+			<result name="success">/pages/dbPage/cpManage/demand/demandCollect/skip.jsp</result>
+		</action>
+		<!-- 生成差距评估报告 -->
+		<action name="assessResultReport" class="assessResultAction" method="assessResultReport">
+			<result name="success">/pages/dbPage/cpManage/technology/assessResultReport.jsp</result>
+		</action>
+		<!-- 历次差距评估报告 -->
+		<action name="everyTimeAssessResultReport" class="assessResultAction" method="everyTimeAssessResultReport">
+			<result name="success">/pages/dbPage/cpManage/technology/assessResultReport.jsp</result>
+		</action>
+	</package>
+</struts>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="msaShow" extends="struts-default" namespace="/msaShow">
+	
+		<action name="msaShowNoFit" class="MsaShowAction" method="msaShowNoFit">
+	   <result name="success">/pages/dbPage/cpManage/msahShow/msaShow.jsp</result>
+		</action>
+		<action name="msaShowNoFitFirst" class="MsaShowAction" method="msaShowNoFitFirst">
+		   <result name="success">/pages/dbPage/cpManage/msahShow/msaShow.jsp</result>
+		</action>
+		
+		<action name="queryTree" class="MsaShowAction" method="queryTree">
+		</action>
+		<action name="queryAjaxMsaShowNoFit" class="MsaShowAction" method="queryAjaxMsaShowNoFit">
+		</action>
+		
+		<action name="queryNotKeyAjaxMsaShowNoFit" class="MsaShowAction" method="queryNotKeyAjaxMsaShowNoFit">
+		</action>
+		
+	</package>
+
+</struts>

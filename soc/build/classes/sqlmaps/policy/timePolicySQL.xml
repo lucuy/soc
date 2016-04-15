@@ -1,0 +1,445 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="timePolicySQL">
+    <typeAlias alias="timePolicy"
+		type="com.soc.model.policy.TimePolicy" />
+	<resultMap id="timePolicyResult" class="timePolicy">
+   		<result property="timePolicyId" 		               column="TIME_POLICY_ID" 				     jdbcType="bigint"/>
+   		<result property="timePolicyName"                      column="TIME_POLICY_NAME"                 jdbcType="varchar"/>
+   		<result property="timePolicyEffectWay"                 column="TIME_POLICY_EFFECT_WAY"           jdbcType="int"/>
+   		<result property="timePolicyTimeStart"                 column="TIME_POLICY_TIME_START"           jdbcType="datetime"/>
+   		<result property="timePolicyTimeEnd"                   column="TIME_POLICY_TIME_END"             jdbcType="datetime"/>
+   		<result property="timePolicyDateStart"                 column="TIME_POLICY_DATE_START"           jdbcType="date"/>
+   		<result property="timePolicyDateEnd"                   column="TIME_POLICY_DATE_END"             jdbcType="date"/>
+   		<result property="timePolicyHour"                      column="TIME_POLICY_HOUR"        		 jdbcType="varchar"/>
+   		<result property="timePolicyUserLoginName"             column="TIME_POLICY_USER_LOGIN_NAME"      jdbcType="varchar"/>
+   		<result property="timePolicyCreateDateTime"            column="TIME_POLICY_CREATE_DATE_TIME"     jdbcType="datetime"/>
+   		<result property="timePolicyUpdateDateTime"            column="TIME_POLICY_UPDATE_DATE_TIME"     jdbcType="datetime"/>
+   		<result property="timePolicyIsDelete"                  column="TIME_POLICY_IS_DELETE"            jdbcType="int"/>
+   		<result property="timePolicyStates"					   column="TIME_POLICY_STATES"               jdbcType="int" />
+   		<result property="timePolicyWeek"                      column="TIME_POLICY_WEEK"                 jdbcType="varchar"/>
+   		<result property="timePolicyMemo"                      column="TIME_POLICY_MEMO"                 jdbcType="varchar"/>
+ 		 <result property="timePolicyexecuteWay"               column="TIME_POLICY_EXECEUTE_WAY"         jdbcType="int"/> 
+   	</resultMap>
+   		<resultMap id="userResult" class="user">
+   		<result property="userId" 				    column="USER_ID" 				    jdbcType="bigint"/>
+   		<result property="userLoginName"            column="USER_LOGIN_NAME"            jdbcType="varchar"/>
+   		<result property="userRealName"             column="USER_REAL_NAME"             jdbcType="varchar"/>
+   		<result property="userPassword"             column="USER_PASSWORD"              jdbcType="varchar"/>
+   		<result property="userStatus"               column="USER_STATUS"                jdbcType="int"/>
+   		<result property="userAuthType"             column="USER_AUTH_TYPE"             jdbcType="int"/>
+   		<result property="userChangePassword"       column="USER_CHANGE_PASSWORD"       jdbcType="int"/>
+   		<result property="userEmail"                column="USER_EMAIL"                 jdbcType="varchar"/>
+   		<result property="userMobile"               column="USER_MOBILE"                jdbcType="varchar"/>
+   		<result property="userTelephone"            column="USER_TELEPHONE"             jdbcType="varchar"/>
+   		<result property="userAddress"              column="USER_ADDRESS"               jdbcType="varchar"/>
+   		<result property="userCreatorIp"            column="USER_CREATOR_IP"            jdbcType="varchar"/>
+   		<result property="userCreateDateTime"       column="USER_CREATE_DATE_TIME"      jdbcType="datetime"/>
+   		<result property="userUpdateDateTime"       column="USER_UPDATE_DATE_TIME"      jdbcType="datetime"/>
+   		<result property="userDisplay"              column="USER_DISPLAY"               jdbcType="int"/>
+   		<result property="userMemo"                 column="USER_MEMO"                  jdbcType="text"/>
+   		<result property="userLockTime"             column="USER_LOCKED_TIME"           jdbcType="datetime"/>
+   		<result property="userFailNum"              column="USER_FAIL_NUM"              jdbcType="int"/>
+   		<result property="userIsDelete"             column="USER_IS_DELETE"             jdbcType="int"/>
+   		<result property="userRoleList"             column="USER_ID"                    select="pgAdminuser.queryRoleByUserId"/>
+   	</resultMap>
+	<!-- 查询条数 -->
+	<select id="pgAdmintimePolicy.count" resultClass="int" parameterClass="java.util.HashMap">
+	   SELECT COUNT(*) FROM "tbl_time_policy" WHERE "TIME_POLICY_IS_DELETE" = 0
+	   <isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				("TIME_POLICY_NAME" LIKE '%$keyword$%' OR "TIME_POLICY_MEMO" LIKE '%$keyword$%')
+			]]>
+		</isNotEmpty>
+		<!-- 高级查询 -->
+		<isNotEmpty prepend = "AND" property="timePolicyName">
+		   <![CDATA[
+		     "TIME_POLICY_NAME" LIKE '%$timePolicyName$%'
+		   ]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend="AND" property="timePolicyMemo">
+		   <![CDATA[
+		     "TIME_POLICY_MEMO" LIKE '%$timePolicyMemo$%'
+		   ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="timePolicyStatus">
+		   <![CDATA[
+		     "TIME_POLICY_STATES" = #timePolicyStatus#
+		   ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="timePolicyEffectWay">
+		   <![CDATA[
+		     "TIME_POLICY_EFFECT_WAY" = #timePolicyEffectWay#
+		   ]]>
+		</isNotEmpty>
+	</select>
+	
+	<!-- 查询结果列表 -->
+	<select id="pgAdmintimePolicy.queryTimePolicy" parameterClass="java.util.HashMap" resultMap="timePolicyResult">
+	    SELECT * FROM "tbl_time_policy" WHERE "TIME_POLICY_IS_DELETE" = 0
+	    <isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				("TIME_POLICY_NAME" LIKE '%$keyword$%' OR "TIME_POLICY_USER_LOGIN_NAME" LIKE '%$keyword$%' OR "TIME_POLICY_MEMO" LIKE '%$keyword$%')
+			]]>
+		</isNotEmpty>
+		<!-- 高级查询 -->
+		<isNotEmpty prepend = "AND" property="timePolicyName">
+		   <![CDATA[
+		     "TIME_POLICY_NAME" LIKE '%$timePolicyName$%'
+		   ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="timePolicyMemo">
+		   <![CDATA[
+		     "TIME_POLICY_MEMO" LIKE '%$timePolicyMemo$%'
+		   ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="timePolicyStatus">
+		   <![CDATA[
+		     "TIME_POLICY_STATES" = #timePolicyStatus#
+		   ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="timePolicyEffectWay">
+		   <![CDATA[
+		     "TIME_POLICY_EFFECT_WAY" = #timePolicyEffectWay#
+		   ]]>
+		</isNotEmpty>
+		ORDER BY "TIME_POLICY_UPDATE_DATE_TIME" DESC
+	</select>
+	
+	<!-- 查询所有 -->
+	<select id="pgAdmintimePolicy.queryTimePolicyEx" parameterClass="java.util.HashMap" resultMap="timePolicyResult">
+	    SELECT * FROM "tbl_time_policy" WHERE "TIME_POLICY_IS_DELETE" = 0
+	    <isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				("TIME_POLICY_NAME" LIKE '%$keyword$%' OR "TIME_POLICY_USER_LOGIN_NAME" LIKE '%$keyword$%' OR "TIME_POLICY_MEMO" LIKE '%$keyword$%')
+			]]>
+		</isNotEmpty>
+		<!-- 高级查询 -->
+		<isNotEmpty prepend = "AND" property="timePolicyName">
+		   <![CDATA[
+		     "TIME_POLICY_NAME" LIKE '%$timePolicyName$%'
+		   ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="timePolicyMemo">
+		   <![CDATA[
+		     "TIME_POLICY_MEMO" LIKE '%$timePolicyMemo$%'
+		   ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="timePolicyStatus">
+		   <![CDATA[
+		     "TIME_POLICY_STATES" LIKE '%$timePolicyStatus$%'
+		   ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="timePolicyEffectWay">
+		   <![CDATA[
+		     "TIME_POLICY_EFFECT_WAY" LIKE '%$timePolicyEffectWay$%'
+		   ]]>
+		</isNotEmpty>
+		ORDER BY "TIME_POLICY_UPDATE_DATE_TIME" DESC
+	</select>
+	
+	<!-- 根据Id查询时间策略 -->
+	<select id="pgAdmintimePolicy.queryByTimePolicyId" parameterClass="long" resultMap="timePolicyResult">
+	     <![CDATA[
+	      SELECT * FROM "tbl_time_policy" WHERE "TIME_POLICY_ID" = #timePolicyId#
+	     ]]>
+	</select>
+	
+	<!-- 更新时间策略状态 -->
+	<update id="pgAdmintimePolicy.updateTimePolicyStatus" parameterClass="java.util.HashMap" >
+		<![CDATA[
+			UPDATE "tbl_time_policy" 
+			SET 
+			       "TIME_POLICY_STATES" = #timePolicyStatus#,
+			       "TIME_POLICY_UPDATE_DATE_TIME" = #timePolicyUpdateDateTime# 
+			WHERE 
+			       "TIME_POLICY_ID" = #timePolicyId#
+		]]>
+	</update>
+	
+	<!-- 标记删除 -->
+	<update id="pgAdmintimePolicy.deleteTimePolicy" parameterClass="java.util.HashMap">
+	   <![CDATA[
+	       UPDATE "tbl_time_policy" 
+	       SET  
+	               "TIME_POLICY_IS_DELETE" = #timePolicyIsDelete#,
+	               "TIME_POLICY_UPDATE_DATE_TIME" = #timePolicyUpdateDateTime# 
+	       WHERE   
+	               "TIME_POLICY_ID" = #timePolicyTd#
+	   ]]>
+	</update>
+	
+	<!-- 更新时间策略 -->
+	<update id="pgAdmintimePolicy.updateTimePolicy" parameterClass="timePolicy">
+	   <![CDATA[
+	         UPDATE "tbl_time_policy" 
+	         SET
+	                 "TIME_POLICY_EFFECT_WAY" = #timePolicyEffectWay#,
+			         "TIME_POLICY_DATE_START" = #timePolicyDateStart#,
+			         "TIME_POLICY_DATE_END" = #timePolicyDateEnd#,
+			         "TIME_POLICY_HOUR" = #timePolicyHour#,
+			         "TIME_POLICY_UPDATE_DATE_TIME" = #timePolicyUpdateDateTime#,
+			         "TIME_POLICY_WEEK" = #timePolicyWeek#,
+			         "TIME_POLICY_MEMO" = #timePolicyMemo#,
+			         "TIME_POLICY_EXECEUTE_WAY" = #timePolicyexecuteWay#,
+			         "TIME_POLICY_NAME"=#timePolicyName#
+	         WHERE 
+	                 "TIME_POLICY_ID" = #timePolicyId#
+	   ]]>
+	</update>
+	
+	<!-- 插入时间策略 -->
+	<insert id="pgAdmintimePolicy.insert" parameterClass="timePolicy">
+	   <![CDATA[
+	       INSERT INTO "tbl_time_policy"
+	               ("TIME_POLICY_NAME",
+	                "TIME_POLICY_EFFECT_WAY",
+	                "TIME_POLICY_TIME_START",
+	                "TIME_POLICY_TIME_END",
+	                "TIME_POLICY_DATE_START",
+	                "TIME_POLICY_DATE_END",
+	                "TIME_POLICY_HOUR",
+	                "TIME_POLICY_USER_LOGIN_NAME",
+	                "TIME_POLICY_CREATE_DATE_TIME",
+	                "TIME_POLICY_UPDATE_DATE_TIME",
+	                "TIME_POLICY_WEEK",
+	                "TIME_POLICY_MEMO",
+	                "TIME_POLICY_EXECEUTE_WAY",
+	                "TIME_POLICY_IS_DELETE",
+	                "TIME_POLICY_STATES")
+	        VALUES
+	               (#timePolicyName#,
+	                #timePolicyEffectWay#,
+	                #timePolicyTimeStart#,
+	                #timePolicyTimeEnd#,
+	                #timePolicyDateStart#,
+	                #timePolicyDateEnd#,
+	                #timePolicyHour#,
+	                #timePolicyUserLoginName#,
+	                #timePolicyCreateDateTime#,
+	                #timePolicyUpdateDateTime#,
+	                #timePolicyWeek#,
+	                #timePolicyMemo#,
+	                #timePolicyexecuteWay#,
+	                #timePolicyIsDelete#,
+	                #timePolicyStates#)   
+	   ]]>
+	</insert>
+		
+	<!-- 根据策略名称查询策略 -->
+	<select id="pgAdmintimePolicy.queryBytimePolicyName" parameterClass="java.lang.String" resultMap="timePolicyResult">
+	  <![CDATA[
+	     SELECT * FROM "tbl_time_policy" WHERE "TIME_POLICY_NAME" = #value# and "TIME_POLICY_IS_DELETE" = 0
+	  ]]>  
+	</select>
+	<!-- 排序 -->
+	<select id="pgAdmintimePolicy.sort" resultMap="timePolicyResult" parameterClass="java.lang.String">
+	    SELECT * FROM "tbl_time_policy" WHERE "TIME_POLICY_IS_DELETE" = 0 ORDER BY $str$
+	</select>
+	 <!-- 根据时间策略Id查询所有与之关联的用户 -->
+	 <select id="pgAdmintimePolicy.queryuser" parameterClass="long" resultMap="userResult">
+		select * from "tbl_user" where "USER_ID" in (select "REL_USER_ID" from "tbl_rel_user_time_policy" where "REL_TIME_POLICY_ID"=#value#)	 	
+	 </select> 
+	 <!-- sqlServer -->
+	 <!-- 查询条数 -->
+	<select id="sqlServertimePolicy.count" resultClass="int" parameterClass="java.util.HashMap">
+	   SELECT COUNT(*) FROM "tbl_time_policy" WHERE "TIME_POLICY_IS_DELETE" = 0
+	   <isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				("TIME_POLICY_NAME" LIKE '%$keyword$%' OR "TIME_POLICY_MEMO" LIKE '%$keyword$%')
+			]]>
+		</isNotEmpty>
+		<!-- 高级查询 -->
+		<isNotEmpty prepend = "AND" property="timePolicyName">
+		   <![CDATA[
+		     "TIME_POLICY_NAME" LIKE '%$timePolicyName$%'
+		   ]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend="AND" property="timePolicyMemo">
+		   <![CDATA[
+		     "TIME_POLICY_MEMO" LIKE '%$timePolicyMemo$%'
+		   ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="timePolicyStatus">
+		   <![CDATA[
+		     "TIME_POLICY_STATES" = #timePolicyStatus#
+		   ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="timePolicyEffectWay">
+		   <![CDATA[
+		     "TIME_POLICY_EFFECT_WAY" = #timePolicyEffectWay#
+		   ]]>
+		</isNotEmpty>
+	</select>
+	
+	<!-- 查询结果列表 -->
+	<select id="sqlServertimePolicy.queryTimePolicy" parameterClass="java.util.HashMap" resultMap="timePolicyResult">
+	    SELECT * FROM "tbl_time_policy" WHERE "TIME_POLICY_IS_DELETE" = 0
+	    <isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				("TIME_POLICY_NAME" LIKE '%$keyword$%' OR "TIME_POLICY_USER_LOGIN_NAME" LIKE '%$keyword$%' OR "TIME_POLICY_MEMO" LIKE '%$keyword$%')
+			]]>
+		</isNotEmpty>
+		<!-- 高级查询 -->
+		<isNotEmpty prepend = "AND" property="timePolicyName">
+		   <![CDATA[
+		     "TIME_POLICY_NAME" LIKE '%$timePolicyName$%'
+		   ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="timePolicyMemo">
+		   <![CDATA[
+		     "TIME_POLICY_MEMO" LIKE '%$timePolicyMemo$%'
+		   ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="timePolicyStatus">
+		   <![CDATA[
+		     "TIME_POLICY_STATES" = #timePolicyStatus#
+		   ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="timePolicyEffectWay">
+		   <![CDATA[
+		     "TIME_POLICY_EFFECT_WAY" = #timePolicyEffectWay#
+		   ]]>
+		</isNotEmpty>
+		ORDER BY "TIME_POLICY_UPDATE_DATE_TIME" DESC
+	</select>
+	
+	<!-- 查询所有 -->
+	<select id="sqlServertimePolicy.queryTimePolicyEx" parameterClass="java.util.HashMap" resultMap="timePolicyResult">
+	    SELECT * FROM "tbl_time_policy" WHERE "TIME_POLICY_IS_DELETE" = 0
+	    <isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				("TIME_POLICY_NAME" LIKE '%$keyword$%' OR "TIME_POLICY_USER_LOGIN_NAME" LIKE '%$keyword$%' OR "TIME_POLICY_MEMO" LIKE '%$keyword$%')
+			]]>
+		</isNotEmpty>
+		<!-- 高级查询 -->
+		<isNotEmpty prepend = "AND" property="timePolicyName">
+		   <![CDATA[
+		     "TIME_POLICY_NAME" LIKE '%$timePolicyName$%'
+		   ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="timePolicyMemo">
+		   <![CDATA[
+		     "TIME_POLICY_MEMO" LIKE '%$timePolicyMemo$%'
+		   ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="timePolicyStatus">
+		   <![CDATA[
+		     "TIME_POLICY_STATES" LIKE '%$timePolicyStatus$%'
+		   ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="timePolicyEffectWay">
+		   <![CDATA[
+		     "TIME_POLICY_EFFECT_WAY" LIKE '%$timePolicyEffectWay$%'
+		   ]]>
+		</isNotEmpty>
+		ORDER BY "TIME_POLICY_UPDATE_DATE_TIME" DESC
+	</select>
+	
+	<!-- 根据Id查询时间策略 -->
+	<select id="sqlServertimePolicy.queryByTimePolicyId" parameterClass="long" resultMap="timePolicyResult">
+	     <![CDATA[
+	      SELECT * FROM "tbl_time_policy" WHERE "TIME_POLICY_ID" = #timePolicyId#
+	     ]]>
+	</select>
+	
+	<!-- 更新时间策略状态 -->
+	<update id="sqlServertimePolicy.updateTimePolicyStatus" parameterClass="java.util.HashMap" >
+		<![CDATA[
+			UPDATE "tbl_time_policy" 
+			SET 
+			       "TIME_POLICY_STATES" = #timePolicyStatus#,
+			       "TIME_POLICY_UPDATE_DATE_TIME" = #timePolicyUpdateDateTime# 
+			WHERE 
+			       "TIME_POLICY_ID" = #timePolicyId#
+		]]>
+	</update>
+	
+	<!-- 标记删除 -->
+	<update id="sqlServertimePolicy.deleteTimePolicy" parameterClass="java.util.HashMap">
+	   <![CDATA[
+	       UPDATE "tbl_time_policy" 
+	       SET  
+	               "TIME_POLICY_IS_DELETE" = #timePolicyIsDelete#,
+	               "TIME_POLICY_UPDATE_DATE_TIME" = #timePolicyUpdateDateTime# 
+	       WHERE   
+	               "TIME_POLICY_ID" = #timePolicyTd#
+	   ]]>
+	</update>
+	
+	<!-- 更新时间策略 -->
+	<update id="sqlServertimePolicy.updateTimePolicy" parameterClass="timePolicy">
+	   <![CDATA[
+	         UPDATE "tbl_time_policy" 
+	         SET
+	                 "TIME_POLICY_EFFECT_WAY" = #timePolicyEffectWay#,
+			         "TIME_POLICY_DATE_START" = #timePolicyDateStart#,
+			         "TIME_POLICY_DATE_END" = #timePolicyDateEnd#,
+			         "TIME_POLICY_HOUR" = #timePolicyHour#,
+			         "TIME_POLICY_UPDATE_DATE_TIME" = #timePolicyUpdateDateTime#,
+			         "TIME_POLICY_WEEK" = #timePolicyWeek#,
+			         "TIME_POLICY_MEMO" = #timePolicyMemo#,
+			         "TIME_POLICY_EXECEUTE_WAY" = #timePolicyexecuteWay#,
+			         "TIME_POLICY_NAME"=#timePolicyName#
+	         WHERE 
+	                 "TIME_POLICY_ID" = #timePolicyId#
+	   ]]>
+	</update>
+	
+	<!-- 插入时间策略 -->
+	<insert id="sqlServertimePolicy.insert" parameterClass="timePolicy">
+	   <![CDATA[
+	       INSERT INTO "tbl_time_policy"
+	               ("TIME_POLICY_NAME",
+	                "TIME_POLICY_EFFECT_WAY",
+	                "TIME_POLICY_TIME_START",
+	                "TIME_POLICY_TIME_END",
+	                "TIME_POLICY_DATE_START",
+	                "TIME_POLICY_DATE_END",
+	                "TIME_POLICY_HOUR",
+	                "TIME_POLICY_USER_LOGIN_NAME",
+	                "TIME_POLICY_CREATE_DATE_TIME",
+	                "TIME_POLICY_UPDATE_DATE_TIME",
+	                "TIME_POLICY_WEEK",
+	                "TIME_POLICY_MEMO",
+	                "TIME_POLICY_EXECEUTE_WAY",
+	                "TIME_POLICY_IS_DELETE",
+	                "TIME_POLICY_STATES")
+	        VALUES
+	               (#timePolicyName#,
+	                #timePolicyEffectWay#,
+	                #timePolicyTimeStart#,
+	                #timePolicyTimeEnd#,
+	                #timePolicyDateStart#,
+	                #timePolicyDateEnd#,
+	                #timePolicyHour#,
+	                #timePolicyUserLoginName#,
+	                #timePolicyCreateDateTime#,
+	                #timePolicyUpdateDateTime#,
+	                #timePolicyWeek#,
+	                #timePolicyMemo#,
+	                #timePolicyexecuteWay#,
+	                #timePolicyIsDelete#,
+	                #timePolicyStates#)   
+	   ]]>
+	</insert>
+		
+	<!-- 根据策略名称查询策略 -->
+	<select id="sqlServertimePolicy.queryBytimePolicyName" parameterClass="java.lang.String" resultMap="timePolicyResult">
+	  <![CDATA[
+	     SELECT * FROM "tbl_time_policy" WHERE "TIME_POLICY_NAME" = #value# and "TIME_POLICY_IS_DELETE" = 0
+	  ]]>  
+	</select>
+	<!-- 排序 -->
+	<select id="sqlServertimePolicy.sort" resultMap="timePolicyResult" parameterClass="java.lang.String">
+	    SELECT * FROM "tbl_time_policy" WHERE "TIME_POLICY_IS_DELETE" = 0 ORDER BY $str$
+	</select>
+	 <!-- 根据时间策略Id查询所有与之关联的用户 -->
+	 <select id="sqlServertimePolicy.queryuser" parameterClass="long" resultMap="userResult">
+		select * from "tbl_user" where "USER_ID" in (select "REL_USER_ID" from "tbl_rel_user_time_policy" where "REL_TIME_POLICY_ID"=#value#)	 	
+	 </select> 
+	 
+</sqlMap>

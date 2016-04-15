@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+<!-- 文件长度过大的缓冲文件夹 -->
+<constant name="struts.multipart.saveDir" value="/tmp"/>
+<!-- 上传文件最大限制 -->
+<constant name="struts.multipart.maxSize" value="52428800" />
+
+	<package name="sysAbolish" extends="struts-default" namespace="/sysAbolish">
+		<action name="querySysInFo" class="SysAbolishAction" method="querySysInFo">
+			<result name="success">/pages/dbPage/score/sysAbolish.jsp</result>
+		</action> 
+	
+	<action name="queryForJson" class="SysAbolishAction" method="queryForJson">
+		    <result name="success">/pages/dbPage/menus/allMenus.jsp</result>
+		</action>
+	 
+		<action name="sysAbolishEdit" class="SysAbolishAction" method="sysAbolishEdit">
+			<result name="success">/pages/dbPage/score/sysAbolish.jsp</result>
+		</action>
+			 
+		<action name="editBegin" class="SysAbolishAction" method="editBegin">
+			 <result name="success" >/pages/dbPage/score/sysAbolishEdit.jsp</result>
+		</action>
+		<!-- 上传信息删除证明 -->
+		<action name="upsysabfile" class="SysAbolishAction" method="upsysabfile">
+		<param name="fsysAccessPath">/uploadFiles/infosysabolish</param>
+		</action>
+		<!-- 上传设备清除证明 -->
+		<action name="updevabfile" class="SysAbolishAction" method="updevabfile">
+		<param name="fdevAccessPath">/uploadFiles/devsysabolish</param>
+		</action>
+		<!-- 上传存储设备清除证明 -->
+		<action name="upstorabfile" class="SysAbolishAction" method="upstoreabfile">
+		<param name="fstorAccessPath">/uploadFiles/storesysabolish</param>
+		</action>
+	</package>
+</struts>

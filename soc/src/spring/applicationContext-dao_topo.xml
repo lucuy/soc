@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans-2.0.xsd" default-lazy-init="true">
+
+	<!-- Transaction manager for a single JDBC DataSource -->
+	<bean id="transactionManager2" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- SqlMap setup for iBATIS Database Layer -->
+	<bean id="sqlMapClient2" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sql-map-topo-config.xml" />
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="sqlExecutor2" class="com.topo.dao.ibatis.LimitSqlExecutor">
+		<property name="dialect">
+			<bean class="com.topo.dao.ibatis.MyDialect" />
+		</property>
+	</bean>
+
+	<!--baseDao1 所有service都继承此类 -->
+	<bean id="baseDao2" abstract="true" class="com.topo.dao.ibatis.BaseDaoiBatis" init-method="initialize">
+		<property name="dataSource" ref="dataSource" />
+		<property name="sqlMapClient" ref="sqlMapClient2" />
+		<property name="sqlExecutor">
+			<ref bean="sqlExecutor2" />
+		</property>
+	</bean>
+
+	<!-- 设备管理 -->
+	<bean id="deviceDao" class="com.topo.dao.device.ibatis.CommonDaoImpl" parent="baseDao2"></bean>
+
+	<!-- 设备类型管理 -->
+	<bean id="deviceCategoryDao" class="com.topo.dao.deviceCategory.ibatis.DeviceCategoryDaoImpl" parent="baseDao2"></bean>
+	<!-- 临时设备管理 -->
+	<bean id="tempDeviceDao" class="com.topo.dao.device.ibatis.TempDeviceDaoIbatis" parent="baseDao2"></bean>
+	<!-- 拓扑背景图片 -->
+	<bean id="netBackGroundPhotoDao" class="com.topo.dao.device.ibatis.NetBackGroundPhotoIbatis" parent="baseDao2"></bean>
+	<!-- 下级soc告警数量 -->
+	<bean id="deviceAlertCountDao" class="com.topo.dao.device.ibatis.DeviceAlertCountIbatis" parent="baseDao2"></bean>
+</beans>
+
+
+
+
+
+
+
+

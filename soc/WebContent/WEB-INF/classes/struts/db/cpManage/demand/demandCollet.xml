@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="demandCollet" extends="struts-default" namespace="/demandCollet">
+		<!--整改需求汇总左侧导航栏 -->
+		<action name="queryTree" class="demandColletAction" method="queryTree" />
+		<!--整改需求汇总列表 -->
+		<action name="queryDemand" class="demandColletAction" method="queryDemand">
+			<result name="success">/pages/dbPage/cpManage/demand/demandCollect/demandCollectList.jsp</result>
+		</action>
+		<!-- 整改需求汇总列表搜索 -->
+		<action name="queryAjaxDemand" class="demandColletAction" method="queryAjaxDemand"></action>
+		
+		
+		<!-- 整改需求汇总列表搜索 key等于  空-->
+		<action name="queryNoKeyAjaxDemand" class="demandColletAction" method="queryNoKeyAjaxDemand"></action>
+		
+		
+		
+		<!--查询评估树形列表 -->
+		<action name="queryGradeForTree" class="demandColletAction" method="queryGradeForTree"></action>
+		<!--根据排序查询评估项 -->
+		<action name="querySortInfo" class="demandColletAction" method="querySortInfo">
+			<result name="success">/pages/dbPage/cpManage/demand/demandCollect/demandAssessInfo.jsp</result>
+		</action>
+		
+		 
+	    <!--高级搜索整改需求汇总信息-->
+	</package>
+
+</struts>

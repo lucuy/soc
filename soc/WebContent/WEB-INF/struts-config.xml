@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+ "http://struts.apache.org/dtds/struts-config_1_2.dtd">
+
+<!--
+	Licensed to the Apache Software Foundation (ASF) under one or more
+	contributor license agreements.  See the NOTICE file distributed with
+	this work for additional information regarding copyright ownership.
+	The ASF licenses this file to You under the Apache License, Version 2.0
+	(the "License"); you may not use this file except in compliance with
+	the License.  You may obtain a copy of the License at
+	
+	http://www.apache.org/licenses/LICENSE-2.0
+	
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.
+-->
+<struts-config>
+	<form-beans>
+        <form-bean name="ReportForm" 
+        	type="com.util.reportForm.struts.form.ReportForm">
+        </form-bean>
+        <form-bean name="ReportCustomForm" 
+        	type="com.util.reportForm.struts.form.ReportCustomForm">
+        </form-bean>
+		<form-bean name="uploadForm" type="org.apache.struts.action.DynaActionForm">
+            <form-property name="filepath" type="org.apache.struts.upload.FormFile" />
+        </form-bean>
+		 <form-bean name="ReportTimerForm" 
+        	type="com.util.reportForm.struts.form.ReportTimerForm">
+        </form-bean>
+	</form-beans>
+
+	<global-exceptions />
+	<global-forwards />
+	<action-mappings>
+		<action name="ReportForm" path="/newreportform" 
+			scope="request" type="com.util.reportForm.struts.action.NewReportFormAction"
+			parameter="method">
+			<forward name="step1" path="/pages/reportForm/newreportstep1.jsp"></forward>
+			<forward name="step2" path="/pages/reportForm/newreportstep2.jsp"></forward>
+			<forward name="step3" path="/pages/reportForm/newreportstep3.jsp"></forward>
+			<forward name="step4" path="/pages/reportForm/newreportstep4.jsp"></forward>
+			<forward name="step5" path="/pages/reportForm/newreportstep5.jsp"></forward>
+			<forward name="query" path="/pages/reportForm/queryresult.jsp"></forward>
+			<forward name="querystep1" path="/pages/newreportform.do?method=creatReportFormStep1"></forward>
+			<forward name="saveas" path="/pages/reportForm/saveas.jsp"></forward>
+			<forward name="initPage" path="/pages/reportForm/reportFormQuery.jsp" />
+		</action>
+		<action name="ReportForm" path="/ajaxquerycolumn" parameter="method"
+			scope="request" type="com.util.reportForm.struts.action.AjaxQueryColAction">
+		</action>
+		<action path="/ajaxquerytables" parameter="method"
+			scope="request" type="com.util.reportForm.struts.action.AjaxQueryTableAction">
+			<forward name="ajaxquerytablesres" path="/pages/reportForm/ajaxquerytables.jsp"></forward>
+		</action>
+		<action path="/editreportform"
+			scope="request" parameter="method"
+			type="com.util.reportForm.struts.action.EditReportFormAction">
+			<forward name="step1" path="/pages/reportForm/newreportstep1.jsp"></forward>
+			<forward name="step2" path="/pages/reportForm/newreportstep2.jsp"></forward>
+			<forward name="step3" path="/pages/reportForm/newreportstep3.jsp"></forward>
+			<forward name="step4" path="/pages/reportForm/newreportstep4.jsp"></forward>
+			<forward name="step5" path="/pages/reportForm/newreportstep5.jsp"></forward>
+		</action>
+		<action path="/queryformcount"
+			parameter="method"
+			type="com.util.reportForm.struts.action.QueryFormCountAction">
+			<forward name="countpage" path="/pages/reportForm/pictruedisplay.jsp"></forward>
+			<forward name="selectTable" path="/pages/reportForm/selectTable.jsp"></forward>
+		</action>
+		
+		<action parameter="method" scope="request" path="/reportFormQuery"  name="uploadForm"
+			type="com.util.reportForm.struts.action.ReportFormAction">
+			<forward name="initPage" path="/pages/reportForm/reportFormQuery.jsp" />
+			<forward name="selectList" path="/pages/reportForm/reportFormQuery.jsp" />
+			<forward name="showDetail" path="/pages/reportForm/reportFormDetail.jsp" />
+			<forward name="upload" path="/pages/reportForm/uploadReport.jsp"></forward>
+		</action>
+		<action parameter="method" path="/updateReport"  name="uploadForm" scope="request">
+			<forward name="upload" path="/pages/reportForm/uploadReport.jsp"></forward>
+		</action>
+		<action parameter="method" path="/queryStat"
+			type="com.util.reportForm.struts.action.QueryStatAction" name="uploadForm">
+			<forward name="initPage" path="/pages/reportForm/queryStatistics.jsp" />
+		</action>
+		<action path="/reportCustom" parameter="method" scope="request" name="ReportCustomForm" type="com.util.reportForm.struts.action.ReportCustomAction">
+			<forward name="initPage" path="/pages/reportForm/reportCustomList.jsp"></forward>
+			<forward name="reportCustomAdd" path="/pages/reportForm/reportCustomAdd.jsp"></forward>
+			<forward name="reportCustomUpdate" path="/pages/reportForm/reportCustomUpdate.jsp"></forward>
+			<forward name="toList" path="/reportCustom.do?method=initPage"></forward>
+			<forward name="report" path="/pages/reportForm/reportCustom.jsp"></forward>
+			<forward name="upload" path="/pages/reportForm/uploadReportCustom.jsp"></forward>
+		</action>
+		<action path="/reportTime" name="ReportTimerForm" parameter="method" scope="request" type="com.util.reportForm.struts.action.ReportTimeAction">
+			<forward name="initPage" path="/pages/reportForm/timeReport.jsp"></forward>
+			<forward name="toShow" path="/reportTime.do?method=initPage"></forward>
+		</action>
+	</action-mappings>
+	
+	
+	<controller contentType="text/html;charset=UTF-8" locale="true"
+		nocache="true" className="org.apache.struts.config.ControllerConfig"
+		bufferSize="10M" maxFileSize="10M" 
+		processorClass="com.util.reportForm.util.CustomRequestProcessor" />
+	<!-- 资源 -->
+	<message-resources parameter="ApplicationResources"  null="false"/>
+	
+	<message-resources parameter="MessageResources"  null="false"/>
+		
+</struts-config>

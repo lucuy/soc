@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="SettingSyncDateAction" extends="json-default"
+		namespace="/syncDate">
+		
+		<action name="syncDate" class="SettingSyncDateAction" method="ntpDate">
+			<result name="success">
+				/pages/systemsetting/setting_SyncDate.jsp
+			</result>
+		</action>
+		
+		<action name="settingSyncDate" class="SettingSyncDateAction" method="settingSyncDate">
+		     <result name="success">
+		        /pages/systemsetting/setting_SyncDate.jsp
+		     </result>
+		</action>
+		<!-- set sys time -->
+		<action name="installTime" class="SettingSyncDateAction" method="installTime">
+		    <result name="success" type="json">
+		      <param name="root">installTime</param>
+		    </result>
+		</action>
+		
+		<!-- sync Server time -->
+		<action name="syncServerDate" class="SettingSyncDateAction" method="syncServerDate">
+			<result name="success" type="json">
+				<param name="root">msg</param>
+			</result>
+		</action>
+		
+		
+	</package>
+</struts>

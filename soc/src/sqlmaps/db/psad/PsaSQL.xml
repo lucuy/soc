@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    <sqlMap>
+       	<resultMap class="Psa" id="PsaResult">
+		<result property="psaId" column="PK_PSA" jdbcType="int" />
+		<result property="psaDate" column="PSA_Date" jdbcType="varchar" />
+		<result property="psaSort" column="PSA_Sort" jdbcType="varchar" />
+		<result property="psaA" column="PSA_A" jdbcType="varchar" />
+	    <result property="psaB" column="PSA_B" jdbcType="varchar" />
+	    <result property="psaC" column="PSA_C" jdbcType="varchar" />
+	    <result property="psaD" column="PSA_D" jdbcType="varchar" />
+	    <result property="psaE" column="PSA_E" jdbcType="varchar" />
+	    <result property="psaF" column="PSA_F" jdbcType="varchar" />
+	    <result property="psaG" column="PSA_G" jdbcType="varchar" />
+	    <result property="psaH" column="PSA_H" jdbcType="varchar" />
+	    <result property="psaI" column="PSA_I" jdbcType="varchar" />
+	    <result property="psaJ" column="PSA_J" jdbcType="varchar" />
+		<result property="psaAssessResult" column="PSA_AssessResult" jdbcType="varchar" />
+		<result property="psaMainProbDes" column="PSA_MainProbDes" jdbcType="varchar" />
+	</resultMap>
+	<!-- 添加 -->
+	   
+     <insert id="pgAdminpsa.insert" parameterClass="Psa">
+       INSERT INTO "tb_psa"("PSA_Date","PSA_Sort","PSA_A","PSA_B","PSA_C","PSA_D","PSA_E","PSA_F","PSA_G","PSA_H","PSA_I","PSA_J","PSA_AssessResult","PSA_MainProbDes")
+		VALUES(#psaDate#,#psaSort#,#psaA#,#psaB#,#psaC#,#psaD#,#psaE#,#psaF#,#psaG#,#psaH#,#psaI#,#psaJ#,#psaAssessResult#,#psaMainProbDes#)
+     </insert>
+     
+      <!-- 查询最新评估时间 -->
+          <select id="pgAdminpsa.queryLastTime" resultClass="java.util.Date">
+        SELECT MAX("PSA_Date") FROM "tb_psa"  
+        </select>  
+        
+        <!--统计最新时间个数-->
+        <select id="pgAdminpsa.queryNum" resultClass="int">
+         SELECT COUNT(*)  FROM "tb_psa" WHERE "PSA_Date" = (SELECT MAX("PSA_Date") FROM "tb_psa" )
+        </select>   
+        
+         <!--根据时间与 编号查询评估单元的评估结果 -->
+        <select id="pgAdminpsa.queryResultByTimeAndSort" parameterClass="java.util.HashMap" resultMap="PsaResult" >
+          SELECT * FROM "tb_psa" WHERE
+          
+             "PSA_Date"=#PSA_Date#
+         AND
+        
+          	"PSA_Sort"=#PSA_Sort#
+      
+        </select>
+        
+        <!--修改一个评估单元的评估结果  -->
+        <update id="pgAdminpsa.updata" parameterClass="Psa">
+             <![CDATA[
+			UPDATE "tb_psa"  SET 
+			  "PSA_Date"=#psaDate#,
+			  "PSA_Sort"=#psaSort#,
+			  "PSA_A"=#psaA#,
+			  "PSA_B"=#psaB#,
+			  "PSA_C"=#psaC#,
+			  "PSA_D"=#psaD#,
+			  "PSA_E"=#psaE#,
+			  "PSA_F"=#psaF#,
+			  "PSA_G"=#psaG#,
+			  "PSA_H"=#psaH#,
+			  "PSA_I"=#psaI#,
+			  "PSA_J"=#psaJ#,
+			  "PSA_AssessResult"=#psaAssessResult#,
+			  "PSA_MainProbDes"=#psaMainProbDes#
+			WHERE 
+				"PK_PSA"=#psaId#
+		]]>
+        
+        </update>
+	<!-- sqlserver -->
+	<!-- 添加 -->
+	   
+     <insert id="sqlServerpsa.insert" parameterClass="Psa">
+       INSERT INTO "tb_psa"("PSA_Date","PSA_Sort","PSA_A","PSA_B","PSA_C","PSA_D","PSA_E","PSA_F","PSA_G","PSA_H","PSA_I","PSA_J","PSA_AssessResult","PSA_MainProbDes")
+		VALUES(#psaDate#,#psaSort#,#psaA#,#psaB#,#psaC#,#psaD#,#psaE#,#psaF#,#psaG#,#psaH#,#psaI#,#psaJ#,#psaAssessResult#,#psaMainProbDes#)
+     </insert>
+     
+      <!-- 查询最新评估时间 -->
+          <select id="sqlServerpsa.queryLastTime" resultClass="java.util.Date">
+        SELECT MAX("PSA_Date") FROM "tb_psa"  
+        </select>  
+        
+        <!--统计最新时间个数-->
+        <select id="sqlServerpsa.queryNum" resultClass="int">
+         SELECT COUNT(*)  FROM "tb_psa" WHERE "PSA_Date" = (SELECT MAX("PSA_Date") FROM "tb_psa" )
+        </select>   
+        
+         <!--根据时间与 编号查询评估单元的评估结果 -->
+        <select id="sqlServerpsa.queryResultByTimeAndSort" parameterClass="java.util.HashMap" resultMap="PsaResult" >
+          SELECT * FROM "tb_psa" WHERE
+          
+             "PSA_Date"=#PSA_Date#
+         AND
+        
+          	"PSA_Sort"=#PSA_Sort#
+      
+        </select>
+        
+        <!--修改一个评估单元的评估结果  -->
+        <update id="sqlServerpsa.updata" parameterClass="Psa">
+             <![CDATA[
+			UPDATE "tb_psa"  SET 
+			  "PSA_Date"=#psaDate#,
+			  "PSA_Sort"=#psaSort#,
+			  "PSA_A"=#psaA#,
+			  "PSA_B"=#psaB#,
+			  "PSA_C"=#psaC#,
+			  "PSA_D"=#psaD#,
+			  "PSA_E"=#psaE#,
+			  "PSA_F"=#psaF#,
+			  "PSA_G"=#psaG#,
+			  "PSA_H"=#psaH#,
+			  "PSA_I"=#psaI#,
+			  "PSA_J"=#psaJ#,
+			  "PSA_AssessResult"=#psaAssessResult#,
+			  "PSA_MainProbDes"=#psaMainProbDes#
+			WHERE 
+				"PK_PSA"=#psaId#
+		]]>
+        
+        </update>
+        
+    </sqlMap>

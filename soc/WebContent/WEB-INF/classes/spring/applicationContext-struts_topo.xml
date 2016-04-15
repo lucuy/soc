@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+    	  http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+
+
+	<!-- 所有ACTION都继承此类 -->
+	<bean id="baseAction2" class="com.topo.action.BaseAction" scope="prototype">
+		<property name="baseService1" ref="baseService2" />
+	</bean>
+	
+	<!-- 设备管理 -->
+	<bean id="deviceAction" class="com.topo.action.device.DeviceManageAction" parent="baseAction2">
+		<property name="deviceManageService" ref="deviceService"></property>
+		<property name="deviceCategoryService" ref="deviceCategoryService"></property>
+		<property name="alertMessageManager" ref="alertMessageManager"></property>
+		<!-- 李长红修改，根据用户关联的资产组，查询资产然后显示数据 -->
+		<property name="assetManager" ref="assetManager"/>
+	</bean>
+	<!-- 设备类型管理 -->
+	<bean id="deviceCategoryAction" class="com.topo.action.deviceCategory.DeviceCategoryManageAction" parent="baseAction2">
+		<property name="deviceCategoryManageService" ref="deviceCategoryService"></property>
+		<property name="deviceManageService" ref="deviceService"></property>
+	</bean>
+	<!-- 临时设备管理 -->
+	<bean id="tempDeviceAction" class="com.topo.action.device.TempDeviceAction" parent="baseAction2">
+		<property name="tempDeviceService" ref="tempDeviceService"></property>
+		<property name="deviceManagerService" ref="deviceService"></property>
+		<!-- 李长红修改，根据用户关联的资产组，查询资产然后显示数据 -->
+		<property name="assetManager" ref="assetManager"/>
+	</bean>
+	<!-- 拓扑背景图片 -->
+	<bean id="netBackGroundPhotoAction" class="com.topo.action.device.NetBackGroundPhotoAction" parent="baseAction2">
+		<property name="netBackGroundPhotoService" ref="netBackGroundPhotoService"></property>
+	</bean>
+	<bean id="deviceAlertCountAction" class="com.topo.action.device.DeviceAlertCountAction" parent="baseAction2">
+		<property name="deviceAlertCountService" ref="deviceAlertCountService"></property>
+		<property name="alertMessageManager" ref="alertMessageManager"></property>
+		<!-- 李长红修改，根据用户关联的资产组，查询资产然后显示数据 -->
+		<property name="assetManager" ref="assetManager"/>
+	</bean>
+</beans>

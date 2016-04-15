@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="filteringRules" extends="struts-default"
+		namespace="/filteringRules">
+		<!-- querylist -->
+		<action name="queryFilterRuleList" class="FilteringRuleAction"
+			method="queryFilterRuleList">
+			<result name="success">
+			/pages/systemsetting/rules/setting_filtering_rule_list.jsp
+			</result>
+		</action>
+		
+		<!-- deleteFilterRule -->
+		<action name="deleteFilterRule" class="FilteringRuleAction"
+			method="deleteFilterRule">
+			<result name="success" type="chain">
+			  <param name="namespace">/filteringRules</param>
+			  <param name="actionName">queryFilterRuleList</param>
+			</result>
+		</action>
+		<!-- insertFilterRule -->
+		<action name="insertOrUpdateFilterRule" class="FilteringRuleAction"
+			method="insertOrUpdateFilterRule">
+			<result name="success" type="chain">
+			  <param name="namespace">/filteringRules</param>
+			  <param name="actionName">queryFilterRuleList</param>
+			</result>
+		</action>
+		<!-- updateFilteringRule -->
+<!-- 		<action name="updateFilteringRule" class="FilteringRuleAction"
+			method="updateFilteringRule">
+			<result name="success" type="redirectAction">queryFilterRuleList</result>
+		</action> -->
+		<!-- selectFilterRuleById -->
+		<action name="selectFilterRuleById" class="FilteringRuleAction"
+			method="selectFilterRuleById">
+			<result name="success">/pages/systemsetting/rules/setting_new_filtering_rule.jsp
+			</result>
+		</action>
+		<action name="updateStatus" class="FilteringRuleAction"
+			method="updateStatus">
+			<result name="success" type="chain">
+			  <param name="namespace">/filteringRules</param>
+			  <param name="actionName">queryFilterRuleList</param>
+			</result>
+		</action>
+		<action name="toInsertFilterPage" class="FilteringRuleAction"
+			method="toInsertFilterPage">
+			<result name="success" >/pages/systemsetting/rules/setting_new_filtering_rule.jsp</result>
+		</action>
+	
+	</package>
+</struts>

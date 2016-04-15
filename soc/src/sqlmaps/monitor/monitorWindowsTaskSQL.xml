@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="monitorWindowsTaskSQL">
+	<resultMap class="WindowsTask" id="windowsTaskResult">
+		<result property="winId"  		    column="WIN_ID"  			jdbcType="bigint"/>
+		<result property="winName"  	    column="WIN_NAME"  		    jdbcType="varchar"/>
+		<result property="winIp"  		    column="WIN_IP"  		    jdbcType="varchar"/>
+		<result property="snmpType"  	    column="WIN_TYPE"  		    jdbcType="varchar"/>
+		<result property="winPort"  		column="WIN_PORT"  	        jdbcType="int"/>
+		<result property="communityName"  	column="COMMUNITY_NAME"     jdbcType="varchar"/>
+		<result property="winContacts"  	column="WIN_CONTACTS"       jdbcType="varchar"/>
+		<result property="winAddress"  		column="WIN_ADDRESS"  	    jdbcType="varchar"/>
+		<result property="winTaskDesc"  	column="WIN_TASK_DESC"  	jdbcType="text"/>
+		<result property="winIsOnline"  	column="WIN_IS_ONLINE"  	jdbcType="int"/>
+		<result property="winTaskStatus"  	column="WIN_TASK_STATUS"  	jdbcType="int"/>
+		<result property="regTime"          column="REG_TIME"           jdbcType="datetime"/>
+		<result property="winIsDelete"  	column="WIN_IS_DELETE"  	jdbcType="int"/>
+	</resultMap>
+	<!-- 查询所有的 -->
+	<select id="pgAdminmwt.queryAllWin" resultMap="windowsTaskResult" >
+		select * from "tbl_monitor_windows_task" where "WIN_TASK_STATUS" = 1;
+		</select>
+	<!-- 根据条件查询主机监控 列表-->
+	<select id="pgAdminmwt.queryAll" resultMap="windowsTaskResult" parameterClass="java.util.HashMap">
+		select * from "tbl_monitor_windows_task" where 1=1
+		<isNotEmpty prepend="AND" property="keyword">
+	<![CDATA[
+		"WIN_NAME" like '%$keyword$%' OR "WIN_IP" like '%$keyword$%' 
+	]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="winName">
+			<![CDATA[
+				"WIN_NAME" = #winName#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="winIp">
+			<![CDATA[
+				"WIN_IP" = #winIp#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="snmpType">
+			<![CDATA[
+				"WIN_TYPE" = #snmpType#
+			]]>
+		</isNotEmpty>
+		ORDER BY "REG_TIME" desc
+	</select>
+	<!-- 根据条件查询主机监控总数 -->
+	<select id="pgAdminmwt.count" resultClass="int" parameterClass="java.util.HashMap">
+		select count("WIN_ID") from "tbl_monitor_windows_task" where 1=1
+		<isNotEmpty prepend="AND" property="keyword">
+	<![CDATA[
+		"WIN_NAME" like '%$keyword$%' OR "WIN_IP" like '%$keyword$%' 
+	]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="winName">
+			<![CDATA[
+				"WIN_NAME" = #winName#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="winIp">
+			<![CDATA[
+				"WIN_IP" = #winIp#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="snmpType">
+			<![CDATA[
+				"WIN_TYPE" = #snmpType#
+			]]>
+		</isNotEmpty>
+	</select>
+	<!-- 新增主机监控 -->
+		<insert id="pgAdminmwt.insert" parameterClass="windowsTask" >
+			INSERT INTO "tbl_monitor_windows_task"
+			(
+             "WIN_NAME", "WIN_IP", "WIN_TYPE", "WIN_PORT","COMMUNITY_NAME", "WIN_CONTACTS", "WIN_ADDRESS", 
+            "WIN_TASK_DESC", "WIN_IS_ONLINE", "WIN_TASK_STATUS", "REG_TIME", "WIN_IS_DELETE")
+    VALUES ( #winName#, #winIp#,#snmpType#, #winPort#,
+             #communityName#,#winContacts#, #winAddress#, 
+            #winTaskDesc#, #winIsOnline#, 1,
+            #regTime#, #winIsDelete#)
+		
+		<selectKey resultClass="java.lang.Long" keyProperty="winId" >
+            SELECT currval('tbl_monitor_windows_task_seq'::regclass) AS winId
+      	</selectKey>
+		</insert>
+	<!-- 修改主机监控 -->
+	<update id="pgAdminmwt.update" parameterClass="windowsTask">
+	UPDATE tbl_monitor_windows_task
+   		SET "WIN_NAME"=#winName#, "WIN_IP"=#winIp#, "WIN_TYPE"=#snmpType#,  
+       "WIN_PORT"=#winPort#,"COMMUNITY_NAME"=#communityName#, "WIN_CONTACTS"=#winContacts#, "WIN_ADDRESS"=#winAddress#, 
+       "WIN_TASK_DESC"=#winTaskDesc#, "WIN_IS_ONLINE"=#winIsOnline#,  
+       "REG_TIME"=#regTime#, "WIN_IS_DELETE"=#winIsDelete#
+ WHERE "WIN_ID" = #winId#
+	</update>
+	<!-- 删除主机监控 -->
+	<delete id="pgAdminmwt.delete" parameterClass="long">
+		DELETE FROM "tbl_monitor_windows_task"
+ WHERE "WIN_ID" = #winId#
+	</delete>
+	<!-- 根据id查询主机监控 -->
+	<select id="pgAdminmwt.queryDetailById" resultMap="windowsTaskResult" parameterClass="long">
+		select * from "tbl_monitor_windows_task" where "WIN_ID" = #winId#
+	</select>
+	<!-- 根据任务名称查询 -->
+	<select id="pgAdminmwt.queryDetailByName" resultClass="java.lang.String" parameterClass="java.lang.String">
+		select "WIN_NAME" from "tbl_monitor_windows_task" where "WIN_NAME" = #winName#
+	</select>
+	<!-- 启停监控 -->
+	<update id="pgAdminmwt.updateStatus" parameterClass="java.util.HashMap">
+	UPDATE tbl_monitor_windows_task
+   		SET 
+   		"WIN_TASK_STATUS" = #winTaskStatus#
+ 		WHERE "WIN_ID" = #winId#
+	</update>
+	<!-- 启停主机 -->
+	<update id="pgAdminmwt.updateOnline" parameterClass="java.util.HashMap">
+	UPDATE tbl_monitor_windows_task
+   		SET 
+   		"WIN_IS_ONLINE" = #winIsOnline#
+ 		WHERE "WIN_ID" = #winId#
+	</update>
+</sqlMap>

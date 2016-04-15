@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="settingRoute" extends="struts-default" namespace="/settingRoute">
+		<action name="settingRoute" class="SettingRouteAction" method="query">
+			<result name="success">/pages/systemsetting/setting_route.jsp</result>
+		</action>
+		<action name="insertCard" class="SettingRouteAction" method="insertCard"/>
+	 	
+	 	<action name="saveCardSize" class="SettingRouteAction" method="saveCardSize"/>
+	 	
+	 	<action name="conIP" class="SettingRouteAction" method="conIP"/>
+	 	
+	 	<action name="testingLoadBalancing" class="SettingRouteAction" method="testingLoadBalancing"/>
+	 	
+	 	<action name="executePing" class="SettingRouteAction" method="executePing"/>
+	 	
+	 	<action name="flush_route_list" class="SettingRouteAction" method="flush_route_list"/>
+	 	
+	 	<action name="lookInterfaces" class="SettingRouteAction" method="lookInterfaces"/>
+	 	
+	 	<action name="recoverNetwork" class="SettingRouteAction" method="recoverNetwork"/>
+	 	
+	 	<action name="flush" class="SettingRouteAction" method="flush"/>
+	</package>
+</struts>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="tempDevice" extends="struts-default" namespace="/tempDevice">
+		<!-- 释放图片后，调用 -->
+		<action name="editTempDevice" class="tempDeviceAction" method="editTempDevice">
+		</action>
+		<!-- 点击保存按钮，调用 -->
+		<action name="saveTempDevice" class="tempDeviceAction" method="save">
+		</action>
+	</package>
+</struts>

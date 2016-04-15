@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="monitorNetworkTopologySQL">
+	<resultMap id="monitorNetworkTopology" class="node">
+		<result property="id" column="NODE_ID" jdbcType="int" />
+		<result property="fatherId" column="NODE_FATHER_ID" jdbcType="int" />
+		<result property="name" column="NODE_NAME"
+			jdbcType="varchar" />
+
+		<result property="state" column="NODE_STATE"
+			jdbcType="int" />
+		<result property="url" column="NODE_URL"
+			jdbcType="varchar" />
+			<result property="assetIp" column="NODE_ASSET_IP"
+			jdbcType="varchar" />
+			<result property="top" column="NODE_TOP" jdbcType="int" />
+			<result property="left" column="NODE_LEFT" jdbcType="int" />
+	</resultMap>
+	<!-- 查询出所有的节点类 -->
+	<select id="pgAdminmonitorNetworkTopologyDao.queryAllNode"  resultMap="monitorNetworkTopology">
+		SELECT * FROM "tbl_network_topology_node"
+	</select>
+	<!-- 根据id查询节点-->
+	<select id="pgAdminmonitorNetworkTopologyDao.queryById"  resultMap="monitorNetworkTopology" parameterClass="int">
+		SELECT * FROM "tbl_network_topology_node" where "NODE_ID" = #id#
+	</select>
+	<!-- 更新状态 -->
+	<update id="pgAdminmonitorNetworkTopologyDao.updateStatus" parameterClass="node">
+		UPDATE "tbl_network_topology_node"
+		SET
+		"NODE_STATE" = #state#,
+		"NODE_URL" = #url#
+		WHERE
+		"NODE_ID" = #id#
+	</update>
+	<update id="pgAdminmonitorNetworkTopologyDao.updatePositionById" parameterClass="java.util.HashMap">
+		UPDATE "tbl_network_topology_node"
+		SET
+		"NODE_LEFT" = #left#,
+		"NODE_TOP" = #top#
+		WHERE
+		"NODE_ID" = #id#
+	</update>
+	<!-- sqlserver -->
+	<!-- 查询出所有的节点类 -->
+	<select id="sqlServermonitorNetworkTopologyDao.queryAllNode"  resultMap="monitorNetworkTopology">
+		SELECT * FROM "tbl_network_topology_node"
+	</select>
+	<!-- 根据id查询节点-->
+	<select id="sqlServermonitorNetworkTopologyDao.queryById"  resultMap="monitorNetworkTopology" parameterClass="int">
+		SELECT * FROM "tbl_network_topology_node" where "NODE_ID" = #id#
+	</select>
+	<!-- 更新状态 -->
+	<update id="sqlServermonitorNetworkTopologyDao.updateStatus" parameterClass="node">
+		UPDATE "tbl_network_topology_node"
+		SET
+		"NODE_STATE" = #state#,
+		"NODE_URL" = #url#
+		WHERE
+		"NODE_ID" = #id#
+	</update>
+	<update id="sqlServermonitorNetworkTopologyDao.updatePositionById" parameterClass="java.util.HashMap">
+		UPDATE "tbl_network_topology_node"
+		SET
+		"NODE_LEFT" = #left#,
+		"NODE_TOP" = #top#
+		WHERE
+		"NODE_ID" = #id#
+	</update>
+</sqlMap>

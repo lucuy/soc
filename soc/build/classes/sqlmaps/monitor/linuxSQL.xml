@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="linuxSQL">
+<!-- 进程信息 -->
+	<resultMap class="linuxProgressMsg" id="linuxProResult">
+		<result property="ip" column="IP" jdbcType="varchar"/>
+		<result property="progressNamePID" column="PROGRESS_NAME_PID" jdbcType="varchar"/>
+		<result property="USER" column="USER" jdbcType="varchar"/>
+		<result property="PR" column="PR" jdbcType="varchar"/>
+		<result property="NI" column="NI" jdbcType="varchar"/>
+		<result property="VIRT" column="VIRT" jdbcType="varchar"/>
+		<result property="RES" column="RES" jdbcType="varchar"/>
+		<result property="SHR" column="SHR" jdbcType="varchar"/>
+		<result property="S" column="S" jdbcType="varchar"/>
+		<result property="MEM" column="MEM" jdbcType="varchar"/>
+		<result property="CPU" column="CPU" jdbcType="varchar"/>
+		<result property="COMMAND" column="COMMAND" jdbcType="varchar"/>
+		<result property="TIME" column="TIME" jdbcType="varchar"/>
+		<result property="fromDate" column="FROM_DATE" jdbcType="datetime"/>
+	</resultMap>
+	<!-- 新增 -->
+	<insert id="lpm.inster" parameterClass="linuxProgressMsg">
+	INSERT INTO "tbl_linux_progress_meg"
+	(
+	"IP",
+	"PR",
+	"PROGRESS_NAME_PID",
+	"NI",
+	"SHR",
+	"VIRT",
+	"RES",
+	"USER",
+	"CPU",
+	"S",
+	"MEM",
+	"TIME",
+	"COMMAND",
+	"FROM_DATE"
+	)
+	VALUES
+	(
+	#ip#,
+	#PR#,
+	#progressNamePID#,
+	#NI#,
+	#SHR#,
+	#VIRT#,
+	#RES#,
+	#USER#,
+	#CPU#,
+	#S#,
+	#MEM#,
+	#TIME#,
+	#COMMAND#,
+	#fromDate#
+	)
+	
+	</insert>
+	 <!-- 根据资产IP查询总数 -->
+    <select id="lpm.count" resultClass="int" parameterClass="java.util.HashMap">
+    SELECT count(*) FROM "tbl_linux_progress_meg" WHERE "IP"=#ip#
+    <isNotEmpty prepend="and" property="startTime">
+   	 "FROM_DATE" between #startTime# and #endTime#
+    </isNotEmpty>
+    
+    </select>
+     <!-- 根据资产IP查询总数 -->
+    <select id="lpm.query" resultMap="linuxProResult" parameterClass="java.util.HashMap">
+    SELECT * FROM "tbl_linux_progress_meg" WHERE "IP"=#ip#
+     <isNotEmpty prepend="and" property="startTime">
+   	 "FROM_DATE" between #startTime# and #endTime#
+    </isNotEmpty>
+     ORDER BY "FROM_DATE" desc
+    </select>
+    
+<!-- 服务信息 -->
+	<resultMap class="linuxServiceMsg" id="linuxServiceMsgRuselt">
+	<result property="ip" column="IP" jdbcType="varchar"/>
+	<result property="content" column="CONTENT" jdbcType="varchar"/>
+	<result property="fromDate" column="FROM_DATE" jdbcType="datetime"/>
+	</resultMap>
+	<!-- 新增 -->
+	<insert id="lsm.inster" parameterClass="linuxServiceMsg">
+	INSERT INTO "tbl_liunx_servermeg"
+	(
+	"IP",
+	"CONTENT",
+	"FROM_DATE"
+	)
+	VALUES
+	(
+	#ip#,
+	#content#,
+	#fromDate#
+	)
+	</insert>
+	 <!-- 根据资产IP查询总数 -->
+    <select id="lsm.count" resultClass="int" parameterClass="java.util.HashMap">
+    SELECT count(*) FROM "tbl_liunx_servermeg" WHERE "IP"=#ip#
+    <isNotEmpty prepend="and" property="startTime">
+   	 "FROM_DATE" between #startTime# and #endTime#
+    </isNotEmpty> 
+    </select>
+     <!-- 根据资产IP查询总数 -->
+    <select id="lsm.query" resultMap="linuxServiceMsgRuselt" parameterClass="java.util.HashMap">
+    SELECT * FROM "tbl_liunx_servermeg" WHERE "IP"=#ip#
+     <isNotEmpty prepend="and" property="startTime">
+   	 "FROM_DATE" between #startTime# and #endTime#
+    </isNotEmpty>
+     ORDER BY "FROM_DATE" desc
+    </select>
+
+
+
+</sqlMap>

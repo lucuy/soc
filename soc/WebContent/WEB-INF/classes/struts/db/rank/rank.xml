@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+<!-- 文件长度过大的缓冲文件夹 -->
+<constant name="struts.multipart.saveDir" value="/tmp"/>
+<!-- 上传文件最大限度 -->
+<constant name="struts.multipart.maxSize" value="524288000" />	
+
+	<package name="rank" extends="struts-default" namespace="/rank">
+		<action name="rankAction_*" class="RankAction" method="{1}">
+		  <result name="show">/pages/dbPage/score/simplescore.jsp</result>
+		  <result name="updateInfo">/pages/dbPage/score/rankOne.jsp</result>
+		  <result name="rankOne" >/pages/dbPage/score/rankTwo.jsp</result>
+		  <result name="rankTwo">/pages/dbPage/score/rankThree.jsp</result>
+		  <result name="rankThree">/pages/dbPage/score/rankFourBefore.jsp</result>
+		  <result name="rankFourBefore">/pages/dbPage/score/rankFour.jsp</result>
+		  <result name="rankFour">/pages/dbPage/score/rankFive.jsp</result>
+		  <result name="rankFive">/pages/dbPage/score/rankSix.jsp</result>
+		  <result name="rankSix" type="redirectAction">queryRank.action</result>
+		  <result name="updateRankInfo">/pages/dbPage/score/rankOneUpdate.jsp</result>
+		  <result name="rankOneUpdate" >/pages/dbPage/score/rankTwoUpdate.jsp</result>
+		  <result name="rankTwoUpdate">/pages/dbPage/score/rankThreeUpdate.jsp</result>
+		  <result name="rankThreeUpdate">/pages/dbPage/score/rankFourBeforeUpdate.jsp</result>
+		  <result name="rankFourBeforeUpdate">/pages/dbPage/score/rankFourUpdate.jsp</result>
+		  <result name="rankFourUpdate">/pages/dbPage/score/rankFiveUpdate.jsp</result>
+		  <result name="rankFiveUpdate">/pages/dbPage/score/rankSixUpdate.jsp</result>
+		  <result name="rankSixUpdate" type="redirectAction">queryRank.action</result>
+		</action>
+		
+		<!--ajax分页搜索-->
+		<action name="queryAjaxRank" class="RankAction" method="queryAjaxRank">
+		</action>
+	    <!-- 处理第一个页面上传文件 -->
+		<action name="upfile" class="RankAction" method="upfile">
+		<param name="frankEvalRelAccessPath">/uploadFiles/frank</param>
+		</action>
+		<!-- 处理第五个页面上传文件 -->
+		<action name="uprankfile" class="RankAction" method="uprankfile">
+		<param name="frankAccessPath">/uploadFiles/rankfiles</param>
+		</action>
+		<!-- 处理第六个页面上传拓扑结构文件 -->
+		<action name="uptopfile" class="RankAction" method="uptopfile">
+		<param name="ftopRelAcc1SavePath">/uploadFiles/topfiles</param>
+		</action>
+		<!-- 处理第六个页面上系统安全组织附件 -->
+		<action name="upsysmanfile" class="RankAction" method="upsysmanfile">
+		<param name="fsysManRel1SavePath">/uploadFiles/sysmanfiles</param>
+		</action>
+		<!-- 处理第六个页面上系统安全保护设施附件 -->
+		<action name="upsysplanfile" class="RankAction" method="upsysplanfile">
+		<param name="fsysPlanRel1SavePath">/uploadFiles/sysplanfiles</param>
+		</action>
+		<!-- 处理第六个页面上安全产品附件 -->
+		<action name="upsyslicefile" class="RankAction" method="upsyslicefile">
+		<param name="fsysLiceRel1SavePath">/uploadFiles/syssafetyfiles</param>
+		</action>
+		<!-- 处理第六个页面上系统等级测评报告附件 -->
+		<action name="upsysrefile" class="RankAction" method="upsysrefile">
+		<param name="fsysReportRel1SavePath">/uploadFiles/sysreportfiles</param>
+		</action>
+		<!-- 处理第六个页面上专家评审情况附件 -->
+		<action name="uppeerfile" class="RankAction" method="uppeerfile">
+		<param name="fpeerRevRel1SavePath">/uploadFiles/sysprofessionalfiles</param>
+		</action>
+		<!-- 处理第六个页面上上级主管部门审批附件 -->
+		<action name="upsuperfile" class="RankAction" method="upsuperfile">
+		<param name="fsuperOpinRel1SavePath">/uploadFiles/syssuperiorfiles</param>
+		</action>
+		<!--遍历列表-->
+		<action name="queryRank" class="RankAction" method="queryRank">
+			<result name="success">/pages/dbPage/score/manager.jsp</result>
+		</action>
+		<!--根据信息系统管理删除Sysinfo_id查询该id的信息系统是否已经定级-->
+		<action name="queryByIdAjax" class="RankAction" method="queryByIdAjax">
+		 
+		</action>
+		
+		<!--差距评估左侧列表-->
+		<action name="liftList" class="RankAction" method="queryRank">
+			<result name="success">/pages/dbPage/menus/differenceMenutest1.jsp</result>
+		</action>
+		<!-- 高级搜索定级信息 -->
+		<action name="precisequeryrank" class="RankAction" method="queryPreciseRank">
+			
+		</action>
+	</package>
+</struts>

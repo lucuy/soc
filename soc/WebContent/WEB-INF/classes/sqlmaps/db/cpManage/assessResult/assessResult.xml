@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap>
+	<resultMap class="assessResult" id="assessResultResult">
+		<result property="PK_CIA" column="PK_CIA" jdbcType="int"/>
+		<result property="FK_CA" column="FK_CA" jdbcType="int" />
+		<result property="CIA_Sort" column="CIA_Sort" jdbcType="varchar"/>
+		<result property="CIA_A" column="CIA_A" jdbcType="varchar"/>
+		<result property="CIA_B" column="CIA_B" jdbcType="varchar"/>
+		<result property="CIA_C" column="CIA_C" jdbcType="varchar"/>
+		<result property="CIA_D" column="CIA_D" jdbcType="varchar"/>
+		<result property="CIA_E" column="CIA_E" jdbcType="varchar"/>
+		<result property="CIA_F" column="CIA_F" jdbcType="varchar"/>
+		<result property="CIA_G" column="CIA_G" jdbcType="varchar"/>
+		<result property="CIA_H" column="CIA_H" jdbcType="varchar"/>
+		<result property="CIA_I" column="CIA_I" jdbcType="varchar"/>
+		<result property="CIA_J" column="CIA_J" jdbcType="varchar"/>
+		<result property="CIA_AssessResult" column="CIA_AssessResult" jdbcType="varchar"/>
+		<result property="CIA_MainProbDes" column="CIA_MainProbDes" jdbcType="varchar"/>
+	</resultMap>
+	<!--查询统计 -->
+	<select id="pgAdminassessResult.count" resultClass="int" parameterClass="java.util.HashMap">
+		select count(*) FROM "tb_cia"   WHERE 1=1
+		<isNotEmpty prepend="AND" property="FK_CA">
+			"FK_CA" = #FK_CA#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="CIA_AssessResult">
+			"CIA_AssessResult" = #CIA_AssessResult#
+		</isNotEmpty>
+	</select>
+
+	<!-- 查询列表 -->
+	<select id="pgAdminassessResult.query" parameterClass="java.util.HashMap" resultClass="assessResult">
+		select "CIA_Sort","CIA_A","CIA_B","CIA_C","CIA_D","CIA_E","CIA_F","CIA_G","CIA_H","CIA_I","CIA_J" from "tb_cia"   WHERE 1=1
+		<isNotEmpty prepend="AND" property="FK_CA">
+			"FK_CA" = #FK_CA#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="CIA_AssessResult">
+			"CIA_AssessResult" = #CIA_AssessResult#
+		</isNotEmpty>
+	</select>
+	
+	<!-- 查询评估项存在数量 -->
+	<select id="pgAdminassessResult.queryAssessCount" parameterClass="java.util.HashMap" resultMap="assessResultResult">
+		select * from "tb_cia"   WHERE 1=1
+		<isNotEmpty prepend="AND" property="acId">
+			"FK_CA" = #acId#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="sort">
+			"CIA_Sort" = #sort#
+		</isNotEmpty>
+	</select>
+	
+	<!-- 模糊查询差距分布表 -->
+	<select id="pgAdminassessResult.queryAssessCountTable" parameterClass="java.util.HashMap" resultMap="assessResultResult">
+		select * from "tb_cia"   WHERE 1=1
+		<isNotEmpty prepend="AND" property="acId">
+			 "FK_CA" = #acId#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="sort">
+			"CIA_Sort" LIKE '$sort$%'
+		</isNotEmpty>
+	</select>
+	
+	<!-- 查询评估项已评估数量 -->
+	<select id="pgAdminassessResult.queryAssessOverCount" parameterClass="int" resultClass="int">
+		select	count(distinct "CIA_Sort") from "tb_cia" where "FK_CA"=#FK_CA#
+	</select>
+	
+	<!-- 添加 -->
+	<insert id="pgAdminassessResult.insert" parameterClass="assessResult">
+		INSERT INTO 
+		"tb_cia"("FK_CA","CIA_Sort","CIA_A","CIA_B","CIA_C","CIA_D","CIA_E","CIA_F","CIA_G","CIA_H","CIA_I","CIA_J","CIA_AssessResult","CIA_MainProbDes")
+		VALUES(#FK_CA#,#CIA_Sort#,#CIA_A#,#CIA_B#,#CIA_C#,#CIA_D#,#CIA_E#,#CIA_F#,#CIA_G#,#CIA_H#,#CIA_I#,#CIA_J#,#CIA_AssessResult#,#CIA_MainProbDes#)
+	</insert>
+	<!-- 修改 -->
+	<update id="pgAdminassessResult.update" parameterClass="assessResult">
+		update  "tb_cia"   
+		set "FK_CA"=#FK_CA#,
+		"CIA_Sort"=#CIA_Sort#,
+		"CIA_A"=#CIA_A#,
+		"CIA_B"=#CIA_B#,
+		"CIA_C"=#CIA_C#,
+		"CIA_D"=#CIA_D#,
+		"CIA_E"=#CIA_E#,
+		"CIA_F"=#CIA_F#,
+		"CIA_G"=#CIA_G#,
+		"CIA_H"=#CIA_H#,
+		"CIA_I"=#CIA_I#,
+		"CIA_J"=#CIA_J#,
+		"CIA_AssessResult"=#CIA_AssessResult#,
+		"CIA_MainProbDes"=#CIA_MainProbDes#
+		where "PK_CIA" = #PK_CIA#
+	</update>
+	<!-- sqlserver -->
+	<!--查询统计 -->
+	<select id="sqlServerassessResult.count" resultClass="int" parameterClass="java.util.HashMap">
+		select count(*) FROM "tb_cia"   WHERE 1=1
+		<isNotEmpty prepend="AND" property="FK_CA">
+			"FK_CA" = #FK_CA#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="CIA_AssessResult">
+			"CIA_AssessResult" = #CIA_AssessResult#
+		</isNotEmpty>
+	</select>
+
+	<!-- 查询列表 -->
+	<select id="sqlServerassessResult.query" parameterClass="java.util.HashMap" resultClass="assessResult">
+		select "CIA_Sort","CIA_A","CIA_B","CIA_C","CIA_D","CIA_E","CIA_F","CIA_G","CIA_H","CIA_I","CIA_J" from "tb_cia"   WHERE 1=1
+		<isNotEmpty prepend="AND" property="FK_CA">
+			"FK_CA" = #FK_CA#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="CIA_AssessResult">
+			"CIA_AssessResult" = #CIA_AssessResult#
+		</isNotEmpty>
+	</select>
+	
+	<!-- 查询评估项存在数量 -->
+	<select id="sqlServerassessResult.queryAssessCount" parameterClass="java.util.HashMap" resultMap="assessResultResult">
+		select * from "tb_cia"   WHERE 1=1
+		<isNotEmpty prepend="AND" property="acId">
+			"FK_CA" = #acId#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="sort">
+			"CIA_Sort" = #sort#
+		</isNotEmpty>
+	</select>
+	
+	<!-- 模糊查询差距分布表 -->
+	<select id="sqlServerassessResult.queryAssessCountTable" parameterClass="java.util.HashMap" resultMap="assessResultResult">
+		select * from "tb_cia"   WHERE 1=1
+		<isNotEmpty prepend="AND" property="acId">
+			 "FK_CA" = #acId#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="sort">
+			"CIA_Sort" LIKE '$sort$%'
+		</isNotEmpty>
+	</select>
+	
+	<!-- 查询评估项已评估数量 -->
+	<select id="sqlServerassessResult.queryAssessOverCount" parameterClass="int" resultClass="int">
+		select	count(distinct "CIA_Sort") from "tb_cia" where "FK_CA"=#FK_CA#
+	</select>
+	
+	<!-- 添加 -->
+	<insert id="sqlServerassessResult.insert" parameterClass="assessResult">
+		INSERT INTO 
+		"tb_cia"("FK_CA","CIA_Sort","CIA_A","CIA_B","CIA_C","CIA_D","CIA_E","CIA_F","CIA_G","CIA_H","CIA_I","CIA_J","CIA_AssessResult","CIA_MainProbDes")
+		VALUES(#FK_CA#,#CIA_Sort#,#CIA_A#,#CIA_B#,#CIA_C#,#CIA_D#,#CIA_E#,#CIA_F#,#CIA_G#,#CIA_H#,#CIA_I#,#CIA_J#,#CIA_AssessResult#,#CIA_MainProbDes#)
+	</insert>
+	<!-- 修改 -->
+	<update id="sqlServerassessResult.update" parameterClass="assessResult">
+		update  "tb_cia"   
+		set "FK_CA"=#FK_CA#,
+		"CIA_Sort"=#CIA_Sort#,
+		"CIA_A"=#CIA_A#,
+		"CIA_B"=#CIA_B#,
+		"CIA_C"=#CIA_C#,
+		"CIA_D"=#CIA_D#,
+		"CIA_E"=#CIA_E#,
+		"CIA_F"=#CIA_F#,
+		"CIA_G"=#CIA_G#,
+		"CIA_H"=#CIA_H#,
+		"CIA_I"=#CIA_I#,
+		"CIA_J"=#CIA_J#,
+		"CIA_AssessResult"=#CIA_AssessResult#,
+		"CIA_MainProbDes"=#CIA_MainProbDes#
+		where "PK_CIA" = #PK_CIA#
+	</update>
+	
+</sqlMap>

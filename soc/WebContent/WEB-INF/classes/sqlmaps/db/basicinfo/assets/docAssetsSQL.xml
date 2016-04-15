@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="docAssetsSQL">
+
+	<resultMap class="docAssets" id="docAssetsResult">
+		<result property="id" column="PK_SGD" jdbcType="int" />
+		<result property="docName" column="SGD_DocName" jdbcType="varchar" />
+		<result property="impDegree" column="SGD_Importance" jdbcType="varchar" />
+		<result property="impContent" column="SGD_MainCon" jdbcType="varchar" />
+		<result property="docRemarks" column="SGD_Remark" jdbcType="varchar" />
+		<result property="resType" column="SGD_AssetType" jdbcType="varchar" />
+		<result property="relsysName" column="PK_SGD" select="pgAdmindocAssets.getSysName" />
+	</resultMap>
+	<!-- postrgreSql -->
+	<select id="pgAdmindocAssets.getSysName" parameterClass="int" resultClass="string">
+		select "SYSINFO_Name" from "tb_sysref" where "PK_SGD" = #value#
+	</select>
+	<insert id="pgAdmindocAssets.addSysName">
+		insert into "tb_sysref" ("SYSINFO_Name", "PK_SGD")
+		values(#relsysName#, #id#)
+	</insert>
+	<delete id="pgAdmindocAssets.delSysName" parameterClass="int">
+		delete from "tb_sysref" where "PK_SGD" = #value#
+	</delete>
+	<!-- sqlServer -->
+	<select id="sqlServerdocAssets.getSysName" parameterClass="int" resultClass="string">
+		select "SYSINFO_Name" from "tb_sysref" where "PK_SGD" = #value#
+	</select>
+	<insert id="sqlServerdocAssets.addSysName">
+		insert into "tb_sysref" ("SYSINFO_Name", "PK_SGD")
+		values(#relsysName#, #id#)
+	</insert>
+	<delete id="sqlServerdocAssets.delSysName" parameterClass="int">
+		delete from "tb_sysref" where "PK_SGD" = #value#
+	</delete>
+	<!-- 根据信息系统名称查询业务应用软件总记录数 -->
+	<sql id="count4BySysName">
+		SELECT count(*) FROM "tb_sgd"
+		WHERE
+			"PK_SGD" IN (
+				SELECT
+					A ."PK_SGD"
+				FROM
+					tb_sgd A
+				RIGHT JOIN tb_sysref b ON A ."PK_SGD" = b."PK_SGD"
+				WHERE
+					b."SYSINFO_Name" = #keyword2#
+			)
+	</sql>
+	<!-- 根据信息系统名称查询业务应用软件 -->
+	<sql id="query4ySysName">
+		SELECT * FROM "tb_sgd"
+		WHERE
+			"PK_SGD" IN (
+				SELECT
+					A ."PK_SGD"
+				FROM
+					tb_sgd A
+				RIGHT JOIN tb_sysref b ON A ."PK_SGD" = b."PK_SGD"
+				WHERE
+					b."SYSINFO_Name" = #keyword2#
+			)
+	</sql>
+	<!-- 按照文档名称、所属系统名称、文档主要内容、重要程度进行模糊查询查询条数 -->
+	<select id="pgAdmindocAssets.count" resultClass="int">
+		SELECT COUNT(*) FROM "tb_sgd"   where 1=1
+		<isNotEmpty prepend="AND" property="keyword">
+			<![CDATA[
+				(
+					"SGD_DocName" LIKE '%$keyword$%' 
+					or "SGD_MainCon" LIKE '%$keyword$%'
+					or "SGD_Importance" LIKE '%$keyword$%' 
+					
+				)
+			]]>
+		</isNotEmpty>
+
+	</select>
+	<!-- 添加安全管理文档 -->
+	<insert id="pgAdmindocAssets.insert" parameterClass="docAssets">
+		<selectKey resultClass="int" type="pre" keyProperty="id">
+			SELECT nextval('tb_sgd_seq'::regclass)
+		</selectKey>
+	  INSERT INTO "tb_sgd"("PK_SGD", "SGD_AssetType", "SGD_DocName", "SGD_Importance","SGD_MainCon", "SGD_Remark")
+                    VALUES(#id#, #resType#,#docName#,#impDegree#,#impContent#,#docRemarks#);
+	</insert>
+	<select id="pgAdmindocAssets.queryById" parameterClass="Integer" resultMap="docAssetsResult">
+		select * from "tb_sgd"   where "PK_SGD" = #id#
+	</select>
+	<!-- 修改安全管理文档 -->
+	<update id="pgAdmindocAssets.update" parameterClass="docAssets">
+		update "tb_sgd"  
+		SET
+		"SGD_DocName" = #docName#,
+		"SGD_Importance" = #impDegree#,
+		"SGD_MainCon" = #impContent#,
+		"SGD_Remark" = #docRemarks#,
+		"SGD_AssetType" = #resType#
+		where
+		"PK_SGD" =
+		#id#
+	</update>
+	<!-- 按照文档名称、所属系统名称、文档主要内容、重要程度进行模糊查询快速搜索 -->
+
+	<select id="pgAdmindocAssets.query" resultMap="docAssetsResult" parameterClass="java.util.HashMap">
+		SELECT * FROM "tb_sgd"   where 1=1
+		<isNotEmpty prepend="AND" property="keyword">
+			<![CDATA[
+				(
+					"SGD_DocName" LIKE '%$keyword$%' 
+					or "SGD_MainCon" LIKE '%$keyword$%'
+					or "SGD_Importance" LIKE '%$keyword$%' 
+					
+				)
+			]]>
+		</isNotEmpty>
+		order by "PK_SGD" desc
+	</select>
+	<!-- 按照文档名称、所属系统名称、重要程度进行精确查找 -->
+	<select id="pgAdmindocAssets.pricisequery" resultMap="docAssetsResult" parameterClass="java.util.HashMap">
+		<isNotEmpty property="keyword2">
+			<include refid="query4ySysName"/>
+		</isNotEmpty>
+		<isEmpty property="keyword2">
+			SELECT * FROM "tb_sgd"   where 1=1
+			<isNotEmpty prepend="AND" property="keyword1"> 
+			<![CDATA[ 
+				( 
+					"SGD_DocName" =#keyword1# 
+				 
+				) 
+			]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="keyword2"> 
+			<![CDATA[ 
+				( 
+				 "SYSINFO_Names"=#keyword2# 
+				) 
+			]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="keyword3"> 
+			<![CDATA[ 
+				( 
+				 "SGD_Importance" =#keyword3#
+				) 
+			]]>
+			</isNotEmpty>
+		</isEmpty>
+		order by "PK_SGD" desc
+	</select>
+	<!-- 删除安全管理文档 -->
+	<delete id="pgAdmindocAssets.delete" parameterClass="int">
+		delete from "tb_sgd"
+		WHERE "PK_SGD"=#id#
+	</delete>
+	<!-- 按照文档名称、所属系统名称、重要程度进行精确查找查询条数 -->
+	<select id="pgAdmindocAssets.countpresice" resultClass="int">
+		<isNotEmpty property="keyword2">
+			<include refid="count4BySysName"/>
+		</isNotEmpty>
+		<isEmpty property="keyword2">
+			SELECT COUNT(*) FROM "tb_sgd"    where 1=1
+			<isNotEmpty prepend="AND" property="keyword1"> 
+			<![CDATA[ 
+				( 
+					"SGD_DocName" =#keyword1# 
+				 
+				) 
+			]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="keyword2"> 
+			<![CDATA[ 
+				( 
+				 "SYSINFO_Names"=#keyword2# 
+				) 
+			]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="keyword3"> 
+			<![CDATA[ 
+				( 
+				 "SGD_Importance" =#keyword3#
+				) 
+			]]>
+			</isNotEmpty>
+		</isEmpty>
+	</select>
+
+	<!-- 评估导出报表。查询所有 -->
+	<select id="pgAdmindocAssets.queryAll" resultMap="docAssetsResult">
+		SELECT * FROM "tb_sgd"
+	</select>
+	<!-- sqlserver -->
+	<!-- 按照文档名称、所属系统名称、文档主要内容、重要程度进行模糊查询查询条数 -->
+	<select id="sqlServerdocAssets.count" resultClass="int">
+		SELECT COUNT(*) FROM "tb_sgd"   where 1=1
+		<isNotEmpty prepend="AND" property="keyword">
+			<![CDATA[
+				(
+					"SGD_DocName" LIKE '%$keyword$%' 
+					or "SGD_MainCon" LIKE '%$keyword$%'
+					or "SGD_Importance" LIKE '%$keyword$%' 
+					
+				)
+			]]>
+		</isNotEmpty>
+
+	</select>
+	<!-- 添加安全管理文档 -->
+	<insert id="sqlServerdocAssets.insert" parameterClass="docAssets">
+	  INSERT INTO "tb_sgd"("SGD_AssetType", "SGD_DocName", "SGD_Importance","SGD_MainCon", "SGD_Remark")
+      VALUES(#resType#,#docName#,#impDegree#,#impContent#,#docRemarks#);
+		<selectKey resultClass="int" type="post" keyProperty="id" >
+           SELECT @@IDENTITY AS id
+      	</selectKey>
+	</insert>
+	<select id="sqlServerdocAssets.queryById" parameterClass="Integer" resultMap="docAssetsResult">
+		select * from "tb_sgd"   where "PK_SGD" = #id#
+	</select>
+	<!-- 修改安全管理文档 -->
+	<update id="sqlServerdocAssets.update" parameterClass="docAssets">
+		update "tb_sgd"  
+		SET
+		"SGD_DocName" = #docName#,
+		"SGD_Importance" = #impDegree#,
+		"SGD_MainCon" = #impContent#,
+		"SGD_Remark" = #docRemarks#,
+		"SGD_AssetType" = #resType#
+		where
+		"PK_SGD" =
+		#id#
+	</update>
+	<!-- 按照文档名称、所属系统名称、文档主要内容、重要程度进行模糊查询快速搜索 -->
+
+	<select id="sqlServerdocAssets.query" resultMap="docAssetsResult" parameterClass="java.util.HashMap">
+		SELECT * FROM "tb_sgd"   where 1=1
+		<isNotEmpty prepend="AND" property="keyword">
+			<![CDATA[
+				(
+					"SGD_DocName" LIKE '%$keyword$%' 
+					or "SGD_MainCon" LIKE '%$keyword$%'
+					or "SGD_Importance" LIKE '%$keyword$%' 
+					
+				)
+			]]>
+		</isNotEmpty>
+		order by "PK_SGD" desc
+	</select>
+	<!-- 按照文档名称、所属系统名称、重要程度进行精确查找 -->
+	<select id="sqlServerdocAssets.pricisequery" resultMap="docAssetsResult" parameterClass="java.util.HashMap">
+		<isNotEmpty property="keyword2">
+			<include refid="query4ySysName"/>
+		</isNotEmpty>
+		<isEmpty property="keyword2">
+			SELECT * FROM "tb_sgd"   where 1=1
+			<isNotEmpty prepend="AND" property="keyword1"> 
+			<![CDATA[ 
+				( 
+					"SGD_DocName" =#keyword1# 
+				 
+				) 
+			]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="keyword2"> 
+			<![CDATA[ 
+				( 
+				 "SYSINFO_Names"=#keyword2# 
+				) 
+			]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="keyword3"> 
+			<![CDATA[ 
+				( 
+				 "SGD_Importance" =#keyword3#
+				) 
+			]]>
+			</isNotEmpty>
+		</isEmpty>
+		order by "PK_SGD" desc
+	</select>
+	<!-- 删除安全管理文档 -->
+	<delete id="sqlServerdocAssets.delete" parameterClass="int">
+		delete from "tb_sgd"
+		WHERE "PK_SGD"=#id#
+	</delete>
+	<!-- 按照文档名称、所属系统名称、重要程度进行精确查找查询条数 -->
+	<select id="sqlServerdocAssets.countpresice" resultClass="int">
+		<isNotEmpty property="keyword2">
+			<include refid="count4BySysName"/>
+		</isNotEmpty>
+		<isEmpty property="keyword2">
+			SELECT COUNT(*) FROM "tb_sgd"    where 1=1
+			<isNotEmpty prepend="AND" property="keyword1"> 
+			<![CDATA[ 
+				( 
+					"SGD_DocName" =#keyword1# 
+				 
+				) 
+			]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="keyword2"> 
+			<![CDATA[ 
+				( 
+				 "SYSINFO_Names"=#keyword2# 
+				) 
+			]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="keyword3"> 
+			<![CDATA[ 
+				( 
+				 "SGD_Importance" =#keyword3#
+				) 
+			]]>
+			</isNotEmpty>
+		</isEmpty>
+	</select>
+
+	<!-- 评估导出报表。查询所有 -->
+	<select id="sqlServerdocAssets.queryAll" resultMap="docAssetsResult">
+		SELECT * FROM "tb_sgd"
+	</select>
+
+</sqlMap>

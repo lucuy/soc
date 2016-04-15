@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="rankReport" extends="struts-default" namespace="/rankReport">
+		
+		<!--添加用户信息-->
+		<action name="query" class="rankReportAction" method="query">
+            	<result>/pages/dbPage/score/rankReport.jsp</result>
+      	</action>  
+		
+		 <!-- 查询统计报表 -->
+		<action name="queryAjax" class="rankReportAction" method="queryAjax"/>
+	</package>
+</struts>

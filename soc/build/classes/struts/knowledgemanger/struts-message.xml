@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="message" extends="struts-default" namespace="/message">
+		<!-- 显示消息中心数据 -->
+		<action name="query" class="messageAction" method="queryMessage">
+			<result name="success">
+				/pages/knowledgemanger/knowledge_center_list.jsp
+			</result>
+		</action>
+		<!-- 显示消息中心数据 -->
+		<action name="updateStatus" class="messageAction" method="updateMessageStatus">
+		     <result name="success" type="chain">
+		     	<param name="namespace">/message</param>
+		     	<param name="actionName">query</param>
+		     	<param name="dualstatus">${dualstatus}</param>
+		     </result>
+		</action>
+		<!-- 根据id获得单个消息对象 -->
+		<action name="queryMessage" class="messageAction" method="queryMessageById">
+			<result name="success">/pages/knowledgemanger/knowledge_update.jsp</result>
+		</action>
+		<!-- 处理消息 -->
+		<action name="updateMessage" class="messageAction" method="updateMessage">
+			 <result name="success" type="chain">
+		     	<param name="namespace">/message</param>
+		     	<param name="actionName">query</param>
+		     	<param name="dualstatus">${dualstatus}</param>
+		     </result>
+		</action>
+	</package>
+
+</struts>

@@ -1,0 +1,132 @@
+@charset "utf-8";
+/* 
+ * <主要对审计日志体的结构及样式控制>
+ * @author:YinHaiping
+ * @version:[no:1] 
+ */
+
+/* 控制整体显示方式*/
+* { margin:0; padding:0;}
+body {
+	color: #000000;
+	font-family: "宋体";
+	font-size: 12px;
+}
+
+input,textarea,select,button,img,file {
+	font-size: 12px;
+	vertical-align:middle;
+}
+
+.btn1{ background:url(../../images/btn_back_x1.png) no-repeat; width:39px; height:28px; border:none; cursor:pointer;}
+.btn2{ background:url(../../images/btn_back_x2.png) no-repeat; width:59px; height:30px; border:none; cursor:pointer;}
+.btn4{ background:url(../../images/btn_back_x4.png) no-repeat; width:94px; height:30px; border:none; cursor:pointer;}
+.btn4s{ background:url(../../images/btn_back_x4s.png) no-repeat; width:89px; height:30px; border:none; cursor:pointer;}
+.italic {
+	font-style: italic;
+}
+
+.caozuobox {
+	overflow: hidden;
+	border: 1px solid #c1ddf1;
+	background: url(/soc/images/rightDh.jpg) repeat-x 0 0;
+	height: 33px;
+	line-height: 30px;
+}
+
+.tab2 .biaocm {
+	background: none repeat scroll 0 0 #F3F9FF;
+}
+
+.sbox {
+	clear: both;
+	margin-bottom: 10px;
+	margin-top: 4px;
+	overflow: hidden;
+}
+
+.tab2 {
+	background: none repeat scroll 0 0 #F3F9FF;
+}
+
+.tab2 td {
+	background: none repeat scroll 0 0 #FFFFFF;
+	line-height: 28px;
+	text-align: center;
+}
+
+
+/*
+ *   <排序箭头>
+*/
+.tab2 thead tr .header{
+	background-image: url(/soc/images/sortArrows_bg.gif);
+	background-repeat: no-repeat;
+	background-position: center right;
+	cursor: pointer;
+}
+
+.tab2 thead tr .headerSortUp {
+	background-image: url(/soc/images/sortArrows_asc.gif);
+}
+
+.tab2 thead tr .headerSortDown {
+	background-image: url(/soc/images/sortArrows_desc.gif);
+}
+
+.tab2 thead tr .headerSortDown , .tab2 thead tr .headerSortUp{
+	background-color: #8dbdd8;
+}
+
+
+.tab2 .td_t {
+	background: none repeat scroll 0 0 #ffffff;
+	line-height: 28px;
+	text-align: left;
+	padding-left: 20px;
+}
+
+.tab2 .biaoti {
+	background: url("/soc/images/tdBg.jpg") repeat-x scroll 0 0 transparent;
+	height: 28px;
+	color: black;
+	font-weight: bold;
+	text-align: center;
+	cursor: pointer;
+}
+
+.cont {
+	clear: both;
+	overflow: hidden;
+	border-top: none;
+	zoom: 1;
+}
+
+.btnstyle {
+	background: url(/soc/images/btnbg.jpg) no-repeat;
+	border:none;
+	width:66px;
+	height:21px;
+	cursor:pointer;
+	color:#265D86;
+	align:center;
+}
+
+.box{
+	overflow:hidden;
+	border:1px solid #D1D2D4;
+	background:url(/soc/images/rightDh.jpg) repeat-x 0 0; 
+	
+	height:33px; 
+	line-height:30px;
+	align:center
+}
+.right{
+	float:right;
+}
+.kuaiju{
+	margin-left:12px;
+}
+.jianju{
+	margin-left:5px;
+}

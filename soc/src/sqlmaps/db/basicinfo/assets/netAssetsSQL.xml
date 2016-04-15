@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="netAssetsSQL">
+
+	<resultMap class="netAssets" id="netAssetsResult">
+		<result property="id" column="PK_IID" jdbcType="int" />
+		<result property="devName" column="IID_DeviceName" jdbcType="varchar" />
+		<result property="impDegree" column="IID_Importance" jdbcType="varchar" />
+		<result property="devDescriotion" column="IID_DevDescriotion" jdbcType="varchar" />
+		<result property="netRemarks" column="IID_Remark" jdbcType="varchar" />
+		<result property="resType" column="IID_AssetType" jdbcType="varchar" />
+		<result property="relsysName" column="PK_IID" select="pgAdminnetAssets.getSysName" />
+	</resultMap>
+	<!-- postrgreSql -->
+	<select id="pgAdminnetAssets.getSysName" parameterClass="int" resultClass="string">
+		select "SYSINFO_Name" from "tb_sysref" where "PK_IID" = #value#
+	</select>
+	<insert id="pgAdminnetAssets.addSysName">
+		insert into "tb_sysref" ("SYSINFO_Name", "PK_IID")
+		values(#relsysName#, #id#)
+	</insert>
+	<delete id="pgAdminnetAssets.delSysName" parameterClass="int">
+		delete from "tb_sysref" where "PK_IID" = #value#
+	</delete>
+	<!-- sqlServer -->
+	<select id="sqlServernetAssets.getSysName" parameterClass="int" resultClass="string">
+		select "SYSINFO_Name" from "tb_sysref" where "PK_IID" = #value#
+	</select>
+	<insert id="sqlServernetAssets.addSysName">
+		insert into "tb_sysref" ("SYSINFO_Name", "PK_IID")
+		values(#relsysName#, #id#)
+	</insert>
+	<delete id="sqlServernetAssets.delSysName" parameterClass="int">
+		delete from "tb_sysref" where "PK_IID" = #value#
+	</delete>
+	<!-- 根据信息系统名称查询业务应用软件总记录数 -->
+	<sql id="count2BySysName">
+		SELECT count(*) FROM "tb_iid"
+		WHERE
+			"PK_IID" IN (
+				SELECT
+					A ."PK_IID"
+				FROM
+					tb_iid A
+				RIGHT JOIN tb_sysref b ON A ."PK_IID" = b."PK_IID"
+				WHERE
+					b."SYSINFO_Name" = #keyword2#
+			)
+	</sql>
+	<!-- 根据信息系统名称查询业务应用软件 -->
+	<sql id="query2BySysName">
+		SELECT * FROM "tb_iid"
+		WHERE
+			"PK_IID" IN (
+				SELECT
+					A ."PK_IID"
+				FROM
+					tb_iid A
+				RIGHT JOIN tb_sysref b ON A ."PK_IID" = b."PK_IID"
+				WHERE
+					b."SYSINFO_Name" = #keyword2#
+			)
+	</sql>
+	<!-- 设备名称、所属系统名称、设备描述、重要程度进行模糊查询查询条数 -->
+	<select id="pgAdminnetAssets.count" resultClass="int">
+		SELECT COUNT(*) FROM "tb_iid"   where 1=1
+		<isNotEmpty prepend="AND" property="keyword">
+			<![CDATA[
+				(
+					"IID_DeviceName" LIKE '%$keyword$%' 
+					or "IID_DevDescriotion" LIKE '%$keyword$%'
+					or "IID_Importance" LIKE '%$keyword$%' 
+					
+				)
+			]]>
+		</isNotEmpty>
+
+	</select>
+	<!-- 按照设备名称、所属系统名称、设备描述、重要程度进行模糊查询快速搜索 -->
+
+	<select id="pgAdminnetAssets.query" resultMap="netAssetsResult" parameterClass="java.util.HashMap">
+		SELECT * FROM "tb_iid"   where 1=1
+		<isNotEmpty prepend="AND" property="keyword">
+			<![CDATA[
+				(
+					
+					"IID_DeviceName" LIKE '%$keyword$%' 
+					or "IID_DevDescriotion" LIKE '%$keyword$%'
+					or "IID_Importance" LIKE '%$keyword$%' 
+					
+				)
+			]]>
+		</isNotEmpty>
+		order by "PK_IID" desc
+	</select>
+	<!-- 根据id查询网络互连设备 -->
+	<select id="pgAdminnetAssets.queryById" parameterClass="Integer" resultMap="netAssetsResult">
+
+		select * from "tb_iid"   where "PK_IID" = #id#
+	</select>
+	<!-- 添加网络互连设备 -->
+	<insert id="pgAdminnetAssets.insert" parameterClass="netAssets">
+		<selectKey resultClass="int" type="pre" keyProperty="id">
+			SELECT nextval('tb_iid_seq'::regclass)
+		</selectKey>
+		insert into "tb_iid" ("PK_IID", "IID_DeviceName","IID_Importance" ,
+		"IID_DevDescriotion" ,"IID_Remark","IID_AssetType")
+		values(#id#,#devName#,#impDegree#,#devDescriotion#,#netRemarks#,#resType#)
+	</insert>
+	<!-- 修改网络互连设备信息 -->
+	<update id="pgAdminnetAssets.update" parameterClass="netAssets">
+		update "tb_iid"  
+		SET
+		"IID_DeviceName" = #devName#,
+		"IID_Importance" = #impDegree#,
+		"IID_DevDescriotion" = #devDescriotion#,
+		"IID_Remark" = #netRemarks#,
+		"IID_AssetType"= #resType#
+		where
+		"PK_IID" = #id#
+	</update>
+	<!-- 删除网络互连设备 -->
+	<delete id="pgAdminnetAssets.delete" parameterClass="int">
+		delete from "tb_iid" WHERE "PK_IID"=#id#
+	</delete>
+	<!-- 按照设备名称、所属系统名称、重要程度进行精确查找，查找数据条数 -->
+	<select id="pgAdminnetAssets.countprecise" resultClass="int">
+		<isNotEmpty property="keyword2">
+			<include refid="count2BySysName"/>
+		</isNotEmpty>
+		<isEmpty property="keyword2">
+			SELECT COUNT(*) FROM "tb_iid"   where 1=1
+			<isNotEmpty prepend="AND" property="keyword1">
+					<![CDATA[
+							"IID_DeviceName" =#keyword1# 
+					]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="keyword2">
+					<![CDATA[
+							"SYSINFO_Names" =#keyword2# 
+					]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="keyword3">
+					<![CDATA[
+						 "IID_Importance" =#keyword3#
+					]]>
+			</isNotEmpty>
+		</isEmpty>
+	</select>
+	<!-- 按照设备名称、所属系统名称、重要程度进行精确查找 -->
+
+	<select id="pgAdminnetAssets.queryprecise" resultMap="netAssetsResult" parameterClass="java.util.HashMap">
+		<isNotEmpty property="keyword2">
+			<include refid="query2BySysName"/>
+		</isNotEmpty>
+		<isEmpty property="keyword2">
+			SELECT * FROM "tb_iid"   where 1=1
+			<isNotEmpty prepend="AND" property="keyword1">
+					<![CDATA[
+							"IID_DeviceName"=#keyword1#
+					]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="keyword2">
+					<![CDATA[
+							"SYSINFO_Names"=#keyword2# 
+					]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="keyword3">
+					<![CDATA[
+						 "IID_Importance" =#keyword3# 
+					]]>
+			</isNotEmpty>
+			order by "PK_IID" desc
+		</isEmpty>
+	</select>
+
+	<!-- 评估导出报表。查询所有 -->
+	<select id="pgAdminnetAssets.queryAll" resultMap="netAssetsResult">
+		SELECT * FROM "tb_iid"
+	</select>
+	<!-- sqlserver -->
+	<!-- 设备名称、所属系统名称、设备描述、重要程度进行模糊查询查询条数 -->
+	<select id="sqlServernetAssets.count" resultClass="int">
+		SELECT COUNT(*) FROM "tb_iid"   where 1=1
+		<isNotEmpty prepend="AND" property="keyword">
+			<![CDATA[
+				(
+					"IID_DeviceName" LIKE '%$keyword$%' 
+					or "IID_DevDescriotion" LIKE '%$keyword$%'
+					or "IID_Importance" LIKE '%$keyword$%' 
+					
+				)
+			]]>
+		</isNotEmpty>
+
+	</select>
+	<!-- 按照设备名称、所属系统名称、设备描述、重要程度进行模糊查询快速搜索 -->
+
+	<select id="sqlServernetAssets.query" resultMap="netAssetsResult" parameterClass="java.util.HashMap">
+		SELECT * FROM "tb_iid"   where 1=1
+		<isNotEmpty prepend="AND" property="keyword">
+			<![CDATA[
+				(
+					
+					"IID_DeviceName" LIKE '%$keyword$%' 
+					or "IID_DevDescriotion" LIKE '%$keyword$%'
+					or "IID_Importance" LIKE '%$keyword$%' 
+					
+				)
+			]]>
+		</isNotEmpty>
+		order by "PK_IID" desc
+	</select>
+	<!-- 根据id查询网络互连设备 -->
+	<select id="sqlServernetAssets.queryById" parameterClass="Integer" resultMap="netAssetsResult">
+
+		select * from "tb_iid"   where "PK_IID" = #id#
+	</select>
+	<!-- 添加网络互连设备 -->
+	<insert id="sqlServernetAssets.insert" parameterClass="netAssets">
+		insert into "tb_iid" ("IID_DeviceName","IID_Importance" ,
+		"IID_DevDescriotion" ,"IID_Remark","IID_AssetType")
+		values(#devName#,#impDegree#,#devDescriotion#,#netRemarks#,#resType#)
+		<selectKey resultClass="int" type="post" keyProperty="id" >
+           SELECT @@IDENTITY AS id
+      	</selectKey>
+	</insert>
+	<!-- 修改网络互连设备信息 -->
+	<update id="sqlServernetAssets.update" parameterClass="netAssets">
+		update "tb_iid"  
+		SET
+		"IID_DeviceName" = #devName#,
+		"IID_Importance" = #impDegree#,
+		"IID_DevDescriotion" = #devDescriotion#,
+		"IID_Remark" = #netRemarks#,
+		"IID_AssetType"= #resType#
+		where
+		"PK_IID" = #id#
+	</update>
+	<!-- 删除网络互连设备 -->
+	<delete id="sqlServernetAssets.delete" parameterClass="int">
+		delete from "tb_iid" WHERE "PK_IID"=#id#
+	</delete>
+	<!-- 按照设备名称、所属系统名称、重要程度进行精确查找，查找数据条数 -->
+	<select id="sqlServernetAssets.countprecise" resultClass="int">
+		<isNotEmpty property="keyword2">
+			<include refid="count2BySysName"/>
+		</isNotEmpty>
+		<isEmpty property="keyword2">
+			SELECT COUNT(*) FROM "tb_iid"   where 1=1
+			<isNotEmpty prepend="AND" property="keyword1">
+					<![CDATA[
+							"IID_DeviceName" =#keyword1# 
+					]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="keyword2">
+					<![CDATA[
+							"SYSINFO_Names" =#keyword2# 
+					]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="keyword3">
+					<![CDATA[
+						 "IID_Importance" =#keyword3#
+					]]>
+			</isNotEmpty>
+		</isEmpty>
+	</select>
+	<!-- 按照设备名称、所属系统名称、重要程度进行精确查找 -->
+
+	<select id="sqlServernetAssets.queryprecise" resultMap="netAssetsResult" parameterClass="java.util.HashMap">
+		<isNotEmpty property="keyword2">
+			<include refid="query2BySysName"/>
+		</isNotEmpty>
+		<isEmpty property="keyword2">
+			SELECT * FROM "tb_iid"   where 1=1
+			<isNotEmpty prepend="AND" property="keyword1">
+					<![CDATA[
+							"IID_DeviceName"=#keyword1#
+					]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="keyword2">
+					<![CDATA[
+							"SYSINFO_Names"=#keyword2# 
+					]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="keyword3">
+					<![CDATA[
+						 "IID_Importance" =#keyword3# 
+					]]>
+			</isNotEmpty>
+		</isEmpty>
+		order by "PK_IID" desc
+	</select>
+
+	<!-- 评估导出报表。查询所有 -->
+	<select id="sqlServernetAssets.queryAll" resultMap="netAssetsResult">
+		SELECT * FROM "tb_iid"
+	</select>
+</sqlMap>

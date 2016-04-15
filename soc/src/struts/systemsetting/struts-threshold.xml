@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="settingThreshold" extends="struts-default" namespace="/settingThreshold">
+
+		<!--  阀值修改 -->
+		<action name="thresholdEdit" class="settingThresholdAction" method="editThreshold">
+			<result name="success">/pages/systemsetting/setting_threshold.jsp</result>
+		</action>
+		
+		<!--  阀值更新 -->
+		<action name="updateThreshold" class="settingThresholdAction" method="updateThreshold">
+			<result name="success">/pages/systemsetting/setting_threshold.jsp</result>
+		</action>
+		
+	</package>
+</struts>

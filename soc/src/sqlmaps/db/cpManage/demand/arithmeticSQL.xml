@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="arithmeticSQL">
+	<resultMap class="arithmetic" id="arithmeticResult">
+		<result property="id" 		column="PK_APPRAISALALG" 		jdbcType="int" />
+		<result property="sort" 	column="APPRAISALALG_Sort" 		jdbcType="varchar" />
+		<result property="jsAlg" 	column="APPRAISALALG_JsAlg" 	jdbcType="varchar" />
+	</resultMap>
+	<!--根据排序查询评估js算法 -->
+	<select id="pgAdmindemandCollet.queryJsAlgBySort" parameterClass="String" resultMap="arithmeticResult"> 
+		 <![CDATA[ 
+			select * from "tb_appraisalalg" where "APPRAISALALG_Sort" = #sort#
+		]]>
+	</select>
+	<!--sqlserver  -->
+	<!--根据排序查询评估js算法 -->
+	<select id="sqlServerdemandCollet.queryJsAlgBySort" parameterClass="String" resultMap="arithmeticResult"> 
+		 <![CDATA[ 
+			select * from "tb_appraisalalg" where "APPRAISALALG_Sort" = #sort#
+		]]>
+	</select>
+</sqlMap>
+    

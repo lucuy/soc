@@ -1,0 +1,1034 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="userSQL">
+	<resultMap id="userResult" class="user">
+   		<result property="userId" 				    column="USER_ID" 				    jdbcType="bigint"/>
+   		<result property="userLoginName"            column="USER_LOGIN_NAME"            jdbcType="varchar"/>
+   		<result property="userRealName"             column="USER_REAL_NAME"             jdbcType="varchar"/>
+   		<result property="userPassword"             column="USER_PASSWORD"              jdbcType="varchar"/>
+   		<result property="userStatus"               column="USER_STATUS"                jdbcType="int"/>
+   		<result property="userAuthType"             column="USER_AUTH_TYPE"             jdbcType="int"/>
+   		<result property="userChangePassword"       column="USER_CHANGE_PASSWORD"       jdbcType="int"/>
+   		<result property="userEmail"                column="USER_EMAIL"                 jdbcType="varchar"/>
+   		<result property="userMobile"               column="USER_MOBILE"                jdbcType="varchar"/>
+   		<result property="userTelephone"            column="USER_TELEPHONE"             jdbcType="varchar"/>
+   		<result property="userAddress"              column="USER_ADDRESS"               jdbcType="varchar"/>
+   		<result property="userCreatorIp"            column="USER_CREATOR_IP"            jdbcType="varchar"/>
+   		<result property="userCreateDateTime"       column="USER_CREATE_DATE_TIME"      jdbcType="datetime"/>
+   		<result property="userUpdateDateTime"       column="USER_UPDATE_DATE_TIME"      jdbcType="datetime"/>
+   		<result property="userDisplay"              column="USER_DISPLAY"               jdbcType="int"/>
+   		<result property="userMemo"                 column="USER_MEMO"                  jdbcType="text"/>
+   		<result property="userLockTime"             column="USER_LOCKED_TIME"           jdbcType="datetime"/>
+   		<result property="userFailNum"              column="USER_FAIL_NUM"              jdbcType="int"/>
+   		<result property="userIsDelete"             column="USER_IS_DELETE"             jdbcType="int"/>
+   		<result property="userRoleList"             column="USER_ID"                    select="pgAdminuser.queryRoleByUserId"/>
+   		<result property="assetGroupid"             column="ASSET_GROUP_ID"             jdbcType="bigint"/>
+   		<result property="showEventFiled"           column="EVENT_FAILD"                jdbcType="varchar" />
+   		<result property="layout"           		column="USER_LAYOUT"             	jdbcType="int"/>
+   		<result property="userSavedSecret"          column="USER_SAVEDSECRET"           jdbcType="varchar"/>
+   	</resultMap>
+   	
+   	<!-- 角色 -->
+  	<resultMap id="roleResult" class="role">
+		<result	property="roleId"				column="ROLE_ID"				jdbcType="bigint" />
+		<result	property="roleName"				column="ROLE_NAME"				jdbcType="varchar" />
+		<result	property="roleCreateDateTime"	column="ROLE_CREATE_DATE_TIME"	jdbcType="datetime" />
+		<result	property="roleUpdateDateTime"	column="ROLE_UPDATE_DATE_TIME"	jdbcType="datetime" />
+		<result	property="roleDisplay"			column="ROLE_DISPLAY"			jdbcType="tinyint" />
+		<result	property="roleMemo"				column="ROLE_MEMO"				jdbcType="varchar" />
+		<result	property="permissionList"		column="ROLE_ID"				select="pgAdminrole.query-allRelPermission" />
+   	</resultMap> 
+   	
+   	<!-- 密码策略 -->
+   	<resultMap id="passwordPolicyResult" class="passwordPolicy">
+   		<result property="passwordPolicyId" 		            column="PASSWORD_POLICY_ID" 				      jdbcType="bigint"/>
+   		<result property="passwordPolicyName"                   column="PASSWORD_POLICY_NAME"                    jdbcType="varchar"/>
+   		<result property="passwordPolicyLowerCaseNumber"        column="PASSWORD_POLICY_LOWER_CASE_NUMBER"       jdbcType="int"/>
+   		<result property="passwordPolicyUpperCaseNumber"        column="PASSWORD_POLICY_UPPER_CASE_NUMBER"       jdbcType="int"/>
+   		<result property="passwordPoicyNumericNumber"           column="PASSWORD_POLICY_NUMERIC_NUMBER"          jdbcType="int"/>
+   		<result property="passwordPolicyPasswordChangeCycle"    column="PASSWORD_POLICY_PASSWORD_CHANGE_CYCLE"   jdbcType="int"/>
+   		<result property="passwordPolicyPasswordLength"         column="PASSWORD_POLICY_PASSWORD_LENGTH"         jdbcType="int"/>
+   		<result property="passwordPoicyFailLockNumber"          column="PASSWORD_POLICY_FAIL_LOCK_NUMBER"        jdbcType="int"/>
+   		<result property="passwordPolicyLockRecoveTime"         column="PASSWORD_POLICY_LOCK_RECOVER_TIME"       jdbcType="int"/>
+   		<result property="passwordPolicyStatus"                 column="PASSWORD_POLICY_STATUS"                  jdbcType="tinyint"/>
+   		<result property="passwordPolicyUserLoginName"          column="PASSWORD_POLICY_USER_LOGIN_NAME"         jdbcType="varchar"/>
+   		<result property="passwordPolicyCreateDateTime"         column="PASSWORD_POLICY_CREATE_DATE_TIME"        jdbcType="datetime"/>
+   		<result property="passwordPolicyUpdateDateTime"         column="PASSWORD_POLICY_UPDATE_DATE_TIME"        jdbcType="datetime"/>
+   		<result property="passwordPolicyIsDelete"               column="PASSWORD_POLICY_IS_DELETE"               jdbcType="tinyint"/>
+   		<result property="passwordPolicyMemo"                   column="PASSWORD_POLICY_MEMO"                    jdbcType="text"/>
+   	</resultMap>
+   	
+   	<!-- 时间策略 -->
+   	<resultMap id="timePolicyResult" class="timePolicy">
+   		<result property="timePolicyId" 		               column="TIME_POLICY_ID" 				     jdbcType="bigint"/>
+   		<result property="timePolicyName"                      column="TIME_POLICY_NAME"                 jdbcType="varchar"/>
+   		<result property="timePolicyEffectWay"                 column="TIME_POLICY_EFFECT_WAY"           jdbcType="int"/>
+   		<result property="timePolicyTimeStart"                 column="TIME_POLICY_TIME_START"           jdbcType="datetime"/>
+   		<result property="timePolicyTimeEnd"                   column="TIME_POLICY_TIME_END"             jdbcType="datetime"/>
+   		<result property="timePolicyDateStart"                 column="TIME_POLICY_DATE_START"           jdbcType="date"/>
+   		<result property="timePolicyDateEnd"                   column="TIME_POLICY_DATE_END"             jdbcType="date"/>
+   		<result property="timePolicyHour"                      column="TIME_POLICY_HOUR"        		 jdbcType="varchar"/>
+   		<result property="timePolicyUserLoginName"             column="TIME_POLICY_USER_LOGIN_NAME"      jdbcType="varchar"/>
+   		<result property="timePolicyCreateDateTime"            column="TIME_POLICY_CREATE_DATE_TIME"     jdbcType="datetime"/>
+   		<result property="timePolicyUpdateDateTime"            column="TIME_POLICY_UPDATE_DATE_TIME"     jdbcType="datetime"/>
+   		<result property="timePolicyIsDelete"                  column="TIME_POLICY_IS_DELETE"            jdbcType="int"/>
+   		<result property="timePolicyStates"					   column="TIME_POLICY_STATES"               jdbcType="int" />
+   		<result property="timePolicyWeek"                      column="TIME_POLICY_WEEK"                 jdbcType="varchar"/>
+   		<result property="timePolicyMemo"                      column="TIME_POLICY_MEMO"                 jdbcType="varchar"/>
+ 		 <result property="timePolicyexecuteWay"               column="TIME_POLICY_EXECEUTE_WAY"         jdbcType="int"/> 
+   	</resultMap>
+   	
+   	<!-- 地址策略 -->
+   	<resultMap class="addressPolicy" id="addressPolicyResult">
+		<result property="addressPolicyId" column="ADDRESS_POLICY_ID"
+			jdbcType="bigint" />
+		<result property="addressPolicyName" column="ADDRESS_POLICY_NAME"
+			jdbcType="varchar" />
+		<result property="addressPolicyEffectWay" column="ADDRESS_POLICY_EFFECT_WAY"
+			jdbcType="int" />
+		<result property="addressPolicyStatus" column="ADDRESS_POLICY_STATUS"
+			jdbcType="int" />
+		<result property="addressPolicyCreateTime" column="ADDRESS_POLICY_CREATE_DATE_TIME"
+			jdbcType="datetime" />
+		<result property="addressPolicyUpdateTime" column="ADDRESS_POLICY_UPDATE_DATE_TIME"
+			jdbcType="datetime" />
+		<result property="addressPolicyCreateUserLoginName" column="ADDRESS_CREATOR_USER_LOGIN_NAME"
+			jdbcType="varchar" />
+		<result property="addressPolicyIsDelete" column="ADDRESS_POLICY_IS_DELETE"
+			jdbcType="tinyint" />
+		<result property="addressPolicyMemo" column="ADDRESS_MEMO"
+			jdbcType="text" />
+		<result property="addressList" column="ADDRESS_POLICY_ID"
+			select="pgAdminaddressPolicySQL.queryAddressById" />
+	</resultMap>
+	
+
+	
+   	<!-- 查询条数 李长红修改。默认不显示内置用户-->
+	<select id="pgAdminuser.count" resultClass="int" parameterClass="java.util.HashMap">
+		SELECT COUNT(*) FROM "tbl_user" WHERE 1=1 and "USER_IS_DELETE" != 1 and "USER_DISPLAY" != 0
+		
+		
+		<isNotEmpty prepend= "AND"  property="selUserLoginName">
+			<![CDATA[
+				"USER_LOGIN_NAME" LIKE '%$selUserLoginName$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="selUserRealName">
+			<![CDATA[
+				"USER_REAL_NAME" LIKE '%$selUserRealName$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="userState">
+			<![CDATA[
+				"USER_STATUS" = #userState#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="roleid">
+			<![CDATA[
+				"USER_ID" in(select "REL_USER_ID" from soc.tbl_rel_user_role where "REL_ROLE_ID" =#roleid#)
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="userEmail">
+			<![CDATA[
+				"USER_EMAIL" = #userEmail#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="selUserCreatorIp">
+			<![CDATA[
+				"USER_CREATOR_IP" LIKE '%$selUserCreatorIp$%' 
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				("USER_LOGIN_NAME" LIKE '%$keyword$%' OR "USER_REAL_NAME" LIKE '%$keyword$%' OR "USER_EMAIL" LIKE '%$keyword$%' OR "USER_CREATOR_IP" LIKE '%$keyword$%' )
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="userStatus">
+			<![CDATA[
+				"USER_STATUS" = #userStatus#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="relUsers">
+		    <![CDATA[
+		       "USER_ID" in ($relUsers$)
+		    ]]>
+		</isNotEmpty>
+		
+	</select>
+	
+	<!-- 查询 (默认不显示系统内置用户)李长红修改。默认不显示内置用户-->
+	<select id="pgAdminuser.query"  parameterClass="java.util.HashMap" resultMap="userResult" >
+		SELECT * FROM "tbl_user" WHERE 1=1 and "USER_IS_DELETE" != 1 and "USER_DISPLAY" != 0
+		
+		<!--<isNotEmpty prepend= "AND"  property="display">
+			<![CDATA[
+				"USER_DISPLAY" = #display#
+			]]>
+		</isNotEmpty>-->
+		
+		<isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				("USER_LOGIN_NAME" LIKE '%$keyword$%' OR "USER_REAL_NAME" LIKE '%$keyword$%' OR "USER_EMAIL" LIKE '%$keyword$%' OR "USER_CREATOR_IP" LIKE '%$keyword$%' ) 
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="selUserLoginName">
+			<![CDATA[
+				"USER_LOGIN_NAME" LIKE '%$selUserLoginName$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="selUserRealName">
+			<![CDATA[
+				"USER_REAL_NAME" LIKE '%$selUserRealName$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="selUserCreatorIp">
+			<![CDATA[
+				"USER_CREATOR_IP" LIKE '%$selUserCreatorIp$%' 
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="userState">
+			<![CDATA[
+				"USER_STATUS" = #userState#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="roleid">
+			<![CDATA[
+				"USER_ID" in(select "REL_USER_ID" from soc.tbl_rel_user_role where "REL_ROLE_ID" =#roleid#)
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="userEmail">
+			<![CDATA[
+				"USER_EMAIL" = #userEmail#
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend= "AND"  property="userStatus">
+			<![CDATA[
+				"USER_STATUS" = #userStatus#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="relUsers">
+		    <![CDATA[
+		       "USER_ID" in ($relUsers$)
+		    ]]>
+		</isNotEmpty>
+			ORDER BY "USER_UPDATE_DATE_TIME" desc
+	</select>
+	
+	<!-- 查询所有 (默认不显示系统内置用户)李长红修改。默认不显示内置用户-->
+	<select id="pgAdminuser.queryEx"  parameterClass="java.util.HashMap" resultMap="userResult" >
+		SELECT * FROM "tbl_user" WHERE 1=1 and "USER_IS_DELETE" != 1 and "USER_DISPLAY" != 0
+		
+		<!--<isNotEmpty prepend= "AND"  property="display">
+			<![CDATA[
+				"USER_DISPLAY" = #display#
+			]]>
+		</isNotEmpty>-->
+		<isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				("USER_LOGIN_NAME" LIKE '%$keyword$%' OR "USER_REAL_NAME" LIKE '%$keyword$%' OR "USER_EMAIL" LIKE '%$keyword$%' OR "USER_CREATOR_IP" LIKE '%$keyword$%' ) 
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="selUserLoginName">
+			<![CDATA[
+				"USER_LOGIN_NAME" LIKE '%$selUserLoginName$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="selUserRealName">
+			<![CDATA[
+				"USER_REAL_NAME" LIKE '%$selUserRealName$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="selUserCreatorIp">
+			<![CDATA[
+				"USER_CREATOR_IP" LIKE '%$selUserCreatorIp$%' 
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="userStatus">
+			<![CDATA[
+				"USER_STATUS" = #userStatus#
+			]]>
+		</isNotEmpty>
+			ORDER BY "USER_UPDATE_DATE_TIME" desc
+	</select>
+	
+	<!-- 根据登录名查询 -->
+	<select id="pgAdminuser.queryByUserLoginName"  parameterClass="java.lang.String" resultMap="userResult">
+		<![CDATA[
+			SELECT * FROM "tbl_user" WHERE "USER_LOGIN_NAME" = #value# AND "USER_IS_DELETE" = 0
+		]]>
+	</select>
+	
+	<!-- 根据账户ID查询 -->
+	<select id="pgAdminuser.queryById"  parameterClass="long" resultMap="userResult" >
+		<![CDATA[
+			SELECT * FROM "tbl_user" WHERE "USER_ID" = #userId#
+		]]>
+	</select>
+	
+		<!-- 根据账户ID查询账户名称 -->
+	<select id="pgAdminuser.queryUserNameById"  parameterClass="long" resultClass="java.lang.String" >
+		<![CDATA[
+			SELECT "USER_LOGIN_NAME" FROM "tbl_user" WHERE "USER_ID" = #id#
+		]]>
+	</select>
+	
+	<select id="pgAdminUserIdByName" parameterClass="java.lang.String" resultClass="long">
+		<![CDATA[
+			SELECT "USER_ID" FROM "tbl_user" WHERE "USER_LOGIN_NAME" = #name# AND "USER_IS_DELETE" != 1
+		]]>
+	</select>
+	
+	
+	<!-- 更新账户状态 -->
+	<update id="pgAdminuser.updateUserStatus" parameterClass="java.util.HashMap" >
+		<![CDATA[
+			UPDATE "tbl_user" 
+			SET 
+			       "USER_STATUS" = #userStatus#,
+			       "USER_UPDATE_DATE_TIME" = #userUpdateDateTime# 
+			WHERE 
+			       "USER_ID" = #userId#
+		]]>
+	</update>
+	
+	<!-- 设置账户为标记删除 -->
+	<update id="pgAdminuser.updateUserIsDelete" parameterClass="java.util.HashMap" >
+		<![CDATA[
+			UPDATE "tbl_user" 
+			SET 
+			       "USER_IS_DELETE" = #userIsDelete# 
+			WHERE  
+			       "USER_ID" = #userId#
+		]]>
+	</update>
+	
+	<!-- 更新 账户信息-->
+	<update id="pgAdminuser.update" parameterClass="user" >
+			UPDATE "tbl_user"
+			SET 
+					"USER_LOGIN_NAME" = #userLoginName#,
+					"USER_REAL_NAME" = #userRealName#,
+					"USER_EMAIL" = #userEmail#,
+					"USER_MOBILE" = #userMobile#,
+					"USER_TELEPHONE" = #userTelephone#,
+					"USER_ADDRESS" = #userAddress#,
+					"USER_STATUS" = #userStatus#,
+					"USER_CREATOR_IP" = #userCreatorIp#,
+					"USER_CREATE_DATE_TIME" = #userCreateDateTime#,
+					"USER_UPDATE_DATE_TIME" = #userUpdateDateTime#,
+					"USER_AUTH_TYPE" = #userAuthType#,
+					"USER_FAIL_NUM" = #userFailNum#,
+					"USER_LOCKED_TIME" = #userLockTime#,
+					<isNotEmpty property="userPassword">
+						<![CDATA[
+							"USER_PASSWORD" = #userPassword#,
+						]]>
+					</isNotEmpty>
+					"USER_CHANGE_PASSWORD" = #userChangePassword#,
+					"USER_MEMO" = #userMemo#,
+					"ASSET_GROUP_ID" =#assetGroupid#
+			 	WHERE 
+			 		"USER_ID" = #userId#
+	</update>
+	
+	<!-- 添加账户 -->
+	<insert id="pgAdminuser.insert" parameterClass="user" >
+		INSERT INTO "tbl_user" 
+				(   "USER_LOGIN_NAME",
+					"USER_REAL_NAME", 
+					"USER_EMAIL", 
+					"USER_MOBILE", 
+					"USER_TELEPHONE", 
+					"USER_ADDRESS", 
+					"USER_STATUS", 
+					"USER_CREATOR_IP",
+					"USER_CREATE_DATE_TIME", 
+					"USER_UPDATE_DATE_TIME", 
+					"USER_AUTH_TYPE", 
+					"USER_PASSWORD", 
+					"USER_CHANGE_PASSWORD", 
+					"USER_DISPLAY",
+					"USER_FAIL_NUM",
+					"USER_IS_DELETE",
+					"USER_MEMO",
+					"USER_SAVEDSECRET",
+					"ASSET_GROUP_ID" 
+				)
+		VALUES 
+				(   #userLoginName#, 
+					#userRealName#,
+					#userEmail#, 
+					#userMobile#, 
+					#userTelephone#, 
+					#userAddress#, 
+					#userStatus#, 
+					#userCreatorIp#, 
+					#userCreateDateTime#,
+					#userUpdateDateTime#, 
+					#userAuthType#,
+					#userPassword#, 
+					#userChangePassword#, 
+					#userDisplay#,
+					#userFailNum#,
+					#userIsDelete#,
+					#userMemo# ,
+					#userSavedSecret#,
+					#assetGroupid#
+				)
+		<selectKey resultClass="java.lang.Long" keyProperty="userId" >
+            SELECT currval('tbl_user_seq'::regclass) AS userId
+      	</selectKey>
+	</insert>
+	
+	 <!-- 关联角色 -->
+	<statement id="pgAdminuser.queryRoleByUserId" parameterClass="long" resultMap="roleResult">
+		select * from "tbl_role" where "ROLE_IS_DELETE" = 0 AND "ROLE_ID" in(select "REL_ROLE_ID" from "tbl_rel_user_role" where "REL_USER_ID" = #value#)
+	</statement> 
+	
+	<!-- 关联密码策略 -->
+	<statement id="pgAdminuser.queryPasswordPolicyByUserId" parameterClass="long" resultMap="passwordPolicyResult">
+		select * from "tbl_password_policy" where "PASSWORD_POLICY_IS_DELETE" = 0 AND "PASSWORD_POLICY_IS_DELETE" = 0 AND "PASSWORD_POLICY_ID" in(select "REL_PASSWORD_POLICY_ID" from "tbl_rel_user_password_policy" where "REL_USER_ID" = #value#)
+	</statement>
+	
+	<!-- 关联时间策略 -->
+	<statement id="pgAdminuser.queryTimePolicyByUserId" parameterClass="long" resultMap="timePolicyResult">
+		select * from "tbl_time_policy" where "TIME_POLICY_IS_DELETE" = 0 AND "TIME_POLICY_IS_DELETE" = 0 AND "TIME_POLICY_ID" in(select "REL_TIME_POLICY_ID" from "tbl_rel_user_time_policy" where "REL_USER_ID" = #value#)
+	</statement>
+	
+	<!-- 关联地址策略 -->
+	<statement id="pgAdminuser.queryAddressPolicyByUserId" parameterClass="long" resultMap="addressPolicyResult">
+		select * from "tbl_address_policy" where "ADDRESS_POLICY_IS_DELETE" = 0 AND "ADDRESS_POLICY_IS_DELETE" = 0 AND "ADDRESS_POLICY_ID" in(select "REL_ADDRESS_POLICY_ID" from "tbl_rel_user_address_policy" where "REL_USER_ID" = #value#)
+	</statement>
+	
+	<!-- 添加账户角色信息 -->
+	<insert id="pgAdminuser.insert-relRole" parameterClass="java.util.HashMap">
+		<![CDATA[
+			INSERT INTO "tbl_rel_user_role"
+			         ("REL_USER_ID",
+			          "REL_ROLE_ID") 
+			VALUES (#userId#,
+			        #roleId#)
+		]]>
+	</insert>
+	
+	<!-- 添加账户密码策略信息 -->
+	<insert id="pgAdminuser.insert-relPasswordPolicy" parameterClass="java.util.HashMap">
+		<![CDATA[
+			INSERT INTO "tbl_rel_user_password_policy"
+			            ("REL_USER_ID",
+			             "REL_PASSWORD_POLICY_ID") 
+			VALUES 
+			         (#userId#,
+			          #passwordPolicyId#)
+		]]>
+	</insert>
+	
+	<!-- 添加账户时间策略信息 -->
+	<insert id="pgAdminuser.insert-relTimePolicy" parameterClass="java.util.HashMap">
+		<![CDATA[
+			INSERT INTO "tbl_rel_user_time_policy" 
+			            ("REL_USER_ID",
+			             "REL_TIME_POLICY_ID") 
+			VALUES 
+			             (#userId#,
+			              #timePolicyId#)
+		]]>
+	</insert><!-- 添加账户资产组信息 -->
+	<insert id="pgAdminuser.insert-relAssetGroup" parameterClass="java.util.HashMap">
+		<![CDATA[
+			INSERT INTO "tbl_rel_user_asset_group" 
+			            ("REL_USER_ID",
+			             "REL_ASSET_GROUP_ID") 
+			VALUES 
+			             (#userId#,
+			              #assetGroupId#)
+		]]>
+	</insert>
+	
+	<!-- 添加账户地址策略信息 -->
+	<insert id="pgAdminuser.insert-relAddressPolicy" parameterClass="java.util.HashMap">
+		<![CDATA[
+			INSERT INTO "tbl_rel_user_address_policy"
+			            ("REL_USER_ID",
+			             "REL_ADDRESS_POLICY_ID") 
+			VALUES 
+			             (#userId#,
+			              #addressPolicyId#)
+		]]>
+	</insert>
+	
+	<!-- 删除角色 -->
+	<delete id="pgAdminuser.delete-relRole" parameterClass="long">
+		<![CDATA[
+			DELETE FROM "tbl_rel_user_role" WHERE "REL_USER_ID" = #userId#
+		]]>
+	</delete>
+	<!-- 删除用户资产组 -->
+	<delete id="pgAdminuser.delete-asset_group" parameterClass="long">
+		<![CDATA[
+			DELETE FROM "tbl_rel_user_asset_group" WHERE "REL_USER_ID" = #userId#
+		]]>
+	</delete>
+	<!-- 删除密码策略 -->
+	<delete id="pgAdminuser.delete-relPasswordPolicy" parameterClass="long">
+		<![CDATA[
+			DELETE FROM "tbl_rel_user_password_policy" WHERE "REL_USER_ID" = #userId#
+		]]>
+	</delete>
+	
+	<!-- 删除时间策略 -->
+	<delete id="pgAdminuser.delete-relTimePolicy" parameterClass="long">
+		<![CDATA[
+			DELETE FROM "tbl_rel_user_time_policy" WHERE "REL_USER_ID" = #userId#
+		]]>
+	</delete>
+	
+	<!-- 删除地址策略 -->
+	<delete id="pgAdminuser.delete-relAddressPolicy" parameterClass="long">
+		<![CDATA[
+			DELETE FROM "tbl_rel_user_address_policy" WHERE "REL_USER_ID" = #userId#
+		]]>
+	</delete>
+	
+	<!-- 修改用户密码 -->
+	<update id="pgAdminuser.updatePassword" parameterClass="java.util.HashMap">
+	   <![CDATA[
+	       UPDATE "tbl_user" 
+	       SET 
+	               "USER_PASSWORD" = #userPassword#,
+	               "USER_CHANGE_PASSWORD" = 0,
+                   "USER_UPDATE_DATE_TIME" = #userUpdateDateTime# 
+	       WHERE 
+	               "USER_ID" = #userId#
+	   ]]>
+	</update>
+	
+	<!-- 根据用户ID串查询用户 -->
+	<select id="pgAdminquery.userIds" parameterClass="String" resultMap="userResult">
+	   SELECT *
+        FROM "tbl_user" WHERE "USER_ID" IN ($userIds$)
+	</select>
+	
+	<!-- 排序 -->
+	<select id="pgAdminuser.sort" parameterClass="java.util.HashMap" resultMap="userResult">
+	    SELECT * FROM "tbl_user" WHERE 1=1 and "USER_IS_DELETE" != 1 
+        <isNotEmpty prepend= "AND"  property="display">
+			<![CDATA[
+				"USER_DISPLAY" = #display#
+			]]>
+		</isNotEmpty>
+        ORDER BY $str$
+	</select>
+
+	
+	<!-- 为派发工单查询所有 (默认不显示系统内置用户)-->
+	<select id="pgAdminuser.queryAll"  parameterClass="java.util.HashMap" resultMap="userResult" >
+		SELECT * FROM "tbl_user" WHERE 1=1 and "USER_IS_DELETE" != 1 and "USER_DISPLAY" != 0 and "USER_STATUS" != 0 
+		ORDER BY "USER_UPDATE_DATE_TIME" desc
+	</select>
+	
+	<!-- 升级用户对应的事件字段 -->
+	<update id="pgAdminuser.updateEventFaild" parameterClass="java.util.HashMap">
+	    UPDATE "tbl_user" SET "EVENT_FAILD" = '$showEventFiled$' WHERE "USER_ID" = #userId#
+	</update>
+
+	<!-- 根据预警影响的资产，查询到负责人 李长红修改20140417-->
+	<select id="pgAdminuser.queryAssetResponsibilityUserByPrincipalSys" parameterClass="java.util.HashMap" resultMap="userResult">
+	   <!-- SELECT * FROM tbl_user WHERE "USER_ID" IN (SELECT "ASSET_RESPONSIBILITY_USER_ID" FROM tbl_asset WHERE "ASSET_SUPPORT_DEVICE"  SIMILAR TO '%($assetSupportDevice$)%'); --> 
+	   SELECT * FROM tbl_user WHERE "USER_ID" IN (SELECT "asset"."ASSET_RESPONSIBILITY_USER_ID" from tbl_asset as "asset" where "asset"."ASSET_SYSTEM_ID" in (SELECT "asset_system"."ASSET_SYSTEM_ID" FROM tbl_asset_system as "asset_system" where "asset_system"."ASSET_SYSTEM_NAME" in $assetSupportDevice$));
+	</select>
+	<!-- 根据用户id查询这个用户有多少列 -->
+	<select id="pgAdminuser.queryLayoutByUserId" parameterClass="int" resultClass="int">
+	 
+	   SELECT "USER_LAYOUT" FROM tbl_user WHERE "USER_ID"  = #userId#
+	</select>
+		<!-- 更新用户的首页显示列数 -->
+	<update id="pgAdminuser.updateLayoutByUserId" parameterClass="java.util.HashMap" >
+		<![CDATA[
+			UPDATE "tbl_user" 
+			SET 
+			       "USER_LAYOUT" = #layout#
+			WHERE 
+			       "USER_ID" = #userId#
+		]]>
+	</update>
+		<!-- 查询条数 -->
+	<select id="pgAdminuser.queryUserLayoutByUserId" resultClass="int" parameterClass="long">
+		SELECT "USER_LAYOUT" FROM "tbl_user" WHERE  "USER_ID" = #userId#
+		
+		
+	</select>
+	
+	<select id="pgAdminuser.queryUserIdByName" parameterClass="java.lang.String" resultClass="long">
+		<![CDATA[
+			SELECT "USER_ID" FROM "tbl_user" WHERE "USER_LOGIN_NAME" = #name# AND "USER_IS_DELETE" != 1
+		]]>
+	</select>
+	
+<!-- sqlServer -->
+	<!-- 查询条数 李长红修改。默认不显示内置用户-->
+	<select id="sqlServeruser.count" resultClass="int" parameterClass="java.util.HashMap">
+		SELECT COUNT(*) FROM "tbl_user" WHERE 1=1 and "USER_IS_DELETE" != 1 and "USER_DISPLAY" = 1
+		
+		<!--<isNotEmpty prepend= "AND"  property="display">
+			<![CDATA[
+				"USER_DISPLAY" = #display#
+			]]>
+		</isNotEmpty>-->
+		
+		<isNotEmpty prepend= "AND"  property="selUserLoginName">
+			<![CDATA[
+				"USER_LOGIN_NAME" LIKE '%$selUserLoginName$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="selUserRealName">
+			<![CDATA[
+				"USER_REAL_NAME" LIKE '%$selUserRealName$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="userState">
+			<![CDATA[
+				"USER_STATUS" = #userState#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="roleid">
+			<![CDATA[
+				"USER_ID" in(select "REL_USER_ID" from soc.tbl_rel_user_role where "REL_ROLE_ID" =#roleid#)
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="userEmail">
+			<![CDATA[
+				"USER_EMAIL" = #userEmail#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="selUserCreatorIp">
+			<![CDATA[
+				"USER_CREATOR_IP" LIKE '%$selUserCreatorIp$%' 
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				("USER_LOGIN_NAME" LIKE '%$keyword$%' OR "USER_REAL_NAME" LIKE '%$keyword$%' OR "USER_EMAIL" LIKE '%$keyword$%' OR "USER_CREATOR_IP" LIKE '%$keyword$%' )
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="userStatus">
+			<![CDATA[
+				"USER_STATUS" = #userStatus#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="relUsers">
+		    <![CDATA[
+		       "USER_ID" in ($relUsers$)
+		    ]]>
+		</isNotEmpty>
+		
+	</select>
+	
+	
+	<!-- 查询 (默认不显示系统内置用户)李长红修改。默认不显示内置用户-->
+	<select id="sqlServeruser.query"  parameterClass="java.util.HashMap" resultMap="userResult" >
+		SELECT * FROM "tbl_user" WHERE 1=1 and "USER_IS_DELETE" != 1 and "USER_DISPLAY" = 1
+		<!--<isNotEmpty prepend= "AND"  property="display">
+			<![CDATA[
+				"USER_DISPLAY" = #display#
+			]]>
+		</isNotEmpty>-->
+		
+		<isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				("USER_LOGIN_NAME" LIKE '%$keyword$%' OR "USER_REAL_NAME" LIKE '%$keyword$%' OR "USER_EMAIL" LIKE '%$keyword$%' OR "USER_CREATOR_IP" LIKE '%$keyword$%' ) 
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="selUserLoginName">
+			<![CDATA[
+				"USER_LOGIN_NAME" LIKE '%$selUserLoginName$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="selUserRealName">
+			<![CDATA[
+				"USER_REAL_NAME" LIKE '%$selUserRealName$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="selUserCreatorIp">
+			<![CDATA[
+				"USER_CREATOR_IP" LIKE '%$selUserCreatorIp$%' 
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="userState">
+			<![CDATA[
+				"USER_STATUS" = #userState#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="roleid">
+			<![CDATA[
+				"USER_ID" in(select "REL_USER_ID" from soc.tbl_rel_user_role where "REL_ROLE_ID" =#roleid#)
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="userEmail">
+			<![CDATA[
+				"USER_EMAIL" = #userEmail#
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend= "AND"  property="userStatus">
+			<![CDATA[
+				"USER_STATUS" = #userStatus#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="relUsers">
+		    <![CDATA[
+		       "USER_ID" in ($relUsers$)
+		    ]]>
+		</isNotEmpty>
+			ORDER BY "USER_UPDATE_DATE_TIME" desc
+	</select>
+	
+	<!-- 查询所有 (默认不显示系统内置用户)李长红修改。默认不显示内置用户-->
+	<select id="sqlServeruser.queryEx"  parameterClass="java.util.HashMap" resultMap="userResult" >
+		SELECT * FROM "tbl_user" WHERE 1=1 and "USER_IS_DELETE" != 1 and "USER_DISPLAY" = 1
+		<!--<isNotEmpty prepend= "AND"  property="display">
+			<![CDATA[
+				"USER_DISPLAY" = #display#
+			]]>
+		</isNotEmpty>-->
+		
+		<isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				("USER_LOGIN_NAME" LIKE '%$keyword$%' OR "USER_REAL_NAME" LIKE '%$keyword$%' OR "USER_EMAIL" LIKE '%$keyword$%' OR "USER_CREATOR_IP" LIKE '%$keyword$%' ) 
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="selUserLoginName">
+			<![CDATA[
+				"USER_LOGIN_NAME" LIKE '%$selUserLoginName$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="selUserRealName">
+			<![CDATA[
+				"USER_REAL_NAME" LIKE '%$selUserRealName$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="selUserCreatorIp">
+			<![CDATA[
+				"USER_CREATOR_IP" LIKE '%$selUserCreatorIp$%' 
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="userStatus">
+			<![CDATA[
+				"USER_STATUS" = #userStatus#
+			]]>
+		</isNotEmpty>
+			ORDER BY "USER_UPDATE_DATE_TIME" desc
+	</select>
+	
+	<!-- 根据登录名查询 -->
+	<select id="sqlServeruser.queryByUserLoginName"  parameterClass="java.lang.String" resultMap="userResult">
+		<![CDATA[
+			SELECT * FROM "tbl_user" WHERE "USER_LOGIN_NAME" = #value# AND "USER_IS_DELETE" = 0
+		]]>
+	</select>
+	
+	<!-- 根据账户ID查询 -->
+	<select id="sqlServeruser.queryById"  parameterClass="long" resultMap="userResult" >
+		<![CDATA[
+			SELECT * FROM "tbl_user" WHERE "USER_ID" = #userId#
+		]]>
+	</select>
+	
+		<!-- 根据账户ID查询账户名称 -->
+	<select id="sqlServeruser.queryUserNameById"  parameterClass="long" resultClass="java.lang.String" >
+		<![CDATA[
+			SELECT "USER_LOGIN_NAME" FROM "tbl_user" WHERE "USER_ID" = #id#
+		]]>
+	</select>
+	
+	<select id="sqlServeruser.queryUserIdByName" parameterClass="java.lang.String" resultClass="long">
+		<![CDATA[
+			SELECT "USER_ID" FROM "tbl_user" WHERE "USER_LOGIN_NAME" = #name# AND "USER_IS_DELETE" != 1
+		]]>
+	</select>
+	
+	
+	<!-- 更新账户状态 -->
+	<update id="sqlServeruser.updateUserStatus" parameterClass="java.util.HashMap" >
+		<![CDATA[
+			UPDATE "tbl_user" 
+			SET 
+			       "USER_STATUS" = #userStatus#,
+			       "USER_UPDATE_DATE_TIME" = #userUpdateDateTime# 
+			WHERE 
+			       "USER_ID" = #userId#
+		]]>
+	</update>
+	
+	<!-- 设置账户为标记删除 -->
+	<update id="sqlServeruser.updateUserIsDelete" parameterClass="java.util.HashMap" >
+		<![CDATA[
+			UPDATE "tbl_user" 
+			SET 
+			       "USER_IS_DELETE" = #userIsDelete# 
+			WHERE  
+			       "USER_ID" = #userId#
+		]]>
+	</update>
+	
+	<!-- 更新 账户信息-->
+	<update id="sqlServeruser.update" parameterClass="user" >
+			UPDATE "tbl_user"
+			SET 
+					"USER_LOGIN_NAME" = #userLoginName#,
+					"USER_REAL_NAME" = #userRealName#,
+					"USER_EMAIL" = #userEmail#,
+					"USER_MOBILE" = #userMobile#,
+					"USER_TELEPHONE" = #userTelephone#,
+					"USER_ADDRESS" = #userAddress#,
+					"USER_STATUS" = #userStatus#,
+					"USER_CREATOR_IP" = #userCreatorIp#,
+					"USER_CREATE_DATE_TIME" = #userCreateDateTime#,
+					"USER_UPDATE_DATE_TIME" = #userUpdateDateTime#,
+					"USER_AUTH_TYPE" = #userAuthType#,
+					"USER_FAIL_NUM" = #userFailNum#,
+					"USER_LOCKED_TIME" = #userLockTime#,
+					<isNotEmpty property="userPassword">
+						<![CDATA[
+							"USER_PASSWORD" = #userPassword#,
+						]]>
+					</isNotEmpty>
+					"USER_CHANGE_PASSWORD" = #userChangePassword#,
+					"USER_MEMO" = #userMemo#,
+					"ASSET_GROUP_ID" =#assetGroupid#
+			 	WHERE 
+			 		"USER_ID" = #userId#
+	</update>
+	
+	<!-- 添加账户 -->
+	<insert id="sqlServeruser.insert" parameterClass="user" >
+		INSERT INTO "tbl_user" 
+				(   "USER_LOGIN_NAME",
+					"USER_REAL_NAME", 
+					"USER_EMAIL", 
+					"USER_MOBILE", 
+					"USER_TELEPHONE", 
+					"USER_ADDRESS", 
+					"USER_STATUS", 
+					"USER_CREATOR_IP",
+					"USER_CREATE_DATE_TIME", 
+					"USER_UPDATE_DATE_TIME", 
+					"USER_AUTH_TYPE", 
+					"USER_PASSWORD", 
+					"USER_CHANGE_PASSWORD", 
+					"USER_DISPLAY",
+					"USER_FAIL_NUM",
+					"USER_IS_DELETE",
+					"USER_MEMO",
+					"ASSET_GROUP_ID"
+				)
+		VALUES 
+				(   #userLoginName#, 
+					#userRealName#,
+					#userEmail#, 
+					#userMobile#, 
+					#userTelephone#, 
+					#userAddress#, 
+					#userStatus#, 
+					#userCreatorIp#, 
+					#userCreateDateTime#,
+					#userUpdateDateTime#, 
+					#userAuthType#,
+					#userPassword#, 
+					#userChangePassword#, 
+					#userDisplay#,
+					#userFailNum#,
+					#userIsDelete#,
+					#userMemo# ,
+					#assetGroupid#
+				)
+		<selectKey resultClass="java.lang.Long" keyProperty="userId" >
+           SELECT @@IDENTITY AS userId
+      	</selectKey>
+	</insert>
+	
+	 <!-- 关联角色 -->
+	<statement id="sqlServeruser.queryRoleByUserId" parameterClass="long" resultMap="roleResult">
+		select * from "tbl_role" where "ROLE_IS_DELETE" = 0 AND "ROLE_ID" in(select "REL_ROLE_ID" from "tbl_rel_user_role" where "REL_USER_ID" = #value#)
+	</statement> 
+	
+	<!-- 关联密码策略 -->
+	<statement id="sqlServeruser.queryPasswordPolicyByUserId" parameterClass="long" resultMap="passwordPolicyResult">
+		select * from "tbl_password_policy" where "PASSWORD_POLICY_IS_DELETE" = 0 AND "PASSWORD_POLICY_IS_DELETE" = 0 AND "PASSWORD_POLICY_ID" in(select "REL_PASSWORD_POLICY_ID" from "tbl_rel_user_password_policy" where "REL_USER_ID" = #value#)
+	</statement>
+	
+	<!-- 关联时间策略 -->
+	<statement id="sqlServeruser.queryTimePolicyByUserId" parameterClass="long" resultMap="timePolicyResult">
+		select * from "tbl_time_policy" where "TIME_POLICY_IS_DELETE" = 0 AND "TIME_POLICY_IS_DELETE" = 0 AND "TIME_POLICY_ID" in(select "REL_TIME_POLICY_ID" from "tbl_rel_user_time_policy" where "REL_USER_ID" = #value#)
+	</statement>
+	
+	<!-- 关联地址策略 -->
+	<statement id="sqlServeruser.queryAddressPolicyByUserId" parameterClass="long" resultMap="addressPolicyResult">
+		select * from "tbl_address_policy" where "ADDRESS_POLICY_IS_DELETE" = 0 AND "ADDRESS_POLICY_IS_DELETE" = 0 AND "ADDRESS_POLICY_ID" in(select "REL_ADDRESS_POLICY_ID" from "tbl_rel_user_address_policy" where "REL_USER_ID" = #value#)
+	</statement>
+	
+	<!-- 添加账户角色信息 -->
+	<insert id="sqlServeruser.insert-relRole" parameterClass="java.util.HashMap">
+		<![CDATA[
+			INSERT INTO "tbl_rel_user_role"
+			         ("REL_USER_ID",
+			          "REL_ROLE_ID") 
+			VALUES (#userId#,
+			        #roleId#)
+		]]>
+	</insert>
+	
+	<!-- 添加账户密码策略信息 -->
+	<insert id="sqlServeruser.insert-relPasswordPolicy" parameterClass="java.util.HashMap">
+		<![CDATA[
+			INSERT INTO "tbl_rel_user_password_policy"
+			            ("REL_USER_ID",
+			             "REL_PASSWORD_POLICY_ID") 
+			VALUES 
+			         (#userId#,
+			          #passwordPolicyId#)
+		]]>
+	</insert>
+	
+	<!-- 添加账户时间策略信息 -->
+	<insert id="sqlServeruser.insert-relTimePolicy" parameterClass="java.util.HashMap">
+		<![CDATA[
+			INSERT INTO "tbl_rel_user_time_policy" 
+			            ("REL_USER_ID",
+			             "REL_TIME_POLICY_ID") 
+			VALUES 
+			             (#userId#,
+			              #timePolicyId#)
+		]]>
+	</insert><!-- 添加账户资产组信息 -->
+	<insert id="sqlServeruser.insert-relAssetGroup" parameterClass="java.util.HashMap">
+		<![CDATA[
+			INSERT INTO "tbl_rel_user_asset_group" 
+			            ("REL_USER_ID",
+			             "REL_ASSET_GROUP_ID") 
+			VALUES 
+			             (#userId#,
+			              #assetGroupId#)
+		]]>
+	</insert>
+	
+	<!-- 添加账户地址策略信息 -->
+	<insert id="sqlServeruser.insert-relAddressPolicy" parameterClass="java.util.HashMap">
+		<![CDATA[
+			INSERT INTO "tbl_rel_user_address_policy"
+			            ("REL_USER_ID",
+			             "REL_ADDRESS_POLICY_ID") 
+			VALUES 
+			             (#userId#,
+			              #addressPolicyId#)
+		]]>
+	</insert>
+	
+	<!-- 删除角色 -->
+	<delete id="sqlServeruser.delete-relRole" parameterClass="long">
+		<![CDATA[
+			DELETE FROM "tbl_rel_user_role" WHERE "REL_USER_ID" = #userId#
+		]]>
+	</delete>
+	<!-- 删除用户资产组 -->
+	<delete id="sqlServeruser.delete-asset_group" parameterClass="long">
+		<![CDATA[
+			DELETE FROM "tbl_rel_user_asset_group" WHERE "REL_USER_ID" = #userId#
+		]]>
+	</delete>
+	<!-- 删除密码策略 -->
+	<delete id="sqlServeruser.delete-relPasswordPolicy" parameterClass="long">
+		<![CDATA[
+			DELETE FROM "tbl_rel_user_password_policy" WHERE "REL_USER_ID" = #userId#
+		]]>
+	</delete>
+	
+	<!-- 删除时间策略 -->
+	<delete id="sqlServeruser.delete-relTimePolicy" parameterClass="long">
+		<![CDATA[
+			DELETE FROM "tbl_rel_user_time_policy" WHERE "REL_USER_ID" = #userId#
+		]]>
+	</delete>
+	
+	<!-- 删除地址策略 -->
+	<delete id="sqlServeruser.delete-relAddressPolicy" parameterClass="long">
+		<![CDATA[
+			DELETE FROM "tbl_rel_user_address_policy" WHERE "REL_USER_ID" = #userId#
+		]]>
+	</delete>
+	
+	<!-- 修改用户密码 -->
+	<update id="sqlServeruser.updatePassword" parameterClass="java.util.HashMap">
+	   <![CDATA[
+	       UPDATE "tbl_user" 
+	       SET 
+	               "USER_PASSWORD" = #userPassword#,
+	               "USER_CHANGE_PASSWORD" = 0,
+                   "USER_UPDATE_DATE_TIME" = #userUpdateDateTime# 
+	       WHERE 
+	               "USER_ID" = #userId#
+	   ]]>
+	</update>
+	
+	<!-- 根据用户ID串查询用户 -->
+	<select id="sqlServerquery.userIds" parameterClass="String" resultMap="userResult">
+	   SELECT *
+        FROM "tbl_user" WHERE "USER_ID" IN ($userIds$)
+	</select>
+	
+	<!-- 排序 -->
+	<select id="sqlServeruser.sort" parameterClass="java.util.HashMap" resultMap="userResult">
+	    SELECT * FROM "tbl_user" WHERE 1=1 and "USER_IS_DELETE" != 1 
+        <isNotEmpty prepend= "AND"  property="display">
+			<![CDATA[
+				"USER_DISPLAY" = #display#
+			]]>
+		</isNotEmpty>
+        ORDER BY $str$
+	</select>
+
+	
+	<!-- 为派发工单查询所有 (默认不显示系统内置用户)-->
+	<select id="sqlServeruser.queryAll"  parameterClass="java.util.HashMap" resultMap="userResult" >
+		SELECT * FROM "tbl_user" WHERE 1=1 and "USER_IS_DELETE" != 1 and "USER_DISPLAY" != 0 and "USER_STATUS" != 0 
+		ORDER BY "USER_UPDATE_DATE_TIME" desc
+	</select>
+	
+	<!-- 升级用户对应的事件字段 -->
+	<update id="sqlServeruser.updateEventFaild" parameterClass="java.util.HashMap">
+	    UPDATE "tbl_user" SET "EVENT_FAILD" = '$showEventFiled$' WHERE "USER_ID" = #userId#
+	</update>
+
+	<!-- 根据预警影响的资产，查询到负责人 -->
+	<select id="sqlServeruser.queryAssetResponsibilityUserByPrincipalSys" parameterClass="java.util.HashMap" resultMap="userResult">
+	   <!-- SELECT * FROM tbl_user WHERE "USER_ID" IN (SELECT "ASSET_RESPONSIBILITY_USER_ID" FROM tbl_asset WHERE "ASSET_SUPPORT_DEVICE"  SIMILAR TO '%($assetSupportDevice$)%'); --> 
+	   SELECT * FROM tbl_user WHERE "USER_ID" IN (SELECT "ASSET_RESPONSIBILITY_USER_ID" from tbl_asset where "ASSET_SYSTEM_ID" in (SELECT "ASSET_SYSTEM_ID" FROM tbl_asset_system where "ASSET_SYSTEM_NAME" in $assetSupportDevice$));
+	</select>
+
+	<!-- 根据用户id查询这个用户有多少列 -->
+	<select id="sqlServeruser.queryLayoutByUserId" parameterClass="int" resultClass="int">
+	 
+	   SELECT "USER_LAYOUT" FROM tbl_user WHERE "USER_ID"  = #userId#
+	</select>
+		<!-- 更新用户的首页显示列数 -->
+	<update id="sqlServeruser.updateLayoutByUserId" parameterClass="java.util.HashMap" >
+		<![CDATA[
+			UPDATE "tbl_user" 
+			SET 
+			       "USER_LAYOUT" = #layout#
+			WHERE 
+			       "USER_ID" = #userId#
+		]]>
+	</update>
+		<!-- 查询条数 -->
+	<select id="sqlServeruser.queryUserLayoutByUserId" resultClass="int" parameterClass="long">
+		SELECT "USER_LAYOUT" FROM "tbl_user" WHERE  "USER_ID" = #userId#
+		
+		
+	</select>
+
+</sqlMap>

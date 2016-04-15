@@ -1,0 +1,10 @@
+table{
+	font-size: 12px;
+	
+}
+
+ table td{
+	border-top:thin;
+	border-left:thin;
+	line-height: 28px;
+}

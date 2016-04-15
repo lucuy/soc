@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="probeStateSQL">
+	<resultMap id="probeStateResult" class="probeState">
+   		<result property="collectorMacs" 			column="ASSET_COLLECTOR_MAC" 		    jdbcType="varchar"/>
+   		<result property="error"           column="ASSET_ERROR"           jdbcType="bigint"/>
+   		<result property="result"       column="ASSET_RESULT"             jdbcType="bigint"/>
+   		<result property="taskId"       column="ASSET_TASK_ID"             jdbcType="bigint"/>
+   	</resultMap>
+   	<!-- 根据当前MAC地址查询采集器状态 -->
+	<select id="pgAdminprobeState.queryMac" resultClass="String" resultMap="probeStateResult">
+		SELECT * FROM "tbl_probe_state"  WHERE "ASSET_COLLECTOR_MAC"=#collectorMacs#
+	</select>
+	<!-- 更新执行状态 -->
+	<update id="pgAdminprobeState.update" parameterClass="probeState">
+		UPDATE "tbl_probe_state"
+		SET 
+		"ASSET_ERROR"=#error#,
+		"ASSET_RESULT"=#result#
+		WHERE "ASSET_TASK_ID" = $taskId$
+	</update>
+	
+	<!-- 新增 -->
+	<insert id="pgAdminprobeState.insert" parameterClass="probeState">
+		INSERT INTO
+		"tbl_probe_state"
+		( "ASSET_COLLECTOR_MAC",
+		"ASSET_ERROR",
+		"ASSET_RESULT",
+		"ASSET_TASK_ID"
+		)
+		VALUES
+		(
+		#collectorMacs#,
+		#error#,
+		#result#,
+		$taskId$
+		)
+	</insert>
+	
+	<!-- 根据taskId 查询采集器状态 -->
+	<select id="pgAdminprobeState.queryByTaskId" parameterClass="int" resultMap="probeStateResult">
+	    SELECT * FROM "tbl_probe_state"  WHERE "ASSET_TASK_ID" = $taskId$
+	</select>
+	
+	<!-- 删除采集器状态 -->
+	<delete id="pgAdminprobeState.deleteProbeState" parameterClass="int">
+	    DELETE FROM "tbl_probe_state" WHERE "ASSET_TASK_ID" = $taskId$
+	</delete> 
+   	<!-- sqlserver -->
+   	<!-- 根据当前MAC地址查询采集器状态 -->
+	<select id="sqlServerprobeState.queryMac" resultClass="String" resultMap="probeStateResult">
+		SELECT * FROM "tbl_probe_state"  WHERE "ASSET_COLLECTOR_MAC"=#collectorMacs#
+	</select>
+	<!-- 更新执行状态 -->
+	<update id="sqlServerprobeState.update" parameterClass="probeState">
+		UPDATE "tbl_probe_state"
+		SET 
+		"ASSET_ERROR"=#error#,
+		"ASSET_RESULT"=#result#
+		WHERE "ASSET_TASK_ID" = $taskId$
+	</update>
+	
+	<!-- 新增 -->
+	<insert id="sqlServerprobeState.insert" parameterClass="probeState">
+		INSERT INTO
+		"tbl_probe_state"
+		( "ASSET_COLLECTOR_MAC",
+		"ASSET_ERROR",
+		"ASSET_RESULT",
+		"ASSET_TASK_ID"
+		)
+		VALUES
+		(
+		#collectorMacs#,
+		#error#,
+		#result#,
+		$taskId$
+		)
+	</insert>
+	
+	<!-- 根据taskId 查询采集器状态 -->
+	<select id="sqlServerprobeState.queryByTaskId" parameterClass="int" resultMap="probeStateResult">
+	    SELECT * FROM "tbl_probe_state"  WHERE "ASSET_TASK_ID" = $taskId$
+	</select>
+	
+	<!-- 删除采集器状态 -->
+	<delete id="sqlServerprobeState.deleteProbeState" parameterClass="int">
+	    DELETE FROM "tbl_probe_state" WHERE "ASSET_TASK_ID" = $taskId$
+	</delete> 
+	
+</sqlMap>

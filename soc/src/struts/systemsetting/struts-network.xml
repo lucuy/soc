@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="settingNetwork" extends="struts-default" namespace="/settingNetwork">
+		<action name="settingNetwork" class="SettingNetworkAction" method="query">
+			<result name="success">/pages/systemsetting/Syssetting_network.jsp</result>
+		</action>
+		
+		<action name="insertCard" class="SettingNetworkAction" method="insertCard"/>
+	 	
+	 	<action name="saveCardSize" class="SettingNetworkAction" method="saveCardSize"/>
+	 	
+	 	<action name="conIP" class="SettingNetworkAction" method="conIP"/>
+	 	
+	 	<action name="testingLoadBalancing" class="SettingNetworkAction" method="testingLoadBalancing"/>
+	 	
+	 	<action name="executePing" class="SettingNetworkAction" method="executePing"/>
+	 	
+	 	<action name="flush_route_list" class="SettingNetworkAction" method="flush_route_list"/>
+	 	
+	 	<action name="lookInterfaces" class="SettingNetworkAction" method="lookInterfaces"/>
+	 	
+	 	<action name="recoverNetwork" class="SettingNetworkAction" method="recoverNetwork"/>
+	 	
+	 	<action name="flush" class="SettingNetworkAction" method="flush"/>
+	 	
+	 	<!-- 双机热备的Action -->
+	 	<action name="updateNet" class="SettingNetworkAction" method="updateNet">
+			<result name="success" type="redirect">queryNetSetting.action</result>
+		</action>
+		<action name="queryNetSetting" class="SettingNetworkAction" method="queryNetSetting">
+			<result name="success">/pages/systemsetting/netSetting.jsp</result>
+		</action>
+		<action name="queryHAStart" class="SettingNetworkAction" method="queryHAStart">
+			<result name="success">/pages/systemsetting/queryHAStart.jsp</result>
+		</action>
+		<action name="queryHAProfessional" class="SettingNetworkAction" method="queryHAProfessional"></action>
+	 	<!--  -->
+	</package>
+</struts>

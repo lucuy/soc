@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="warnSQL">
+
+	<resultMap class="warn" id="wranResult">
+		<result property="warnId" column="WARN_ID" jdbcType="bigint" />
+		<result property="warnName" column="WARN_NAME" jdbcType="varchar" />
+		<result property="warnDescription" column="WARN_DESCRIPTION"
+			jdbcType="text" />
+		<result property="warnHarm" column="WARN_HARM" jdbcType="text" />
+		<result property="warnType" column="WARN_TYPE" jdbcType="text" />
+		<result property="leakName" column="LEAK_NAME" jdbcType="varchar" />
+		<result property="leakType" column="LEAK_TYPE" jdbcType="varchar" />
+		<result property="leakLevel" column="LEAK_LEVEL" jdbcType="int" />
+		<result property="status" column="STATUS" jdbcType="int" />
+		<result property="seriousLevel" column="SERIOUS_LEVLE"
+			jdbcType="int" />
+		<result property="solution" column="SOLUTION" jdbcType="text" />
+		<result property="publicDate" column="PUBLIC_DATE" jdbcType="date" />
+		<result property="source" column="SOURCE" jdbcType="varchar" />
+		<result property="publisher" column="PUBLISHER" jdbcType="varchar" />
+		<result property="influenceSys" column="INFLUENCE_SYS"
+			jdbcType="varchar" />
+		<result property="leakNum" column="LEAK_NUM" jdbcType="varchar" />
+		<result property="influenceInterface" column="INFLUENCE_INTERFACE"
+			jdbcType="varchar" />
+	</resultMap>
+
+	<!-- 查询条数 -->
+	<select id="pgAdminwarn.count" parameterClass="java.util.HashMap"
+		resultClass="int">
+		SELECT COUNT(*) FROM "tbl_warn" WHERE 1=1
+		<isNotEmpty prepend="AND" property="keyword">
+			<![CDATA[
+				(
+				"WARN_NAME" LIKE '%$keyword$%'
+				)
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selWarnName">
+			<![CDATA[
+				("WARN_NAME" LIKE '%$selWarnName$%')
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selWarnType">
+			<![CDATA[
+				("WARN_TYPE" LIKE '%$selWarnType$%')
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selSeriousLevel">
+			<![CDATA[
+				("SERIOUS_LEVLE" = '$selSeriousLevel$')
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selStatus">
+		     <![CDATA[
+				("STATUS" = '$selStatus$')
+			  ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="OR" property="status">
+			<![CDATA[
+				("STATUS" = '$status$')
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="OR" property="warnType">
+			<![CDATA[
+				("WARN_TYPE" = '$warnType$')
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="OR" property="seriousLevel">
+			<![CDATA[
+				("SERIOUS_LEVLE" = '$seriousLevel$')
+			]]>
+		</isNotEmpty>
+	</select>
+	<!-- 高级查询 -->
+	<select id="pgAdminwarn.higQuery" parameterClass="java.util.HashMap"
+		resultMap="wranResult">
+		SELECT * FROM "tbl_warn" WHERE 1=1
+		<isNotEmpty prepend="AND" property="keyword">
+			<![CDATA[
+				("WARN_NAME" LIKE '%$keyword$%' )
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selWarnName">
+			<![CDATA[
+				("WARN_NAME" LIKE '%$selWarnName$%')
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selWarnType">
+			<![CDATA[
+				("WARN_TYPE" LIKE '%$selWarnType$%')
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selSeriousLevel">
+			<![CDATA[
+				("SERIOUS_LEVLE" = '$selSeriousLevel$')
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selStatus">
+		     <![CDATA[
+				("STATUS" = '$selStatus$')
+			  ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="OR" property="status">
+			<![CDATA[
+				("STATUS" = '$status$')
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="OR" property="warnType">
+			<![CDATA[
+				("WARN_TYPE" = '$warnType$')
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="OR" property="seriousLevel">
+			<![CDATA[
+				("SERIOUS_LEVLE" = '$seriousLevel$')
+			]]>
+		</isNotEmpty>
+		ORDER BY "PUBLIC_DATE" DESC
+	</select>
+	<!-- 查询warn发布 -->
+	<select id="pgAdminwarn.query" resultMap="wranResult">
+		select * from "tbl_warn"
+	</select>
+
+	<!-- 插入预警 -->
+	<insert id="pgAdminwarn.insert" parameterClass="warn">
+		INSERT INTO tbl_warn(
+		"WARN_NAME", "WARN_DESCRIPTION", "WARN_HARM", "WARN_TYPE",
+		"LEAK_NAME", "LEAK_TYPE", "LEAK_LEVEL", "STATUS", "SERIOUS_LEVLE",
+		"SOLUTION", "PUBLIC_DATE", "SOURCE", "PUBLISHER", "INFLUENCE_SYS",
+		"LEAK_NUM", "INFLUENCE_INTERFACE")
+		VALUES
+		(#warnName#,#warnDescription#,#warnHarm#,#warnType#,#leakName#,#leakType#,#leakLevel#,#status#,#seriousLevel#,#solution#,#publicDate#,#source#,#publisher#,#influenceSys#,#leakNum#,#influenceInterface#);
+	</insert>
+
+	<!-- 查看详细信息 -->
+	<select id="pgAdminwarn.queryById" parameterClass="warn" resultMap="wranResult">
+		select * from tbl_warn where "WARN_ID" = #warnId#
+	</select>
+
+	<!-- 批量删除 -->
+	<delete id="pgAdminwarn.deleteWarn" parameterClass="java.lang.String">
+		delete from tbl_warn
+		where "WARN_ID" in ($s:String$)
+	</delete>
+
+	<!-- 修改预警信息 -->
+	<update id="pgAdminwarn.updateWarn" parameterClass="warn">
+		update tbl_warn set
+		"WARN_NAME"=#warnName#,"WARN_DESCRIPTION"=#warnDescription#,"WARN_HARM"=#warnHarm#,"WARN_TYPE"=#warnType#,"LEAK_NAME"=#leakName#,"LEAK_TYPE"=#leakType#,"LEAK_LEVEL"=#leakLevel#,"STATUS"=#status#,"SERIOUS_LEVLE"=#seriousLevel#,"SOLUTION"=#solution#,"PUBLIC_DATE"=#publicDate#,"SOURCE"=#source#,"PUBLISHER"=#publisher#,"INFLUENCE_SYS"=#influenceSys#,"LEAK_NUM"=#leakNum#,"INFLUENCE_INTERFACE"=#influenceInterface#
+		where "WARN_ID"=#warnId#
+	</update>
+
+	<!-- 排序 -->
+	<select id="pgAdminwarn.sort" parameterClass="java.lang.String"
+		resultMap="wranResult">
+		select * from tbl_warn order by $str$
+	</select>
+	<!-- sqlServer -->
+	<!-- 查询条数 -->
+	<select id="sqlServerwarn.count" parameterClass="java.util.HashMap"
+		resultClass="int">
+		SELECT COUNT(*) FROM "tbl_warn" WHERE 1=1
+		<isNotEmpty prepend="AND" property="keyword">
+			<![CDATA[
+				(
+				"WARN_NAME" LIKE '%$keyword$%'
+				)
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selWarnName">
+			<![CDATA[
+				("WARN_NAME" LIKE '%$selWarnName$%')
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selWarnType">
+			<![CDATA[
+				("WARN_TYPE" LIKE '%$selWarnType$%')
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selSeriousLevel">
+			<![CDATA[
+				("SERIOUS_LEVLE" = '$selSeriousLevel$')
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selStatus">
+		     <![CDATA[
+				("STATUS" = '$selStatus$')
+			  ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="OR" property="status">
+			<![CDATA[
+				("STATUS" = '$status$')
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="OR" property="warnType">
+			<![CDATA[
+				("WARN_TYPE" = '$warnType$')
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="OR" property="seriousLevel">
+			<![CDATA[
+				("SERIOUS_LEVLE" = '$seriousLevel$')
+			]]>
+		</isNotEmpty>
+	</select>
+	<!-- 高级查询 -->
+	<select id="sqlServerwarn.higQuery" parameterClass="java.util.HashMap"
+		resultMap="wranResult">
+		SELECT * FROM "tbl_warn" WHERE 1=1
+		<isNotEmpty prepend="AND" property="keyword">
+			<![CDATA[
+				("WARN_NAME" LIKE '%$keyword$%' )
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selWarnName">
+			<![CDATA[
+				("WARN_NAME" LIKE '%$selWarnName$%')
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selWarnType">
+			<![CDATA[
+				("WARN_TYPE" LIKE '%$selWarnType$%')
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selSeriousLevel">
+			<![CDATA[
+				("SERIOUS_LEVLE" = '$selSeriousLevel$')
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selStatus">
+		     <![CDATA[
+				("STATUS" = '$selStatus$')
+			  ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="OR" property="status">
+			<![CDATA[
+				("STATUS" = '$status$')
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="OR" property="warnType">
+			<![CDATA[
+				("WARN_TYPE" = '$warnType$')
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="OR" property="seriousLevel">
+			<![CDATA[
+				("SERIOUS_LEVLE" = '$seriousLevel$')
+			]]>
+		</isNotEmpty>
+		ORDER BY "PUBLIC_DATE" DESC
+	</select>
+	<!-- 查询warn发布 -->
+	<select id="sqlServerwarn.query" resultMap="wranResult">
+		select * from "tbl_warn"
+	</select>
+
+	<!-- 插入预警 -->
+	<insert id="sqlServerwarn.insert" parameterClass="warn">
+		INSERT INTO tbl_warn(
+		"WARN_NAME", "WARN_DESCRIPTION", "WARN_HARM", "WARN_TYPE",
+		"LEAK_NAME", "LEAK_TYPE", "LEAK_LEVEL", "STATUS", "SERIOUS_LEVLE",
+		"SOLUTION", "PUBLIC_DATE", "SOURCE", "PUBLISHER", "INFLUENCE_SYS",
+		"LEAK_NUM", "INFLUENCE_INTERFACE")
+		VALUES
+		(#warnName#,#warnDescription#,#warnHarm#,'$warnType$',#leakName#,#leakType#,#leakLevel#,#status#,#seriousLevel#,#solution#,#publicDate#,#source#,#publisher#,#influenceSys#,#leakNum#,#influenceInterface#);
+	</insert>
+
+	<!-- 查看详细信息 -->
+	<select id="sqlServerwarn.queryById" parameterClass="warn" resultMap="wranResult">
+		select * from tbl_warn where "WARN_ID" = #warnId#
+	</select>
+
+	<!-- 批量删除 -->
+	<delete id="sqlServerwarn.deleteWarn" parameterClass="java.lang.String">
+		delete from tbl_warn
+		where "WARN_ID" in ($s:String$)
+	</delete>
+
+	<!-- 修改预警信息 -->
+	<update id="sqlServerwarn.updateWarn" parameterClass="warn">
+		update tbl_warn set
+		"WARN_NAME"=#warnName#,"WARN_DESCRIPTION"=#warnDescription#,"WARN_HARM"=#warnHarm#,"WARN_TYPE"='$warnType$',"LEAK_NAME"=#leakName#,"LEAK_TYPE"=#leakType#,"LEAK_LEVEL"=#leakLevel#,"STATUS"=#status#,"SERIOUS_LEVLE"=#seriousLevel#,"SOLUTION"=#solution#,"PUBLIC_DATE"=#publicDate#,"SOURCE"=#source#,"PUBLISHER"=#publisher#,"INFLUENCE_SYS"=#influenceSys#,"LEAK_NUM"=#leakNum#,"INFLUENCE_INTERFACE"=#influenceInterface#
+		where "WARN_ID"=#warnId#
+	</update>
+
+	<!-- 排序 -->
+	<select id="sqlServerwarn.sort" parameterClass="java.lang.String"
+		resultMap="wranResult">
+		select * from tbl_warn order by $str$
+	</select>
+</sqlMap>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Graph>
+<node id="1" name="点">
+<node id="2" name="汉斯">
+<node id="4" name="什么">
+  <node id="6" name="不知道" /> 
+  </node>
+  </node>
+<node id="3" name="是">
+<node id="5" name="你猜">
+  <node id="7" name="靠！" /> 
+  </node>
+  </node>
+  </node>
+<node id="8" name="sdf">
+  <node id="9" name="fgdfg" /> 
+  </node>
+</Graph>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	
+	<package name="user" extends="struts-default" namespace="/user">
+	
+		<action name="queryUser" class="userAction" method="queryUser">
+			<result name="success">/pages/user/user_list.jsp</result>     	
+		</action>
+		
+		<action name="editUser" class="userAction" method="editUser">
+			<result name="success">/pages/user/user_info.jsp</result>  
+			<result name="adduser">/pages/user/user_add.jsp</result>
+			<result name="userInfoSet">/pages/user/userInfoSet.jsp</result>  
+		</action>
+		
+		<action name="updateUser" class="userAction" method="updateUser">
+		<interceptor-ref name="defaultStack"/><!-- 需要注意拦截器栈的配置顺序-->  
+            <interceptor-ref name="token"/><!-- 这就是用来防止表单重复提交的拦截器-->  
+            <result name="invalid.token" type="redirectAction">
+            <param name="namespace">/user</param>
+		       <param name="actionName">queryUser</param>
+            
+            </result><!-- 需要注意的是名字必须为invalid.token-->  
+		    <result name="success" type="chain">
+		       <param name="namespace">/user</param>
+		       <param name="actionName">queryUser</param>
+		       <param name="userStatus">${userStatus}</param>
+		       <param name="time">${time}</param>
+		       <param name="order">${order}</param>
+		    </result>
+		</action>
+		
+		<!-- 更新用户状态 -->
+		<action name="updateUserStatus" class="userAction" method="updateUserStatus">
+		    <result name="success" type="chain">
+		       <param name="namespace">/user</param>
+		       <param name="actionName">queryUser</param>
+		       <param name="order">${order}</param>
+		    </result>
+		</action>
+		
+		<!-- 根据登录名查询账户 -->
+		<action name="queryByUserLoginName" class="userAction" method="queryByUserLoginName" />
+		<!-- 得到谷歌key-->
+		<action name="getSecretKey" class="userAction" method="getSecretKey" />
+		<!-- 得到二维码-->
+		<action name="getErWeiMa" class="userAction" method="getErWeiMa" />
+		
+		<!-- 根据登录名查询账户 -->
+		<action name="deleteUser" class="userAction" method="deleteUser" >
+		   <result name="success" type="chain">
+		        <param name="namespace">/user</param>
+				<param name="actionName">queryUser</param>
+		   </result>
+			
+		</action>
+		
+		<!-- 更改账户密码 -->
+		<action name="personSeting" class="userAction" method="personSeting">
+			<result name="success">/pages/user/user_info_set.jsp</result> 
+			<result name="changePwd">/pages/user/changePwd.jsp</result>	
+		</action>
+		
+		<!--检验密码  -->
+		<action name="checkPassword" class="userAction" method="checkPassword"/>
+		
+		<!--验证密码策略 -->
+		<action name="checkPwdPolicy" class="userPwdPolicyAction" method="checkPwdPolicy"/> 
+	    
+	    <!-- 保存个人设置 -->
+	    <action name="userInfoSeting" class="userAction" method="userInfoSeting">
+	       <result name="success">/pages/user/user_info_set.jsp</result>
+	    </action>
+	    
+	     <!-- 排序 -->
+	    <action name="sort" class="userAction" method="sort">
+	        <result name="success">/pages/user/user_list.jsp</result>     	
+	    </action>
+	    
+	    <action name="accountData" class="userAction" method="accountData" >
+	       <result name="success" type="chain">
+				<param name="namespace">/user</param>
+				<param name="actionName">queryUser</param>
+			</result>
+	    </action>
+	    
+	</package>
+	
+</struts>	

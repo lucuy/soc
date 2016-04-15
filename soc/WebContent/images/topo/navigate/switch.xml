@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<settings autoRotate="1" autoRotateSpeed="4" useSubtitle="1"
+	useTooltip="0" useSecondCaption="1" spanX="352" spanY="40" centerX="500"
+	centerY="300" distanceValue="0" perspectiveRatio="0.5" minimumscale=".1"
+	turningspeed="10" rotationKind="1" useFocalBlur="1" focalBlurValue=".6"
+	useMotionBlur="1" motionBlurValue=".25" useFadeOnMouseOver="1"
+	mouseOverAlphaValue=".5" useReflection="1" reflectionAlphaValue="0" />
+<photos>
+	<photo imageURL="../images/topo/01.jpg" linkType="URL"
+		linkTarget="_blank" linkData="/soc/flexhtml/BusinessModel.html"
+		captionText="内网拓扑" captionText2="当日告警：严重0  重要 0  一般 0  轻微 0  " />
+	<photo imageURL="../images/topo/02.jpg" linkType="URL"
+		linkTarget="_blank" linkData="/soc/flexhtml/IntranetBusinessModel.html"
+		captionText="外网拓扑" captionText2="当日告警：严重0  重要 0  一般 0  轻微 0  " />
+	<photo imageURL="../images/topo/03.jpg" linkType="URL"
+		linkTarget="_blank" linkData="/soc/alertMessage/alertMessageQuery.actioncaptionText="
+		告警信息 " captionText2="当日告警：严重0  重要 0  一般 0  轻微 0  " />
+</photos>

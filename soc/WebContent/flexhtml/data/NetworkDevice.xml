@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NetDevice>
+<deviceInfo cpuUsage="11" ramUsage="22"/>
+  <ports>
+	<res portName="a" downDeviceName="aaa" bandWidth="1000" flow="12334" time="1346813440000" severity="1" />
+	<res portName="b" downDeviceName="aab" bandWidth="1000" flow="12334" time="1346813440000" severity="2" />
+	<res portName="c" downDeviceName="aac" bandWidth="1000" flow="12334" time="1346813440000" severity="3" />
+	<res portName="d" downDeviceName="aad" bandWidth="1000" flow="25066312634528" time="1346898263000" severity="4" />
+  </ports>
+</NetDevice>

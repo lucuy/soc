@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+	<package name="relevanceEvents" extends="json-default" namespace="/relevanceEvents">
+
+	   <!-- 分页查询 -->
+		<action name="queryRelevanceEvents" class="queryRelevanceEvents"
+			method="queryRelevanceEvents">
+			<result name="success">/pages/events/relevance_events_list.jsp</result>
+		</action>
+		<!--  -->
+		<action name="queryAtnalyticEvents" class="queryAtnalyticEvents"
+			method="queryRelevanceEvents">
+			<result name="success">/pages/events/relevance_atnalytic_events_list.jsp</result>
+		</action>
+	</package>
+	   
+
+</struts>	

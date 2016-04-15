@@ -1,0 +1,2264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="assetSQL">
+
+	<resultMap class="asset" id="assetResult9">
+		<result property="assetId" column="ASSET_ID" jdbcType="bigint" />
+		<result property="assetName" column="ASSET_NAME" jdbcType="varchar" />
+		<result property="assetIp" column="ASSET_IP" jdbcType="bigint" />
+		<result property="assetGateWay" column="ASSET_GATEWAY"
+			jdbcType="bigint" />
+		<result property="assetSegMent" column="ASSET_IP_SEGMENT"
+			jdbcType="bigint" />
+
+		<result property="assetImportance" column="ASSET_IMPORTANCE"
+			nullValue="0" jdbcType="tinyint" />
+		<result property="assetHostName" column="ASSET_HOST_NAME"
+			jdbcType="varchar" />
+		<result property="assetAliasName" column="ASSET_ALIAS_NAME"
+			jdbcType="varchar" />
+		<result property="assetWorkIdent" column="ASSER_WORK_IDENT"
+			jdbcType="varchar" />
+
+		<result property="assetMac" column="ASSET_MAC" jdbcType="varchar" />
+
+		<result property="assetCreateDateTime" column="ASSET_CREATE_DATE_TIME"
+			jdbcType="datetime" />
+
+		<result property="assetUpdateDateTime" column="ASSET_UPDATE_DATE_TIME"
+			jdbcType="datetime" />
+
+		<result property="assetUserLoginName" column="ASSET_USER_LOGIN_NAME"
+			jdbcType="varchar" />
+
+		<result property="assetNodeId" column="ASSET_NODE_ID" jdbcType="bigint" />
+
+		<result property="assetIsDelete" column="ASSET_IS_DELETE"
+			jdbcType="tinyint" />
+		<result property="assetMemo" column="ASSET_MEMO" jdbcType="text" />
+		<result property="assetGroupName" column="ASSET_GROUP_NAME"
+			jdbcType="varchar" />
+		<result property="assetGroupFeature" column="ASSET_GROUP_FEATRUE"
+			jdbcType="text" />
+		<result property="assetUnName" column="NOTSURE" jdbcType="int"
+			nullValue="0" />
+		<result property="organizationName" column="ASSET_ORGANIZATION_NAME"
+			jdbcType="varchar" />
+		<result property="version" column="ASSET_VERSION" jdbcType="varchar" />
+		<result property="directorise" column="ASSET_MONITOR_DIRECTORIES"
+			jdbcType="varchar" />
+		<result property="file" column="ASSET_MONITOR_FILE" jdbcType="varchar" />
+		<result property="assetCollectorName" column="ASSET_COLLECTOR_NAME"
+			jdbcType="varchar" />
+		<result property="assetCollectorMac" column="ASSET_COLLECTOR_MAC"
+			jdbcType="varchar" />
+		<result property="assetCollectType" column="ASSET_COLLECT_TYPE"
+			jdbcType="varchar" />
+		<result property="assetDeviceType" column="ASSET_DEVICE_TYPE"
+			jdbcType="varchar" />
+		<result property="assetSupportDevice" column="ASSET_SUPPORT_DEVICE"
+			jdbcType="varchar" />
+		<result property="assetDeviceTypeId" column="ASSET_DEVICE_TYPE_ID"
+			jdbcType="bigint" />
+		<result property="assetSupportDeviceId" column="ASSET_SUPPORT_DEVICE_ID"
+			jdbcType="bigint" />
+		<result property="assetPrivilegeCommand" column="ASSET_PRIVILEGE_COMMAND"
+			jdbcType="varchar" />
+		<result property="assetCollectorId" column="ASSET_COLLECTOR_ID"
+			jdbcType="bigint" />
+		<result property="assetStatus" column="ASSET_STATUS" jdbcType="smallint"></result>
+		<result property="assetDeviceTypeCode" column="ASSET_DEVICE_CATEGORY_CODE"
+			jdbcType="varchar" />
+		<result property="assetSupportDeviceTypeCode" column="ASSET_SUPPORT_DEVICE_CATEGORY_CODE"
+			jdbcType="varchar" />
+		<result property="assetDeviceRules" column="ASSET_DEVICES_REL_RULES"
+			jdbcType="varchar"></result>
+		<result property="assetPort" column="ASSET_PORT" jdbcType="smallint"></result>
+		<result property="assetLog" column="ASSET_LOG" jdbcType="smallint"></result>
+		<result property="assetAPM" column="ASSET_APM" jdbcType="smallint"></result>
+		<result property="assetAPMMonitor" column="ASSET_APM_MONITOR"
+			jdbcType="smallint"></result>
+		<result property="secretValue" column="ASSET_SECRET_VALUE"
+			jdbcType="smallint"></result>
+		<result property="integrityValue" column="ASSET_INTEGRITY_VALUE"
+			jdbcType="smallint"></result>
+		<result property="usabilityValue" column="ASSET_USABILITY_VALUE"
+			jdbcType="smallint"></result>
+		<result property="assetValue" column="ASSET_ASSET_VALUE"
+			jdbcType="numeric" />
+		<result property="riskThreatValue" column="RISK_THREATVALUE"
+			jdbcType="numeric"></result>
+		<result property="vAVulnerabilityValue" column="VAVULNERABILITYVALUE"
+			jdbcType="numeric" />
+		<result property="assetIssued" column="ASSET_ISSUED" jdbcType="smallint" />
+		<result property="asset_answer_user_id" column="ASSET_ANSER_USER_ID"
+			jdbcType="bigint" />
+		<result property="asset_pessponsibility_user_id" column="ASSET_RESPONSIBILITY_USER_ID"
+			jdbcType="bigint" />
+		<result property="asset_system_id" column="ASSET_SYSTEM_ID"
+			jdbcType="bigint" />
+		<result property="asset_system_version" column="ASSET_SYSTEM_VERSION"
+			jdbcType="varchar" />
+		<result property="asset_system_versionno" column="ASSET_SYSTEM_VERSIONNO"
+			jdbcType="varchar" />
+		<result property="asset_system_brand" column="ASSET_SYSTEM_BRAND"
+			jdbcType="varchar" />
+		<result property="assetProperty1" column="ASSET_PROPERTY1"
+			jdbcType="varchar" />
+		<result property="assetPropertyValue1" column="ASSET_PROPERTY_VALUE1"
+			jdbcType="varchar" />
+		<result property="assetProperty2" column="ASSET_PROPERTY2"
+			jdbcType="varchar" />
+		<result property="assetPropertyValue2" column="ASSET_PROPERTY_VALUE2"
+			jdbcType="varchar" />
+		<result property="assetProperty3" column="ASSET_PROPERTY3"
+			jdbcType="varchar" />
+		<result property="assetPropertyValue3" column="ASSET_PROPERTY_VALUE3"
+			jdbcType="bigint" />
+		<result property="assetProperty4" column="ASSET_PROPERTY4"
+			jdbcType="varchar" />
+		<result property="assetPropertyValue4" column="ASSET_PROPERTY_VALUE4"
+			jdbcType="datetime" />
+		<result property="assetProperty5" column="ASSET_PROPERTY5"
+			jdbcType="varchar" />
+		<result property="assetPropertyValue5" column="ASSET_PROPERTY_VALUE5"
+			jdbcType="datetime" />
+		<result property="asset_answer_userName" column="ASSET_ANSER_USER_NAME"
+			jdbcType="varchar" />
+		<result property="asset_pessonsibility_userName" column="ASSET_RESPONSIBILITY_USER_NAME"
+			jdbcType="varchar" />
+		<result property="asset_system_name" column="ASSET_SYSTEM_NAME"
+			jdbcType="varchar" />
+		<result property="asset_system_version_name" column="ASSET_SYSTEM_VERSION_NAME"
+			jdbcType="varchar" />
+		<result property="asset_system_versionno_name" column="ASSET_SYSTEM_VERSIONNO_NAME"
+			jdbcType="varchar" />
+		<result property="asset_system_brand_name" column="ASSET_SYSTEM_BRAND_NAME"
+			jdbcType="varchar" />
+		<result property="securityPort" column="SECURITY_PORT"
+			jdbcType="smallint"></result>
+		<result property="securityUserName" column="SECURITY_USERNAME"
+			jdbcType="varchar"></result>
+		<result property="securityPWD" column="SECURITY_PASSWORD"
+			jdbcType="varchar"></result>
+		<result property="securityLinkeThod" column="SECURITY_LINKMETHOD"
+			jdbcType="varchar"></result>
+	</resultMap>
+
+
+	<resultMap id="assetResult" class="asset">
+		<result property="assetId" column="ASSET_ID" jdbcType="bigint" />
+		<result property="assetName" column="ASSET_NAME" jdbcType="varchar" />
+		<result property="assetIp" column="ASSET_IP" jdbcType="bigint" />
+		<result property="assetGateWay" column="ASSET_GATEWAY"
+			jdbcType="bigint" />
+		<result property="assetSegMent" column="ASSET_IP_SEGMENT"
+			jdbcType="bigint" />
+
+		<result property="assetImportance" column="ASSET_IMPORTANCE"
+			nullValue="0" jdbcType="tinyint" />
+		<result property="assetHostName" column="ASSET_HOST_NAME"
+			jdbcType="varchar" />
+		<result property="assetAliasName" column="ASSET_ALIAS_NAME"
+			jdbcType="varchar" />
+		<result property="assetWorkIdent" column="ASSER_WORK_IDENT"
+			jdbcType="varchar" />
+
+		<result property="assetMac" column="ASSET_MAC" jdbcType="varchar" />
+
+		<result property="assetCreateDateTime" column="ASSET_CREATE_DATE_TIME"
+			jdbcType="datetime" />
+
+		<result property="assetUpdateDateTime" column="ASSET_UPDATE_DATE_TIME"
+			jdbcType="datetime" />
+
+		<result property="assetUserLoginName" column="ASSET_USER_LOGIN_NAME"
+			jdbcType="varchar" />
+
+		<result property="assetNodeId" column="ASSET_NODE_ID" jdbcType="bigint" />
+
+		<result property="assetIsDelete" column="ASSET_IS_DELETE"
+			jdbcType="tinyint" />
+		<result property="assetMemo" column="ASSET_MEMO" jdbcType="text" />
+		<result property="assetGroupName" column="ASSET_GROUP_NAME"
+			jdbcType="varchar" />
+		<result property="assetGroupFeature" column="ASSET_GROUP_FEATRUE"
+			jdbcType="text" />
+		<result property="assetUnName" column="NOTSURE" jdbcType="int"
+			nullValue="0" />
+		<result property="organizationName" column="ASSET_ORGANIZATION_NAME"
+			jdbcType="varchar" />
+		<result property="version" column="ASSET_VERSION" jdbcType="varchar" />
+		<result property="directorise" column="ASSET_MONITOR_DIRECTORIES"
+			jdbcType="varchar" />
+		<result property="file" column="ASSET_MONITOR_FILE" jdbcType="varchar" />
+		<result property="assetCollectorName" column="ASSET_COLLECTOR_NAME"
+			jdbcType="varchar" />
+		<result property="assetCollectorMac" column="ASSET_COLLECTOR_MAC"
+			jdbcType="varchar" />
+		<result property="assetCollectType" column="ASSET_COLLECT_TYPE"
+			jdbcType="varchar" />
+		<result property="assetDeviceType" column="ASSET_DEVICE_TYPE"
+			jdbcType="varchar" />
+		<result property="assetSupportDevice" column="ASSET_SUPPORT_DEVICE"
+			jdbcType="varchar" />
+		<result property="assetDeviceTypeId" column="ASSET_DEVICE_TYPE_ID"
+			jdbcType="bigint" />
+		<result property="assetSupportDeviceId" column="ASSET_SUPPORT_DEVICE_ID"
+			jdbcType="bigint" />
+		<result property="assetPrivilegeCommand" column="ASSET_PRIVILEGE_COMMAND"
+			jdbcType="varchar" />
+		<result property="assetCollectorId" column="ASSET_COLLECTOR_ID"
+			jdbcType="bigint" />
+		<result property="assetStatus" column="ASSET_STATUS" jdbcType="smallint"></result>
+		<result property="assetDeviceTypeCode" column="ASSET_DEVICE_CATEGORY_CODE"
+			jdbcType="varchar" />
+		<result property="assetSupportDeviceTypeCode" column="ASSET_SUPPORT_DEVICE_CATEGORY_CODE"
+			jdbcType="varchar" />
+		<result property="assetDeviceRules" column="ASSET_DEVICES_REL_RULES"
+			jdbcType="varchar"></result>
+		<result property="assetPort" column="ASSET_PORT" jdbcType="smallint"></result>
+		<result property="assetLog" column="ASSET_LOG" jdbcType="smallint"></result>
+		<result property="assetAPM" column="ASSET_APM" jdbcType="smallint"></result>
+		<result property="assetAPMMonitor" column="ASSET_APM_MONITOR"
+			jdbcType="smallint"></result>
+		<result property="secretValue" column="ASSET_SECRET_VALUE"
+			jdbcType="smallint"></result>
+		<result property="integrityValue" column="ASSET_INTEGRITY_VALUE"
+			jdbcType="smallint"></result>
+		<result property="usabilityValue" column="ASSET_USABILITY_VALUE"
+			jdbcType="smallint"></result>
+		<result property="assetValue" column="ASSET_ASSET_VALUE"
+			jdbcType="double" />
+		<result property="riskThreatValue" column="RISK_THREATVALUE"
+			jdbcType="double"></result>
+		<result property="vAVulnerabilityValue" column="VAVULNERABILITYVALUE"
+			jdbcType="double" />
+		<result property="assetIssued" column="ASSET_ISSUED" jdbcType="smallint" />
+		<result property="asset_answer_user_id" column="ASSET_ANSER_USER_ID"
+			jdbcType="bigint" />
+		<result property="asset_pessponsibility_user_id" column="ASSET_RESPONSIBILITY_USER_ID"
+			jdbcType="bigint" />
+		<result property="asset_system_id" column="ASSET_SYSTEM_ID"
+			jdbcType="bigint" />
+		<result property="asset_system_version" column="ASSET_SYSTEM_VERSION"
+			jdbcType="varchar" />
+		<result property="asset_system_versionno" column="ASSET_SYSTEM_VERSIONNO"
+			jdbcType="varchar" />
+		<result property="asset_system_brand" column="ASSET_SYSTEM_BRAND"
+			jdbcType="varchar" />
+
+		<result property="assetProperty1" column="ASSET_PROPERTY1"
+			jdbcType="varchar" />
+		<result property="assetPropertyValue1" column="ASSET_PROPERTY_VALUE1"
+			jdbcType="varchar" />
+		<result property="assetProperty2" column="ASSET_PROPERTY2"
+			jdbcType="varchar" />
+		<result property="assetPropertyValue2" column="ASSET_PROPERTY_VALUE2"
+			jdbcType="varchar" />
+		<result property="assetProperty3" column="ASSET_PROPERTY3"
+			jdbcType="varchar" />
+		<result property="assetPropertyValue3" column="ASSET_PROPERTY_VALUE3"
+			jdbcType="bigint" />
+		<result property="assetProperty4" column="ASSET_PROPERTY4"
+			jdbcType="varchar" />
+		<result property="assetPropertyValue4" column="ASSET_PROPERTY_VALUE4"
+			jdbcType="datetime" />
+		<result property="assetProperty5" column="ASSET_PROPERTY5"
+			jdbcType="varchar" />
+		<result property="assetPropertyValue5" column="ASSET_PROPERTY_VALUE5"
+			jdbcType="datetime" />
+		<result property="assetGrouplistt" column="ASSET_ID"
+			select="sqlServerquery.assetGroupByAssetId" />
+
+		<result property="asset_answer_userName" column="ASSET_ANSER_USER_NAME"
+			jdbcType="varchar" />
+		<result property="asset_pessonsibility_userName" column="ASSET_RESPONSIBILITY_USER_NAME"
+			jdbcType="varchar" />
+		<result property="asset_system_name" column="ASSET_SYSTEM_NAME"
+			jdbcType="varchar" />
+		<result property="asset_system_version_name" column="ASSET_SYSTEM_VERSION_NAME"
+			jdbcType="varchar" />
+		<result property="asset_system_versionno_name" column="ASSET_SYSTEM_VERSIONNO_NAME"
+			jdbcType="varchar" />
+		<result property="asset_system_brand_name" column="ASSET_SYSTEM_BRAND_NAME"
+			jdbcType="varchar" />
+		<result property="securityPort" column="SECURITY_PORT"
+			jdbcType="smallint"></result>
+		<result property="securityUserName" column="SECURITY_USERNAME"
+			jdbcType="varchar"></result>
+		<result property="securityPWD" column="SECURITY_PASSWORD"
+			jdbcType="varchar"></result>
+		<result property="securityLinkeThod" column="SECURITY_LINKMETHOD"
+			jdbcType="varchar"></result>
+	</resultMap>
+
+
+	<!-- 查询条数 -->
+	<select id="pgAdminasset.count" resultClass="int"
+		parameterClass="java.util.HashMap">
+		SELECT COUNT(*) FROM "tbl_asset" WHERE 1=1 and "ASSET_IS_DELETE" = 0
+		<!-- <isNotEmpty prepend="AND" property="assetGroupIds"> <![CDATA[ "ASSET_ID" 
+			in (select "ASSET_ID" from "tbl_asset_group_asset" where "ASSET_GROUP_ID" 
+			in ($assetGroupIds$)) OR "ASSET_GROUP_FEATRUE" LIKE '%$assetGroupIds$%' ]]> 
+			</isNotEmpty> -->
+		<isNotEmpty prepend="AND" property="keyword">
+		  <![CDATA[
+		    ("ASSET_NAME" LIKE '%$keyword$%' OR "ASSET_MAC" LIKE '%$keyword$%' )
+		  ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selAssetName">
+		   <![CDATA[ 
+		      "ASSET_NAME" LIKE '%$selAssetName$%'
+		   ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selAssetIp">
+		    <![CDATA[ 
+		      "ASSET_IP" =#selAssetIp#
+		    ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selAssetCollector">
+		    <![CDATA[ 
+		      "ASSET_COLLECTOR_ID" =#selAssetCollector#
+		    ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selAssetImportance">
+		    <![CDATA[ 
+		      "ASSET_IMPORTANCE" =#selAssetImportance#
+		    ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selAssetStatus">
+		    <![CDATA[ 
+		      "ASSET_STATUS" =#selAssetStatus#
+		    ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selassetValue">
+	       <![CDATA[ 
+	          "ASSET_ASSET_VALUE"=#selassetValue#
+	       ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selvAVulnerabilityValue">
+	       <![CDATA[ 
+	          "VAVULNERABILITYVALUE" =#selvAVulnerabilityValue#
+	       ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selriskThreatValue">
+	       <![CDATA[ 
+	         "RISK_THREATVALUE" =#selriskThreatValue#
+	       ]]>
+		</isNotEmpty>
+		<!-- <isNotEmpty property="roleAssetIds"> <isNotEmpty prepend="AND" property="roleAssetGroupIds"> 
+			<![CDATA[ ("ASSET_ID" in ($roleAssetIds$) OR "ASSET_GROUP_ID" in ($roleAssetGroupIds$)) 
+			]]> </isNotEmpty> <isEmpty prepend="AND" property="roleAssetGroupIds"> <![CDATA[ 
+			"ASSET_ID" in ($roleAssetIds$) ]]> </isEmpty> </isNotEmpty> -->
+		<!-- <isEmpty property="roleAssetIds"> <isNotEmpty prepend="AND" property="roleAssetGroupIds"> 
+			<![CDATA[ "ASSET_GROUP_ID" in ($roleAssetGroupIds$) ]]> </isNotEmpty> </isEmpty> -->
+		<isNotEmpty prepend="AND" property="assetGroupId">
+		    <![CDATA[
+		       "ASSET_ID" in (select distinct("ASSET_ID") from "tbl_asset_group_asset" where "ASSET_GROUP_ID" in ($assetGroupId$)) 
+		    ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="collectorId">
+		    <![CDATA[
+		      "ASSET_COLLECTOR_ID"  = #collectorId#
+		    ]]>
+		</isNotEmpty>
+
+		<isNotEmpty prepend="AND" property="assetSegMent">
+		    <![CDATA[
+		      "ASSET_IP_SEGMENT" =#assetSegMent# AND "ASSET_IS_DELETE" = 0
+		    ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="assetStatus">
+		   <![CDATA[
+		       "ASSET_STATUS" = #assetStatus#
+		   ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="assetDeviceType">
+		  <![CDATA[
+		   "ASSET_DEVICE_TYPE" LIKE '%$assetDeviceType$%'
+		  ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="collectorMac">
+		   <![CDATA[
+		       "ASSET_COLLECTOR_MAC" = #collectorMac#
+		   ]]>
+		</isNotEmpty>
+		<!-- <isNotEmpty prepend="AND" property="assetGroupId"> <![CDATA[ "ASSET_GROUP_ID" 
+			= #assetGroupId# ]]> </isNotEmpty> -->
+	</select>
+
+
+	<!-- 查询 -->
+	<select id="pgAdminasset.query" parameterClass="java.util.HashMap"
+		resultMap="assetResult">
+		SELECT * FROM "tbl_asset" WHERE 1=1 and "ASSET_IS_DELETE" = 0
+		<!-- <isNotEmpty prepend="AND" property="assetGroupIds"> <![CDATA[ "ASSET_ID" 
+			in (select "ASSET_ID" from "tbl_asset_group_asset" where "ASSET_GROUP_ID" 
+			in ($assetGroupIds$)) OR "ASSET_GROUP_FEATRUE" LIKE '%$assetGroupIds$%' ]]> 
+			</isNotEmpty> -->
+		<isNotEmpty prepend="AND" property="assetDeviceType">
+		  <![CDATA[
+		   "ASSET_DEVICE_TYPE" LIKE '%$assetDeviceType$%'
+		  ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword">
+		  <![CDATA[
+		    ("ASSET_NAME" LIKE '%$keyword$%' OR "ASSET_MAC" LIKE '%$keyword$%')
+		  ]]>
+		</isNotEmpty>
+
+		<isNotEmpty prepend="AND" property="selAssetName">
+		   <![CDATA[ 
+		      "ASSET_NAME" LIKE '%$selAssetName$%'
+		   ]]>
+		</isNotEmpty>
+
+		<isNotEmpty prepend="AND" property="selAssetIp">
+		    <![CDATA[ 
+		      "ASSET_IP" =#selAssetIp#
+		    ]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend="AND" property="selAssetCollector">
+		    <![CDATA[ 
+		      "ASSET_COLLECTOR_ID" =#selAssetCollector#
+		    ]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend="AND" property="selAssetImportance">
+		    <![CDATA[ 
+		      "ASSET_IMPORTANCE" =#selAssetImportance#
+		    ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selAssetStatus">
+		    <![CDATA[ 
+		      "ASSET_STATUS" =#selAssetStatus#
+		    ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selassetValue">
+	       <![CDATA[ 
+	          "ASSET_ASSET_VALUE"=#selassetValue#
+	       ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selvAVulnerabilityValue">
+	       <![CDATA[ 
+	          "VAVULNERABILITYVALUE" =#selvAVulnerabilityValue#
+	       ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selriskThreatValue">
+	       <![CDATA[ 
+	         "RISK_THREATVALUE" =#selriskThreatValue#
+	       ]]>
+		</isNotEmpty>
+		<!-- <isNotEmpty property="roleAssetIds"> <isNotEmpty prepend="AND" property="roleAssetGroupIds"> 
+			<![CDATA[ ("ASSET_ID" in ($roleAssetIds$) OR "ASSET_GROUP_ID" in ($roleAssetGroupIds$)) 
+			]]> </isNotEmpty> <isEmpty prepend="AND" property="roleAssetGroupIds"> <![CDATA[ 
+			"ASSET_ID" in ($roleAssetIds$) ]]> </isEmpty> </isNotEmpty> -->
+		<!-- <isEmpty property="roleAssetIds"> <isNotEmpty prepend="AND" property="roleAssetGroupIds"> 
+			<![CDATA[ "ASSET_GROUP_ID" in ($roleAssetGroupIds$) ]]> </isNotEmpty> </isEmpty> -->
+
+		<isNotEmpty prepend="AND" property="assetGroupId">
+		    <![CDATA[
+		       "ASSET_ID" in (select distinct("ASSET_ID") from "tbl_asset_group_asset" where "ASSET_GROUP_ID" in ($assetGroupId$)) 
+		    ]]>
+		</isNotEmpty>
+
+		<isNotEmpty prepend="AND" property="collectorId">
+		    <![CDATA[
+		     ( "ASSET_COLLECTOR_ID" = #collectorId#)
+		    ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="assetSegMent">
+		    <![CDATA[
+		      "ASSET_IP_SEGMENT" =#assetSegMent# AND "ASSET_IS_DELETE" = 0
+		    ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="assetStatus">
+		   <![CDATA[
+		       "ASSET_STATUS" = #assetStatus#
+		   ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="collectorMac">
+		   <![CDATA[
+		       "ASSET_COLLECTOR_MAC" = #collectorMac#
+		   ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="assetSupportDevice">
+		    <![CDATA[
+		       "ASSET_SUPPORT_DEVICE" IN $assetSupportDevice$
+		   ]]>
+		</isNotEmpty>
+
+		<!-- <isNotEmpty prepend="AND" property="assetGroupId"> <![CDATA[ ("ASSET_GROUP_ID" 
+			= #assetGroupId# OR "") ]]> </isNotEmpty> -->
+
+		<!--ORDER BY "ASSET_UPDATE_DATE_TIME" DESC -->
+		<!--ORDER BY "ASSET_ISSUED" ASC -->
+
+		<isEqual property="sortType" compareValue="ASSET_ISSUED">
+		      <![CDATA[
+		         ORDER BY "ASSET_ISSUED" ASC
+		       ]]>
+		</isEqual>
+
+		<isEmpty property="sortType">
+		       <![CDATA[ 
+		         ORDER BY "ASSET_UPDATE_DATE_TIME" DESC
+		       ]]>
+		</isEmpty>
+
+
+	</select>
+
+	<!-- 查询所有资产 -->
+	<select id="pgAdminasset.queryEx" parameterClass="java.util.HashMap"
+		resultMap="assetResult9">
+		SELECT * FROM "tbl_asset" WHERE 1=1 and "ASSET_IS_DELETE" = 0
+		<isNotEmpty prepend="AND" property="keyword">
+		  <![CDATA[
+		    ("ASSET_NAME" LIKE '%$keyword$%' OR "ASSET_IP" LIKE '%$keyword$%')
+		  ]]>
+		</isNotEmpty>
+
+		<isNotEmpty prepend="AND" property="selAssetName">
+		   <![CDATA[ 
+		      "ASSET_NAME" LIKE '%$selAssetName$%'
+		   ]]>
+		</isNotEmpty>
+
+		<isNotEmpty prepend="AND" property="selAssetIp">
+		    <![CDATA[ 
+		      "ASSET_IP" = #selAssetIp#
+		    ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selAssetCollector">
+		    <![CDATA[ 
+		      "ASSET_COLLECTOR_ID" = #selAssetCollector#
+		    ]]>
+		</isNotEmpty>
+
+		<isNotEmpty prepend="AND" property="selAssetMac">
+		    <![CDATA[ 
+		      "ASSET_MAC" = #selAssetMac#
+		    ]]>
+		</isNotEmpty>
+
+		<isNotEmpty prepend="AND" property="assetGroupId">
+		    <![CDATA[
+		      "ASSET_ID" in (select distinct("ASSET_ID") from "tbl_asset_group_asset" where "ASSET_GROUP_ID" in ($assetGroupId$)) 
+		    ]]>
+		</isNotEmpty>
+
+		<isNotEmpty prepend="AND" property="selAssetImportance">
+		    <![CDATA[
+		       "ASSET_IMPORTANCE" = #selAssetImportance#
+		    ]]>
+		</isNotEmpty>
+
+		<isNotEmpty prepend="AND" property="assetCollectorId">
+		    <![CDATA[
+		       "ASSET_COLLECTOR_ID" = #assetCollectorId#
+		    ]]>
+		</isNotEmpty>
+
+		<isNotEmpty prepend="AND" property="assetCollectorName">
+		    <![CDATA[
+		       "ASSET_COLLECTOR_NAME" = #assetCollectorName#
+		    ]]>
+		</isNotEmpty>
+
+		<isNotEmpty prepend="AND" property="assetCollectorMac">
+		    <![CDATA[
+		       "ASSET_COLLECTOR_MAC" = #assetCollectorMac#
+		    ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="assetSupportDevice">
+		    <![CDATA[
+		       "ASSET_SUPPORT_DEVICE" IN $assetSupportDevice$
+		   ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="asset_system_id">
+		      <![CDATA[
+		       "ASSET_SYSTEM_ID" IN ($asset_system_id$)
+		        ]]>
+		</isNotEmpty>
+
+		ORDER BY "ASSET_UPDATE_DATE_TIME" DESC
+	</select>
+
+	<!-- 查询组ID -->
+	<select id="pgAdminasset.queryByAssetGroupId" parameterClass="long"
+		resultMap="assetResult">
+		SELECT
+		*
+		FROM
+		"tbl_asset" A
+		LEFT JOIN "tbl_asset_group_asset" b ON A ."ASSET_ID" = b."ASSET_ID"
+		LEFT JOIN "tbl_asset_group" c ON b."ASSET_GROUP_ID" = c."ASSET_GROUP_ID"
+		WHERE
+		c."ASSET_GROUP_ID" = #assetGroupId# AND a."ASSET_IS_DELETE" = 0 AND
+		c."ASSET_GROUP_IS_DELETE" = 0
+		ORDER BY
+		"ASSET_UPDATE_DATE_TIME" DESC
+	</select>
+
+	<!-- 根据id查询资产 -->
+	<select id="pgAdminasset.queryById" resultMap="assetResult"
+		parameterClass="long">
+		SELECT * FROM "tbl_asset" where "ASSET_ID" = #value#
+	</select>
+	<select id="pgAdminasset.queryById1" resultMap="assetResult"
+		parameterClass="long">
+		SELECT * FROM "tbl_asset" where "ASSET_ID" = #value#
+		AND "ASSET_IS_DELETE" = 0
+	</select>
+
+	<!-- 根据IP段查询资产 -->
+	<select id="pgAdminasset.queryByIp" resultMap="assetResult"
+		parameterClass="long">
+		SELECT * FROM "tbl_asset" where "ASSET_IP_SEGMENT"
+		=#assetSegMent# AND "ASSET_IS_DELETE" = 0
+	</select>
+	<!-- 根据IP查询资产 -->
+
+	<select id="pgAdminasset.queryAssetByIpOld" resultMap="assetResult"
+		parameterClass="long">
+		SELECT * FROM "tbl_asset" where "ASSET_IP"
+		=#value# AND
+		"ASSET_IS_DELETE" = 0
+	</select>
+	<!-- 标记删除 -->
+	<update id="pgAdminasset.delete" parameterClass="java.util.HashMap">
+		UPDATE
+		"tbl_asset"
+		SET
+		"ASSET_IS_DELETE" = 1,
+		"ASSET_UPDATE_DATE_TIME" =
+		#assetUpdateTime#
+		WHERE
+		"ASSET_ID" = #assetId#
+	</update>
+
+	<!-- 插入一条记录 -->
+	<insert id="pgAdminasset.insert" parameterClass="asset">
+		INSERT INTO "tbl_asset"
+		("ASSET_NAME",
+		"ASSET_IP",
+		"ASSET_GATEWAY",
+		"ASSET_IP_SEGMENT",
+		"ASSET_IMPORTANCE",
+		"ASSET_HOST_NAME",
+		"ASSET_MAC",
+		"ASSET_CREATE_DATE_TIME",
+		"ASSET_UPDATE_DATE_TIME",
+		"ASSET_USER_LOGIN_NAME",
+		"ASSET_NODE_ID",
+		"ASSET_MEMO",
+		"ASSET_ALIAS_NAME",
+		"ASSER_WORK_IDENT",
+		"ASSET_GROUP_NAME",
+		"ASSET_IS_DELETE",
+		"ASSET_GROUP_FEATRUE",
+		"NOTSURE",
+		"ASSET_VERSION",
+		"ASSET_ORGANIZATION_NAME",
+		"ASSET_MONITOR_DIRECTORIES",
+		"ASSET_MONITOR_FILE",
+		"ASSET_COLLECT_TYPE",
+		"ASSET_DEVICE_TYPE",
+		"ASSET_SUPPORT_DEVICE",
+		"ASSET_DEVICE_TYPE_ID",
+		"ASSET_SUPPORT_DEVICE_ID",
+		"ASSET_PRIVILEGE_COMMAND",
+		"ASSET_COLLECTOR_ID",
+		"ASSET_COLLECTOR_NAME",
+		"ASSET_COLLECTOR_MAC",
+		"ASSET_STATUS",
+		"ASSET_DEVICE_CATEGORY_CODE",
+		"ASSET_SUPPORT_DEVICE_CATEGORY_CODE",
+		"ASSET_DEVICES_REL_RULES",
+		"ASSET_PORT",
+		"ASSET_LOG",
+		"ASSET_APM",
+		"ASSET_APM_MONITOR",
+		"ASSET_SECRET_VALUE",
+		"ASSET_INTEGRITY_VALUE",
+		"ASSET_USABILITY_VALUE",
+		"ASSET_ASSET_VALUE",
+		"RISK_THREATVALUE",
+		"VAVULNERABILITYVALUE",
+		"ASSET_ANSER_USER_ID",
+		"ASSET_RESPONSIBILITY_USER_ID",
+		"ASSET_SYSTEM_ID",
+		"ASSET_SYSTEM_VERSION",
+		"ASSET_SYSTEM_VERSIONNO",
+		"ASSET_SYSTEM_BRAND",
+		"ASSET_PROPERTY1",
+		"ASSET_PROPERTY_VALUE1",
+		"ASSET_PROPERTY2",
+		"ASSET_PROPERTY_VALUE2",
+		"ASSET_PROPERTY3",
+		"ASSET_PROPERTY_VALUE3",
+		"ASSET_PROPERTY4",
+		"ASSET_PROPERTY_VALUE4",
+		"ASSET_PROPERTY5",
+		"ASSET_PROPERTY_VALUE5",
+		"ASSET_ANSER_USER_NAME",
+		"ASSET_RESPONSIBILITY_USER_NAME",
+		"ASSET_SYSTEM_NAME",
+		"ASSET_SYSTEM_VERSION_NAME",
+		"ASSET_SYSTEM_VERSIONNO_NAME",
+		"ASSET_SYSTEM_BRAND_NAME",
+		"SECURITY_PORT",
+		"SECURITY_USERNAME",
+		"SECURITY_PASSWORD",
+		"SECURITY_LINKMETHOD"
+
+		)
+		VALUES
+		(#assetName#,
+		#assetIp#,
+		#assetGateWay#,
+		#assetSegMent#,
+		#assetImportance#,
+		#assetHostName#,
+		#assetMac#,
+		#assetCreateDateTime#,
+		#assetUpdateDateTime#,
+		#assetUserLoginName#,
+		#assetNodeId#,
+		#assetMemo#,
+		#assetAliasName#,
+		#assetWorkIdent#,
+		#assetGroupName#,
+		0,
+		#assetGroupFeature#,
+		#assetUnName#,
+		#version#,
+		#organizationName#,
+		#directorise#,
+		#file#,
+		#assetCollectType#,
+		#assetDeviceType#,
+		#assetSupportDevice#,
+		#assetDeviceTypeId#,
+		#assetSupportDeviceId#,
+		#assetPrivilegeCommand#,
+		#assetCollectorId#,
+		#assetCollectorName#,
+		#assetCollectorMac#,
+		#assetStatus#,
+		#assetDeviceTypeCode#,
+		#assetSupportDeviceTypeCode#,
+		#assetDeviceRules#,
+		#assetPort#,
+		#assetLog#,
+		#assetAPM#,
+		#assetAPMMonitor#,
+		#secretValue#,
+		#integrityValue#,
+		#usabilityValue#,
+		#assetValue#,
+		0,
+		0,
+		#asset_answer_user_id#,
+		#asset_pessponsibility_user_id#,
+		#asset_system_id#,
+		#asset_system_version#,
+		#asset_system_versionno#,
+		#asset_system_brand#,
+		#assetProperty1#,
+		#assetPropertyValue1#,
+		#assetProperty2#,
+		#assetPropertyValue2#,
+		#assetProperty3#,
+		#assetPropertyValue3#,
+		#assetProperty4#,
+		#assetPropertyValue4#,
+		#assetProperty5#,
+		#assetPropertyValue5#,
+		#asset_answer_userName#,
+		#asset_pessonsibility_userName#,
+		#asset_system_name#,
+		#asset_system_version_name#,
+		#asset_system_versionno_name#,
+		#asset_system_brand_name#,
+		#securityPort#,
+		#securityUserName#,
+		#securityPWD#,
+		#securityLinkeThod#
+		)
+		<selectKey resultClass="long" keyProperty="assetId">
+			SELECT
+			currval('tbl_asset_seq'::regclass) AS assetId
+		</selectKey>
+	</insert>
+
+	<!--更新记录 -->
+	<update id="pgAdminasset.update" parameterClass="asset">
+		UPDATE
+		"tbl_asset"
+		SET
+		"ASSET_NAME" = #assetName#,
+		"ASSET_IP" = #assetIp#,
+		"ASSET_IP_SEGMENT"=#assetSegMent#,
+		"ASSET_GATEWAY"=#assetGateWay#,
+		"ASSET_IMPORTANCE" =
+		#assetImportance#,
+		"ASSET_HOST_NAME" =
+		#assetHostName#,
+		"ASSET_MAC" =
+		#assetMac#,
+		"ASSET_UPDATE_DATE_TIME" =
+		#assetUpdateDateTime#,
+		"ASSET_NODE_ID" =
+		#assetNodeId#,
+		"ASSET_MEMO" =
+		#assetMemo#,
+		"ASSET_ALIAS_NAME" =
+		#assetAliasName#,
+		"ASSER_WORK_IDENT" =
+		#assetWorkIdent#,
+		"ASSET_GROUP_NAME" =
+		#assetGroupName#,
+		"ASSET_GROUP_FEATRUE" =
+		#assetGroupFeature#,
+		"NOTSURE" = #assetUnName#,
+		"ASSET_VERSION"=#version#,
+		"ASSET_ORGANIZATION_NAME"=#organizationName#,
+		"ASSET_MONITOR_DIRECTORIES"=#directorise#,
+		"ASSET_MONITOR_FILE"=#file#,
+		"ASSET_COLLECT_TYPE" = #assetCollectType#,
+		"ASSET_DEVICE_TYPE" = #assetDeviceType#,
+		"ASSET_SUPPORT_DEVICE" =
+		#assetSupportDevice#,
+		"ASSET_DEVICE_TYPE_ID" = #assetDeviceTypeId#,
+		"ASSET_SUPPORT_DEVICE_ID" = #assetSupportDeviceId#,
+		"ASSET_PRIVILEGE_COMMAND" = #assetPrivilegeCommand#,
+		"ASSET_COLLECTOR_ID"= #assetCollectorId#,
+		"ASSET_COLLECTOR_NAME" =
+		#assetCollectorName#,
+		"ASSET_COLLECTOR_MAC" = #assetCollectorMac#,
+		"ASSET_STATUS" = #assetStatus#,
+		"ASSET_DEVICE_CATEGORY_CODE" =
+		#assetDeviceTypeCode#,
+		"ASSET_SUPPORT_DEVICE_CATEGORY_CODE" =
+		#assetSupportDeviceTypeCode#,
+		"ASSET_DEVICES_REL_RULES" =
+		#assetDeviceRules#,
+		"ASSET_PORT" = #assetPort#,
+		"ASSET_LOG" =
+		#assetLog#,
+		"ASSET_APM" = #assetAPM#,
+		"ASSET_APM_MONITOR" =
+		#assetAPMMonitor#,
+		"ASSET_SECRET_VALUE" = #secretValue#,
+		"ASSET_INTEGRITY_VALUE" = #integrityValue#,
+		"ASSET_USABILITY_VALUE" =
+		#usabilityValue#,
+		"ASSET_ANSER_USER_ID" = #asset_answer_user_id#,
+		"ASSET_RESPONSIBILITY_USER_ID" = #asset_pessponsibility_user_id#,
+		"ASSET_PROPERTY1" = #assetProperty1#,
+		"ASSET_PROPERTY2" =
+		#assetProperty2#,
+		"ASSET_PROPERTY3" = #assetProperty3#,
+		"ASSET_PROPERTY4" = #assetProperty4#,
+		"ASSET_PROPERTY5" =
+		#assetProperty5#,
+		"ASSET_PROPERTY_VALUE1" = #assetPropertyValue1#,
+		"ASSET_PROPERTY_VALUE2" = #assetPropertyValue2#,
+		"ASSET_PROPERTY_VALUE3" = #assetPropertyValue3#,
+		"ASSET_PROPERTY_VALUE4" = #assetPropertyValue4#,
+		"ASSET_PROPERTY_VALUE5" = #assetPropertyValue5#,
+		"ASSET_SYSTEM_ID" =
+		#asset_system_id#,
+		"ASSET_SYSTEM_VERSION" = #asset_system_version#,
+		"ASSET_SYSTEM_VERSIONNO" = #asset_system_versionno#,
+		"ASSET_SYSTEM_BRAND" = #asset_system_brand#,
+		"ASSET_ANSER_USER_NAME" =
+		#asset_answer_userName#,
+		"ASSET_RESPONSIBILITY_USER_NAME" =
+		#asset_pessonsibility_userName#,
+		"ASSET_SYSTEM_NAME" =
+		#asset_system_name#,
+		"ASSET_SYSTEM_VERSION_NAME" =
+		#asset_system_version_name#,
+		"ASSET_SYSTEM_VERSIONNO_NAME" =
+		#asset_system_versionno_name#,
+		"ASSET_SYSTEM_BRAND_NAME" =
+		#asset_system_brand_name#,
+		"SECURITY_PORT" =#securityPort#,
+		"SECURITY_USERNAME" = #securityUserName#,
+		"SECURITY_PASSWORD" =
+		#securityPWD#,
+		"SECURITY_LINKMETHOD" = #securityLinkeThod#
+		WHERE
+		"ASSET_ID" = #assetId#
+	</update>
+
+	<!-- 更新资产的下发状态 -->
+	<update id="pgAdminasset.updataIssued" parameterClass="asset">
+		UPDATE "tbl_asset" SET "ASSET_ISSUED" = #assetIssued# WHERE "ASSET_ID" =
+		#assetId#
+	</update>
+
+	<!-- 更新资产的威胁值、脆弱性值 -->
+	<update id="pgAdminasset.updateValue" parameterClass="asset">
+
+		UPDATE "tbl_asset"
+		SET
+		"RISK_THREATVALUE" =#riskThreatValue#,
+		"VAVULNERABILITYVALUE"=#vAVulnerabilityValue#,
+		"ASSET_ASSET_VALUE" =
+		#assetValue#,
+		"ASSET_SECRET_VALUE" = #secretValue#,
+		"ASSET_INTEGRITY_VALUE" = #integrityValue#,
+		"ASSET_USABILITY_VALUE" =
+		#usabilityValue#
+		WHERE
+		"ASSET_ID" = #assetId#
+	</update>
+	<!-- 根据资产名查询 -->
+	<select id="pgAdminasset.queryByName" parameterClass="java.lang.String"
+		resultMap="assetResult">
+		SELECT * FROM "tbl_asset" WHERE "ASSET_NAME" = #value# AND
+		"ASSET_IS_DELETE"=0
+	</select>
+
+	<!-- 更新资产状态 -->
+	<update id="pgAdminasset.updateStatus" parameterClass="java.util.HashMap">
+		UPDATE
+		"tbl_asset" SET "ASSET_STATUS" = #assetStatus# WHERE
+		"ASSET_ID"=#assetId#
+	</update>
+
+	<!-- 验证资产MAC的唯一性 -->
+	<select id="pgAdmincheck.mac" parameterClass="java.util.HashMap"
+		resultMap="assetResult">
+		SELECT * FROM "tbl_asset" WHERE "ASSET_IS_DELETE"=0 AND
+		"ASSET_MAC" = #mac#
+	</select>
+
+	<!-- 删除资产所对应的资产组 -->
+	<!-- <update id="pgAdminasset.deleteGroup" parameterClass="java.util.HashMap"> 
+		UPDATE "tbl_asset" SET "ASSET_GROUP_NAME" = #groupName# WHERE "ASSET_GROUP_ID" 
+		= #assetGroupId# OR "ASSET_GROUP_FEATRUE" LIKE '%,$assetGroupId$,%' </update> -->
+
+	<!-- 查询某个资产组所对应的结构内是否含有资产 -->
+	<select id="pgAdminasset.selectByGroupId" parameterClass="java.util.HashMap"
+		resultClass="int">
+		SELECT COUNT(*) FROM "tbl_asset_group_asset" WHERE
+		"ASSET_GROUP_ID" =#assetGroupId#
+	</select>
+
+	<!-- 更改资产对应的资产组的名字 -->
+	<!-- <update id="pgAdminasset.updateGroupName" parameterClass="java.util.HashMap"> 
+		UPDATE "tbl_asset" SET "ASSET_GROUP_NAME" = #assetGroupName# WHERE "ASSET_GROUP_ID" 
+		= #assetGroupId# </update> -->
+
+	<!-- 查询 -->
+	<select id="pgAdminqueryIpTree.query" resultClass="java.util.HashMap">
+		select
+		distinct"ASSET_IP_SEGMENT" AS segment ,count(*),"ASSET_GATEWAY" AS
+		gate from "tbl_asset" WHERE "ASSET_IS_DELETE"=0
+		group by
+		"ASSET_IP_SEGMENT" ,"ASSET_GATEWAY";
+	</select>
+
+	<!-- 查询设备种类 -->
+	<select id="pgAdminqueryCategory" resultClass="java.util.HashMap">
+		SELECT
+		"DEVICE_CATEGORY_ID" AS deviceId ,"DEVICE_CATEGORY_NAME"AS deviceName,
+		"EVENTS_DEVNAME" AS devName
+		FROM "tbl_device_category" WHERE
+		"HIGHER_UPS_ID" = 0 AND "EVENTS_CUSTOMD1" = 1
+		ORDER BY
+		"DEVICE_CATEGORY_ID" desc
+	</select>
+
+	<!-- 根据父级的设别种类，查询子集的字符串，并以"，"拼接 李长红修改-->
+	<select id="pgAdminQueryCategoryByFatherId.toString"
+		resultClass="String" parameterClass="long">
+		SELECT
+		array_to_string(
+
+		ARRAY (SELECT "EVENTS_DEVNAME" from "tbl_device_category" WHERE
+		"HIGHER_UPS_ID" = $deviceId$ AND "EVENTS_CUSTOMD1"=1),
+		','
+		)
+		FROM
+		"tbl_device_category" where "DEVICE_CATEGORY_ID" = $deviceId$ 
+	</select>
+	<!-- 根据传入的设备种类查询关联的资产id串，并以","拼接 -->
+	<select id="pgAdminQueryAssetIdByCategoryName.toString"
+		resultClass="String" parameterClass="java.util.HashMap">
+		SELECT
+	DISTINCT(
+		array_to_string(
+
+		ARRAY (SELECT "ASSET_ID" from "tbl_asset"  WHERE
+		"ASSET_DEVICES_REL_RULES"  in ($categoryName$) and "ASSET_ID" in ($assetId$)),
+		','
+		))
+		FROM
+		"tbl_asset"   
+	</select>
+
+
+	<select id="pgAdminqueryCategoryService" resultClass="java.util.HashMap">
+		SELECT
+		"DEVICE_CATEGORY_ID" AS deviceId ,"DEVICE_CATEGORY_NAME" AS deviceName
+		FROM "tbl_device_category" WHERE "DEVICE_CATEGORY_NAME" = 'Server服务器'
+		ORDER BY "DEVICE_CATEGORY_ID" desc
+	</select>
+
+	<select id="pgAdminqueryCategoryByUpsId" resultClass="java.util.HashMap">
+		SELECT
+		"DEVICE_CATEGORY_ID" AS deviceId ,"DEVICE_CATEGORY_NAME"AS deviceName,
+		"EVENTS_DEVNAME" AS eventsDevName
+		FROM "tbl_device_category" WHERE
+		"HIGHER_UPS_ID" = #upsId# AND "EVENTS_CUSTOMD1" = 1
+		ORDER BY
+		"DEVICE_CATEGORY_ID" asc
+	</select>
+
+	<select id="pgAdminqueryCategorys" resultClass="java.util.HashMap">
+		SELECT
+		"DEVICE_CATEGORY_ID" AS deviceId ,"DEVICE_CATEGORY_NAME"AS deviceName,
+		"DEVICE_CATEGORY_CODE" AS deviceCategoryCode
+		FROM "tbl_device_category" where "EVENTS_CUSTOMD1" = 1
+		ORDER BY
+		"DEVICE_CATEGORY_ID" desc
+	</select>
+
+	<!-- 根据设备Id查询设备 -->
+	<select id="pgAdminqueryDeviceById" parameterClass="long"
+		resultClass="String">
+		SELECT "DEVICE_CATEGORY_NAME" AS devicename FROM
+		"tbl_device_category"
+		WHERE "DEVICE_CATEGORY_ID" = #deviceId# AND
+		"EVENTS_CUSTOMD1" = 1
+		ORDER BY "DEVICE_CATEGORY_ID"
+		asc
+	</select>
+
+	<select id="pgAdminquery.deviceById" parameterClass="long"
+		resultClass="java.util.HashMap">
+		SELECT "DEVICE_CATEGORY_NAME"AS deviceName,
+		"DEVICE_CATEGORY_CODE" AS deviceCategoryCode FROM
+		"tbl_device_category"
+		WHERE "DEVICE_CATEGORY_ID" = #deviceId#
+		ORDER BY
+		"DEVICE_CATEGORY_ID"
+		asc
+	</select>
+
+	<!-- 根据设备Id查询设备对应的解析规则 -->
+	<select id="pgAdminquery.deviceRulesById" parameterClass="Long"
+		resultClass="String">
+		SELECT "EVENTS_DEVNAME" FROM "tbl_device_category"
+		WHERE "DEVICE_CATEGORY_ID" = #value#
+	</select>
+
+	<!-- 资产 导出成excel 李长红修改，增加快速搜索关键字条件20140515 -->
+	<select id="pgAdminasset.export" parameterClass="java.util.HashMap"
+		resultClass="java.util.HashMap">
+		SELECT * FROM "tbl_asset" WHERE 1 =1 AND "ASSET_IS_DELETE" = 0
+		<isNotEmpty prepend="AND" property="keyword">
+		  <![CDATA[
+		    ("ASSET_NAME" LIKE '%$keyword$%' OR "ASSET_MAC" LIKE '%$keyword$%')
+		  ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selAssetName">
+		   <![CDATA[ 
+		      "ASSET_NAME" LIKE '%$selAssetName$%'
+		   ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selAssetIp">
+		    <![CDATA[ 
+		      "ASSET_IP" =#selAssetIp#
+		    ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selAssetCollector">
+		    <![CDATA[ 
+		      "ASSET_COLLECTOR_ID" =#selAssetCollector#
+		    ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="ids">
+			"ASSET_ID" in($ids$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="assetGroupIds">
+		  <![CDATA[
+		   "ASSET_ID" in (select distinct("ASSET_ID") from "tbl_asset_group_asset" where "ASSET_GROUP_ID" in ($assetGroupIds$)) 
+		  ]]></isNotEmpty>
+
+	</select>
+	<!-- 查询资产组关联的平均威胁值值 -->
+	<select id="pgAdminassetNameByValue.query" parameterClass="java.util.HashMap"
+		resultClass="String">
+		SELECT avg("RISK_THREATVALUE") FROM "tbl_asset" WHERE 1 =1 AND
+		"ASSET_IS_DELETE" = 0
+		<isNotEmpty prepend="AND" property="assetGroupId">
+		  <![CDATA[
+		  "ASSET_ID" in (select distinct("ASSET_ID") from "tbl_asset_group_asset" where "ASSET_GROUP_ID" in ($assetGroupId$))
+		  ]]></isNotEmpty>
+
+	</select>
+	<!-- 查询资产组关联的平均风险值 <select id="assetNameByValue3.query" parameterClass="java.util.HashMap" 
+		resultClass="String"> SELECT round(avg("ASSET_ASSET_VALUE"*"VAVULNERABILITYVALUE"*"RISK_THREATVALUE"),2) 
+		FROM "tbl_asset" WHERE 1 =1 AND "ASSET_IS_DELETE" = 0 <isNotEmpty prepend="AND" 
+		property="assetGroupId"> <![CDATA[ "ASSET_ID" in (select "ASSET_ID" from 
+		"tbl_asset_group_asset" where "ASSET_GROUP_ID" in ($assetGroupIds$)) ]]></isNotEmpty> 
+		<isNotEmpty prepend="AND" property="assetGroupIds"> <![CDATA[ "ASSET_ID" 
+		in (select "ASSET_ID" from "tbl_asset_group_asset" where "ASSET_GROUP_ID" 
+		in ($assetGroupIds$)) ]]></isNotEmpty> </select> -->
+	<!-- 查询资产组关联的平均脆弱性值 -->
+	<select id="pgAdminassetNameByValue1.query" parameterClass="java.util.HashMap"
+		resultClass="String">
+		SELECT avg("VAVULNERABILITYVALUE") FROM "tbl_asset" WHERE 1 =1 AND
+		"ASSET_IS_DELETE" = 0
+		<isNotEmpty prepend="AND" property="assetGroupId">
+		  <![CDATA[
+		"ASSET_ID" in (select distinct("ASSET_ID") from "tbl_asset_group_asset" where "ASSET_GROUP_ID" in ($assetGroupId$))
+		  ]]></isNotEmpty>
+
+	</select>
+	<!-- 查询资产组关联的资产值 -->
+	<select id="pgAdminassetNameByValue2.query" parameterClass="java.util.HashMap"
+		resultClass="String">
+		SELECT avg("ASSET_ASSET_VALUE") FROM "tbl_asset" WHERE 1 =1 AND
+		"ASSET_IS_DELETE" = 0
+		<isNotEmpty prepend="AND" property="assetGroupId">
+		  <![CDATA[
+		   "ASSET_ID" in (select distinct("ASSET_ID") from "tbl_asset_group_asset" where "ASSET_GROUP_ID" in ($assetGroupId$))
+		  ]]></isNotEmpty>
+
+	</select>
+
+	<!-- 大屏展示用 -->
+
+	<!-- 资产分布情况 -->
+	<select id="pgAdminassetGroup.display" parameterClass="java.util.HashMap"
+		resultClass="java.util.HashMap">
+		SELECT count("ASSET_NAME") AS "count","ASSET_NAME" AS "name" from
+		"tbl_asset"
+		WHERE "ASSET_IS_DELETE" =0
+		GROUP BY "name"
+		ORDER BY "count" DESC
+	</select>
+
+	<!-- 排序 -->
+	<select id="pgAdminasset.sort" parameterClass="java.lang.String"
+		resultMap="assetResult">
+		SELECT * FROM "tbl_asset" WHERE 1=1 and "ASSET_IS_DELETE" = 0 ORDER BY $str$
+	</select>
+	<!-- 查询资产分布 -->
+	<select id="pgAdminrisk.queryAssets" parameterClass="java.util.HashMap"
+		resultClass="java.util.HashMap">
+
+		SELECT "$key$" AS key,avg("$value$") AS value
+		FROM "tbl_asset"
+		WHERE "ASSET_IS_DELETE" = 0
+		<isNotEmpty prepend="AND" property="assetGroupId">
+		    <![CDATA[
+		       "ASSET_ID" in (select distinct("ASSET_ID") from "tbl_asset_group_asset" where "ASSET_GROUP_ID" in ($assetGroupId$)) 
+		    ]]>
+		</isNotEmpty>
+		GROUP BY key ORDER BY value DESC LIMIT #topN# offset 0
+
+	</select>
+	<!-- 根据资产组名查询资产分布 -->
+	<select id="pgAdminrisk.queryAssetsByGroupName" resultClass="java.util.HashMap"
+		resultMap="assetResult">
+		SELECT
+		*
+		FROM "tbl_asset"
+		WHERE "ASSET_IS_DELETE" = 0
+		and "ASSET_GROUP_NAME" LIKE
+		'%value%'
+	</select>
+	<!-- 查询条数 -->
+	<select id="pgAdminasset.assetIp" resultClass="int"
+		parameterClass="java.util.HashMap">
+		SELECT "ASSET_ID" FROM "tbl_asset" WHERE 1=1
+		<isNotEmpty prepend="AND" property="vaIp">
+		    <![CDATA[
+		       "ASSET_IP" = #vaIp#
+		    ]]>
+		</isNotEmpty>
+
+	</select>
+	<!-- 根据资产ip查询资产所关联的脆弱性平均值 -->
+	<select id="pgAdminasset.queryVAvalue" parameterClass="java.lang.String"
+		resultClass="Double">
+		SELECT round (avg("VAVULNERABILITYVALUE"),2)
+		FROM tbl_risk_vulnerabilityassessment where "VAIP"=#value#;
+	</select>
+	<!-- 根据资产id查询资产所关联的威胁性平均值 -->
+	<select id="pgAdminasset.queryRiskvalue" parameterClass="Long"
+		resultClass="Double">
+		select round(avg("RISK_RESULT"),2)FROM tbl_risk_value where
+		"RISK_ASSET_ID"=#value#
+	</select>
+
+	<!-- 根据资产id查询资产所关联的资产值 -->
+	<select id="pgAdminasset.queryAssetvalue" parameterClass="Long"
+		resultClass="Double">
+		select "ASSET_ASSET_VALUE" FROM tbl_asset_value where "REL_ASSET_ID"=#value#
+	</select>
+	<!-- 更新：根据中间表查询组中的资产 -->
+	<select id="pgAdminasset.queryAssetByGroupId" resultMap="assetResult9"
+		parameterClass="java.util.HashMap">
+		select * from "tbl_asset" where 1=1 and "ASSET_IS_DELETE" = 0
+		<isNotEmpty prepend="AND" property="assetGroupId"> 
+	        <![CDATA[
+	     "ASSET_ID" in (select distinct("ASSET_ID") from "tbl_asset_group_asset" where "ASSET_GROUP_ID" in ($assetGroupId$))
+	        ]]>
+		</isNotEmpty>
+	</select>
+
+	<!-- asset.queryAllAssetByGroupId -->
+	<select id="pgAdminasset.queryAllAssetByGroupId" parameterClass="java.util.HashMap"
+		resultMap="assetResult">
+		SELECT distinct * from "tbl_asset" WHERE "ASSET_ID" in
+		(SELECT distinct("ASSET_ID") from "tbl_asset_group_asset" where
+		"ASSET_GROUP_ID" in ($groupId$))
+	</select>
+	<!-- 查询资产分布 -->
+	<select id="pgAdminrisk.queryRiskAssets" parameterClass="java.util.HashMap"
+		resultClass="java.util.HashMap">
+
+		SELECT "ASSET_NAME" AS key,avg("$value$") AS value
+		FROM "tbl_asset"
+		WHERE "ASSET_IS_DELETE" = 0
+		<isNotEmpty prepend="AND" property="assetGroupId"> 
+	        <![CDATA[
+	     "ASSET_ID" in (select distinct("ASSET_ID") from "tbl_asset_group_asset" where "ASSET_GROUP_ID" in ($assetGroupId$))
+	        ]]>
+		</isNotEmpty>
+		GROUP BY key ORDER BY value DESC LIMIT #topN# offset 0
+
+	</select>
+
+	<update id="pgAdminasset.updateAnalysisRules" parameterClass="java.util.HashMap">
+		UPDATE "tbl_asset" SET "ASSET_DEVICES_REL_RULES" = #relRules# WHERE
+		"ASSET_ID" = #assetId#
+	</update>
+	<!-- 删除关联 威胁值 -->
+	<delete id="pgAdminasset.deleteRiskValues" parameterClass="long">
+		DELETE FROM "tbl_risk_value" WHERE "RISK_ASSET_ID" = #value#
+
+	</delete>
+
+	<!-- 删除资产和资产组中间表 -->
+	<delete id="pgAdminasset.deleteAssetGroupAssets" parameterClass="long">
+		DELETE FROM "tbl_asset_group_asset" WHERE "ASSET_ID" = #value#
+	</delete>
+	<!-- 删除关联的风险赋值 -->
+	<delete id="pgAdminasset.deleteAssetValues" parameterClass="long">
+		DELETE FROM "tbl_asset_value" WHERE "REL_ASSET_ID" =#value#;
+	</delete>
+	<!-- 删除关联的脆弱性值 -->
+	<delete id="pgAdminasset.deleteRiskVulnerabilityassessment"
+		parameterClass="java.lang.String">
+		DELETE FROM tbl_risk_vulnerabilityassessment where "VAIP"=#value#;;
+	</delete>
+
+	<!-- 修改资产的脆弱性值 -->
+	<update id="pgAdminasset.updateAssetVavulNerabilityValue"
+		parameterClass="java.util.HashMap">
+		UPDATE "tbl_asset"
+		SET
+		"VAVULNERABILITYVALUE" = #value#
+		WHERE
+		"ASSET_ID" = #assetId#
+	</update>
+
+	<!-- 查询资产的id 这里只在工单里用 -->
+	<select id="pgAdminasset.queryAssetIdWorkOrder" parameterClass="java.util.HashMap"
+		resultClass="int">
+		SELECT "ASSET_ID" FROM "tbl_asset" WHERE "ASSET_IS_DELETE" = 0
+		<isNotEmpty prepend="AND" property="assetGroupId">
+		    <![CDATA[
+		      "ASSET_ID" in (select distinct("ASSET_ID") from "tbl_asset_group_asset" where "ASSET_GROUP_ID" in ($assetGroupId$)) 
+		    ]]>
+		</isNotEmpty>
+	</select>
+
+	<!-- 根据资产的IP进行查询 -->
+	<select id="pgAdminasset.queryAssetByIp" parameterClass="long"
+		resultMap="assetResult">
+		SELECT * FROM "tbl_asset" WHERE "ASSET_IP" = #ip# AND "ASSET_IS_DELETE" = 0
+	</select>
+
+	<!-- sqlServer用的sql -->
+
+	<!-- 查询条数 -->
+	<select id="sqlServerasset.count" resultClass="int"
+		parameterClass="java.util.HashMap">
+		SELECT COUNT(*) FROM "tbl_asset" WHERE 1=1 and "ASSET_IS_DELETE" = 0
+		<!-- <isNotEmpty prepend="AND" property="assetGroupIds"> <![CDATA[ "ASSET_ID" 
+			in (select "ASSET_ID" from "tbl_asset_group_asset" where "ASSET_GROUP_ID" 
+			in ($assetGroupIds$)) OR "ASSET_GROUP_FEATRUE" LIKE '%$assetGroupIds$%' ]]> 
+			</isNotEmpty> -->
+		<isNotEmpty prepend="AND" property="keyword">
+		  <![CDATA[
+		    ("ASSET_NAME" LIKE '%$keyword$%' OR "ASSET_MAC" LIKE '%$keyword$%' )
+		  ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selAssetName">
+		   <![CDATA[ 
+		      "ASSET_NAME" LIKE '%$selAssetName$%'
+		   ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selAssetCollector">
+		   <![CDATA[ 
+		      "ASSET_COLLECTOR_ID" =#selAssetCollector#
+		   ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selAssetIp">
+		    <![CDATA[ 
+		      "ASSET_IP" =#selAssetIp#
+		    ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selAssetImportance">
+		    <![CDATA[ 
+		      "ASSET_IMPORTANCE" =#selAssetImportance#
+		    ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selAssetStatus">
+		    <![CDATA[ 
+		      "ASSET_STATUS" =#selAssetStatus#
+		    ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selassetValue">
+	       <![CDATA[ 
+	          "ASSET_ASSET_VALUE"=#selassetValue#
+	       ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selvAVulnerabilityValue">
+	       <![CDATA[ 
+	          "VAVULNERABILITYVALUE" =#selvAVulnerabilityValue#
+	       ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selriskThreatValue">
+	       <![CDATA[ 
+	         "RISK_THREATVALUE" =#selriskThreatValue#
+	       ]]>
+		</isNotEmpty>
+		<!-- <isNotEmpty property="roleAssetIds"> <isNotEmpty prepend="AND" property="roleAssetGroupIds"> 
+			<![CDATA[ ("ASSET_ID" in ($roleAssetIds$) OR "ASSET_GROUP_ID" in ($roleAssetGroupIds$)) 
+			]]> </isNotEmpty> <isEmpty prepend="AND" property="roleAssetGroupIds"> <![CDATA[ 
+			"ASSET_ID" in ($roleAssetIds$) ]]> </isEmpty> </isNotEmpty> -->
+		<!-- <isEmpty property="roleAssetIds"> <isNotEmpty prepend="AND" property="roleAssetGroupIds"> 
+			<![CDATA[ "ASSET_GROUP_ID" in ($roleAssetGroupIds$) ]]> </isNotEmpty> </isEmpty> -->
+		<isNotEmpty prepend="AND" property="assetGroupId">
+		    <![CDATA[
+		       "ASSET_ID" in (select distinct("ASSET_ID") from "tbl_asset_group_asset" where "ASSET_GROUP_ID" in ($assetGroupId$)) 
+		    ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="collectorId">
+		    <![CDATA[
+		      "ASSET_COLLECTOR_ID"  = #collectorId#
+		    ]]>
+		</isNotEmpty>
+
+		<isNotEmpty prepend="AND" property="assetSegMent">
+		    <![CDATA[
+		      "ASSET_IP_SEGMENT" =#assetSegMent# AND "ASSET_IS_DELETE" = 0
+		    ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="assetStatus">
+		   <![CDATA[
+		       "ASSET_STATUS" = #assetStatus#
+		   ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="assetDeviceType">
+		  <![CDATA[
+		   "ASSET_DEVICE_TYPE" LIKE '%$assetDeviceType$%'
+		  ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="collectorMac">
+		   <![CDATA[
+		       "ASSET_COLLECTOR_MAC" = #collectorMac#
+		   ]]>
+		</isNotEmpty>
+		<!-- <isNotEmpty prepend="AND" property="assetGroupId"> <![CDATA[ "ASSET_GROUP_ID" 
+			= #assetGroupId# ]]> </isNotEmpty> -->
+	</select>
+
+	<!-- 查询 -->
+	<select id="sqlServerasset.query" parameterClass="java.util.HashMap"
+		resultMap="assetResult">
+		SELECT * FROM "tbl_asset" WHERE 1=1 and "ASSET_IS_DELETE" = 0
+		<!-- <isNotEmpty prepend="AND" property="assetGroupIds"> <![CDATA[ "ASSET_ID" 
+			in (select "ASSET_ID" from "tbl_asset_group_asset" where "ASSET_GROUP_ID" 
+			in ($assetGroupIds$)) OR "ASSET_GROUP_FEATRUE" LIKE '%$assetGroupIds$%' ]]> 
+			</isNotEmpty> -->
+		<isNotEmpty prepend="AND" property="assetDeviceType">
+		  <![CDATA[
+		   "ASSET_DEVICE_TYPE" LIKE '%$assetDeviceType$%'
+		  ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="keyword">
+		  <![CDATA[
+		    ("ASSET_NAME" LIKE '%$keyword$%' OR "ASSET_MAC" LIKE '%$keyword$%')
+		  ]]>
+		</isNotEmpty>
+
+		<isNotEmpty prepend="AND" property="selAssetName">
+		   <![CDATA[ 
+		      "ASSET_NAME" LIKE '%$selAssetName$%'
+		   ]]>
+		</isNotEmpty>
+
+		<isNotEmpty prepend="AND" property="selAssetIp">
+		    <![CDATA[ 
+		      "ASSET_IP" =#selAssetIp#
+		    ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selAssetCollector">
+		    <![CDATA[ 
+		      "ASSET_COLLECTOR_ID" =#selAssetCollector#
+		    ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selAssetImportance">
+		    <![CDATA[ 
+		      "ASSET_IMPORTANCE" =#selAssetImportance#
+		    ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selAssetStatus">
+		    <![CDATA[ 
+		      "ASSET_STATUS" =#selAssetStatus#
+		    ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selassetValue">
+	       <![CDATA[ 
+	          "ASSET_ASSET_VALUE"=#selassetValue#
+	       ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selvAVulnerabilityValue">
+	       <![CDATA[ 
+	          "VAVULNERABILITYVALUE" =#selvAVulnerabilityValue#
+	       ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selriskThreatValue">
+	       <![CDATA[ 
+	         "RISK_THREATVALUE" =#selriskThreatValue#
+	       ]]>
+		</isNotEmpty>
+		<!-- <isNotEmpty property="roleAssetIds"> <isNotEmpty prepend="AND" property="roleAssetGroupIds"> 
+			<![CDATA[ ("ASSET_ID" in ($roleAssetIds$) OR "ASSET_GROUP_ID" in ($roleAssetGroupIds$)) 
+			]]> </isNotEmpty> <isEmpty prepend="AND" property="roleAssetGroupIds"> <![CDATA[ 
+			"ASSET_ID" in ($roleAssetIds$) ]]> </isEmpty> </isNotEmpty> -->
+		<!-- <isEmpty property="roleAssetIds"> <isNotEmpty prepend="AND" property="roleAssetGroupIds"> 
+			<![CDATA[ "ASSET_GROUP_ID" in ($roleAssetGroupIds$) ]]> </isNotEmpty> </isEmpty> -->
+
+		<isNotEmpty prepend="AND" property="assetGroupId">
+		    <![CDATA[
+		       "ASSET_ID" in (select distinct("ASSET_ID") from "tbl_asset_group_asset" where "ASSET_GROUP_ID" in ($assetGroupId$)) 
+		    ]]>
+		</isNotEmpty>
+
+		<isNotEmpty prepend="AND" property="collectorId">
+		    <![CDATA[
+		     ( "ASSET_COLLECTOR_ID" = #collectorId#)
+		    ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="assetSegMent">
+		    <![CDATA[
+		      "ASSET_IP_SEGMENT" =#assetSegMent# AND "ASSET_IS_DELETE" = 0
+		    ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="assetStatus">
+		   <![CDATA[
+		       "ASSET_STATUS" = #assetStatus#
+		   ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="collectorMac">
+		   <![CDATA[
+		       "ASSET_COLLECTOR_MAC" = #collectorMac#
+		   ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="assetSupportDevice">
+		    <![CDATA[
+		       "ASSET_SUPPORT_DEVICE" IN $assetSupportDevice$
+		   ]]>
+		</isNotEmpty>
+
+		<!-- <isNotEmpty prepend="AND" property="assetGroupId"> <![CDATA[ ("ASSET_GROUP_ID" 
+			= #assetGroupId# OR "") ]]> </isNotEmpty> -->
+
+		<!--ORDER BY "ASSET_UPDATE_DATE_TIME" DESC -->
+		<!--ORDER BY "ASSET_ISSUED" ASC -->
+
+		<isEqual property="sortType" compareValue="ASSET_ISSUED">
+		      <![CDATA[
+		         ORDER BY "ASSET_ISSUED" ASC
+		       ]]>
+		</isEqual>
+		<isEmpty property="sortType">
+		       <![CDATA[ 
+		         ORDER BY "ASSET_UPDATE_DATE_TIME" DESC
+		       ]]>
+		</isEmpty>
+
+
+	</select>
+
+
+	<!-- 查询所有资产 -->
+	<select id="sqlServerasset.queryEx" parameterClass="java.util.HashMap"
+		resultMap="assetResult9">
+		SELECT * FROM "tbl_asset" WHERE 1=1 and "ASSET_IS_DELETE" = 0
+		<isNotEmpty prepend="AND" property="keyword">
+		  <![CDATA[
+		    ("ASSET_NAME" LIKE '%$keyword$%' OR "ASSET_IP" LIKE '%$keyword$%')
+		  ]]>
+		</isNotEmpty>
+
+		<isNotEmpty prepend="AND" property="selAssetName">
+		   <![CDATA[ 
+		      "ASSET_NAME" LIKE '%$selAssetName$%'
+		   ]]>
+		</isNotEmpty>
+
+		<isNotEmpty prepend="AND" property="selAssetIp">
+		    <![CDATA[ 
+		      "ASSET_IP" = #selAssetIp#
+		    ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selAssetCollector">
+		    <![CDATA[ 
+		      "ASSET_COLLECTOR_ID" = #selAssetCollector#
+		    ]]>
+		</isNotEmpty>
+
+		<isNotEmpty prepend="AND" property="selAssetMac">
+		    <![CDATA[ 
+		      "ASSET_MAC" = #selAssetMac#
+		    ]]>
+		</isNotEmpty>
+
+		<isNotEmpty prepend="AND" property="assetGroupId">
+		    <![CDATA[
+		      "ASSET_ID" in (select distinct("ASSET_ID") from "tbl_asset_group_asset" where "ASSET_GROUP_ID" in ($assetGroupId$)) 
+		    ]]>
+		</isNotEmpty>
+
+		<isNotEmpty prepend="AND" property="selAssetImportance">
+		    <![CDATA[
+		       "ASSET_IMPORTANCE" = #selAssetImportance#
+		    ]]>
+		</isNotEmpty>
+
+		<isNotEmpty prepend="AND" property="assetCollectorId">
+		    <![CDATA[
+		       "ASSET_COLLECTOR_ID" = #assetCollectorId#
+		    ]]>
+		</isNotEmpty>
+
+		<isNotEmpty prepend="AND" property="assetCollectorName">
+		    <![CDATA[
+		       "ASSET_COLLECTOR_NAME" = #assetCollectorName#
+		    ]]>
+		</isNotEmpty>
+
+		<isNotEmpty prepend="AND" property="assetCollectorMac">
+		    <![CDATA[
+		       "ASSET_COLLECTOR_MAC" = #assetCollectorMac#
+		    ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="assetSupportDevice">
+		    <![CDATA[
+		       "ASSET_SUPPORT_DEVICE" IN $assetSupportDevice$
+		   ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="asset_system_id">
+		      <![CDATA[
+		       "ASSET_SYSTEM_ID" IN ($asset_system_id$)
+		        ]]>
+		</isNotEmpty>
+
+		ORDER BY "ASSET_UPDATE_DATE_TIME" DESC
+	</select>
+
+	<!-- 查询组ID -->
+	<select id="sqlServerasset.queryByAssetGroupId" parameterClass="long"
+		resultMap="assetResult">
+		SELECT * FROM "tbl_asset" WHERE "ASSET_IS_DELETE" = 0
+		<!-- AND "ASSET_GROUP_ID" = #value# -->
+		ORDER BY "ASSET_UPDATE_DATE_TIME" desc
+	</select>
+
+
+	<!-- 根据id查询资产 -->
+	<select id="sqlServerasset.queryById" resultMap="assetResult"
+		parameterClass="long">
+		SELECT * FROM "tbl_asset" where "ASSET_ID" = #value#
+	</select>
+	<select id="sqlServerasset.queryById1" resultMap="assetResult"
+		parameterClass="long">
+		SELECT * FROM "tbl_asset" where "ASSET_ID" = #value#
+		AND "ASSET_IS_DELETE" = 0
+	</select>
+
+	<!-- 根据IP段查询资产 -->
+	<select id="sqlServerasset.queryByIp" resultMap="assetResult"
+		parameterClass="long">
+		SELECT * FROM "tbl_asset" where "ASSET_IP_SEGMENT"
+		=#assetSegMent# AND "ASSET_IS_DELETE" = 0
+	</select>
+	<!-- 根据IP查询资产 -->
+
+	<select id="sqlServerasset.queryAssetByIpOld" resultMap="assetResult"
+		parameterClass="long">
+		SELECT * FROM "tbl_asset" where "ASSET_IP"
+		=#value# AND
+		"ASSET_IS_DELETE" = 0
+	</select>
+	<!-- 标记删除 -->
+	<update id="sqlServerasset.delete" parameterClass="java.util.HashMap">
+		UPDATE
+		"tbl_asset"
+		SET
+		"ASSET_IS_DELETE" = 1,
+		"ASSET_UPDATE_DATE_TIME" =
+		#assetUpdateTime#
+		WHERE
+		"ASSET_ID" = #assetId#
+	</update>
+
+	<!-- 插入一条记录 -->
+	<insert id="sqlServerasset.insert" parameterClass="asset">
+		INSERT INTO "tbl_asset"
+		("ASSET_NAME",
+		"ASSET_IP",
+		"ASSET_GATEWAY",
+		"ASSET_IP_SEGMENT",
+		"ASSET_IMPORTANCE",
+		"ASSET_HOST_NAME",
+		"ASSET_MAC",
+		"ASSET_CREATE_DATE_TIME",
+		"ASSET_UPDATE_DATE_TIME",
+		"ASSET_USER_LOGIN_NAME",
+		"ASSET_NODE_ID",
+		"ASSET_MEMO",
+		"ASSET_ALIAS_NAME",
+		"ASSER_WORK_IDENT",
+		"ASSET_GROUP_NAME",
+		"ASSET_IS_DELETE",
+		"ASSET_GROUP_FEATRUE",
+		"NOTSURE",
+		"ASSET_VERSION",
+		"ASSET_ORGANIZATION_NAME",
+		"ASSET_MONITOR_DIRECTORIES",
+		"ASSET_MONITOR_FILE",
+		"ASSET_COLLECT_TYPE",
+		"ASSET_DEVICE_TYPE",
+		"ASSET_SUPPORT_DEVICE",
+		"ASSET_DEVICE_TYPE_ID",
+		"ASSET_SUPPORT_DEVICE_ID",
+		"ASSET_PRIVILEGE_COMMAND",
+		"ASSET_COLLECTOR_ID",
+		"ASSET_COLLECTOR_NAME",
+		"ASSET_COLLECTOR_MAC",
+		"ASSET_STATUS",
+		"ASSET_DEVICE_CATEGORY_CODE",
+		"ASSET_SUPPORT_DEVICE_CATEGORY_CODE",
+		"ASSET_DEVICES_REL_RULES",
+		"ASSET_PORT",
+		"ASSET_LOG",
+		"ASSET_APM",
+		"ASSET_APM_MONITOR",
+		"ASSET_SECRET_VALUE",
+		"ASSET_INTEGRITY_VALUE",
+		"ASSET_USABILITY_VALUE",
+		"ASSET_ASSET_VALUE",
+		"RISK_THREATVALUE",
+		"VAVULNERABILITYVALUE",
+		"ASSET_ANSER_USER_ID",
+
+		"ASSET_RESPONSIBILITY_USER_ID",
+		"ASSET_SYSTEM_ID",
+		"ASSET_SYSTEM_VERSION",
+		"ASSET_SYSTEM_VERSIONNO",
+		"ASSET_SYSTEM_BRAND",
+		"ASSET_PROPERTY1",
+		"ASSET_PROPERTY_VALUE1",
+		"ASSET_PROPERTY2",
+		"ASSET_PROPERTY_VALUE2",
+		"ASSET_PROPERTY3",
+		"ASSET_PROPERTY_VALUE3",
+		"ASSET_PROPERTY4",
+
+		"ASSET_PROPERTY_VALUE4",
+		"ASSET_PROPERTY5",
+		"ASSET_PROPERTY_VALUE5",
+		"ASSET_ANSER_USER_NAME",
+		"ASSET_RESPONSIBILITY_USER_NAME",
+
+		"ASSET_SYSTEM_NAME",
+		"ASSET_SYSTEM_VERSION_NAME",
+		"ASSET_SYSTEM_VERSIONNO_NAME",
+		"ASSET_SYSTEM_BRAND_NAME",
+		"SECURITY_PORT",
+		"SECURITY_USERNAME",
+		"SECURITY_PASSWORD",
+		"SECURITY_LINKMETHOD"
+
+		)
+		VALUES
+		(#assetName#,
+		#assetIp#,
+		#assetGateWay#,
+		#assetSegMent#,
+		#assetImportance#,
+		#assetHostName#,
+		#assetMac#,
+		#assetCreateDateTime#,
+		#assetUpdateDateTime#,
+		#assetUserLoginName#,
+		#assetNodeId#,
+		#assetMemo#,
+		#assetAliasName#,
+		#assetWorkIdent#,
+		#assetGroupName#,
+		0,
+		#assetGroupFeature#,
+		#assetUnName#,
+		#version#,
+		#organizationName#,
+		#directorise#,
+		#file#,
+		#assetCollectType#,
+		#assetDeviceType#,
+		#assetSupportDevice#,
+		#assetDeviceTypeId#,
+		#assetSupportDeviceId#,
+		#assetPrivilegeCommand#,
+		#assetCollectorId#,
+		#assetCollectorName#,
+		#assetCollectorMac#,
+		#assetStatus#,
+		#assetDeviceTypeCode#,
+		#assetSupportDeviceTypeCode#,
+		#assetDeviceRules#,
+		#assetPort#,
+		#assetLog#,
+		#assetAPM#,
+		#assetAPMMonitor#,
+		#secretValue#,
+		#integrityValue#,
+		#usabilityValue#,
+		#assetValue#,
+		0,
+		0,
+		#asset_answer_user_id#,
+
+		#asset_pessponsibility_user_id#,
+		#asset_system_id#,
+		#asset_system_version#,
+		#asset_system_versionno#,
+		#asset_system_brand#,
+		#assetProperty1#,
+		#assetPropertyValue1#,
+		#assetProperty2#,
+		#assetPropertyValue2#,
+		#assetProperty3#,
+		#assetPropertyValue3#,
+		#assetProperty4#,
+
+		#assetPropertyValue4#,
+		#assetProperty5#,
+		#assetPropertyValue5#,
+		#asset_answer_userName#,
+		#asset_pessonsibility_userName#,
+
+		#asset_system_name#,
+		#asset_system_version_name#,
+		#asset_system_versionno_name#,
+		#asset_system_brand_name#,
+		"SECURITY_PORT",
+		"SECURITY_USERNAME",
+		"SECURITY_PASSWORD",
+		"SECURITY_LINKMETHOD"
+
+		)
+		<selectKey resultClass="long" keyProperty="assetId">
+			SELECT @@IDENTITY AS assetId
+		</selectKey>
+	</insert>
+
+	<!--更新记录 -->
+	<update id="sqlServerasset.update" parameterClass="asset">
+		UPDATE
+		"tbl_asset"
+		SET
+		"ASSET_NAME" = #assetName#,
+		"ASSET_IP" = #assetIp#,
+		"ASSET_IP_SEGMENT"=#assetSegMent#,
+		"ASSET_GATEWAY"=#assetGateWay#,
+		"ASSET_IMPORTANCE" =
+		#assetImportance#,
+		"ASSET_HOST_NAME" =
+		#assetHostName#,
+		"ASSET_MAC" =
+		#assetMac#,
+		"ASSET_UPDATE_DATE_TIME" =
+		#assetUpdateDateTime#,
+		"ASSET_NODE_ID" =
+		#assetNodeId#,
+		"ASSET_MEMO" =
+		#assetMemo#,
+		"ASSET_ALIAS_NAME" =
+		#assetAliasName#,
+		"ASSER_WORK_IDENT" =
+		#assetWorkIdent#,
+		"ASSET_GROUP_NAME" =
+		#assetGroupName#,
+		"ASSET_GROUP_FEATRUE" =
+		#assetGroupFeature#,
+		"NOTSURE" = #assetUnName#,
+		"ASSET_VERSION"=#version#,
+		"ASSET_ORGANIZATION_NAME"=#organizationName#,
+		"ASSET_MONITOR_DIRECTORIES"=#directorise#,
+		"ASSET_MONITOR_FILE"=#file#,
+		"ASSET_COLLECT_TYPE" = #assetCollectType#,
+		"ASSET_DEVICE_TYPE" = #assetDeviceType#,
+		"ASSET_SUPPORT_DEVICE" =
+		#assetSupportDevice#,
+		"ASSET_DEVICE_TYPE_ID" = #assetDeviceTypeId#,
+		"ASSET_SUPPORT_DEVICE_ID" = #assetSupportDeviceId#,
+		"ASSET_PRIVILEGE_COMMAND" = #assetPrivilegeCommand#,
+		"ASSET_COLLECTOR_ID"= #assetCollectorId#,
+		"ASSET_COLLECTOR_NAME" =
+		#assetCollectorName#,
+		"ASSET_COLLECTOR_MAC" = #assetCollectorMac#,
+		"ASSET_STATUS" = #assetStatus#,
+		"ASSET_DEVICE_CATEGORY_CODE" =
+		#assetDeviceTypeCode#,
+		"ASSET_SUPPORT_DEVICE_CATEGORY_CODE" =
+		#assetSupportDeviceTypeCode#,
+		"ASSET_DEVICES_REL_RULES" =
+		#assetDeviceRules#,
+		"ASSET_PORT" = #assetPort#,
+		"ASSET_LOG" =
+		#assetLog#,
+		"ASSET_APM" = #assetAPM#,
+		"ASSET_APM_MONITOR" =
+		#assetAPMMonitor#,
+		"ASSET_SECRET_VALUE" = #secretValue#,
+		"ASSET_INTEGRITY_VALUE" = #integrityValue#,
+		"ASSET_USABILITY_VALUE" =
+		#usabilityValue#,
+		"ASSET_ANSER_USER_ID" = #asset_answer_user_id#,
+		"ASSET_RESPONSIBILITY_USER_ID" = #asset_pessponsibility_user_id#,
+		"ASSET_PROPERTY1" = #assetProperty1#,
+		"ASSET_PROPERTY2" =
+		#assetProperty2#,
+		"ASSET_PROPERTY3" = #assetProperty3#,
+		"ASSET_PROPERTY4" = #assetProperty4#,
+		"ASSET_PROPERTY5" =
+		#assetProperty5#,
+		"ASSET_PROPERTY_VALUE1" = #assetPropertyValue1#,
+		"ASSET_PROPERTY_VALUE2" = #assetPropertyValue2#,
+		"ASSET_PROPERTY_VALUE3" = #assetPropertyValue3#,
+		"ASSET_PROPERTY_VALUE4" = #assetPropertyValue4#,
+		"ASSET_PROPERTY_VALUE5" = #assetPropertyValue5#,
+		"ASSET_SYSTEM_ID" =
+		#asset_system_id#,
+		"ASSET_SYSTEM_VERSION" = #asset_system_version#,
+		"ASSET_SYSTEM_VERSIONNO" = #asset_system_versionno#,
+		"ASSET_SYSTEM_BRAND" = #asset_system_brand#,
+		"ASSET_ANSER_USER_NAME" =
+		#asset_answer_userName#,
+		"ASSET_RESPONSIBILITY_USER_NAME" =
+		#asset_pessonsibility_userName#,
+		"ASSET_SYSTEM_NAME" =
+		#asset_system_name#,
+		"ASSET_SYSTEM_VERSION_NAME" =
+		#asset_system_version_name#,
+		"ASSET_SYSTEM_VERSIONNO_NAME" =
+		#asset_system_versionno_name#,
+		"ASSET_SYSTEM_BRAND_NAME" =
+		#asset_system_brand_name#,
+		"SECURITY_PORT" =#securityPort#,
+		"SECURITY_USERNAME" = #securityUserName#,
+		"SECURITY_PASSWORD" =
+		#securityPWD#,
+		"SECURITY_LINKMETHOD" = #securityLinkeThod#
+
+		WHERE
+		"ASSET_ID" = #assetId#
+	</update>
+
+	<!-- 更新资产的下发状态 -->
+	<update id="sqlServerasset.updataIssued" parameterClass="asset">
+		UPDATE "tbl_asset" SET "ASSET_ISSUED" = #assetIssued# WHERE "ASSET_ID" =
+		#assetId#
+	</update>
+
+	<!-- 更新资产的威胁值、脆弱性值 -->
+	<update id="sqlServerasset.updateValue" parameterClass="asset">
+
+		UPDATE "tbl_asset"
+		SET
+		"RISK_THREATVALUE" =#riskThreatValue#,
+		"VAVULNERABILITYVALUE"=#vAVulnerabilityValue#,
+		"ASSET_ASSET_VALUE" = #assetValue#,
+		"ASSET_SECRET_VALUE" = #secretValue#,
+		"ASSET_INTEGRITY_VALUE" = #integrityValue#,
+		"ASSET_USABILITY_VALUE" = #usabilityValue#
+		WHERE
+		"ASSET_ID" = #assetId#
+	</update>
+	<!-- 根据资产名查询 -->
+	<select id="sqlServerasset.queryByName" parameterClass="java.lang.String"
+		resultMap="assetResult">
+		SELECT * FROM "tbl_asset" WHERE "ASSET_NAME" = #value# AND
+		"ASSET_IS_DELETE"=0
+	</select>
+
+	<!-- 更新资产状态 -->
+	<update id="sqlServerasset.updateStatus" parameterClass="java.util.HashMap">
+		UPDATE
+		"tbl_asset" SET "ASSET_STATUS" = #assetStatus# WHERE
+		"ASSET_ID"=#assetId#
+	</update>
+
+	<!-- 验证资产MAC的唯一性 -->
+	<select id="sqlServercheck.mac" parameterClass="java.util.HashMap"
+		resultMap="assetResult">
+		SELECT * FROM "tbl_asset" WHERE "ASSET_IS_DELETE"=0 AND
+		"ASSET_MAC" = #mac#
+	</select>
+
+	<!-- 删除资产所对应的资产组 -->
+	<!-- <update id="sqlServerasset.deleteGroup" parameterClass="java.util.HashMap"> 
+		UPDATE "tbl_asset" SET "ASSET_GROUP_NAME" = #groupName# WHERE "ASSET_GROUP_ID" 
+		= #assetGroupId# OR "ASSET_GROUP_FEATRUE" LIKE '%,$assetGroupId$,%' </update> -->
+
+	<!-- 查询某个资产组所对应的结构内是否含有资产 -->
+	<select id="sqlServerasset.selectByGroupId" parameterClass="java.util.HashMap"
+		resultClass="int">
+		SELECT COUNT(*) FROM "tbl_asset_group_asset" WHERE
+		"ASSET_GROUP_ID" =#assetGroupId#
+	</select>
+
+	<!-- 更改资产对应的资产组的名字 -->
+	<!-- <update id="sqlServerasset.updateGroupName" parameterClass="java.util.HashMap"> 
+		UPDATE "tbl_asset" SET "ASSET_GROUP_NAME" = #assetGroupName# WHERE "ASSET_GROUP_ID" 
+		= #assetGroupId# </update> -->
+
+	<!-- 查询 -->
+	<select id="sqlServerqueryIpTree.query" resultClass="java.util.HashMap">
+		select
+		distinct"ASSET_IP_SEGMENT" AS segment ,count(*),"ASSET_GATEWAY" AS
+		gate from "tbl_asset" WHERE "ASSET_IS_DELETE"=0
+		group by
+		"ASSET_IP_SEGMENT" ,"ASSET_GATEWAY";
+	</select>
+
+	<!-- 查询设备种类 -->
+	<select id="sqlServerqueryCategory" resultClass="java.util.HashMap">
+		SELECT
+		"DEVICE_CATEGORY_ID" AS deviceid ,"DEVICE_CATEGORY_NAME"AS devicename,
+		"EVENTS_DEVNAME" AS devName
+		FROM "tbl_device_category" WHERE
+		"HIGHER_UPS_ID" = 0 AND "EVENTS_CUSTOMD1" = 1
+		ORDER BY
+		"DEVICE_CATEGORY_ID" desc
+	</select>
+
+	<select id="sqlServerqueryCategoryService" resultClass="java.util.HashMap">
+		SELECT
+		"DEVICE_CATEGORY_ID" AS deviceid ,"DEVICE_CATEGORY_NAME"AS devicename
+		FROM "tbl_device_category" WHERE "DEVICE_CATEGORY_NAME" = 'Server服务器'
+		ORDER BY "DEVICE_CATEGORY_ID" desc
+	</select>
+
+	<select id="sqlServerqueryCategoryByUpsId" resultClass="java.util.HashMap">
+		SELECT
+		"DEVICE_CATEGORY_ID" AS deviceid ,"DEVICE_CATEGORY_NAME"AS devicename,
+		"EVENTS_DEVNAME" AS eventsdevname
+		FROM "tbl_device_category" WHERE
+		"HIGHER_UPS_ID" = #upsId# AND "EVENTS_CUSTOMD1" = 1
+		ORDER BY
+		"DEVICE_CATEGORY_ID" asc
+	</select>
+
+	<select id="sqlServerqueryCategorys" resultClass="java.util.HashMap">
+		SELECT
+		"DEVICE_CATEGORY_ID" AS deviceid ,"DEVICE_CATEGORY_NAME"AS devicename,
+		"DEVICE_CATEGORY_CODE" AS devicecategorycode
+		FROM "tbl_device_category" where "EVENTS_CUSTOMD1" = 1
+		ORDER BY
+		"DEVICE_CATEGORY_ID" desc
+	</select>
+
+	<!-- 根据设备Id查询设备 -->
+	<select id="sqlServerqueryDeviceById" parameterClass="long"
+		resultClass="String">
+		SELECT "DEVICE_CATEGORY_NAME" AS devicename FROM
+		"tbl_device_category"
+		WHERE "DEVICE_CATEGORY_ID" = #deviceId# AND
+		"EVENTS_CUSTOMD1" = 1
+		ORDER BY "DEVICE_CATEGORY_ID"
+		asc
+	</select>
+
+	<select id="sqlServerquery.deviceById" parameterClass="long"
+		resultClass="java.util.HashMap">
+		SELECT "DEVICE_CATEGORY_NAME"AS devicename,
+		"DEVICE_CATEGORY_CODE" AS devicecategorycode FROM
+		"tbl_device_category"
+		WHERE "DEVICE_CATEGORY_ID" = #deviceId#
+		ORDER BY
+		"DEVICE_CATEGORY_ID"
+		asc
+	</select>
+
+	<!-- 根据设备Id查询设备对应的解析规则 -->
+	<select id="sqlServerquery.deviceRulesById" parameterClass="Long"
+		resultClass="String">
+		SELECT "EVENTS_DEVNAME" FROM "tbl_device_category"
+		WHERE "DEVICE_CATEGORY_ID" = #value#
+	</select>
+
+	<!-- 资产 导出成excel 李长红修改，增加快速搜索关键字条件20140515 -->
+	<select id="sqlServerasset.export" parameterClass="java.util.HashMap"
+		resultClass="java.util.HashMap">
+		SELECT * FROM "tbl_asset" WHERE 1 =1 AND "ASSET_IS_DELETE" = 0
+		<isNotEmpty prepend="AND" property="keyword">
+		  <![CDATA[
+		    ("ASSET_NAME" LIKE '%$keyword$%' OR "ASSET_MAC" LIKE '%$keyword$%')
+		  ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="ids">
+			"ASSET_ID" in($ids$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selAssetName">
+		   <![CDATA[ 
+		      "ASSET_NAME" LIKE '%$selAssetName$%'
+		   ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selAssetIp">
+		    <![CDATA[ 
+		      "ASSET_IP" =#selAssetIp#
+		    ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="selAssetCollector">
+		    <![CDATA[ 
+		      "ASSET_COLLECTOR_ID" =#selAssetCollector#
+		    ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="assetGroupIds">
+		  <![CDATA[
+		   "ASSET_ID" in (select distinct("ASSET_ID") from "tbl_asset_group_asset" where "ASSET_GROUP_ID" in ($assetGroupIds$)) 
+		  ]]></isNotEmpty>
+
+	</select>
+	<!-- 查询资产组关联的平均威胁值值 -->
+	<select id="sqlServerassetNameByValue.query" parameterClass="java.util.HashMap"
+		resultClass="String">
+		SELECT avg("RISK_THREATVALUE") FROM "tbl_asset" WHERE 1 =1 AND
+		"ASSET_IS_DELETE" = 0
+		<isNotEmpty prepend="AND" property="assetGroupId">
+		  <![CDATA[
+		  "ASSET_ID" in (select distinct("ASSET_ID") from "tbl_asset_group_asset" where "ASSET_GROUP_ID" in ($assetGroupId$))
+		  ]]></isNotEmpty>
+
+	</select>
+	<!-- 查询资产组关联的平均风险值 <select id="assetNameByValue3.query" parameterClass="java.util.HashMap" 
+		resultClass="String"> SELECT round(avg("ASSET_ASSET_VALUE"*"VAVULNERABILITYVALUE"*"RISK_THREATVALUE"),2) 
+		FROM "tbl_asset" WHERE 1 =1 AND "ASSET_IS_DELETE" = 0 <isNotEmpty prepend="AND" 
+		property="assetGroupId"> <![CDATA[ "ASSET_ID" in (select "ASSET_ID" from 
+		"tbl_asset_group_asset" where "ASSET_GROUP_ID" in ($assetGroupIds$)) ]]></isNotEmpty> 
+		<isNotEmpty prepend="AND" property="assetGroupIds"> <![CDATA[ "ASSET_ID" 
+		in (select "ASSET_ID" from "tbl_asset_group_asset" where "ASSET_GROUP_ID" 
+		in ($assetGroupIds$)) ]]></isNotEmpty> </select> -->
+	<!-- 查询资产组关联的平均脆弱性值 -->
+	<select id="sqlServerassetNameByValue1.query" parameterClass="java.util.HashMap"
+		resultClass="String">
+		SELECT avg("VAVULNERABILITYVALUE") FROM "tbl_asset" WHERE 1 =1 AND
+		"ASSET_IS_DELETE" = 0
+		<isNotEmpty prepend="AND" property="assetGroupId">
+		  <![CDATA[
+		"ASSET_ID" in (select distinct("ASSET_ID") from "tbl_asset_group_asset" where "ASSET_GROUP_ID" in ($assetGroupId$))
+		  ]]></isNotEmpty>
+
+	</select>
+	<!-- 查询资产组关联的资产值 -->
+	<select id="sqlServerassetNameByValue2.query" parameterClass="java.util.HashMap"
+		resultClass="String">
+		SELECT avg("ASSET_ASSET_VALUE") FROM "tbl_asset" WHERE 1 =1 AND
+		"ASSET_IS_DELETE" = 0
+		<isNotEmpty prepend="AND" property="assetGroupId">
+		  <![CDATA[
+		   "ASSET_ID" in (select distinct("ASSET_ID") from "tbl_asset_group_asset" where "ASSET_GROUP_ID" in ($assetGroupId$))
+		  ]]></isNotEmpty>
+
+	</select>
+
+	<!-- 大屏展示用 -->
+
+	<!-- 资产分布情况 -->
+	<select id="sqlServerassetGroup.display" parameterClass="java.util.HashMap"
+		resultClass="java.util.HashMap">
+		SELECT count("ASSET_NAME") AS "count","ASSET_NAME" AS "name" from
+		"tbl_asset"
+		WHERE "ASSET_IS_DELETE" =0
+		GROUP BY "name"
+		ORDER BY "count" DESC
+	</select>
+
+	<!-- 排序 -->
+	<select id="sqlServerasset.sort" parameterClass="java.lang.String"
+		resultMap="assetResult">
+		SELECT * FROM "tbl_asset" WHERE 1=1 and "ASSET_IS_DELETE" = 0 ORDER BY $str$
+	</select>
+	<!-- 查询资产分布 -->
+	<select id="sqlServerrisk.queryAssets" parameterClass="java.util.HashMap"
+		resultClass="java.util.HashMap">
+
+		SELECT TOP $topN$ "$key$" AS 'key',avg("$value$") AS 'value'
+		FROM "tbl_asset"
+		WHERE "ASSET_IS_DELETE" = 0
+		<isNotEmpty prepend="AND" property="assetGroupId">
+		    <![CDATA[
+		       "ASSET_ID" in (select distinct("ASSET_ID") from "tbl_asset_group_asset" where "ASSET_GROUP_ID" in ($assetGroupId$)) 
+		    ]]>
+		</isNotEmpty>
+		GROUP BY "$key$" ORDER BY 'value' DESC
+
+	</select>
+	<!-- 根据资产组名查询资产分布 -->
+	<select id="sqlServerrisk.queryAssetsByGroupName" resultClass="java.util.HashMap"
+		resultMap="assetResult">
+		SELECT
+		*
+		FROM "tbl_asset"
+		WHERE "ASSET_IS_DELETE" = 0
+		and "ASSET_GROUP_NAME" LIKE
+		'%value%'
+	</select>
+	<!-- 查询条数 -->
+	<select id="sqlServerasset.assetIp" resultClass="int"
+		parameterClass="java.util.HashMap">
+		SELECT "ASSET_ID" FROM "tbl_asset" WHERE 1=1
+		<isNotEmpty prepend="AND" property="vaIp">
+		    <![CDATA[
+		       "ASSET_IP" = #vaIp#
+		    ]]>
+		</isNotEmpty>
+
+	</select>
+	<!-- 根据资产ip查询资产所关联的脆弱性平均值 -->
+	<select id="sqlServerasset.queryVAvalue" parameterClass="java.lang.String"
+		resultClass="Double">
+		SELECT round (avg("VAVULNERABILITYVALUE"),2)
+		FROM tbl_risk_vulnerabilityassessment where "VAIP"=#value#;
+	</select>
+	<!-- 根据资产id查询资产所关联的威胁性平均值 -->
+	<select id="sqlServerasset.queryRiskvalue" parameterClass="Long"
+		resultClass="Double">
+		select round(avg("RISK_RESULT"),2)FROM tbl_risk_value where
+		"RISK_ASSET_ID"=#value#
+	</select>
+
+	<!-- 根据资产id查询资产所关联的资产值 -->
+	<select id="sqlServerasset.queryAssetvalue" parameterClass="Long"
+		resultClass="Double">
+		select "ASSET_ASSET_VALUE" FROM tbl_asset_value where "REL_ASSET_ID"=#value#
+	</select>
+	<!-- 更新：根据中间表查询组中的资产 -->
+	<select id="sqlServerasset.queryAssetByGroupId" resultMap="assetResult9"
+		parameterClass="java.util.HashMap">
+		select * from "tbl_asset" where 1=1 and "ASSET_IS_DELETE" = 0
+		<isNotEmpty prepend="AND" property="assetGroupId"> 
+	        <![CDATA[
+	     "ASSET_ID" in (select distinct("ASSET_ID") from "tbl_asset_group_asset" where "ASSET_GROUP_ID" in ($assetGroupId$))
+	        ]]>
+		</isNotEmpty>
+	</select>
+
+	<!-- asset.queryAllAssetByGroupId -->
+	<select id="sqlServerasset.queryAllAssetByGroupId"
+		parameterClass="java.util.HashMap" resultMap="assetResult">
+		SELECT distinct * from "tbl_asset" WHERE "ASSET_ID" in
+		(SELECT distinct("ASSET_ID") from "tbl_asset_group_asset" where
+		"ASSET_GROUP_ID" in ($groupId$))
+	</select>
+	<!-- 查询资产分布 -->
+	<select id="sqlServerrisk.queryRiskAssets" parameterClass="java.util.HashMap"
+		resultClass="java.util.HashMap">
+
+		SELECT TOP $topN$ "ASSET_NAME" AS 'key',avg("$value$") AS 'value'
+		FROM "tbl_asset"
+		WHERE "ASSET_IS_DELETE" = 0
+		<isNotEmpty prepend="AND" property="assetGroupId"> 
+	        <![CDATA[
+	     "ASSET_ID" in (select distinct("ASSET_ID") from "tbl_asset_group_asset" where "ASSET_GROUP_ID" in ($assetGroupId$))
+	        ]]>
+		</isNotEmpty>
+		GROUP BY "ASSET_NAME" ORDER BY 'value' DESC
+
+	</select>
+
+	<update id="sqlServerasset.updateAnalysisRules" parameterClass="java.util.HashMap">
+		UPDATE "tbl_asset" SET "ASSET_DEVICES_REL_RULES" = #relRules# WHERE
+		"ASSET_ID" = #assetId#
+	</update>
+	<!-- 删除关联 威胁值 -->
+	<delete id="sqlServerasset.deleteRiskValues" parameterClass="long">
+		DELETE FROM "tbl_risk_value" WHERE "RISK_ASSET_ID" = #value#
+
+	</delete>
+
+	<!-- 删除资产和资产组中间表 -->
+	<delete id="sqlServerasset.deleteAssetGroupAssets"
+		parameterClass="long">
+		DELETE FROM "tbl_asset_group_asset" WHERE "ASSET_ID" = #value#
+	</delete>
+	<!-- 删除关联的风险赋值 -->
+	<delete id="sqlServerasset.deleteAssetValues" parameterClass="long">
+		DELETE FROM "tbl_asset_value" WHERE "REL_ASSET_ID" =#value#;
+	</delete>
+	<!-- 删除关联的脆弱性值 -->
+	<delete id="sqlServerasset.deleteRiskVulnerabilityassessment"
+		parameterClass="java.lang.String">
+		DELETE FROM tbl_risk_vulnerabilityassessment where "VAIP"=#value#;;
+	</delete>
+
+	<!-- 修改资产的脆弱性值 -->
+	<update id="sqlServerasset.updateAssetVavulNerabilityValue"
+		parameterClass="java.util.HashMap">
+		UPDATE "tbl_asset"
+		SET
+		"VAVULNERABILITYVALUE" = #value#
+		WHERE
+		"ASSET_ID" = #assetId#
+	</update>
+
+	<!-- 查询资产的id 这里只在工单里用 -->
+	<select id="sqlServerasset.queryAssetIdWorkOrder"
+		parameterClass="java.util.HashMap" resultClass="int">
+		SELECT "ASSET_ID" FROM "tbl_asset" WHERE "ASSET_IS_DELETE" = 0
+		<isNotEmpty prepend="AND" property="assetGroupId">
+		    <![CDATA[
+		      "ASSET_ID" in (select distinct("ASSET_ID") from "tbl_asset_group_asset" where "ASSET_GROUP_ID" in ($assetGroupId$)) 
+		    ]]>
+		</isNotEmpty>
+	</select>
+
+	<!-- 根据资产的IP进行查询 -->
+	<select id="sqlServerasset.queryAssetByIp" parameterClass="long"
+		resultMap="assetResult">
+		SELECT * FROM "tbl_asset" WHERE "ASSET_IP" = #ip# AND "ASSET_IS_DELETE" = 0
+	</select>
+
+</sqlMap>

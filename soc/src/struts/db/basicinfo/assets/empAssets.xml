@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+    <struts>
+    	<package name="empAssets" extends="struts-default" namespace="/empAssets">
+    	
+		
+		<!-- 查询安全相关人员信息 -->
+		<action name="query" class="empAssetsAction" method="query">
+			<result name="success">/pages/dbPage/basic/assets/empassets.jsp</result>
+		</action>	
+		<action name="kquery" class="empAssetsAction" method="queryEmpAssets">
+			<result name="success">/pages/dbPage/basic/assets/empassets.jsp</result>
+		</action>
+		<!-- 修改安全相关人员信息 -->
+		<action name="edit" class="empAssetsAction" method="edit">
+			<result name="success">/pages/dbPage/basic/assets/addEmpassets.jsp</result>
+		</action>
+		<!-- 添加安全相关人员信息 -->
+		<action name="add" class="empAssetsAction" method="addEmpAssets">
+			<result name="success"  type="redirect">/pages/dbPage/basic/assets/empassets.jsp</result>
+			
+		</action>
+		<!-- 删除安全相关人员信息 -->
+		<action name="delete" class="empAssetsAction" method="delete">
+			<result name="success" type="redirect">/pages/dbPage/basic/assets/empassets.jsp</result>
+		</action> 
+		 
+		<!--查询json分页-->
+		<action name="queryAjaxEmpAssets"   class="empAssetsAction" method="queryAjaxEmpAssets"></action>
+		<!--高级搜索安全相关人员-->
+		<action name="extQuery"   class="empAssetsAction" method="queryExtEmpAsssets"></action>
+		</package>
+    </struts>

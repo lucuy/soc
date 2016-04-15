@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+			http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+            http://www.springframework.org/schema/aop 
+            http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+            http://www.springframework.org/schema/tx 
+            http://www.springframework.org/schema/tx/spring-tx-2.0.xsd"
+	default-lazy-init="true">
+
+	<!-- baseservice 所有service都继承此类 -->
+	<bean id="baseService2" class="com.topo.service.impl.BaseServiceImpl" />
+	<!-- 设备管理 -->
+	<bean id="deviceService" class="com.topo.service.device.impl.DeviceManageServiceImpl" parent="baseService2">
+		<property name="commonDao" ref="deviceDao"></property>
+	</bean>
+	<!-- 设备类型管理 -->
+	<bean id="deviceCategoryService" class="com.topo.service.deviceCategory.impl.DeviceCategoryManageServiceImpl" parent="baseService2">
+		<property name="deviceCategoryDao" ref="deviceCategoryDao"></property>
+	</bean>
+	<!-- 临时设备管理 -->
+	<bean id="tempDeviceService" class="com.topo.service.device.impl.TempDeviceServiceImpl" parent="baseService2">
+		<property name="tempDeviceDao" ref="tempDeviceDao"></property>
+	</bean>
+	<!-- 拓扑背景图片 -->
+	<bean id="netBackGroundPhotoService" class="com.topo.service.device.impl.NetBackGroundPhotoServiceImpl" parent="baseService2">
+		<property name="netBackGroundPhotoDao" ref="netBackGroundPhotoDao"></property>
+	</bean>
+	<!-- 下级soc告警数量 -->
+	<bean id="deviceAlertCountService" class="com.topo.service.device.impl.DeviceAlertCountServiceImpl" parent="baseService2">
+		<property name="deviceAlertCountDao" ref="deviceAlertCountDao"></property>
+	</bean>
+</beans>

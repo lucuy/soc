@@ -1,0 +1,864 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="ruleSQL">
+	<resultMap id="ruleResult" class="alertRule">
+		<result property="ruleId" column="ALARM_RULE_ID" jdbcType="bigint" />
+		<result property="ruleName" column="ALARM_RULE_NAME" jdbcType="varchar" />
+		<result property="ruleCreateTime" column="ALARM_RULE_UPDATE_TIME" jdbcType="datetime"/>
+		<result property="ruleUpdateTime" column="ALARM_RULE_CREATE_TIME" jdbcType="datetime"/>
+		<result property="ruleCreateName" column="ALARM_RULE_OWNER" jdbcType="varchar"/>
+		<result property="ruleIdIsDelete" column="ALARM_RULE_IS_DELETE" jdbcType="smallint"/>
+		<result property="ruleUserList" column="ALARM_RULE_ID" select="sqlServerrule.queryUserByRuleId"/>
+		<result property="ruleLevelValue" column="ALARM_RANK_VALUE" />
+		<result property="sourceAddress" column="ALARM_SOURCEADDRESS" jdbcType="varchar"/>
+		<result property="startTime" 	column="ALARM_STARTTIME" jdbcType="varchar"/>
+		<result property="endTime" 		column="ALARM_ENDTIME" jdbcType="varchar"/>
+		
+		<result property="userId" 				    column="USER_ID" 				    jdbcType="varchar"/>
+		
+		<result property="deviceCategoryId"     column="DEVICE_CATEGORY_ID"         jdbcType="varchar"/>
+   		<result property="assetId"            	column="ASSET_ID"            		jdbcType="text"/>
+   		<result property="definitionId"         column="DEFINITION_ID"            	jdbcType="varchar"/>
+   		<result property="thisUserId"         column="CREATE_USER_ID"            	jdbcType="bigint"/>
+   		<result property="targetAddress"        column="ALARM_TARGETADDRESS"        jdbcType="varchar"/>
+   		<!-- <result property="eventType"         column="EVENT_TYPE_ID"            	jdbcType="varchar"/> -->
+   		<result property="sendMail" column="SEND_MAIL" jdbcType="smallint"/>
+   		<result property="sendSyslog" column="SEND_SYSLOG" jdbcType="smallint"/>
+   		<result property="sendMessage" column="SEND_MESSAGE" jdbcType="smallint"/>
+   		<result property="sendPlatformAlert" column="SEND_PLATFORM_ALERT" jdbcType="smallint"/>
+   		<result property="scriptName" column="ALARM_RULE_ SCRIPTNAME" jdbcType="varchar"/>
+   		<result property="scriptFile" column="ALARM_RULE_ FILE" jdbcType="varchar"/>
+   		<result property="changeScript" column="ALARM_RULE_ CHANGESCRIPT" jdbcType="smallint"/>
+   		
+   		
+	</resultMap>
+	
+	<!-- 用户 -->
+	<resultMap id="userResult" class="user">
+   		<result property="userId" 				    column="USER_ID" 				    jdbcType="varchar"/>
+   		<result property="userLoginName"            column="USER_LOGIN_NAME"            jdbcType="varchar"/>
+   	</resultMap>
+   	<!-- 资产 -->
+   	<!-- <resultMap id="assetResult" class="asset">
+		<result property="assetId" column="ASSET_ID" jdbcType="bigint" />
+		<result property="assetName" column="ASSET_NAME" jdbcType="varchar" />
+		<result property="assetIp" column="ASSET_IP" jdbcType="varchar" />
+	</resultMap> -->
+<!-- 	
+	关联
+	<resultMap id="alertInteractionTableId" class="alertInteractionTable">
+   		<result property="interactionTableId" 	column="INTERACTION_TABLE_ID" 		jdbcType="bigint"/>
+   		<result property="deviceCategoryId"     column="DEVICE_CATEGORY_ID"         jdbcType="bigint"/>
+   		<result property="assetId"            	column="ASSET_ID"            		jdbcType="bigint"/>
+   		<result property="definitionId"         column="DEFINITION_ID"            	jdbcType="bigint"/>
+   	</resultMap> -->
+   	
+   	<select id="pgAdminrule.count" resultClass="int" parameterClass="java.util.HashMap">
+		SELECT COUNT(*) FROM "tbl_alarm_rule" WHERE 1=1
+		<isNotEmpty prepend= "AND"  property="ruleIdIsDelete">
+			<![CDATA[
+				"ALARM_RULE_IS_DELETE" = #ruleIdIsDelete#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="ruleName">
+			<![CDATA[
+				"ALARM_RULE_NAME" LIKE '%$ruleName$%'
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend= "userLoginName"  property="userLoginName">
+			<![CDATA[
+				"USER_LOGIN_NAME" LIKE '%$userLoginName$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="ruleUpdateTime">
+			<![CDATA[
+				Convert(varchar,"ALARM_RULE_UPDATE_TIME",120) LIKE '%$ruleUpdateTime$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="ruleCreateTime">
+			<![CDATA[
+				"ALARM_RULE_CREATE_TIME" LIKE '%$ruleCreateTime$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				("ALARM_RULE_NAME" LIKE '%$keyword$%' )
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="thisUserId">
+			<![CDATA[
+				("CREATE_USER_ID" =#thisUserId#)
+			]]>
+		</isNotEmpty>
+	</select>
+	
+	<!-- 根据条件查询 -->
+   	<select id="pgAdminrule.query" resultMap="ruleResult" parameterClass="java.util.HashMap">
+		SELECT * FROM "tbl_alarm_rule" WHERE 1=1
+		<isNotEmpty prepend= "AND"  property="ruleIdIsDelete">
+			<![CDATA[
+				"ALARM_RULE_IS_DELETE" = #ruleIdIsDelete#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="ruleName">
+			<![CDATA[
+				"ALARM_RULE_NAME" LIKE '%$ruleName$%'
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend= "userLoginName"  property="userLoginName">
+			<![CDATA[
+				"USER_LOGIN_NAME" LIKE '%$userLoginName$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="ruleUpdateTime">
+			<![CDATA[
+				<!-- "ALARM_RULE_UPDATE_TIME" LIKE '%$ruleUpdateTime$%' -->
+				 Convert(varchar,"ALARM_RULE_UPDATE_TIME",120) LIKE '%$ruleUpdateTime$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="ruleCreateTime">
+			<![CDATA[
+				"ALARM_RULE_CREATE_TIME" LIKE '%$ruleCreateTime$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				("ALARM_RULE_NAME" LIKE '%$keyword$%')
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="thisUserId">
+			<![CDATA[
+				("CREATE_USER_ID" =#thisUserId#)
+			]]>
+		</isNotEmpty>
+		ORDER BY "ALARM_RULE_ID" DESC
+	</select>
+	
+	<!-- 根据规则ID查询 -->
+	<select id="pgAdminrule.queryById"  parameterClass="long" resultMap="ruleResult" >
+		<![CDATA[
+			SELECT * FROM "tbl_alarm_rule" WHERE "ALARM_RULE_ID" = #ruleId#
+		]]>
+	</select>
+	<!-- 关联用户 -->
+	<statement id="pgAdminrule.queryUserByRuleId" parameterClass="long" resultMap="userResult">
+		select * from "tbl_user" where "USER_ID" in(select "USER_ID" from "tbl_rel_alarm_rule_user" where "ALARM_RULE_ID" = #value#)
+	</statement>
+	
+	 <statement id="pgAdminruleQueryUserIdAndName.query" parameterClass="long" resultClass="java.util.HashMap">
+		select "USER_ID","USER_LOGIN_NAME" from "tbl_user" where "USER_ID" =#value#  and "USER_IS_DELETE"=0
+	</statement>
+	
+	<statement id="pgAdminruleQueryEventTypeIdAndName.query" parameterClass="String" resultClass="java.util.HashMap">
+	     select "EVENT_CATEGORY_KEY" AS "ID" ,"EVENT_CATEGORY_VALUE" AS "NAME" from "tbl_eventCategory_define" where "EVENT_CATEGORY_KEY" =#value#
+	</statement>
+	
+	<statement id="pgAdminruleQueryAllEventTypeIdAndName.query" resultClass="java.util.HashMap">
+	    select "EVENT_CATEGORY_KEY" AS "ID","EVENT_CATEGORY_VALUE" AS "NAME" from "tbl_eventCategory_define"
+	</statement>
+	
+	<!-- 查询-规则相关账户
+	SELECT "USER_ID" AS relUserId, "USER_LOGIN_NAME" AS relUserName FROM "tbl_user" WHERE "USER_ID" IN 
+				(SELECT "USER_ID","DEVICE_CATEGORY_ID","ASSET_ID","DEFINITION_ID" FROM "tbl_rel_alarm_rule_user" WHERE "ALARM_RULE_ID" = #ruleId#)
+	-->
+	<select id="pgAdminrule.query-relUser"  parameterClass="long" resultClass="java.util.HashMap">
+		<![CDATA[
+		SELECT * FROM "tbl_alarm_rule" where "ALARM_RULE_ID"=#ruleId# and "ALARM_RULE_IS_DELETE"=0
+		]]>
+	</select>
+	<!-- 关联资产-->
+	<!-- <statement id="rule.queryAssetByRuleId" parameterClass="long" resultMap="assetResult">
+		select * from "tbl_asset" where "ASSET_ID" in(select "ASSET_ID" from "tbl_rel_alarm_rule_asset" where "ALARM_RULE_ID" = #value#)
+	</statement> --> 
+	
+	<!-- 查询-规则相关资产-->
+	<!-- <select id="rule.query-relAsset"  parameterClass="long" resultClass="java.util.HashMap">
+		<![CDATA[
+			SELECT "ASSET_ID" AS relId, "ASSET_NAME" AS relName FROM "tbl_asset" WHERE "ASSET_ID" IN 
+				(SELECT "ASSET_ID" FROM "tbl_rel_alarm_rule_asset" WHERE "ALARM_RULE_ID" = #ruleId#)
+		]]>
+	</select> -->
+	
+	<!-- 规则关联的全部账户(REL_IS_ALL_USER = 1) -->
+	<statement id="pgAdminrule.queryRelUserByRuleId" parameterClass="long" resultClass="java.util.HashMap">
+		SELECT "USER_ID" AS relId from "tbl_rel_alarm_rule_user" where "ALARM_RULE_ID" = #ruleId#
+	</statement>
+	
+	<!-- 规则关联的全部资源(REL_IS_ALL_USER = 1) -->
+	<!-- <statement id="rule.queryRelAssetByRuleId" parameterClass="long" resultClass="java.util.HashMap">
+		SELECT "ASSET_ID" AS relId from "tbl_rel_alarm_rule_asset" where "ALARM_RULE_ID" = #ruleId#
+	</statement> -->
+	
+	<!-- 新增规则 -->
+	<insert id="pgAdminrule.insert" parameterClass="alertRule" >
+		INSERT INTO "tbl_alarm_rule" 
+				("ALARM_RULE_NAME",
+				"ALARM_RULE_CREATE_TIME",
+				"ALARM_RULE_UPDATE_TIME",
+				"ALARM_RULE_IS_DELETE",
+				"ALARM_RANK_VALUE",
+				"ALARM_SOURCEADDRESS",
+				"ALARM_STARTTIME",
+				"ALARM_ENDTIME",
+				 "USER_ID",
+				 "DEVICE_CATEGORY_ID",
+				 "ASSET_ID",
+				 "DEFINITION_ID",
+				 "CREATE_USER_ID",
+				 "ALARM_TARGETADDRESS",
+				 "SEND_MAIL",
+				 "SEND_SYSLOG",
+				 "SEND_MESSAGE",
+				 "SEND_PLATFORM_ALERT",
+				 "ALARM_RULE_ CHANGESCRIPT",
+				 "ALARM_RULE_ SCRIPTNAME",
+				 "ALARM_RULE_ FILE" 
+				 
+				 )		 
+		VALUES 
+				(#ruleName#,
+				#ruleCreateTime#,
+				#ruleUpdateTime#,
+				#ruleIdIsDelete#,
+				#ruleLevelValue#,
+				#sourceAddress#,
+				#startTime#,
+				#endTime#,
+				#userId#,
+				#deviceCategoryId#,
+				#assetId#,
+				#definitionId#,
+				#thisUserId#,
+				#targetAddress#,
+				 #sendMail# ,
+				 #sendSyslog#,
+				 #sendMessage#,
+				 #sendPlatformAlert#,
+				 #changeScript#,
+				 #scriptName#,
+				 #scriptFile#
+				 
+				 )
+		<selectKey resultClass="long" keyProperty="ruleId">
+            SELECT currval('tbl_alarm_rule_seq'::regclass) AS ruleId
+      	</selectKey>
+	</insert>
+	
+	<!-- 更新规则 更新，去掉名称的修改 -->
+	<update id="pgAdminrule.update" parameterClass="alertRule" >
+		<![CDATA[
+			UPDATE "tbl_alarm_rule"
+			SET 
+				  
+				    "ALARM_RULE_UPDATE_TIME" = #ruleUpdateTime#,
+				    "ALARM_RANK_VALUE" = #ruleLevelValue#,
+				    "ALARM_SOURCEADDRESS"=#sourceAddress#,
+				    "ALARM_STARTTIME"=#startTime#,
+				    "ALARM_ENDTIME"=#endTime#,
+				    "USER_ID"=#userId#,
+				    "DEVICE_CATEGORY_ID"=#deviceCategoryId#,
+				    "ASSET_ID"=#assetId#,
+				    "DEFINITION_ID"=#definitionId#,
+				    "ALARM_TARGETADDRESS" = #targetAddress#,
+				    "SEND_MAIL" = #sendMail# ,
+				    "SEND_SYSLOG" = #sendSyslog# ,
+				    "SEND_MESSAGE" = #sendMessage# ,
+				    "SEND_PLATFORM_ALERT" = #sendPlatformAlert#,
+				    "ALARM_RULE_ CHANGESCRIPT" = #changeScript# ,
+				 "ALARM_RULE_ SCRIPTNAME" = #scriptName#,
+				 "ALARM_RULE_ FILE" =#scriptFile#
+				    
+				      
+			WHERE 
+			        "ALARM_RULE_ID" = #ruleId#
+		]]>
+	</update>
+		<!-- 删除安全策略的时候更改告警规则 -->
+	<update id="pgAdminruleScript.update" parameterClass="java.lang.String" >
+		<![CDATA[
+			UPDATE "tbl_alarm_rule"
+			SET  
+				    "ALARM_RULE_ CHANGESCRIPT" = 0 ,
+				 "ALARM_RULE_ SCRIPTNAME" = null,
+				 "ALARM_RULE_ FILE" = null
+				    
+				      
+			WHERE 
+			       "ALARM_RULE_ SCRIPTNAME" = #value#
+		]]>
+	</update>
+	<!-- 设置规则为标记删除 -->
+	<update id="pgAdminrule.updateRuleIsDelete" parameterClass="java.util.HashMap" >
+		<![CDATA[
+			UPDATE "tbl_alarm_rule" 
+			SET 
+			       "ALARM_RULE_IS_DELETE" = #ruleIdIsDelete# 
+			WHERE  
+			       "ALARM_RULE_ID" = #ruleId#
+		]]>
+	</update>
+	
+	<!-- 新增-规则相关账户 -->
+	<insert id="pgAdminrule.insert-relUser" parameterClass="java.util.HashMap" >
+		<![CDATA[
+			INSERT INTO "tbl_rel_alarm_rule_user"
+					( "ALARM_RULE_ID",
+						"USER_ID",
+					  "DEVICE_CATEGORY_ID",
+					  "ASSET_ID",
+					  "DEFINITION_ID")
+			VALUES 
+					( #ruleId#, 
+					  #userId#,
+					  #deviceByType#,
+					  #assetType#,
+					  #deviceByName#)
+		]]>
+	</insert>
+	
+	<!-- 删除相关用户 -->
+	<delete id="pgAdminrule.delete-relUser" parameterClass="long">
+		<![CDATA[
+			DELETE FROM "tbl_rel_alarm_rule_user" WHERE "ALARM_RULE_ID" = #ruleId#
+		]]>
+	</delete>
+	
+	<!-- 新增-规则相关资产 -->
+	<!-- <insert id="rule.insert-relAsset" parameterClass="java.util.HashMap" >
+		<![CDATA[
+			INSERT INTO "tbl_rel_alarm_rule_asset" 
+					( "ALARM_RULE_ID",
+					  "ASSET_ID" )		 
+			VALUES 
+					( #ruleId#, 
+					  #assetId#)
+		]]>
+	</insert> -->
+	
+	<!-- 新增相关等级即发送方式 -->
+	<insert id="pgAdminrule.insertRan" parameterClass="java.util.HashMap" >
+		INSERT INTO "tbl_alarm_rule_rank" 
+				("ALARM_RULE_ID",
+				 "ALARM_SEND_WAY_KEY",
+				 "ALARM_SEND_WAY",
+				 "ALARM_RANK_VALUE")		 
+		VALUES 
+				(#ruleId#,
+				#sendWayKey#,
+				#sendWay#,
+				#rank#)
+	</insert>
+	<!-- 查询-规则相关等级-->
+	<select id="pgAdminrule.queryRank"  parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+		<![CDATA[
+			SELECT "ALARM_RANK_VALUE" AS relvalue FROM "tbl_alarm_rule_rank" WHERE  
+			"ALARM_RULE_ID" = #ruleId# AND "ALARM_SEND_WAY_KEY" = #sendWayKey#
+		]]>
+	</select>
+	
+	<!-- 删除规则相关等级 -->
+	<delete id="pgAdminrule.delete-relRank" parameterClass="long">
+		<![CDATA[
+			DELETE FROM "tbl_alarm_rule_rank" WHERE "ALARM_RULE_ID" = #ruleId#
+		]]>
+	</delete>
+	
+	<!-- 删除规则相关资产 -->
+	<!-- <delete id="rule.delete-relAsset" parameterClass="long">
+		<![CDATA[
+			DELETE FROM "tbl_rel_alarm_rule_asset" WHERE "ALARM_RULE_ID" = #ruleId#
+		]]>
+	</delete> -->
+	
+	<!-- 根据告警级别查询告警 -->
+	<select id="pgAdminquery.alarmRuleRank" parameterClass="java.util.HashMap" resultMap="ruleResult">
+	    SELECT * FROM "tbl_alarm_rule" WHERE "ALARM_RULE_IS_DELETE" = 0
+	    AND(
+	    1 = 1
+        <isNotEmpty prepend= "AND"  property="levelStrT1">
+            <![CDATA[
+              "ALARM_RANK_VALUE" LIKE #levelStrT1#
+            ]]>
+        </isNotEmpty>
+         <isNotEmpty prepend= "OR"  property="levelStrT2">
+            <![CDATA[
+               "ALARM_RANK_VALUE" LIKE #levelStrT2#
+            ]]>
+        </isNotEmpty>
+         <isNotEmpty prepend= "OR"  property="levelStrT3">
+            <![CDATA[
+               "ALARM_RANK_VALUE" LIKE #levelStrT3#
+            ]]>
+        </isNotEmpty>
+          <isNotEmpty prepend= "OR"  property="levelStrT4">
+            <![CDATA[
+               "ALARM_RANK_VALUE" LIKE #levelStrT4#
+            ]]>
+        </isNotEmpty> 
+        )  
+	</select>
+	
+	
+	<!-- 根据告警级别、资产ID查询告警 -->
+	<select id="pgAdminquery.alarmRuleRankByAssetIdAndLevel" parameterClass="java.util.HashMap" resultMap="ruleResult">
+	    SELECT * FROM "tbl_alarm_rule" WHERE "ALARM_RULE_IS_DELETE" = 0
+	    AND(
+	    1 = 1
+        <isNotEmpty prepend= "AND"  property="levelStr">
+            <![CDATA[
+              "ALARM_RANK_VALUE" LIKE #levelStr#
+            ]]>
+        </isNotEmpty>
+        <isNotEmpty prepend= "AND" property="assetId">
+            <![CDATA[
+              "DEVICE_CATEGORY_ID" LIKE '%$assetId$%'
+            ]]>
+        </isNotEmpty>
+        )  
+	</select>
+	
+	
+	<!-- 根据告警规则ID查询用户ID -->
+	<select id="pgAdminquery.userIdByRankId" parameterClass="java.lang.Long" resultClass="java.util.HashMap">
+	   SELECT "ALARM_RULE_ID", "USER_ID" FROM "tbl_alarm_rule" WHERE "ALARM_RULE_ID" = #rankId# AND "ALARM_RULE_IS_DELETE" = 0
+	</select>
+	
+	<!-- 查询设备类型 -->
+	<select id="pgAdminquery.deviceType" resultClass="java.util.HashMap">
+	   SELECT "DEVICE_CATEGORY_ID" , "DEVICE_CATEGORY_NAME" FROM "tbl_device_category" WHERE "HIGHER_UPS_ID" = 0
+	</select>
+	
+	<!-- 根据id -->
+	<!-- <select id="query.deviceTypeById" parameterClass="java.lang.Long"  resultMap="alertInteractionTableId">
+	   SELECT * FROM "tbl_alert_interactiontable" WHERE "INTERACTION_TABLE_ID" = #interactionTableId#
+	</select>  -->
+	
+	<!-- 查询设备name -->
+	<select id="pgAdminquery.deviceByName" resultClass="java.util.HashMap">
+	   SELECT "ASSET_ID", "ASSET_NAME" FROM "tbl_asset" WHERE "ASSET_IS_DELETE" = 0 and "ASSET_STATUS" = 1
+	</select>
+	
+	<!-- 查询设备name -->
+	<select id="pgAdminquery.AssetType" resultClass="java.util.HashMap">
+	   SELECT "ID", "NAME" FROM "tbl_event_definition" 
+	</select>
+	
+	<!-- 查询设备name -->
+	<select id="pgAdminquery.AssetType1" parameterClass="java.lang.Long" resultClass="java.util.HashMap">
+	   SELECT "ID", "NAME" FROM "tbl_event_definition" WHERE  "ID"=#value#
+	</select>
+	
+	<select id="pgAdminquery.deviceByName1" parameterClass="java.lang.Long" resultClass="java.util.HashMap">
+	   SELECT "ASSET_NAME","ASSET_ID" FROM "tbl_asset" WHERE "ASSET_IS_DELETE" = 0 and "ASSET_STATUS" = 1 and "ASSET_ID"=#value#
+	</select>
+	
+	<select id="pgAdminquery.deviceType1" parameterClass="java.lang.Long" resultClass="java.util.HashMap">
+	   SELECT "DEVICE_CATEGORY_NAME","DEVICE_CATEGORY_ID" FROM "tbl_device_category" WHERE "HIGHER_UPS_ID" = 0 and "DEVICE_CATEGORY_ID"=#value#
+	</select>
+   	
+	<!-- sqlServer -->
+		 <!-- 查询条数 -->
+	<select id="sqlServerrule.count" resultClass="int" parameterClass="java.util.HashMap">
+		SELECT COUNT(*) FROM "tbl_alarm_rule" WHERE 1=1
+		<isNotEmpty prepend= "AND"  property="ruleIdIsDelete">
+			<![CDATA[
+				"ALARM_RULE_IS_DELETE" = #ruleIdIsDelete#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="ruleName">
+			<![CDATA[
+				"ALARM_RULE_NAME" LIKE '%$ruleName$%'
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend= "userLoginName"  property="userLoginName">
+			<![CDATA[
+				"USER_LOGIN_NAME" LIKE '%$userLoginName$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="ruleUpdateTime">
+			<![CDATA[
+				Convert(varchar,"ALARM_RULE_UPDATE_TIME",120) LIKE '%$ruleUpdateTime$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="ruleCreateTime">
+			<![CDATA[
+				"ALARM_RULE_CREATE_TIME" LIKE '%$ruleCreateTime$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				("ALARM_RULE_NAME" LIKE '%$keyword$%' )
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="thisUserId">
+			<![CDATA[
+				("CREATE_USER_ID" =#thisUserId#)
+			]]>
+		</isNotEmpty>
+	</select>
+	
+	<!-- 根据条件查询 -->
+   	<select id="sqlServerrule.query" resultMap="ruleResult" parameterClass="java.util.HashMap">
+		SELECT * FROM "tbl_alarm_rule" WHERE 1=1
+		<isNotEmpty prepend= "AND"  property="ruleIdIsDelete">
+			<![CDATA[
+				"ALARM_RULE_IS_DELETE" = #ruleIdIsDelete#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="ruleName">
+			<![CDATA[
+				"ALARM_RULE_NAME" LIKE '%$ruleName$%'
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend= "userLoginName"  property="userLoginName">
+			<![CDATA[
+				"USER_LOGIN_NAME" LIKE '%$userLoginName$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="ruleUpdateTime">
+			<![CDATA[
+				<!-- "ALARM_RULE_UPDATE_TIME" LIKE '%$ruleUpdateTime$%' -->
+				 Convert(varchar,"ALARM_RULE_UPDATE_TIME",120) LIKE '%$ruleUpdateTime$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="ruleCreateTime">
+			<![CDATA[
+				"ALARM_RULE_CREATE_TIME" LIKE '%$ruleCreateTime$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				("ALARM_RULE_NAME" LIKE '%$keyword$%')
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="thisUserId">
+			<![CDATA[
+				("CREATE_USER_ID" =#thisUserId#)
+			]]>
+		</isNotEmpty>
+		ORDER BY "ALARM_RULE_ID" DESC
+	</select>
+	
+	<!-- 根据规则ID查询 -->
+	<select id="sqlServerrule.queryById"  parameterClass="long" resultMap="ruleResult" >
+		<![CDATA[
+			SELECT * FROM "tbl_alarm_rule" WHERE "ALARM_RULE_ID" = #ruleId#
+		]]>
+	</select>
+	<!-- 关联用户 -->
+	<statement id="sqlServerrule.queryUserByRuleId" parameterClass="long" resultMap="userResult">
+		select * from "tbl_user" where "USER_ID" in(select "USER_ID" from "tbl_rel_alarm_rule_user" where "ALARM_RULE_ID" = #value#)
+	</statement>
+	
+	 <statement id="sqlServerruleQueryUserIdAndName.query" parameterClass="long" resultClass="java.util.HashMap">
+		select "USER_ID","USER_LOGIN_NAME" from "tbl_user" where "USER_ID" =#value#  and "USER_IS_DELETE"=0
+	</statement>
+	
+	<statement id="sqlServerruleQueryEventTypeIdAndName.query" parameterClass="String" resultClass="java.util.HashMap">
+	     select "EVENT_CATEGORY_KEY" AS "ID" ,"EVENT_CATEGORY_VALUE" AS "NAME" from "tbl_eventCategory_define" where "EVENT_CATEGORY_KEY" =#value#
+	</statement>
+	
+	<statement id="sqlServerruleQueryAllEventTypeIdAndName.query" resultClass="java.util.HashMap">
+	    select "EVENT_CATEGORY_KEY" AS "ID","EVENT_CATEGORY_VALUE" AS "NAME" from "tbl_eventCategory_define"
+	</statement>
+	
+	<!-- 查询-规则相关账户
+	SELECT "USER_ID" AS relUserId, "USER_LOGIN_NAME" AS relUserName FROM "tbl_user" WHERE "USER_ID" IN 
+				(SELECT "USER_ID","DEVICE_CATEGORY_ID","ASSET_ID","DEFINITION_ID" FROM "tbl_rel_alarm_rule_user" WHERE "ALARM_RULE_ID" = #ruleId#)
+	-->
+	<select id="sqlServerrule.query-relUser"  parameterClass="long" resultClass="java.util.HashMap">
+		<![CDATA[
+		SELECT * FROM "tbl_alarm_rule" where "ALARM_RULE_ID"=#ruleId# and "ALARM_RULE_IS_DELETE"=0
+		]]>
+	</select>
+	<!-- 关联资产-->
+	<!-- <statement id="rule.queryAssetByRuleId" parameterClass="long" resultMap="assetResult">
+		select * from "tbl_asset" where "ASSET_ID" in(select "ASSET_ID" from "tbl_rel_alarm_rule_asset" where "ALARM_RULE_ID" = #value#)
+	</statement> --> 
+	
+	<!-- 查询-规则相关资产-->
+	<!-- <select id="rule.query-relAsset"  parameterClass="long" resultClass="java.util.HashMap">
+		<![CDATA[
+			SELECT "ASSET_ID" AS relId, "ASSET_NAME" AS relName FROM "tbl_asset" WHERE "ASSET_ID" IN 
+				(SELECT "ASSET_ID" FROM "tbl_rel_alarm_rule_asset" WHERE "ALARM_RULE_ID" = #ruleId#)
+		]]>
+	</select> -->
+	
+	<!-- 规则关联的全部账户(REL_IS_ALL_USER = 1) -->
+	<statement id="sqlServerrule.queryRelUserByRuleId" parameterClass="long" resultClass="java.util.HashMap">
+		SELECT "USER_ID" AS relId from "tbl_rel_alarm_rule_user" where "ALARM_RULE_ID" = #ruleId#
+	</statement>
+	
+	<!-- 规则关联的全部资源(REL_IS_ALL_USER = 1) -->
+	<!-- <statement id="rule.queryRelAssetByRuleId" parameterClass="long" resultClass="java.util.HashMap">
+		SELECT "ASSET_ID" AS relId from "tbl_rel_alarm_rule_asset" where "ALARM_RULE_ID" = #ruleId#
+	</statement> -->
+	
+	<!-- 新增规则 -->
+	<insert id="sqlServerrule.insert" parameterClass="alertRule" >
+		INSERT INTO "tbl_alarm_rule" 
+				("ALARM_RULE_NAME",
+				"ALARM_RULE_CREATE_TIME",
+				"ALARM_RULE_UPDATE_TIME",
+				"ALARM_RULE_IS_DELETE",
+				"ALARM_RANK_VALUE",
+				"ALARM_SOURCEADDRESS",
+				"ALARM_STARTTIME",
+				"ALARM_ENDTIME",
+				 "USER_ID",
+				 "DEVICE_CATEGORY_ID",
+				 "ASSET_ID",
+				 "DEFINITION_ID",
+				 "CREATE_USER_ID",
+				 "ALARM_TARGETADDRESS",
+				 "SEND_MAIL",
+				 "SEND_SYSLOG",
+				 "SEND_MESSAGE",
+				 "SEND_PLATFORM_ALERT",
+				 "ALARM_RULE_ CHANGESCRIPT",
+				 "ALARM_RULE_ SCRIPTNAME",
+				  "ALARM_RULE_ FILE" 
+				 )		 
+		VALUES 
+				(#ruleName#,
+				#ruleCreateTime#,
+				#ruleUpdateTime#,
+				#ruleIdIsDelete#,
+				#ruleLevelValue#,
+				#sourceAddress#,
+				#startTime#,
+				#endTime#,
+				#userId#,
+				#deviceCategoryId#,
+				#assetId#,
+				#definitionId#,
+				#thisUserId#,
+				#targetAddress#,
+				 #sendMail# ,
+				 #sendSyslog#,
+				 #sendMessage#,
+				 #sendPlatformAlert#,
+				 #changeScript#,
+				 #scriptName#,
+				 #scriptFile#
+				 )
+		<selectKey resultClass="long" keyProperty="ruleId">
+            SELECT @@IDENTITY AS ruleId
+      	</selectKey>
+	</insert>
+	
+	<!-- 更新规则 更新，去掉名称的修改 -->
+	<update id="sqlServerrule.update" parameterClass="alertRule" >
+		<![CDATA[
+			UPDATE "tbl_alarm_rule"
+			SET 
+				  
+				    "ALARM_RULE_UPDATE_TIME" = #ruleUpdateTime#,
+				    "ALARM_RANK_VALUE" = #ruleLevelValue#,
+				    "ALARM_SOURCEADDRESS"=#sourceAddress#,
+				    "ALARM_STARTTIME"=#startTime#,
+				    "ALARM_ENDTIME"=#endTime#,
+				    "USER_ID"=#userId#,
+				    "DEVICE_CATEGORY_ID"=#deviceCategoryId#,
+				    "ASSET_ID"=#assetId#,
+				    "DEFINITION_ID"=#definitionId#,
+				    "ALARM_TARGETADDRESS" = #targetAddress#,
+				    "SEND_MAIL" = #sendMail# ,
+				    "SEND_SYSLOG" = #sendSyslog# ,
+				    "SEND_MESSAGE" = #sendMessage# ,
+				    "SEND_PLATFORM_ALERT" = #sendPlatformAlert#,
+				     "ALARM_RULE_ CHANGESCRIPT" = #changeScript# ,
+				    "ALARM_RULE_ SCRIPTNAME" = #scriptName#;
+				    "ALARM_RULE_ FILE" =#scriptFile#
+				      
+			WHERE 
+			        "ALARM_RULE_ID" = #ruleId#
+		]]>
+	</update>
+	<!-- 删除安全策略的时候更改告警规则 -->
+	<update id="sqlServerruleScript.update" parameterClass="java.lang.String" >
+		<![CDATA[
+			UPDATE "tbl_alarm_rule"
+			SET  
+				    "ALARM_RULE_ CHANGESCRIPT" = 0 ,
+				 "ALARM_RULE_ SCRIPTNAME" = null,
+				 "ALARM_RULE_ FILE" = null
+				    
+				      
+			WHERE 
+			       "ALARM_RULE_ SCRIPTNAME" = #value#
+		]]>
+	</update>
+	<!-- 设置规则为标记删除 -->
+	<update id="sqlServerrule.updateRuleIsDelete" parameterClass="java.util.HashMap" >
+		<![CDATA[
+			UPDATE "tbl_alarm_rule" 
+			SET 
+			       "ALARM_RULE_IS_DELETE" = #ruleIdIsDelete# 
+			WHERE  
+			       "ALARM_RULE_ID" = #ruleId#
+		]]>
+	</update>
+	
+	<!-- 新增-规则相关账户 -->
+	<insert id="sqlServerrule.insert-relUser" parameterClass="java.util.HashMap" >
+		<![CDATA[
+			INSERT INTO "tbl_rel_alarm_rule_user"
+					( "ALARM_RULE_ID",
+						"USER_ID",
+					  "DEVICE_CATEGORY_ID",
+					  "ASSET_ID",
+					  "DEFINITION_ID")
+			VALUES 
+					( #ruleId#, 
+					  #userId#,
+					  #deviceByType#,
+					  #assetType#,
+					  #deviceByName#)
+		]]>
+	</insert>
+	
+	<!-- 删除相关用户 -->
+	<delete id="sqlServerrule.delete-relUser" parameterClass="long">
+		<![CDATA[
+			DELETE FROM "tbl_rel_alarm_rule_user" WHERE "ALARM_RULE_ID" = #ruleId#
+		]]>
+	</delete>
+	
+	<!-- 新增-规则相关资产 -->
+	<!-- <insert id="rule.insert-relAsset" parameterClass="java.util.HashMap" >
+		<![CDATA[
+			INSERT INTO "tbl_rel_alarm_rule_asset" 
+					( "ALARM_RULE_ID",
+					  "ASSET_ID" )		 
+			VALUES 
+					( #ruleId#, 
+					  #assetId#)
+		]]>
+	</insert> -->
+	
+	<!-- 新增相关等级即发送方式 -->
+	<insert id="sqlServerrule.insertRan" parameterClass="java.util.HashMap" >
+		INSERT INTO "tbl_alarm_rule_rank" 
+				("ALARM_RULE_ID",
+				 "ALARM_SEND_WAY_KEY",
+				 "ALARM_SEND_WAY",
+				 "ALARM_RANK_VALUE")		 
+		VALUES 
+				(#ruleId#,
+				#sendWayKey#,
+				#sendWay#,
+				#rank#)
+	</insert>
+	<!-- 查询-规则相关等级-->
+	<select id="sqlServerrule.queryRank"  parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+		<![CDATA[
+			SELECT "ALARM_RANK_VALUE" AS relvalue FROM "tbl_alarm_rule_rank" WHERE  
+			"ALARM_RULE_ID" = #ruleId# AND "ALARM_SEND_WAY_KEY" = #sendWayKey#
+		]]>
+	</select>
+	
+	<!-- 删除规则相关等级 -->
+	<delete id="sqlServerrule.delete-relRank" parameterClass="long">
+		<![CDATA[
+			DELETE FROM "tbl_alarm_rule_rank" WHERE "ALARM_RULE_ID" = #ruleId#
+		]]>
+	</delete>
+	
+	<!-- 删除规则相关资产 -->
+	<!-- <delete id="rule.delete-relAsset" parameterClass="long">
+		<![CDATA[
+			DELETE FROM "tbl_rel_alarm_rule_asset" WHERE "ALARM_RULE_ID" = #ruleId#
+		]]>
+	</delete> -->
+	
+	<!-- 根据告警级别查询告警 -->
+	<select id="sqlServerquery.alarmRuleRank" parameterClass="java.util.HashMap" resultMap="ruleResult">
+	    SELECT * FROM "tbl_alarm_rule" WHERE "ALARM_RULE_IS_DELETE" = 0
+	    AND(
+	    1 = 1
+        <isNotEmpty prepend= "AND"  property="levelStrT1">
+            <![CDATA[
+              "ALARM_RANK_VALUE" LIKE #levelStrT1#
+            ]]>
+        </isNotEmpty>
+         <isNotEmpty prepend= "OR"  property="levelStrT2">
+            <![CDATA[
+               "ALARM_RANK_VALUE" LIKE #levelStrT2#
+            ]]>
+        </isNotEmpty>
+         <isNotEmpty prepend= "OR"  property="levelStrT3">
+            <![CDATA[
+               "ALARM_RANK_VALUE" LIKE #levelStrT3#
+            ]]>
+        </isNotEmpty>
+          <isNotEmpty prepend= "OR"  property="levelStrT4">
+            <![CDATA[
+               "ALARM_RANK_VALUE" LIKE #levelStrT4#
+            ]]>
+        </isNotEmpty> 
+        )  
+	</select>
+	
+	<!-- 根据告警规则ID查询用户ID -->
+	<select id="sqlServerquery.userIdByRankId" parameterClass="java.lang.Long" resultClass="java.util.HashMap">
+	   SELECT "ALARM_RULE_ID", "USER_ID" FROM "tbl_alarm_rule" WHERE "ALARM_RULE_ID" = #rankId# AND "ALARM_RULE_IS_DELETE" = 0
+	</select>
+	
+	<!-- 查询设备类型 -->
+	<select id="sqlServerquery.deviceType" resultClass="java.util.HashMap">
+	   SELECT "DEVICE_CATEGORY_ID" , "DEVICE_CATEGORY_NAME" FROM "tbl_device_category" WHERE "HIGHER_UPS_ID" = 0
+	</select>
+	
+	<!-- 根据id -->
+	<!-- <select id="query.deviceTypeById" parameterClass="java.lang.Long"  resultMap="alertInteractionTableId">
+	   SELECT * FROM "tbl_alert_interactiontable" WHERE "INTERACTION_TABLE_ID" = #interactionTableId#
+	</select>  -->
+	
+	<!-- 查询设备name -->
+	<select id="sqlServerquery.deviceByName" resultClass="java.util.HashMap">
+	   SELECT "ASSET_ID", "ASSET_NAME" FROM "tbl_asset" WHERE "ASSET_IS_DELETE" = 0 and "ASSET_STATUS" = 1
+	</select>
+	
+	<!-- 查询设备name -->
+	<select id="sqlServerquery.AssetType" resultClass="java.util.HashMap">
+	   SELECT "ID", "NAME" FROM "tbl_event_definition" 
+	</select>
+	
+	<!-- 查询设备name -->
+	<select id="sqlServerquery.AssetType1" parameterClass="java.lang.Long" resultClass="java.util.HashMap">
+	   SELECT "ID", "NAME" FROM "tbl_event_definition" WHERE  "ID"=#value#
+	</select>
+	
+	<select id="sqlServerquery.deviceByName1" parameterClass="java.lang.Long" resultClass="java.util.HashMap">
+	   SELECT "ASSET_NAME","ASSET_ID" FROM "tbl_asset" WHERE "ASSET_IS_DELETE" = 0 and "ASSET_STATUS" = 1 and "ASSET_ID"=#value#
+	</select>
+	
+	<select id="sqlServerquery.deviceType1" parameterClass="java.lang.Long" resultClass="java.util.HashMap">
+	   SELECT "DEVICE_CATEGORY_NAME","DEVICE_CATEGORY_ID" FROM "tbl_device_category" WHERE "HIGHER_UPS_ID" = 0 and "DEVICE_CATEGORY_ID"=#value#
+	</select>
+	
+	<!-- 根据告警级别、资产ID查询告警 -->
+	<select id="sqlServerquery.alarmRuleRankByAssetIdAndLevel" parameterClass="java.util.HashMap" resultMap="ruleResult">
+	    SELECT * FROM "tbl_alarm_rule" WHERE "ALARM_RULE_IS_DELETE" = 0
+	    AND(
+	    1 = 1
+        <isNotEmpty prepend= "AND"  property="levelStr">
+            <![CDATA[
+              "ALARM_RANK_VALUE" LIKE #levelStr#
+            ]]>
+        </isNotEmpty>
+        <isNotEmpty prepend= "AND" property="assetId">
+            <![CDATA[
+              "DEVICE_CATEGORY_ID" LIKE '%$assetId$%'
+            ]]>
+        </isNotEmpty>
+        )  
+	</select>
+
+</sqlMap>

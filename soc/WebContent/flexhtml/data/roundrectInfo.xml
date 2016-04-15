@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<BackGroundList>
+<BackGround id="2" pointX="30" pointY="20" width="200" height="300" title="虚区" bgcolor="0x00ffff" paneltype="Top" /> 
+<BackGround id="1" pointX="1" pointY="1" width="200" height="300" title="汉斯区" bgcolor="0xff0000" paneltype="Right" /> 
+</BackGroundList>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="monitorWIN" extends="struts-default" namespace="/monitorWIN">
+		<action name="queryAll" class="mwtAction" method="queryAll">
+			<result name="success">/pages/monitor/computers/windows_task_list.jsp</result>
+		</action>
+		<!-- 删除 -->
+		<action name="deleteWinTask" class="mwtAction" method="deleteWinTask">
+		<result name="success" type="chain">
+		    	<param name="namespace">/monitorWIN</param>
+		    	<param name="actionName">queryAll</param>
+		    </result>
+		</action>
+		<!-- 跳转新增页面 -->
+		<action name="detailWinTask" class="mwtAction" method="detailWinTask">
+		<result name="success">/pages/monitor/computers/windows_task_add.jsp</result>
+		</action>
+		<!-- 监控详细页面 -->
+		<action name="detailWIN" class="mwtAction" method="detailWin">
+		<result name="success">/pages/monitor/computers/windowsDetail.jsp</result>
+		</action>
+		<!-- 新增修改 -->
+		<action name="addOrUpdate" class="mwtAction" method="addOrUpdate">
+		 <interceptor-ref name="defaultStack"/> 
+            <interceptor-ref name="token"/>  
+            <result name="invalid.token" type="redirectAction">
+            <param name="namespace">/monitorWIN</param>
+		    	<param name="actionName">queryAll</param>
+            
+            </result><!-- 需要注意的是名字必须为invalid.token-->  
+		<result name="success" type="chain">
+		    	<param name="namespace">/monitorWIN</param>
+		    	<param name="actionName">queryAll</param>
+		    </result>
+		</action>
+		<!-- 检查重名 -->
+		<action name="checkName" class="mwtAction" method="checkName"></action>
+		<!-- 测试连接 -->
+		<action name="testLink" class="mwtAction" method="testLink"></action>
+		<!-- 停止/启动 -->
+		<action name="stopORstart" class="mwtAction" method="stopORstart"></action>
+		<!-- 检测是否在线 -->
+		<action name="checkOnline" class="mwtAction" method="checkOnline"></action>
+		<action name="online" class="mwtAction" method="online"></action>
+	</package>
+</struts>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="alertMessage" extends="json-default" namespace="/alertMessage">
+
+		<!-- 告警信息查询-->
+		<action name="alertMessageQuery" class="alertMessageAction" method="alertMessageQuery">	
+			<result name="success">/pages/alert/alertMessage/alert_message_list.jsp</result>
+		</action>
+		
+        <action name="queryCurrent" class="alertMessageAction" method="queryCurrent">
+        </action>
+        
+        <action name="ExportExcel" class="alertMessageAction" method="export">
+        </action>
+        
+        <action name="ExportReport" class="alertMessageAction" method="ExportReport">
+        </action>
+        <action name="closeAlaemMessage" class="alertMessageAction" method="closeAlaemMessage">
+        </action>
+        <action name="queryNotCloseAlertMessage" class="alertMessageAction" method="queryNotCloseAlertMessage">
+        </action>
+        
+        <action name="toAddWorkorder" class="alertMessageAction" method="toAddWorkorder">
+        	<result>${ctx}/pages/alert/alertMessage/alertMessage_workOrder_add.jsp</result>
+        </action>
+         <action name="queryWorkorderByAlertId" class="alertMessageAction" method="queryWorkorderByAlertId">
+        	<result>${ctx}/pages/alert/alertMessage/alert_message_workOrder_detail.jsp</result>
+        </action>
+        <action name="checkWorkOrder" class="alertMessageAction" method="checkWorkOrder">
+        </action>
+        <!-- 新增完之后把高级信息模糊查询的值给传递过去 -->
+        <action name="addWorkorder" class="alertMessageAction" method="addWorkorder">
+        <interceptor-ref name="defaultStack"/><!-- 需要注意拦截器栈的配置顺序-->  
+            <interceptor-ref name="token"/><!-- 这就是用来防止表单重复提交的拦截器-->  
+            <result name="invalid.token" type="redirectAction">
+            <param name="namespace">/alertMessage</param>
+		       <param name="actionName">alertMessageQuery</param>
+            
+            </result><!-- 需要注意的是名字必须为invalid.token-->  
+        	<result name="success" type="chain">
+        	   <param name="actionName">alertMessageQuery</param>
+	           <param name="namespace">/alertMessage</param>
+	           <param name="keyword">${keyword}</param>
+        	</result>
+        	
+        </action>
+        		<!--拓扑图部分根据资产的id查询出告警信息 -->
+		<action name="queryAlarmByAssetIdWhereWorkorderEqual01" class="alertMessageAction" method="queryAlarmByAssetIdWhereWorkorderEqual01">
+		    <result name="success" type="json">
+				<param name="root">url</param>
+			</result>
+		</action>
+	<!-- 当天告警信息按告警级别分类获取 -->
+		<action name="alertMessageQueryByRule" class="alertMessageAction" method="queryAlertRankCount">	
+			<result name="success">/pages/topoPage/device/topoNavigate.jsp</result>
+		</action>
+		<!-- 查询当天最新20条没有派发工单的告警信息，然后显示在内网络拓扑上 -->
+		<action name="alertMessageQueryAllAlertInfo" class="alertMessageAction" method="queryAllAlertInfo">
+		</action>
+		<!-- 查外网的告警信息 -->
+		<action name="queryAlertCount" class="deviceAlertCountAction" method="queryAlertCount">
+		</action>
+	</package>
+</struts>

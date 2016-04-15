@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap>
+	<resultMap class="audit" id="auditResult">
+		<result property="id" column="PK_Audit" jdbcType="int" />
+		<result property="name" column="Audit_Name" jdbcType="varchar" />
+		<result property="object" column="Audit_Object" jdbcType="varchar" />
+		<result property="detailed" column="Audit_Detailed" jdbcType="varchar" />
+		<result property="type" column="Audit_Type" jdbcType="varchar" />
+		<result property="time" column="Audit_Time" jdbcType="varchar" />
+	</resultMap>
+	<!-- 添加 -->
+	<insert id="pgAdminaudit.insert" parameterClass="audit">
+		insert into tb_audit
+		(Audit_Name,Audit_Object ,Audit_Detailed,Audit_Type,Audit_Time)
+		values
+		(#name#,#object#,#detailed#,#type#,#time#)
+	</insert>
+
+	<!--查询统计 -->
+	<select id="pgAdminaudit.count" resultClass="int" parameterClass="java.util.HashMap">
+		select count(*) FROM tb_audit a where 1 = 1
+		<isNotEmpty prepend="AND" property="keyword">
+           <![CDATA[
+              a.Audit_Name LIKE'%$keyword$%' or  a.Audit_Object LIKE'%$keyword$%' or  a.Audit_Detailed LIKE'%$keyword$%' or  a.Audit_Type LIKE'%$keyword$%' or  a.Audit_Time LIKE'%$keyword$%'  
+           ]]>
+       </isNotEmpty>
+       
+	</select>
+
+	<!-- 查询列表 -->
+	<select id="pgAdminaudit.query" parameterClass="java.util.HashMap" resultMap="auditResult">
+		select * from tb_audit a where 1 = 1 
+		<isNotEmpty prepend="AND" property="keyword">
+           <![CDATA[
+        a.Audit_Name LIKE'%$keyword$%' or  a.Audit_Object LIKE'%$keyword$%' or  a.Audit_Detailed LIKE'%$keyword$%' or  a.Audit_Type LIKE'%$keyword$%' or  a.Audit_Time LIKE'%$keyword$%' 
+           ]]>
+       </isNotEmpty>
+       order by PK_Audit desc
+	</select>
+   <!--高级搜索用户列表-->
+   <select id="pgAdminaudit.queryprecise" parameterClass="java.util.HashMap" resultMap="auditResult">
+       select * from tb_audit a where 1=1
+       <isNotEmpty prepend="AND" property="keyword1">
+         <![CDATA[
+            a.Audit_Name =#keyword1#
+         ]]>
+       </isNotEmpty>
+       <isNotEmpty prepend="AND" property="keyword2">
+         <![CDATA[
+            a.Audit_Object = #keyword2# 
+         ]]>
+       </isNotEmpty>
+       <isNotEmpty prepend="AND" property="keyword3">
+         <![CDATA[
+            a.Audit_Detailed =#keyword3#
+         ]]>
+       </isNotEmpty>
+       <isNotEmpty prepend="AND" property="keyword4">
+         <![CDATA[
+            a.Audit_Type =#keyword4#
+         ]]>
+       </isNotEmpty>
+       <isNotEmpty prepend="AND" property="keyword5">
+         <![CDATA[
+            a.Audit_Time like '%$keyword5$%'
+         ]]>
+       </isNotEmpty>
+        order by PK_Audit desc
+   </select>
+   <!--高级搜索数据条数-->
+   <select id="pgAdminaudit.countprecise" resultClass="int" parameterClass="java.util.HashMap">
+       SELECT count(*) from tb_audit a where 1=1
+       <isNotEmpty prepend="AND" property="keyword1">
+         <![CDATA[
+            a.Audit_Name =#keyword1#
+         ]]>
+       </isNotEmpty>
+       <isNotEmpty prepend="AND" property="keyword2">
+         <![CDATA[
+            a.Audit_Object = #keyword2# 
+         ]]>
+       </isNotEmpty>
+       <isNotEmpty prepend="AND" property="keyword3">
+         <![CDATA[
+            a.Audit_Detailed =#keyword3#
+         ]]>
+       </isNotEmpty>
+       <isNotEmpty prepend="AND" property="keyword4">
+         <![CDATA[
+            a.Audit_Type =#keyword4#
+         ]]>
+       </isNotEmpty>
+       <isNotEmpty prepend="AND" property="keyword5">
+         <![CDATA[
+            a.Audit_Time like '%$keyword5$%'
+         ]]>
+       </isNotEmpty>
+       order by PK_Audit desc
+   </select>
+<!--sqlserver  -->
+	<!-- 添加 -->
+	<insert id="sqlServeraudit.insert" parameterClass="audit">
+		insert into tb_audit
+		(Audit_Name,Audit_Object ,Audit_Detailed,Audit_Type,Audit_Time)
+		values
+		(#name#,#object#,#detailed#,#type#,#time#)
+	</insert>
+
+	<!--查询统计 -->
+	<select id="sqlServeraudit.count" resultClass="int" parameterClass="java.util.HashMap">
+		select count(*) FROM tb_audit a where 1 = 1
+		<isNotEmpty prepend="AND" property="keyword">
+           <![CDATA[
+              a.Audit_Name LIKE'%$keyword$%' or  a.Audit_Object LIKE'%$keyword$%' or  a.Audit_Detailed LIKE'%$keyword$%' or  a.Audit_Type LIKE'%$keyword$%' or  a.Audit_Time LIKE'%$keyword$%'  
+           ]]>
+       </isNotEmpty>
+       
+	</select>
+
+	<!-- 查询列表 -->
+	<select id="sqlServeraudit.query" parameterClass="java.util.HashMap" resultMap="auditResult">
+		select * from tb_audit a where 1 = 1 
+		<isNotEmpty prepend="AND" property="keyword">
+           <![CDATA[
+        a.Audit_Name LIKE'%$keyword$%' or  a.Audit_Object LIKE'%$keyword$%' or  a.Audit_Detailed LIKE'%$keyword$%' or  a.Audit_Type LIKE'%$keyword$%' or  a.Audit_Time LIKE'%$keyword$%' 
+           ]]>
+       </isNotEmpty>
+       order by PK_Audit desc
+	</select>
+   <!--高级搜索用户列表-->
+   <select id="sqlServeraudit.queryprecise" parameterClass="java.util.HashMap" resultMap="auditResult">
+       select * from tb_audit a where 1=1
+       <isNotEmpty prepend="AND" property="keyword1">
+         <![CDATA[
+            a.Audit_Name =#keyword1#
+         ]]>
+       </isNotEmpty>
+       <isNotEmpty prepend="AND" property="keyword2">
+         <![CDATA[
+            a.Audit_Object = #keyword2# 
+         ]]>
+       </isNotEmpty>
+       <isNotEmpty prepend="AND" property="keyword3">
+         <![CDATA[
+            a.Audit_Detailed =#keyword3#
+         ]]>
+       </isNotEmpty>
+       <isNotEmpty prepend="AND" property="keyword4">
+         <![CDATA[
+            a.Audit_Type =#keyword4#
+         ]]>
+       </isNotEmpty>
+       <isNotEmpty prepend="AND" property="keyword5">
+         <![CDATA[
+            a.Audit_Time like '%$keyword5$%'
+         ]]>
+       </isNotEmpty>
+        order by PK_Audit desc
+   </select>
+   <!--高级搜索数据条数-->
+   <select id="sqlServeraudit.countprecise" resultClass="int" parameterClass="java.util.HashMap">
+       SELECT count(*) from tb_audit a where 1=1
+       <isNotEmpty prepend="AND" property="keyword1">
+         <![CDATA[
+            a.Audit_Name =#keyword1#
+         ]]>
+       </isNotEmpty>
+       <isNotEmpty prepend="AND" property="keyword2">
+         <![CDATA[
+            a.Audit_Object = #keyword2# 
+         ]]>
+       </isNotEmpty>
+       <isNotEmpty prepend="AND" property="keyword3">
+         <![CDATA[
+            a.Audit_Detailed =#keyword3#
+         ]]>
+       </isNotEmpty>
+       <isNotEmpty prepend="AND" property="keyword4">
+         <![CDATA[
+            a.Audit_Type =#keyword4#
+         ]]>
+       </isNotEmpty>
+       <isNotEmpty prepend="AND" property="keyword5">
+         <![CDATA[
+            a.Audit_Time like '%$keyword5$%'
+         ]]>
+       </isNotEmpty>
+       order by PK_Audit desc
+   </select>
+</sqlMap>

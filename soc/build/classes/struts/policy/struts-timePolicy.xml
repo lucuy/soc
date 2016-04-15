@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+	<package name="timePolicy" extends="struts-default" namespace="/timePolicy">
+
+		<action name="query" class="timePolicyAction" method="query">
+			<result name="success">/pages/policy/timepolicy/time_policy_list.jsp
+			</result>
+		</action>
+
+		<action name="updatetimePolicyStatus" class="timePolicyAction"
+			method="updateStatus">
+			<result name="success" type="chain">
+				<param name="namespace">/timePolicy</param>
+				<param name="actionName">query</param>
+			</result>
+		</action>
+
+		<action name="deletetimePolicy" class="timePolicyAction"
+			method="deletetimePolicy">
+			<result name="success" type="chain">
+				<param name="namespace">/timePolicy</param>
+				<param name="actionName">query</param>
+			</result>
+		</action>
+		<action name="edit" class="timePolicyAction" method="editTimePolicy">
+			<result name="success">/pages/policy/timepolicy/time_policy_info.jsp
+			</result>
+		</action>
+
+		<action name="updateTimePolicy" class="timePolicyAction"
+			method="updateTimePolicy">
+			<interceptor-ref name="defaultStack"/><!-- 需要注意拦截器栈的配置顺序-->  
+            <interceptor-ref name="token"/><!-- 这就是用来防止表单重复提交的拦截器-->  
+            <result name="invalid.token" type="redirectAction">
+            <param name="namespace">/timePolicy</param>
+		       <param name="actionName">query</param>
+            
+            </result><!-- 需要注意的是名字必须为invalid.token-->  
+			<result name="success" type="chain">
+				<param name="namespace">/timePolicy</param>
+				<param name="actionName">query</param>
+			</result>
+		</action>
+
+		<action name="checktimePolicyName" class="timePolicyAction"
+			method="checktimePolicyName" />
+			
+		<action name="sort" class="timePolicyAction" method="sort">
+		    <result name="success">/pages/policy/timepolicy/time_policy_list.jsp</result>
+		</action>
+
+	</package>
+
+</struts>	

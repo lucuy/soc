@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="settingCPU">
+	<resultMap id="settingResult" class="settingcpu">
+   		<result property="systemCpuId" 				column="SYSTEM_CPU_ID" 					jdbcType="long"/>
+   		<result property="systemCpuEmploy" 		column="SYSTEM_CPU_EMPLOY" 				jdbcType="varchar"/>
+   		<result property="systemCpuPeak" 			column="SYSTEM_CPU_PEAK"					jdbcType="varchar"/>
+   		<result property="systemCpuDate" 			column="SYSTEM_CPU_DATE" 				jdbcType="datetime"/>
+   	</resultMap>
+   	
+   	<!-- 新增 -->
+   	<insert id="pgAdminsettingcpu.insert" parameterClass="settingcpu">
+		INSERT INTO "tbl_system_cpu" 
+				( 
+				  "SYSTEM_CPU_EMPLOY", 
+				  "SYSTEM_CPU_PEAK", 
+				  "SYSTEM_CPU_DATE" )		 
+		VALUES 
+				(  
+				  #systemCpuEmploy#, 
+				  #systemCpuPeak#, 
+				  #systemCpuDate# )
+	</insert>
+	
+   	<!-- 查询 order by datetime(时间字段) asc(升序)/desc(降序) -->
+   	<select id="pgAdmincount.query"  parameterClass="java.util.HashMap" resultClass="int">
+		SELECT COUNT(*) FROM "tbl_system_cpu" order by "SYSTEM_CPU_DATE" desc
+	</select>
+   	
+   	<select id="pgAdmincpu.query"  parameterClass="java.util.HashMap" resultMap="settingResult">
+		SELECT * FROM "tbl_system_cpu" order by "SYSTEM_CPU_DATE" desc
+	</select>
+	<select id="pgAdminquery.cpu"  parameterClass="java.util.HashMap" resultMap="settingResult">
+		SELECT * FROM "tbl_system_cpu" ORDER BY "SYSTEM_CPU_DATE" DESC LIMIT 10
+	</select>
+	<select id="pgAdminqueryone.cpu"  parameterClass="java.util.HashMap" resultMap="settingResult">
+		SELECT * FROM "tbl_system_cpu" ORDER BY "SYSTEM_CPU_DATE" DESC LIMIT 1
+	</select>
+	<!-- sqlServer -->
+	  	<!-- 新增 -->
+   	<insert id="sqlServersettingcpu.insert" parameterClass="settingcpu">
+		INSERT INTO "tbl_system_cpu" 
+				( 
+				  "SYSTEM_CPU_EMPLOY", 
+				  "SYSTEM_CPU_PEAK", 
+				  "SYSTEM_CPU_DATE" )		 
+		VALUES 
+				(  
+				  #systemCpuEmploy#, 
+				  #systemCpuPeak#, 
+				  #systemCpuDate# )
+	</insert>
+	
+   	<!-- 查询 order by datetime(时间字段) asc(升序)/desc(降序) -->
+   	<select id="sqlServercount.query"  parameterClass="java.util.HashMap" resultClass="int">
+		SELECT COUNT(*) FROM "tbl_system_cpu" order by "SYSTEM_CPU_DATE" desc
+	</select>
+   	
+   	<select id="sqlServercpu.query"  parameterClass="java.util.HashMap" resultMap="settingResult">
+		SELECT * FROM "tbl_system_cpu" order by "SYSTEM_CPU_DATE" desc
+	</select>
+	<select id="sqlServerquery.cpu"  parameterClass="java.util.HashMap" resultMap="settingResult">
+		SELECT * FROM "tbl_system_cpu" ORDER BY "SYSTEM_CPU_DATE" DESC LIMIT 10
+	</select>
+	<select id="sqlServerqueryone.cpu"  parameterClass="java.util.HashMap" resultMap="settingResult">
+		SELECT * FROM "tbl_system_cpu" ORDER BY "SYSTEM_CPU_DATE" DESC LIMIT 1
+	</select>
+	
+</sqlMap>

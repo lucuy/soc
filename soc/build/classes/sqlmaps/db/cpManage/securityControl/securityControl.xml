@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+
+<select id="pgAdmingetSecurityControl.showCIA_A" resultClass="int"
+		parameterClass="lineAndSort">
+		SELECT  COUNT("CIA_A") FROM "tb_cia" WHERE "CIA_A"='1' AND "CIA_Sort"
+		LIKE '%$sort$%' and "FK_CA"=#pkca#
+	</select>
+
+	<select id="pgAdmingetSecurityControl.showCIA_B" resultClass="int"
+		parameterClass="lineAndSort">
+		SELECT COUNT("CIA_B") FROM "tb_cia" WHERE "CIA_B"='1' AND "CIA_Sort"
+		LIKE '%$sort$%' and "FK_CA"=#pkca#
+	</select>
+
+	<select id="pgAdmingetSecurityControl.showCIA_C" resultClass="int"
+		parameterClass="lineAndSort">
+		SELECT COUNT("CIA_C") FROM "tb_cia" WHERE "CIA_C"='1' AND "CIA_Sort"
+		LIKE '%$sort$%' and "FK_CA"=#pkca#
+	</select>
+
+	<select id="pgAdmingetSecurityControl.showCIA_D" resultClass="int"
+		parameterClass="lineAndSort">
+		SELECT COUNT("CIA_D") FROM "tb_cia" WHERE "CIA_D"='1' AND "CIA_Sort"
+		LIKE '%$sort$%' and "FK_CA"=#pkca#
+	</select>
+
+	<select id="pgAdmingetSecurityControl.showCIA_E" resultClass="int"
+		parameterClass="lineAndSort">
+		SELECT COUNT("CIA_E") FROM "tb_cia" WHERE "CIA_E"='1' AND "CIA_Sort"
+		LIKE '%$sort$%' and "FK_CA"=#pkca#
+	</select>
+
+	<select id="pgAdmingetSecurityControl.showCIA_F" resultClass="int"
+		parameterClass="lineAndSort">
+		SELECT COUNT("CIA_F") FROM "tb_cia" WHERE "CIA_F"='1' AND "CIA_Sort"
+		LIKE '%$sort$%' and "FK_CA"=#pkca#
+		
+	</select>
+
+	<select id="pgAdmingetSecurityControl.showCIA_G" resultClass="int"
+		parameterClass="lineAndSort">
+		SELECT COUNT("CIA_G") FROM "tb_cia" WHERE "CIA_G"='1' AND "CIA_Sort"
+		LIKE '%$sort$%' and "FK_CA"=#pkca#
+	</select>
+
+	<select id="pgAdmingetSecurityControl.showCIA_H" resultClass="int"
+		parameterClass="lineAndSort">
+		SELECT COUNT("CIA_H") FROM "tb_cia" WHERE "CIA_H"='1' AND "CIA_Sort"
+		LIKE '%$sort$%' and "FK_CA"=#pkca#
+	</select>
+
+	<select id="pgAdmingetSecurityControl.showCIA_I" resultClass="int"
+		parameterClass="lineAndSort">
+		SELECT COUNT("CIA_I") FROM "tb_cia" WHERE "CIA_I"='1' AND "CIA_Sort"
+		LIKE '%$sort$%' and "FK_CA"=#pkca#
+	</select>
+	<select id="pgAdmingetSecurityControl.showCIA_J" resultClass="int"
+		parameterClass="lineAndSort">
+		SELECT COUNT("CIA_J") FROM "tb_cia" WHERE "CIA_J"='1' AND "CIA_Sort"
+		LIKE '%$sort$%' and "FK_CA"=#pkca#
+	</select>
+	
+	
+	<select id="pgAdmingetControlTask.count" resultClass="int"
+		parameterClass="controlTask">
+		SELECT COUNT("CORRRECOM_ControlDomainSort") from "tb_corrrecom" where "CORRRECOM_SysId"=#sysId# and "CORRRECOM_ControlDomainSort" LIKE '%$controlDomainName$%'
+	</select>
+	
+<!-- sqlserver -->
+	<select id="sqlServergetSecurityControl.showCIA_A" resultClass="int"
+		parameterClass="lineAndSort">
+		SELECT  COUNT("CIA_A") FROM "tb_cia" WHERE "CIA_A"='1' AND "CIA_Sort"
+		LIKE '%$sort$%' and "FK_CA"=#pkca#
+	</select>
+
+	<select id="sqlServergetSecurityControl.showCIA_B" resultClass="int"
+		parameterClass="lineAndSort">
+		SELECT COUNT("CIA_B") FROM "tb_cia" WHERE "CIA_B"='1' AND "CIA_Sort"
+		LIKE '%$sort$%' and "FK_CA"=#pkca#
+	</select>
+
+	<select id="sqlServergetSecurityControl.showCIA_C" resultClass="int"
+		parameterClass="lineAndSort">
+		SELECT COUNT("CIA_C") FROM "tb_cia" WHERE "CIA_C"='1' AND "CIA_Sort"
+		LIKE '%$sort$%' and "FK_CA"=#pkca#
+	</select>
+
+	<select id="sqlServergetSecurityControl.showCIA_D" resultClass="int"
+		parameterClass="lineAndSort">
+		SELECT COUNT("CIA_D") FROM "tb_cia" WHERE "CIA_D"='1' AND "CIA_Sort"
+		LIKE '%$sort$%' and "FK_CA"=#pkca#
+	</select>
+
+	<select id="sqlServergetSecurityControl.showCIA_E" resultClass="int"
+		parameterClass="lineAndSort">
+		SELECT COUNT("CIA_E") FROM "tb_cia" WHERE "CIA_E"='1' AND "CIA_Sort"
+		LIKE '%$sort$%' and "FK_CA"=#pkca#
+	</select>
+
+	<select id="sqlServergetSecurityControl.showCIA_F" resultClass="int"
+		parameterClass="lineAndSort">
+		SELECT COUNT("CIA_F") FROM "tb_cia" WHERE "CIA_F"='1' AND "CIA_Sort"
+		LIKE '%$sort$%' and "FK_CA"=#pkca#
+		
+	</select>
+
+	<select id="sqlServergetSecurityControl.showCIA_G" resultClass="int"
+		parameterClass="lineAndSort">
+		SELECT COUNT("CIA_G") FROM "tb_cia" WHERE "CIA_G"='1' AND "CIA_Sort"
+		LIKE '%$sort$%' and "FK_CA"=#pkca#
+	</select>
+
+	<select id="sqlServergetSecurityControl.showCIA_H" resultClass="int"
+		parameterClass="lineAndSort">
+		SELECT COUNT("CIA_H") FROM "tb_cia" WHERE "CIA_H"='1' AND "CIA_Sort"
+		LIKE '%$sort$%' and "FK_CA"=#pkca#
+	</select>
+
+	<select id="sqlServergetSecurityControl.showCIA_I" resultClass="int"
+		parameterClass="lineAndSort">
+		SELECT COUNT("CIA_I") FROM "tb_cia" WHERE "CIA_I"='1' AND "CIA_Sort"
+		LIKE '%$sort$%' and "FK_CA"=#pkca#
+	</select>
+	<select id="sqlServergetSecurityControl.showCIA_J" resultClass="int"
+		parameterClass="lineAndSort">
+		SELECT COUNT("CIA_J") FROM "tb_cia" WHERE "CIA_J"='1' AND "CIA_Sort"
+		LIKE '%$sort$%' and "FK_CA"=#pkca#
+	</select>
+	
+	
+	<select id="sqlServergetControlTask.count" resultClass="int"
+		parameterClass="controlTask">
+		SELECT COUNT("CORRRECOM_ControlDomainSort") from "tb_corrrecom" where "CORRRECOM_SysId"=#sysId# and "CORRRECOM_ControlDomainSort" LIKE '%$controlDomainName$%'
+	</select>
+	
+</sqlMap>

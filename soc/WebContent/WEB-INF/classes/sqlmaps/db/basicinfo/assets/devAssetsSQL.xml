@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="devAssetsSQL">
+
+	<resultMap class="devAssets" id="devAssetsResult">
+		<result property="id" column="PK_SAFEDEV" jdbcType="int" />
+		<result property="devName" column="SAFEDEV_DeviceName" jdbcType="varchar" />
+		<result property="impDegree" column="SAFEDEV_Importance" jdbcType="varchar" />
+		<result property="devDescription" column="SAFEDEV_DevDescriotion" jdbcType="varchar" />
+		<result property="devRemarks" column="SAFEDEV_Remark" jdbcType="varchar" />
+		<result property="devtype" column="SAFEDEV_AssetType" jdbcType="varchar" />
+		<result property="relsysName" column="PK_SAFEDEV" select="pgAdmindevAssets.getSysName" />
+	</resultMap>
+	<!-- postrgreSql -->
+	<select id="pgAdmindevAssets.getSysName" parameterClass="int" resultClass="string">
+		select "SYSINFO_Name" from "tb_sysref" where "PK_SAFEDEV" = #value#
+	</select>
+	<insert id="pgAdmindevAssets.addSysName">
+		insert into "tb_sysref" ("SYSINFO_Name", "PK_SAFEDEV")
+		values(#relsysName#, #id#)
+	</insert>
+	<delete id="pgAdmindevAssets.delSysName" parameterClass="int">
+		delete from "tb_sysref" where "PK_SAFEDEV" = #value#
+	</delete>
+	<!-- sqlServer -->
+	<select id="sqlServerdevAssets.getSysName" parameterClass="int" resultClass="string">
+		select "SYSINFO_Name" from "tb_sysref" where "PK_SAFEDEV" = #value#
+	</select>
+	<insert id="sqlServerdevAssets.addSysName">
+		insert into "tb_sysref" ("SYSINFO_Name", "PK_SAFEDEV")
+		values(#relsysName#, #id#)
+	</insert>
+	<delete id="sqlServerdevAssets.delSysName" parameterClass="int">
+		delete from "tb_sysref" where "PK_SAFEDEV" = #value#
+	</delete>
+	<!-- 根据信息系统名称查询业务应用软件总记录数 -->
+	<sql id="count3BySysName">
+		SELECT count(*) FROM "tb_safedev"
+		WHERE
+			"PK_SAFEDEV" IN (
+				SELECT
+					A ."PK_SAFEDEV"
+				FROM
+					tb_safedev A
+				RIGHT JOIN tb_sysref b ON A ."PK_SAFEDEV" = b."PK_SAFEDEV"
+				WHERE
+					b."SYSINFO_Name" = #keyword2#
+			)
+	</sql>
+	<!-- 根据信息系统名称查询业务应用软件 -->
+	<sql id="query3BySysName">
+		SELECT * FROM "tb_safedev"
+		WHERE
+			"PK_SAFEDEV" IN (
+				SELECT
+					A ."PK_SAFEDEV"
+				FROM
+					tb_safedev A
+				RIGHT JOIN tb_sysref b ON A ."PK_SAFEDEV" = b."PK_SAFEDEV"
+				WHERE
+					b."SYSINFO_Name" = #keyword2#
+			)
+	</sql>
+	<!--按照设备名称、所属系统名称、设备描述、重要程度进行模糊查询查询条数(已测试) -->
+	<select id="pgAdmindevAssets.count" resultClass="int">
+		SELECT COUNT(*) FROM "tb_safedev"   where 1=1
+		<isNotEmpty prepend="AND" property="keyword">
+			<![CDATA[
+				(
+					"SAFEDEV_DeviceName" LIKE '%$keyword$%' 
+					or "SAFEDEV_DevDescriotion" LIKE '%$keyword$%'
+					or "SAFEDEV_Importance" LIKE '%$keyword$%' 
+				)
+			]]>
+		</isNotEmpty>
+
+	</select>
+	<!-- 添加安全设备(已测试) -->
+	<insert id="pgAdmindevAssets.insert" parameterClass="devAssets">
+		<selectKey resultClass="int" type="pre" keyProperty="id">
+			SELECT nextval('tb_safedev_seq'::regclass)
+		</selectKey>
+		insert into "tb_safedev" ("PK_SAFEDEV",
+		"SAFEDEV_DeviceName","SAFEDEV_Importance",
+		"SAFEDEV_DevDescriotion","SAFEDEV_Remark","SAFEDEV_AssetType")
+		values(#id#,#devName#,#impDegree#,#devDescription#,#devRemarks#,#devtype#)
+	</insert>
+	<!-- 根据id查询安全设备(已测试) -->
+	<select id="pgAdmindevAssets.queryById" parameterClass="Integer" resultMap="devAssetsResult">
+
+		select * from "tb_safedev"  where "PK_SAFEDEV" = #id#
+	</select>
+	<!-- 修改安全设备(已测试) -->
+	<update id="pgAdmindevAssets.update" parameterClass="devAssets">
+		update "tb_safedev" 
+		SET
+		"SAFEDEV_DeviceName" = #devName#,
+		"SAFEDEV_Importance" = #impDegree#,
+		"SAFEDEV_DevDescriotion" = #devDescription#,
+		"SAFEDEV_Remark" = #devRemarks#,
+		"SAFEDEV_AssetType" = #devtype#
+		where
+		"PK_SAFEDEV" = #id#
+	</update>
+	<!-- 设备名称、所属系统名称、设备描述、重要程度进行模糊查询快速搜索(已测试) -->
+
+	<select id="pgAdmindevAssets.query" resultMap="devAssetsResult" parameterClass="java.util.HashMap">
+		SELECT * FROM "tb_safedev"   where 1=1
+		<isNotEmpty prepend="AND" property="keyword">
+			<![CDATA[
+				(
+					
+					"SAFEDEV_DeviceName" LIKE '%$keyword$%' 
+					or "SAFEDEV_DevDescriotion" LIKE '%$keyword$%'
+					or "SAFEDEV_Importance" LIKE '%$keyword$%' 
+				)
+			]]>
+		</isNotEmpty>
+		order by "PK_SAFEDEV" desc
+	</select>
+
+	<!-- 删除安全设备 (已测试) -->
+	<delete id="pgAdmindevAssets.delete" parameterClass="int">
+		delete from "tb_safedev" WHERE "PK_SAFEDEV"=#id#
+	</delete>
+	<!--可按照设备名称、所属系统名称、重要程度进行精确查找查询条数(已测试) -->
+	<select id="pgAdmindevAssets.countprecise" resultClass="int">
+		<isNotEmpty property="keyword2">
+			<include refid="count3BySysName"/>
+		</isNotEmpty>
+		<isEmpty property="keyword2">
+			SELECT COUNT(*) FROM "tb_safedev"   where 1=1
+			<isNotEmpty prepend="AND" property="keyword1">
+				<![CDATA[
+					(
+						"SAFEDEV_DeviceName"=#keyword1# 
+						
+					)
+				]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="keyword2">
+				<![CDATA[
+					(
+						
+						 "SYSINFO_Names"=#keyword2#
+						
+					)
+				]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="keyword3">
+				<![CDATA[
+					(
+						 "SAFEDEV_Importance" =#keyword3#
+					)
+				]]>
+			</isNotEmpty>
+		</isEmpty>
+	</select>
+
+	<!-- 可按照设备名称、所属系统名称、重要程度进行精确查找(未测试) -->
+
+	<select id="pgAdmindevAssets.pricisequery" resultMap="devAssetsResult" parameterClass="java.util.HashMap">
+		<isNotEmpty property="keyword2">
+			<include refid="query3BySysName"/>
+		</isNotEmpty>
+		<isEmpty property="keyword2">
+			SELECT * FROM "tb_safedev"   where 1=1
+			<isNotEmpty prepend="AND" property="keyword1">
+				<![CDATA[
+					(
+						"SAFEDEV_DeviceName"=#keyword1# 
+						
+					)
+				]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="keyword2">
+				<![CDATA[
+					(
+						
+						 "SYSINFO_Names"=#keyword2#
+						
+					)
+				]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="keyword3">
+				<![CDATA[
+					(
+						"SAFEDEV_Importance" =#keyword3#
+					)
+				]]>
+			</isNotEmpty>
+		</isEmpty>
+		order by "PK_SAFEDEV" desc
+	</select>
+
+	<!-- 评估导出报表。查询所有 -->
+	<select id="pgAdmindevAssets.queryAll" resultMap="devAssetsResult">
+		SELECT * FROM "tb_safedev"
+	</select>
+	
+	<!-- sqlserver -->
+	<!--按照设备名称、所属系统名称、设备描述、重要程度进行模糊查询查询条数(已测试) -->
+	<select id="sqlServerdevAssets.count" resultClass="int">
+		SELECT COUNT(*) FROM "tb_safedev"   where 1=1
+		<isNotEmpty prepend="AND" property="keyword">
+			<![CDATA[
+				(
+					"SAFEDEV_DeviceName" LIKE '%$keyword$%' 
+					or "SAFEDEV_DevDescriotion" LIKE '%$keyword$%'
+					or "SAFEDEV_Importance" LIKE '%$keyword$%' 
+				)
+			]]>
+		</isNotEmpty>
+
+	</select>
+	<!-- 添加安全设备(已测试) -->
+	<insert id="sqlServerdevAssets.insert" parameterClass="devAssets">
+		insert into "tb_safedev" (
+		"SAFEDEV_DeviceName","SAFEDEV_Importance",
+		"SAFEDEV_DevDescriotion","SAFEDEV_Remark","SAFEDEV_AssetType")
+		values(#devName#,#impDegree#,#devDescription#,#devRemarks#,#devtype#)
+		<selectKey resultClass="int" type="post" keyProperty="id" >
+           SELECT @@IDENTITY AS id
+      	</selectKey>
+	</insert>
+	<!-- 根据id查询安全设备(已测试) -->
+	<select id="sqlServerdevAssets.queryById" parameterClass="Integer" resultMap="devAssetsResult">
+
+		select * from "tb_safedev"  where "PK_SAFEDEV" = #id#
+	</select>
+	<!-- 修改安全设备(已测试) -->
+	<update id="sqlServerdevAssets.update" parameterClass="devAssets">
+		update "tb_safedev" 
+		SET
+		"SAFEDEV_DeviceName" = #devName#,
+		"SAFEDEV_Importance" = #impDegree#,
+		"SAFEDEV_DevDescriotion" = #devDescription#,
+		"SAFEDEV_Remark" = #devRemarks#,
+		"SAFEDEV_AssetType" = #devtype#
+		where
+		"PK_SAFEDEV" = #id#
+	</update>
+	<!-- 设备名称、所属系统名称、设备描述、重要程度进行模糊查询快速搜索(已测试) -->
+
+	<select id="sqlServerdevAssets.query" resultMap="devAssetsResult" parameterClass="java.util.HashMap">
+		SELECT * FROM "tb_safedev"   where 1=1
+		<isNotEmpty prepend="AND" property="keyword">
+			<![CDATA[
+				(
+					
+					"SAFEDEV_DeviceName" LIKE '%$keyword$%' 
+					or "SAFEDEV_DevDescriotion" LIKE '%$keyword$%'
+					or "SAFEDEV_Importance" LIKE '%$keyword$%' 
+				)
+			]]>
+		</isNotEmpty>
+		order by "PK_SAFEDEV" desc
+	</select>
+
+	<!-- 删除安全设备 (已测试) -->
+	<delete id="sqlServerdevAssets.delete" parameterClass="int">
+		delete from "tb_safedev" WHERE "PK_SAFEDEV"=#id#
+	</delete>
+	<!--可按照设备名称、所属系统名称、重要程度进行精确查找查询条数(已测试) -->
+	<select id="sqlServerdevAssets.countprecise" resultClass="int">
+		<isNotEmpty property="keyword2">
+			<include refid="count3BySysName"/>
+		</isNotEmpty>
+		<isEmpty property="keyword2">
+			SELECT COUNT(*) FROM "tb_safedev"   where 1=1
+			<isNotEmpty prepend="AND" property="keyword1">
+				<![CDATA[
+					(
+						"SAFEDEV_DeviceName"=#keyword1# 
+						
+					)
+				]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="keyword2">
+				<![CDATA[
+					(
+						
+						 "SYSINFO_Names"=#keyword2#
+						
+					)
+				]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="keyword3">
+				<![CDATA[
+					(
+						 "SAFEDEV_Importance" =#keyword3#
+					)
+				]]>
+			</isNotEmpty>
+		</isEmpty>
+	</select>
+
+	<!-- 可按照设备名称、所属系统名称、重要程度进行精确查找(未测试) -->
+
+	<select id="sqlServerdevAssets.pricisequery" resultMap="devAssetsResult" parameterClass="java.util.HashMap">
+		<isNotEmpty property="keyword2">
+			<include refid="query3BySysName"/>
+		</isNotEmpty>
+		<isEmpty property="keyword2">
+			SELECT * FROM "tb_safedev"   where 1=1
+			<isNotEmpty prepend="AND" property="keyword1">
+				<![CDATA[
+					(
+						"SAFEDEV_DeviceName"=#keyword1# 
+						
+					)
+				]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="keyword2">
+				<![CDATA[
+					(
+						
+						 "SYSINFO_Names"=#keyword2#
+						
+					)
+				]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="keyword3">
+				<![CDATA[
+					(
+						"SAFEDEV_Importance" =#keyword3#
+					)
+				]]>
+			</isNotEmpty>
+		</isEmpty>
+		order by "PK_SAFEDEV" desc
+	</select>
+
+	<!-- 评估导出报表。查询所有 -->
+	<select id="sqlServerdevAssets.queryAll" resultMap="devAssetsResult">
+		SELECT * FROM "tb_safedev"
+	</select>
+
+</sqlMap>

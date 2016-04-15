@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="deviceAlertCountSQL">
+
+		<resultMap class="deviceAlertCount" id="deviceAlertCountResult">
+       		<result property="deviceAlertCountId" column="ALERTCOUNT_ID" jdbcType="long"/>
+       		<result property="deviceAlertCountIp" column="ALERTCOUNT_IP" jdbcType="varchar"/>
+       		<result property="deviceAlertCount" column="ALERTCOUNT_COUNT" jdbcType="int"/>
+       		<result property="deviceName" column="ALERTCOUNT_NAME" jdbcType="varchar"/>
+       </resultMap>
+	<!-- 添加 -->
+	<insert id="addDeviceAlertCount" parameterClass="deviceAlertCount">
+		insert into "tbl_devicealertcount"("ALERTCOUNT_IP", "ALERTCOUNT_COUNT","ALERTCOUNT_NAME")
+		values(#deviceAlertCountIp#, #deviceAlertCount#,#deviceName#)
+	</insert>
+	
+	<!-- 更新 根据ID-->
+	<update id="editDeviceAlertCount" parameterClass="deviceAlertCount">
+		update "tbl_devicealertcount" set 
+		"ALERTCOUNT_IP"=#deviceAlertCountIp#,
+		"ALERTCOUNT_COUNT"=#deviceAlertCount#
+		where "ALERTCOUNT_ID"=#deviceAlertCountId#
+	</update>
+	
+	<!-- 更新 根据IP-->
+	<update id="editDeviceAlertCountByIp" parameterClass="deviceAlertCount">
+		update "tbl_devicealertcount" set 
+		"ALERTCOUNT_COUNT"=#deviceAlertCount#
+		where "ALERTCOUNT_IP"=#deviceAlertCountIp#
+	</update>
+	
+	<!-- 查询所有的设备信息 -->
+	<select id="deviceAlertCountAllInfo" resultMap="deviceAlertCountResult">
+		select * from "tbl_devicealertcount" where "ALERTCOUNT_COUNT" !=0 order by "ALERTCOUNT_ID" DESC 
+	</select>
+	
+	<!-- 根据设备Ip查询设备信息 -->
+	<select id="queryDeviceAlertCountByIp" parameterClass="String" resultMap="deviceAlertCountResult">
+		select * from "tbl_devicealertcount" where  "ALERTCOUNT_IP"=#deviceAlertCountIp#
+	</select>
+	
+</sqlMap>

@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="messageSQL">
+	<resultMap class="message" id="messageCenter">
+		<result property="messageId" column="MESSAGE_ID" jdbcType="bigint" />
+		<result property="messageTitle" column="MESSAGE_TITLE" jdbcType="varchar" />
+		<result property="messageType" column="MESSAGE_TYPE" jdbcType="bigint" />
+		<result property="messageContent" column="MESSAGE_CONTENT" jdbcType="varchar" />
+		<result property="messageCreateDate" column="MESSAGE_CREATEDATE" jdbcType="date" />
+		<result property="messageOperateDate" column="MESSAGE_OPERATE_DATE" jdbcType="date" />
+		<result property="messageRead" column="MESSAGE_READ" jdbcType="bigint" />
+		<result property="messageSendUserId" column="MESSAGE_SEND_USER_ID" jdbcType="bigint" />
+		<result property="messageDealUserId" column="MESSAGE_DEAL_USER_ID" jdbcType="bigint" />
+		<result property="messageDealIdea" column="MESSAGE_DEAL_IDEA" jdbcType="varchar" />
+		<result property="messageDelStatus" column="MESSAGE_DEL_STATUS" jdbcType="bigint" />
+		<result property="sendUser" column="MESSAGE_SEND_USER_ID" select="pgAdminuser.queryById" />
+		<result property="dealUser" column="MESSAGE_DEAL_USER_ID" select="pgAdminuser.queryById" />
+	</resultMap>
+	
+	<!-- 根据不同的条件获得信息中心数据 -->
+	<select id="pgAdminmessage.query" parameterClass="java.util.HashMap" resultMap="messageCenter">
+		SELECT 
+			"MESSAGE_ID","MESSAGE_TITLE","MESSAGE_TYPE","MESSAGE_CONTENT","MESSAGE_CREATEDATE","MESSAGE_OPERATE_DATE","MESSAGE_READ","MESSAGE_SEND_USER_ID","MESSAGE_DEAL_USER_ID","MESSAGE_DEAL_IDEA","MESSAGE_DEL_STATUS" 
+			
+			 FROM "tbl_message" WHERE 
+			  ("MESSAGE_SEND_USER_ID" = #onlineUserId#
+			 OR "MESSAGE_DEAL_USER_ID" = #onlineUserId#)
+		
+		<isNotEmpty prepend= "AND"  property="dualstatus">
+			<![CDATA[
+				"MESSAGE_DEL_STATUS" = #dualstatus#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				"MESSAGE_TITLE" LIKE '%$keyword$%' OR "MESSAGE_DEAL_IDEA" LIKE '%$keyword$%'  
+			]]>
+		</isNotEmpty>
+			<isNotEmpty prepend= "AND"  property="messageTitle">
+			<![CDATA[
+				"MESSAGE_TITLE" LIKE '%$messageTitle$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="messageIdea">
+			<![CDATA[
+				"MESSAGE_DEAL_IDEA" LIKE '%$messageIdea$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="messageType">
+			<![CDATA[
+				"MESSAGE_TYPE" = #messageType#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="messageRead">
+			<![CDATA[
+				"MESSAGE_READ" = #messageRead#
+			]]>
+		</isNotEmpty>
+			
+			 	
+			order by "MESSAGE_CREATEDATE" desc
+	</select>
+	<!-- 获得信息中心数据的数量 -->
+	<select id="pgAdminmessage.count" resultClass="int" parameterClass="java.util.HashMap">
+		SELECT COUNT(*) FROM "tbl_message" WHERE 
+			 ("MESSAGE_SEND_USER_ID" = #onlineUserId#
+			 OR "MESSAGE_DEAL_USER_ID" = #onlineUserId#)
+		<isNotEmpty prepend= "AND"  property="dualstatus">
+			<![CDATA[
+				"MESSAGE_DEL_STATUS" = #dualstatus#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				"MESSAGE_TITLE" LIKE '%$keyword$%' OR "MESSAGE_DEAL_IDEA" LIKE '%$keyword$%'  
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="messageTitle">
+			<![CDATA[
+				"MESSAGE_TITLE" LIKE '%$messageTitle$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="messageIdea">
+			<![CDATA[
+				"MESSAGE_DEAL_IDEA" LIKE '%$messageIdea$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="messageType">
+			<![CDATA[
+				"MESSAGE_TYPE" = #messageType#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="messageRead">
+			<![CDATA[
+				"MESSAGE_READ" = #messageRead#
+			]]>
+		</isNotEmpty>
+			 
+	</select>
+	
+	<!-- 删除信息 ，修改为不可见状态，在已删除信息中仍可查看 -->
+	<update id="pgAdminmessage.updateMessageStatus" parameterClass="java.util.HashMap" >
+		<![CDATA[
+			UPDATE "tbl_message" 
+			SET 
+			       "MESSAGE_DEL_STATUS" = 1,
+			       "MESSAGE_OPERATE_DATE" = #operateDate# 
+			WHERE 
+			       "MESSAGE_ID" = #messageId#
+		]]>
+	</update>
+	<!-- 彻底删除信息 -->
+	<delete id="pgAdminmessage.delMessage" parameterClass="long">
+		<![CDATA[
+			DELETE FROM "tbl_message"
+			WHERE "MESSAGE_ID" = #messageId#
+		]]>
+	</delete>
+	
+	<!-- 获得单个信息对象  -->
+	<select id="pgAdminmessage.queryMessage" parameterClass="long" resultMap="messageCenter">
+		<![CDATA[
+			SELECT * FROM "tbl_message" WHERE "MESSAGE_ID" = #messageId#
+		]]>
+	 </select>
+	 
+	 <!-- 修改信息 阅读状态-->
+	 <update id="pgAdminmessage.updateMessageRead" parameterClass="java.util.HashMap" >
+		 <![CDATA[
+				UPDATE "tbl_message" 
+			SET 
+			       "MESSAGE_READ" = 1,
+			       "MESSAGE_OPERATE_DATE" = #operateDate# 
+			WHERE 
+			       "MESSAGE_ID" = #messageId#
+			]]>
+	 </update>
+	 <!-- 处理信息  -->
+	 <update id="pgAdminmessage.updateMessage" parameterClass="java.util.HashMap" >
+		 <![CDATA[
+				UPDATE "tbl_message" 
+			SET 
+			       "MESSAGE_DEAL_IDEA" = #messageDeadIdea# 
+			WHERE 
+			       "MESSAGE_ID" = #messageId#
+			]]>
+	 </update>
+	 <!-- 添加信息 -->
+	 <insert id="pgAdminmessage.insert" parameterClass="java.util.HashMap">
+		  <![CDATA[
+					INSERT INTO "tbl_message"   
+							(	
+								"MESSAGE_TITLE",
+								"MESSAGE_TYPE",
+								"MESSAGE_CONTENT",
+								"MESSAGE_CREATEDATE",
+								"MESSAGE_OPERATE_DATE",
+								"MESSAGE_READ",
+								"MESSAGE_SEND_USER_ID",
+								"MESSAGE_DEAL_USER_ID",
+								"MESSAGE_DEAL_IDEA",
+								"MESSAGE_DEL_STATUS" )
+					VALUES	 (
+								#messageTitle#
+								#messageType#
+								#messageContent#
+								#messageCreateDate#
+								#messageOperateDate#
+								#messageRead#
+								#messageSendUserId#
+								#messageDealUserId#
+								#messageDealIdea#
+								#messageDelStatus#
+							
+								)
+						
+				<selectKey resultClass="java.lang.Long" keyProperty="messageId" >
+		            SELECT CURRVAL('tbl_message_seq'::REGCLASS) AS messageId
+		      	</selectKey>
+			]]>
+	 
+	 </insert>
+	 <!-- sqlserver -->
+	 <!-- 根据不同的条件获得信息中心数据 -->
+	<select id="sqlServermessage.query" parameterClass="java.util.HashMap" resultMap="messageCenter">
+		SELECT 
+			"MESSAGE_ID","MESSAGE_TITLE","MESSAGE_TYPE","MESSAGE_CONTENT","MESSAGE_CREATEDATE","MESSAGE_OPERATE_DATE","MESSAGE_READ","MESSAGE_SEND_USER_ID","MESSAGE_DEAL_USER_ID","MESSAGE_DEAL_IDEA","MESSAGE_DEL_STATUS" 
+			
+			 FROM "tbl_message" WHERE 
+			  ("MESSAGE_SEND_USER_ID" = #onlineUserId#
+			 OR "MESSAGE_DEAL_USER_ID" = #onlineUserId#)
+		
+		<isNotEmpty prepend= "AND"  property="dualstatus">
+			<![CDATA[
+				"MESSAGE_DEL_STATUS" = #dualstatus#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				"MESSAGE_TITLE" LIKE '%$keyword$%' OR "MESSAGE_DEAL_IDEA" LIKE '%$keyword$%'  
+			]]>
+		</isNotEmpty>
+			<isNotEmpty prepend= "AND"  property="messageTitle">
+			<![CDATA[
+				"MESSAGE_TITLE" LIKE '%$messageTitle$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="messageIdea">
+			<![CDATA[
+				"MESSAGE_DEAL_IDEA" LIKE '%$messageIdea$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="messageType">
+			<![CDATA[
+				"MESSAGE_TYPE" = #messageType#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="messageRead">
+			<![CDATA[
+				"MESSAGE_READ" = #messageRead#
+			]]>
+		</isNotEmpty>
+			
+			 	
+			order by "MESSAGE_CREATEDATE" desc
+	</select>
+	<!-- 获得信息中心数据的数量 -->
+	<select id="sqlServermessage.count" resultClass="int" parameterClass="java.util.HashMap">
+		SELECT COUNT(*) FROM "tbl_message" WHERE 
+			 ("MESSAGE_SEND_USER_ID" = #onlineUserId#
+			 OR "MESSAGE_DEAL_USER_ID" = #onlineUserId#)
+		<isNotEmpty prepend= "AND"  property="dualstatus">
+			<![CDATA[
+				"MESSAGE_DEL_STATUS" = #dualstatus#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				"MESSAGE_TITLE" LIKE '%$keyword$%' OR "MESSAGE_DEAL_IDEA" LIKE '%$keyword$%'  
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="messageTitle">
+			<![CDATA[
+				"MESSAGE_TITLE" LIKE '%$messageTitle$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="messageIdea">
+			<![CDATA[
+				"MESSAGE_DEAL_IDEA" LIKE '%$messageIdea$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="messageType">
+			<![CDATA[
+				"MESSAGE_TYPE" = #messageType#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="messageRead">
+			<![CDATA[
+				"MESSAGE_READ" = #messageRead#
+			]]>
+		</isNotEmpty>
+			 
+	</select>
+	
+	<!-- 删除信息 ，修改为不可见状态，在已删除信息中仍可查看 -->
+	<update id="sqlServermessage.updateMessageStatus" parameterClass="java.util.HashMap" >
+		<![CDATA[
+			UPDATE "tbl_message" 
+			SET 
+			       "MESSAGE_DEL_STATUS" = 1,
+			       "MESSAGE_OPERATE_DATE" = #operateDate# 
+			WHERE 
+			       "MESSAGE_ID" = #messageId#
+		]]>
+	</update>
+	<!-- 彻底删除信息 -->
+	<delete id="sqlServermessage.delMessage" parameterClass="long">
+		<![CDATA[
+			DELETE FROM "tbl_message"
+			WHERE "MESSAGE_ID" = #messageId#
+		]]>
+	</delete>
+	
+	<!-- 获得单个信息对象  -->
+	<select id="sqlServermessage.queryMessage" parameterClass="long" resultMap="messageCenter">
+		<![CDATA[
+			SELECT * FROM "tbl_message" WHERE "MESSAGE_ID" = #messageId#
+		]]>
+	 </select>
+	 
+	 <!-- 修改信息 阅读状态-->
+	 <update id="sqlServermessage.updateMessageRead" parameterClass="java.util.HashMap" >
+		 <![CDATA[
+				UPDATE "tbl_message" 
+			SET 
+			       "MESSAGE_READ" = 1,
+			       "MESSAGE_OPERATE_DATE" = #operateDate# 
+			WHERE 
+			       "MESSAGE_ID" = #messageId#
+			]]>
+	 </update>
+	 <!-- 处理信息  -->
+	 <update id="sqlServermessage.updateMessage" parameterClass="java.util.HashMap" >
+		 <![CDATA[
+				UPDATE "tbl_message" 
+			SET 
+			       "MESSAGE_DEAL_IDEA" = #messageDeadIdea# 
+			WHERE 
+			       "MESSAGE_ID" = #messageId#
+			]]>
+	 </update>
+	 <!-- 添加信息 -->
+	 <insert id="sqlServermessage.insert" parameterClass="java.util.HashMap">
+		  <![CDATA[
+					INSERT INTO "tbl_message"   
+							(	
+								"MESSAGE_TITLE",
+								"MESSAGE_TYPE",
+								"MESSAGE_CONTENT",
+								"MESSAGE_CREATEDATE",
+								"MESSAGE_OPERATE_DATE",
+								"MESSAGE_READ",
+								"MESSAGE_SEND_USER_ID",
+								"MESSAGE_DEAL_USER_ID",
+								"MESSAGE_DEAL_IDEA",
+								"MESSAGE_DEL_STATUS" )
+					VALUES	 (
+								#messageTitle#
+								#messageType#
+								#messageContent#
+								#messageCreateDate#
+								#messageOperateDate#
+								#messageRead#
+								#messageSendUserId#
+								#messageDealUserId#
+								#messageDealIdea#
+								#messageDelStatus#
+							
+								)
+						
+				<selectKey resultClass="java.lang.Long" keyProperty="messageId" >
+		            SELECT CURRVAL('tbl_message_seq'::REGCLASS) AS messageId
+		      	</selectKey>
+			]]>
+	 
+	 </insert>
+</sqlMap>

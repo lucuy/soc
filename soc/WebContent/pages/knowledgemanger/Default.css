@@ -1,0 +1,36 @@
+
+@charset "UTF-8";
+
+
+
+table {
+	font-size:			12px;
+	
+}
+
+
+
+a {
+	text-transform:		none;
+	text-decoration:	none;
+} 
+
+a:link {
+	color:				#2C3E56;
+	font-size:			12px;
+}
+
+a:visited {
+	color:				#2C3E56;
+	font-size:			12px;
+}
+
+a:hover {
+	color:				#FF9900;
+	font-size:			12px;
+}
+
+a:active {
+	color:				#2C3E56;
+	font-size:			12px;
+}

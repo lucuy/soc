@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="queryEventsUserLog">
+
+	<resultMap id="eventsUserLogResult" class="eventsUserLog">
+		<result property="numID"        column="NUM_ID"       jdbcType="bigint" />
+		<result property="userID"       column="USER_ID"      jdbcType="varchar" />
+		<result property="organization" column="ORGANIZATION" jdbcType="varchar" />
+		<result property="userName"     column="USER_NAME"    jdbcType="varchar" />
+		<result property="terminalID"   column="TERMINAL_ID"  jdbcType="varchar" />
+		<result property="operateType"  column="OPERATE_TYPE" jdbcType="int" />
+		<result property="operateTime"  column="OPERATE_TIME" jdbcType="datetime" />
+		<result property="operateCondition"  column="OPERATE_CONDITION" jdbcType="varchar" />
+		<result property="operateResult"  column="OPERATE_RESULT" jdbcType="int" />
+	</resultMap>
+<!-- 查询所有的数据 -->
+    <select id="queryEventsUserLog.queryAllLog" resultMap="eventsUserLogResult">
+                SELECT * FROM LOG_INFO 
+    </select>
+
+    <!-- 根据numID查询某个主键之后的所有数据 -->
+    <select id="queryEventsUserLog.queryLogByNumID" parameterClass="long" resultMap="eventsUserLogResult" >
+                SELECT * FROM　LOG_INFO WHERE NUM_ID > #numID# ORDER BY NUM_ID ASC
+    </select>
+   
+
+</sqlMap>

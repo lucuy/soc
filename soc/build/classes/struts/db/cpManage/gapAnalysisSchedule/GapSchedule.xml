@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="gapAnalysisSchedule" extends="struts-default"
+		namespace="/gapAnalysisSchedule">
+
+		<action name="gapSchedule" class="gapScheduleAction"
+			method="getGapSchedule">
+			<result name="success">/pages/dbPage/ensure/jinduC.jsp</result>
+		</action>
+		
+		
+		<action name="projectShowcase"
+			class="gapScheduleAction"
+			method="getProjectShowcase">
+			<result name="success">/pages/dbPage/ensure/jindu.jsp</result>
+			<result name="none">/pages/dbPage/ensure/jinduNullC.jsp</result>
+		</action>
+		
+		
+		<action name="queryAjax" class="gapScheduleAction" method="queryAjax"/>
+		
+		<action name="queryAjaxEquelsNull" class="gapScheduleAction" method="queryAjaxEquelsNull"/>
+		
+	</package>
+</struts>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="rankReportSQL">
+
+	<!-- 统计报表 -->
+	<resultMap class="rankReport" id="RankReportResult">
+		<result property="sysId" 				column="SYSINFO_Id" 			jdbcType="varchar"/>
+		<result property="sysName" 				column="SYSINFO_Name" 			jdbcType="varchar"/>
+		<result property="grade" 				column="SYSINFO_Id" 					select="sqlServerrank.queryGradeBySysId"/>
+		<result property="docment" 				column="SYSINFO_Id" 					select="sqlServerrecord.queryDocumentBySysId"/>
+	</resultMap>
+	
+	<!-- 定级表 -->
+	<resultMap class="Rank"	id="RankResult" >
+		<result property="sysInfoId" 				column="SYSINFO_Id" 					jdbcType="varchar" />
+		<result property="rankGrade" 				column="RANK_Grade" 					jdbcType="varchar" />
+	</resultMap>
+	
+	<!-- 系统备案表 -->
+	<resultMap class="Record" id="recordResult">
+    	<result property="sysInFoId" 				    column="SYSINFO_Id"					    jdbcType="varchar"	/>
+    	<result property="recordDocument" 				column="SYSRECORD_Document"				jdbcType="varchar"	/>
+	</resultMap>
+	<!-- 查询所有 -->
+	<select id="pgAdminrankReport.query"  resultMap="RankReportResult" >
+		<![CDATA[
+			SELECT * FROM "tb_sysinfo"  
+		]]>
+	</select>
+	
+	<!-- 根据SysID查询 -->
+	<select id="pgAdminrank.queryGradeBySysId"  parameterClass="String" resultClass="String" >
+		<![CDATA[
+			SELECT "RANK_Grade" FROM "tb_rank"  WHERE "SYSINFO_Id" = #value#
+		]]>
+	</select>
+	
+	<!-- 根据SysID查询 -->
+	<select id="pgAdminrecord.queryDocumentBySysId"  parameterClass="String" resultClass="String" >
+		<![CDATA[
+			SELECT "SYSRECORD_Document" FROM "tb_sysrecord"  WHERE "SYSINFO_Id" = #value#
+		]]>
+	</select>
+	<!-- sqlserver -->
+	
+	<!-- 查询所有 -->
+	<select id="sqlServerrankReport.query"  resultMap="RankReportResult" >
+		<![CDATA[
+			SELECT * FROM "tb_sysinfo"  
+		]]>
+	</select>
+	
+	<!-- 根据SysID查询 -->
+	<select id="sqlServerrank.queryGradeBySysId"  parameterClass="String" resultClass="String" >
+		<![CDATA[
+			SELECT "RANK_Grade" FROM "tb_rank"  WHERE "SYSINFO_Id" = #value#
+		]]>
+	</select>
+	
+	<!-- 根据SysID查询 -->
+	<select id="sqlServerrecord.queryDocumentBySysId"  parameterClass="String" resultClass="String" >
+		<![CDATA[
+			SELECT "SYSRECORD_Document" FROM "tb_sysrecord"  WHERE "SYSINFO_Id" = #value#
+		]]>
+	</select>
+	
+	
+</sqlMap>

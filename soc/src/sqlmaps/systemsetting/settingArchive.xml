@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="settingArchiveSQL">
+
+	<resultMap id="archive" class="settingArchive">
+   		<result property="archiveId" 			column="ARCHIVE_ID" 		    jdbcType="bigint"/>
+   		<result property="archiveName"          column="ARCHIVE_NAME"           jdbcType="varchar"/>
+   		<result property="archiveStatus"      	column="ARCHIVE_STATUS"       	jdbcType="bigint"/>
+   		<result property="archiveDate"    		column="ARCHIVE_DATE"     		jdbcType="bigint"/>
+  	 	<result property="archivePath"          column="ARCHIVE_PATH"           jdbcType="varchar"/>
+   		<result property="capacity"    			column="ARCHIVE_CAPACITY"     	jdbcType="bigint"/>
+   		<result property="totalCapacity"    	column="ARCHIVE_TOTAL_CAPACITY" jdbcType="bigint"/>
+   		<result property="percent"    			column="ARCHIVE_PERCENT"     	jdbcType="float"/>
+   		<result property="thresholds"    		column="ARCHIVE_THRESHOLDS"     jdbcType="bigint"/>
+   		<result property="alarmMode"    		column="ARCHIVE_ALARM_MODE"     jdbcType="bigint"/>
+   	
+   	</resultMap>
+   	<select id="pgAdminqueryArchiveList.query" parameterClass="java.util.HashMap" resultMap="archive">
+	   SELECT * FROM "tbl_setting_archive"  where 1=1
+	   <isNotEmpty prepend= "AND"  property="archiveStatus">
+			<![CDATA[
+				"ARCHIVE_STATUS" = #archiveStatus#
+			]]>
+		</isNotEmpty>
+		 <isNotEmpty prepend= "AND"  property="archiveName">
+			<![CDATA[
+				"ARCHIVE_NAME"  LIKE '%$archiveName$%'
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend= "AND"  property="archiveDate">
+			<![CDATA[
+				"ARCHIVE_NAME"  LIKE '%$archiveDate$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				"ARCHIVE_NAME"  LIKE '%$keyword$%'
+			]]>
+		</isNotEmpty>
+	   
+	   order by "ARCHIVE_NAME" DESC
+	</select>
+	
+	<select id="pgAdmincountPageArchiveList.query"  parameterClass="java.util.HashMap" resultClass="int">
+		SELECT COUNT(*) FROM "tbl_setting_archive" where 1=1
+		<isNotEmpty prepend= "AND"  property="archiveStatus">
+			<![CDATA[
+				"ARCHIVE_STATUS" = #archiveStatus#
+			]]>
+		</isNotEmpty>
+		 <isNotEmpty prepend= "AND"  property="archiveName">
+			<![CDATA[
+				"ARCHIVE_NAME"  LIKE '%$archiveName$%'
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend= "AND"  property="archiveDate">
+			<![CDATA[
+				"ARCHIVE_NAME"  LIKE '%$archiveDate$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				"ARCHIVE_NAME"  LIKE '%$keyword$%'
+			]]>
+		</isNotEmpty>
+	</select>
+	
+	<!-- 更新数据 -->
+	<update id="pgAdminupdateArchiveById.update" parameterClass="settingArchive" >
+	<![CDATA[
+			UPDATE "tbl_setting_archive"
+			SET 
+					"ARCHIVE_STATUS" = #archiveStatus#,
+					"ARCHIVE_CAPACITY" = #capacity#,
+					"ARCHIVE_PERCENT" = #percent#
+			 	WHERE 
+			 		"ARCHIVE_ID" = #archiveId#
+			 		]]>
+	</update>
+	<!-- 新增 -->
+   	<insert id="pgAdmincreateArchive.insert" parameterClass="settingArchive">
+		INSERT INTO "tbl_setting_archive" 
+				( 
+				  "ARCHIVE_NAME", 
+				  "ARCHIVE_STATUS",
+				  "ARCHIVE_DATE",
+				  "ARCHIVE_PATH",
+				  "ARCHIVE_CAPACITY",
+				  "ARCHIVE_TOTAL_CAPACITY",
+				  "ARCHIVE_PERCENT",
+				  "ARCHIVE_THRESHOLDS",
+				  "ARCHIVE_ALARM_MODE")	
+				  
+				  VALUES 
+				( 
+				  #archiveName#, 
+				  #archiveStatus#,
+				  #archiveDate#,
+				  #archivePath#,
+				  #capacity#,
+				  #totalCapacity#,
+				  #percent#,
+				  #thresholds#,
+				  #alarmMode#)
+	</insert>
+	<select id="pgAdminqueryById.query" parameterClass="long" resultMap="archive">
+	   SELECT * FROM "tbl_setting_archive" WHERE "ARCHIVE_ID" = #archiveId#
+	</select>
+	
+	<select id="pgAdminselectArchiveAuto.query" parameterClass="java.util.HashMap" resultMap="archive">
+	   SELECT * FROM "tbl_setting_archive" WHERE "ARCHIVE_STATUS" = 1 and ("ARCHIVE_DATE" BETWEEN #start# and #end# )
+	</select>
+	
+	
+   	<!-- sqlserver -->
+   	<select id="sqlServerqueryArchiveList.query" parameterClass="java.util.HashMap" resultMap="archive">
+	   SELECT * FROM "tbl_setting_archive"  where 1=1
+	   <isNotEmpty prepend= "AND"  property="archiveStatus">
+			<![CDATA[
+				"ARCHIVE_STATUS" = #archiveStatus#
+			]]>
+		</isNotEmpty>
+		 <isNotEmpty prepend= "AND"  property="archiveName">
+			<![CDATA[
+				"ARCHIVE_NAME"  LIKE '%$archiveName$%'
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend= "AND"  property="archiveDate">
+			<![CDATA[
+				"ARCHIVE_NAME"  LIKE '%$archiveDate$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				"ARCHIVE_NAME"  LIKE '%$keyword$%'
+			]]>
+		</isNotEmpty>
+	   
+	   order by "ARCHIVE_NAME" DESC
+	</select>
+	
+	<select id="sqlServercountPageArchiveList.query"  parameterClass="java.util.HashMap" resultClass="int">
+		SELECT COUNT(*) FROM "tbl_setting_archive" where 1=1
+		<isNotEmpty prepend= "AND"  property="archiveStatus">
+			<![CDATA[
+				"ARCHIVE_STATUS" = #archiveStatus#
+			]]>
+		</isNotEmpty>
+		 <isNotEmpty prepend= "AND"  property="archiveName">
+			<![CDATA[
+				"ARCHIVE_NAME"  LIKE '%$archiveName$%'
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend= "AND"  property="archiveDate">
+			<![CDATA[
+				"ARCHIVE_NAME"  LIKE '%$archiveDate$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="keyword">
+			<![CDATA[
+				"ARCHIVE_NAME"  LIKE '%$keyword$%'
+			]]>
+		</isNotEmpty>
+	</select>
+	
+	<!-- 更新数据 -->
+	<update id="sqlServerupdateArchiveById.update" parameterClass="settingArchive" >
+	<![CDATA[
+			UPDATE "tbl_setting_archive"
+			SET 
+					"ARCHIVE_STATUS" = #archiveStatus#
+			 	WHERE 
+			 		"ARCHIVE_ID" = #archiveId#
+			 		]]>
+	</update>
+	
+	<select id="sqlServerqueryById.query" parameterClass="long" resultMap="archive">
+	   SELECT * FROM "tbl_setting_archive" WHERE "ARCHIVE_ID" = #archiveId#
+	</select>
+	
+	<select id="sqlServerselectArchiveAuto.query" parameterClass="java.util.HashMap" resultMap="archive">
+	   SELECT * FROM "tbl_setting_archive" WHERE "ARCHIVE_STATUS" = 1 and ("ARCHIVE_DATE" BETWEEN #start# and #end# )
+	</select>
+	
+	<!-- sqlServer用的sql语句 -->
+	<insert id="sqlServercreateArchive.insert" parameterClass="settingArchive">
+		INSERT INTO "tbl_setting_archive" 
+				( 
+				  "ARCHIVE_NAME", 
+				  "ARCHIVE_STATUS",
+				  "ARCHIVE_DATE",
+				  "ARCHIVE_PATH",
+				  "ARCHIVE_CAPACITY",
+				  "ARCHIVE_TOTAL_CAPACITY",
+				  "ARCHIVE_PERCENT",
+				  "ARCHIVE_THRESHOLDS",
+				  "ARCHIVE_ALARM_MODE")	
+				  
+				  VALUES 
+				( 
+				  #archiveName#, 
+				  #archiveStatus#,
+				  #archiveDate#,
+				  #archivePath#,
+				  #capacity#,
+				  #totalCapacity#,
+				  #percent#,
+				  #thresholds#,
+				  #alarmMode#)
+	</insert>
+	
+</sqlMap>

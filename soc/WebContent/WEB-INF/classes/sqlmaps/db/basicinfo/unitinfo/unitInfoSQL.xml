@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="unitSQL">
+
+<resultMap class="unitInfo" id="unitInfoResult">
+<result property="id"				column="PK_UNITINFO"								jdbcType="bigint"/>
+<result property="unitName"			column="UNITINFO_UnitName"						jdbcType="varchar"/>
+<result property="province"			column="UNITINFO_Province"						jdbcType="varchar"/>
+<result property="city"				column="UNITINFO_City"							jdbcType="varchar"/>
+<result property="county"			column="UNITINFO_County"							jdbcType="varchar"/>
+<result property="postcode"			column="UNITINFO_Postcode"						jdbcType="varchar"/>
+<result property="divisionCode"		column="UNITINFO_DivisionCode"					jdbcType="varchar"/>
+<result property="unitLeader"		column="UNITINFO_UnitLeader"						jdbcType="varchar"/>
+<result property="duty"				column="UNITINFO_Duty"							jdbcType="varchar"/>
+<result property="unitTel"			column="UNITINFO_UnitTel"						jdbcType="varchar"/>
+<result property="unitEmail"		column="UNITINFO_UnitEmail"						jdbcType="varchar"/>
+<result property="unitDep"			column="UNITINFO_UnitDep"						jdbcType="varchar"/>
+<result property="depContact"		column="UNITINFO_DepContact"						jdbcType="varchar"/>
+<result property="depDuty"			column="UNITINFO_DepDuty"						jdbcType="varchar"/>
+<result property="depTel"			column="UNITINFO_DepTel"							jdbcType="varchar"/>
+<result property="depMobile"		column="UNITINFO_Depmobile"						jdbcType="varchar"/>
+<result property="depEmail"			column="UNITINFO_DepEmail"						jdbcType="varchar"/>
+<result property="subordinate"		column="UNITINFO_Subordinate"					jdbcType="varchar"/>
+<result property="otherSub"			column="UNITINFO_OtherSub"						jdbcType="varchar"/>
+<result property="unitType"			column="UNITINFO_UnitType"						jdbcType="varchar"/>
+<result property="otherUnitType"	column="UNITINFO_OtherUnitType"					jdbcType="varchar"/>
+<result property="employment"		column="UNITINFO_Employment"						jdbcType="varchar"/>
+<result property="otherEmp"			column="UNITINFO_OtherEmp"						jdbcType="varchar"/>
+<result property="sysTotal"			column="UNITINFO_SysTotal"						jdbcType="varchar"/>
+<result property="relAccess"		column="UNITINFO_RelAccess"						jdbcType="varchar"/> 
+</resultMap>
+<!-- 查询单位信息 -->
+<select id="pgAdminunit.query" resultMap="unitInfoResult">
+	select * from tb_unitinfo;
+</select>
+<!-- 添加单位信息 -->
+<insert id="pgAdminunit.insert" parameterClass="unitInfo">
+	insert into "tb_unitinfo"(
+             "UNITINFO_UnitName", "UNITINFO_Province", "UNITINFO_City", 
+            "UNITINFO_County", "UNITINFO_Postcode", "UNITINFO_DivisionCode", 
+            "UNITINFO_UnitLeader", "UNITINFO_Duty", "UNITINFO_UnitTel", "UNITINFO_UnitEmail", 
+            "UNITINFO_UnitDep", "UNITINFO_DepContact", "UNITINFO_DepDuty", 
+            "UNITINFO_DepTel", "UNITINFO_Depmobile", "UNITINFO_DepEmail", 
+            "UNITINFO_Subordinate", "UNITINFO_OtherSub", "UNITINFO_UnitType", 
+            "UNITINFO_OtherUnitType", "UNITINFO_Employment", "UNITINFO_OtherEmp", 
+            "UNITINFO_SysTotal", "UNITINFO_RelAccess")
+	 
+	 values( #unitName#,#province#,#city#,#county#,#postcode#,#divisionCode#,#unitLeader#,
+	 #duty#,#unitTel#,#unitEmail#,#unitDep#,#depContact#,#depDuty#,#depTel#,#depMobile#,#depEmail#,#subordinate#,
+	 #otherSub#,#unitType#,#otherUnitType#,#employment#,#otherEmp#,#sysTotal#,#relAccess#)
+ 
+</insert>
+<!-- 修改单位信息 -->
+  <update id="pgAdminunit.update" parameterClass="unitInfo">
+	update "tb_unitinfo" 
+	set
+		 "UNITINFO_UnitName" = #unitName#,
+		 "UNITINFO_Province" = #province#,
+		 "UNITINFO_City" = #city#,
+		 "UNITINFO_County" =  #county#,
+		 "UNITINFO_Postcode" =  #postcode#, 
+		 "UNITINFO_DivisionCode" = #divisionCode#,
+		 "UNITINFO_UnitLeader" = #unitLeader#,
+		 "UNITINFO_Duty" = #duty#, 
+		 "UNITINFO_UnitTel" = #unitTel#,
+		 "UNITINFO_UnitEmail" = #unitEmail#,
+		 "UNITINFO_UnitDep" = #unitDep#, 
+		 "UNITINFO_DepContact" = #depContact#, 
+		 "UNITINFO_DepDuty" = #depDuty#, 
+		 "UNITINFO_DepTel" = #depTel#, 
+		 "UNITINFO_Depmobile" = #depMobile#, 
+		 "UNITINFO_DepEmail" = #depEmail#,
+		 "UNITINFO_Subordinate"  = #subordinate#,
+		 "UNITINFO_OtherSub" =  #otherSub#,
+		 "UNITINFO_UnitType" = #unitType#, 
+		 "UNITINFO_OtherUnitType" = #otherUnitType#,
+		 "UNITINFO_Employment" = #employment#,
+	 	 "UNITINFO_OtherEmp"  = #otherEmp#,
+		 "UNITINFO_SysTotal"  = #sysTotal#,
+		 "UNITINFO_RelAccess"= #relAccess#
+		
+	where
+		 "PK_UNITINFO" = #id#
+	
+	
+</update>
+ 
+<!-- sqlserver -->
+<!-- 查询单位信息 -->
+<select id="sqlServerunit.query" resultMap="unitInfoResult">
+	select * from tb_unitinfo;
+</select>
+<!-- 添加单位信息 -->
+<insert id="sqlServerunit.insert" parameterClass="unitInfo">
+	insert into "tb_unitinfo"(
+             "UNITINFO_UnitName", "UNITINFO_Province", "UNITINFO_City", 
+            "UNITINFO_County", "UNITINFO_Postcode", "UNITINFO_DivisionCode", 
+            "UNITINFO_UnitLeader", "UNITINFO_Duty", "UNITINFO_UnitTel", "UNITINFO_UnitEmail", 
+            "UNITINFO_UnitDep", "UNITINFO_DepContact", "UNITINFO_DepDuty", 
+            "UNITINFO_DepTel", "UNITINFO_Depmobile", "UNITINFO_DepEmail", 
+            "UNITINFO_Subordinate", "UNITINFO_OtherSub", "UNITINFO_UnitType", 
+            "UNITINFO_OtherUnitType", "UNITINFO_Employment", "UNITINFO_OtherEmp", 
+            "UNITINFO_SysTotal", "UNITINFO_RelAccess")
+	 
+	 values( #unitName#,#province#,#city#,#county#,#postcode#,#divisionCode#,#unitLeader#,
+	 #duty#,#unitTel#,#unitEmail#,#unitDep#,#depContact#,#depDuty#,#depTel#,#depMobile#,#depEmail#,#subordinate#,
+	 #otherSub#,#unitType#,#otherUnitType#,#employment#,#otherEmp#,#sysTotal#,#relAccess#)
+ 
+</insert>
+<!-- 修改单位信息 -->
+  <update id="sqlServerunit.update" parameterClass="unitInfo">
+	update "tb_unitinfo" 
+	set
+		 "UNITINFO_UnitName" = #unitName#,
+		 "UNITINFO_Province" = #province#,
+		 "UNITINFO_City" = #city#,
+		 "UNITINFO_County" =  #county#,
+		 "UNITINFO_Postcode" =  #postcode#, 
+		 "UNITINFO_DivisionCode" = #divisionCode#,
+		 "UNITINFO_UnitLeader" = #unitLeader#,
+		 "UNITINFO_Duty" = #duty#, 
+		 "UNITINFO_UnitTel" = #unitTel#,
+		 "UNITINFO_UnitEmail" = #unitEmail#,
+		 "UNITINFO_UnitDep" = #unitDep#, 
+		 "UNITINFO_DepContact" = #depContact#, 
+		 "UNITINFO_DepDuty" = #depDuty#, 
+		 "UNITINFO_DepTel" = #depTel#, 
+		 "UNITINFO_Depmobile" = #depMobile#, 
+		 "UNITINFO_DepEmail" = #depEmail#,
+		 "UNITINFO_Subordinate"  = #subordinate#,
+		 "UNITINFO_OtherSub" =  #otherSub#,
+		 "UNITINFO_UnitType" = #unitType#, 
+		 "UNITINFO_OtherUnitType" = #otherUnitType#,
+		 "UNITINFO_Employment" = #employment#,
+	 	 "UNITINFO_OtherEmp"  = #otherEmp#,
+		 "UNITINFO_SysTotal"  = #sysTotal#,
+		 "UNITINFO_RelAccess"= #relAccess#
+		
+	where
+		 "PK_UNITINFO" = #id#
+	
+	
+</update>
+ 
+
+
+</sqlMap>

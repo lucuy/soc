@@ -1,0 +1,659 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd"
+	default-lazy-init="true">
+
+	<!-- 所有ACTION都继承此类 -->
+	<bean id="baseAction" class="com.soc.action.BaseAction" scope="prototype">
+		<property name="baseService" ref="baseService" />
+		<property name="logManager" ref="logManager"></property>
+	</bean>
+
+	<!-- 框架 -->
+	<bean id="frameAction" class="com.soc.webapp.action.layout.FrameAction"
+		scope="prototype" parent="baseAction">
+	</bean>
+
+	<!-- 用户 -->
+	<bean id="userAction" class="com.soc.webapp.action.user.UserAction"
+		scope="prototype" parent="baseAction">
+		<property name="userManager" ref="userManager" />
+		<property name="roleManager" ref="roleManager" />
+		<property name="passwordPolicyManager" ref="passwordPolicyManager" />
+		<property name="timePolicyManager" ref="timePolicyManager" />
+		<property name="addressPolicyManager" ref="addressPolicyManager" />
+		<property name="auditManager" ref="auditManager"></property>
+		<property name="assetGroupManager" ref="assetGroupManager"></property>
+		<property name="msg" ref="sendmsg"></property>
+		<property name="ssManger" ref="systemSettingManager"></property>
+		<property name="homePageDivManager" ref="homePageDivManager"></property>
+	</bean>
+
+	<!-- 登录 -->
+	<bean id="loginAction" class="com.soc.webapp.action.user.LoginAction"
+		scope="prototype" parent="baseAction">
+		<property name="loginManager" ref="loginManager"></property>
+		<property name="userManager" ref="userManager"></property>
+		<property name="settingManger" ref="settingManager"></property>
+		<property name="auditManager" ref="auditManager"></property>
+	</bean>
+
+	<!-- 角色 -->
+	<bean id="roleAction" class="com.soc.webapp.action.role.RoleAction"
+		scope="prototype" parent="baseAction">
+		<property name="roleManager" ref="roleManager" />
+		<property name="permissionManager" ref="permissionManager" />
+		<property name="userManager" ref="userManager"></property>
+		<property name="assetManager" ref="assetManager"></property>
+		<property name="assetGroupManager" ref="assetGroupManager"></property>
+		<property name="auditManager" ref="auditManager"></property>
+	</bean>
+
+	<!-- 密码策略 -->
+	<bean id="passwordPolicyAction" class="com.soc.webapp.action.policy.PasswordPolicyAction"
+		scope="prototype" parent="baseAction">
+		<property name="passwordPolicyManager" ref="passwordPolicyManager" />
+		<property name="auditManager" ref="auditManager"></property>
+		<property name="msg" ref="sendmsg"></property>
+		<property name="userManager" ref="userManager" />
+	</bean>
+
+	<!-- 地址策略 -->
+	<bean id="addressPolicyAction" class="com.soc.webapp.action.policy.AddressPolicyAction"
+		scope="prototype" parent="baseAction">
+		<property name="addressPolicyManager" ref="addressPolicyManager" />
+		<property name="auditManager" ref="auditManager"></property>
+		<property name="msg" ref="sendmsg"></property>
+	</bean>
+
+	<!-- 时间策略 -->
+	<bean id="timePolicyAction" class="com.soc.webapp.action.policy.TimePolicyAction"
+		scope="prototype" parent="baseAction">
+		<property name="timePolicyManager" ref="timePolicyManager" />
+		<property name="auditManager" ref="auditManager"></property>
+		<property name="msg" ref="sendmsg"></property>
+	</bean>
+
+	<!-- 资产 -->
+	<bean id="assetAction" class="com.soc.webapp.action.asset.AssetAction"
+		scope="prototype" parent="baseAction">
+		<property name="assetManager" ref="assetManager" />
+		<property name="assetGroupManager" ref="assetGroupManager" />
+		<property name="auditManager" ref="auditManager"></property>
+		<property name="collectorManager" ref="settingLoggerManager"></property>
+		<property name="userManager" ref="userManager"></property>
+		<property name="asManager" ref="assetSystemManage"></property>
+		<property name="analysisManager" ref="analysisManager"></property>
+		<property name="importAsset" ref="importAssetManager"></property>
+		<property ref="deviceService" name="deviceManageService"/>
+		<property ref="deviceCategoryService" name="deviceCategoryService"/>
+		<property ref="settingManager" name="settingManager"/>
+	</bean>
+
+	<!-- 资产组 -->
+	<bean id="assetGroupAction" class="com.soc.webapp.action.asset.AssetGroupAction"
+		scope="prototype" parent="baseAction">
+		<property name="assetGroupManager" ref="assetGroupManager" />
+		<property name="auditManager" ref="auditManager"></property>
+		<property name="collectorManager" ref="settingLoggerManager"></property>
+		<property name="assetManager" ref="assetManager" />
+
+	</bean>
+
+	<!-- 风险管理 -->
+	<bean id="assetRisk" class="com.soc.webapp.action.asset.AssetRisk"
+		scope="prototype" parent="baseAction">
+		<property name="assetRiskManager" ref="assetRiskManager" />
+		<property name="assetManager" ref="assetManager" />
+		<property name="auditManager" ref="auditManager"></property>
+
+	</bean>
+
+	<!-- 资源风险赋值 -->
+	<bean id="assetRiskEvaluationAction" class="com.soc.webapp.action.risk.AssetRiskEvaluationAction"
+		scope="prototype" parent="baseAction">
+		<property name="assetRiskEvaluationService" ref="assetRiskEvaluationService" />
+		<property name="assetManager" ref="assetManager" />
+		<property name="auditManager" ref="auditManager"></property>
+	</bean>
+
+	<bean id="vulnerabilityAssessmentAction"
+		class="com.soc.webapp.action.risk.VulnerabilityAssessmentAction"
+		scope="prototype" parent="baseAction">
+		<property name="vulnerabilityAssessmentManager" ref="vulnerabilityAssessmentManager" />
+		<property name="assetManager" ref="assetManager"></property>
+		<property name="auditManager" ref="auditManager"></property>
+	</bean>
+
+	<bean id="assetRiskGroupAction" class="com.soc.webapp.action.risk.AssetRiskGroupAction"
+		scope="prototype" parent="baseAction">
+		<property name="assetRiskGroupManager" ref="assetRiskGroupManager" />
+		<property name="assetGroupManager" ref="assetGroupManager" />
+		<!-- <property name="assetManager" ref="assetManager" /> -->
+	</bean>
+
+	<!-- 资产任务 -->
+	<bean id="assetProbeTaskAction" class="com.soc.webapp.action.asset.AssetProbeTaskAction"
+		scope="prototype" parent="baseAction">
+		<property name="assetProbeTaskManager" ref="assetProbeTaskManager" />
+		<property name="assetProbeServiceManager" ref="assetProbeServiceManager" />
+		<property name="probeStateServiceManager" ref="probeStateServiceManager" />
+		<property name="auditManager" ref="auditManager"></property>
+	</bean>
+
+	<!-- 资产探测结果 -->
+	<bean id="assetProbeAction" class="com.soc.webapp.action.asset.AssetProbeAction"
+		scope="prototype" parent="baseAction">
+		<property name="assetProbeServiceManager" ref="assetProbeServiceManager" />
+	</bean>
+
+	<!-- 密码策略验证 -->
+	<bean id="userPwdPolicyAction" class="com.soc.webapp.action.user.PwdPolicyAction"
+		scope="prototype" parent="baseAction">
+		<property name="userManage" ref="userManager" />
+		<property name="passwordPolicyManager" ref="passwordPolicyManager" />
+	</bean>
+
+
+	<!-- 审计 -->
+	<bean id="auditAction" class="com.soc.webapp.action.audit.AuditAction"
+		scope="prototype" parent="baseAction">
+		<property name="auditManager" ref="auditManager" />
+		
+	</bean>
+	<!-- 外部审计 -->
+	<bean id="auditReportAction" class="com.soc.webapp.action.audit.AuditReportAction"
+		scope="prototype" parent="baseAction">
+		<property name="auditReportManager" ref="auditReportManager" />
+		<property name="assetManager" ref="assetManager"/>
+			<property name="assetGroupManager" ref="assetGroupManager" />
+			<property name="eventcategoryTagManager" ref="eventCategoryTagManager"></property> 
+		<!-- <property name="queryEeventsManager" ref="queryEeventsManager"></property> 
+			<property name="eventcategoryTagManager" ref="eventCategoryTagManager"></property> 
+			<property name="eventTypeTagManager" ref="eventTypeTagManager" /> <property 
+			name="queryAuditGroupManager" ref="queryAuditGroupManager"/> <property name="eventsManager" 
+			ref="eventsManager"></property> <property name="originalLogManager" ref="originalLogManager"></property> -->
+	</bean>
+	<!-- 系统设置 -->
+
+	<!-- 详细信息 -->
+	<bean id="settinginfoAction" class="com.soc.webapp.action.systemsetting.SettinginfoAction"
+		scope="prototype" parent="baseAction">
+		<property name="settingCpuManager" ref="settingCpuManager"></property>
+		<property name="settingMemoryManager" ref="settingMemoryManager"></property>
+		<!-- <property name="settingManager" ref="settingManager"></property> -->
+		<!-- <property name="auditManager" ref="auditManager" /> -->
+	</bean>
+
+	<!-- 网络配置 -->
+	<bean id="SettingNetworkAction"
+		class="com.soc.webapp.action.systemsetting.SettingNetworkAction"
+		scope="prototype" parent="baseAction">
+		<property name="settingManager" ref="settingManager"></property>
+		<property name="auditManager" ref="auditManager" />
+		<property name="systemCenterIpManager" ref="systemCenterIpManager"></property>
+	</bean>
+
+	<!-- 路由配置 com.soc.webapp.action.systemsetting.SettingRouteAction -->
+	<bean id="SettingRouteAction"
+		class="com.soc.webapp.action.systemsetting.SettingNetworkAction"
+		scope="prototype" parent="baseAction">
+		<property name="settingManager" ref="settingManager"></property>
+		<property name="auditManager" ref="auditManager" />
+	</bean>
+
+	<!-- 邮箱配置 -->
+	<bean id="SettingMailAction" class="com.soc.webapp.action.systemsetting.SettingMailAction"
+		scope="prototype" parent="baseAction">
+		<property name="settingManager" ref="settingManager"></property>
+		<property name="mailManager" ref="mailManager"></property>
+		<property name="auditManager" ref="auditManager"></property>
+	</bean>
+
+	<!-- 系统日志外发配置 -->
+	<bean id="SettingSysLogAction" class="com.soc.webapp.action.systemsetting.SettingSysLogAction"
+		scope="prototype" parent="baseAction">
+		<property name="settingManager" ref="settingManager"></property>
+		<property name="auditManager" ref="auditManager"></property>
+	</bean>
+
+	<!-- snmp配置 -->
+	<bean id="SettingSNMPAction" class="com.soc.webapp.action.systemsetting.SettingSNMPAction"
+		scope="prototype" parent="baseAction">
+		<property name="settingManager" ref="settingManager"></property>
+		<property name="auditManager" ref="auditManager"></property>
+	</bean>
+
+	<!-- 中心IP -->
+	<bean id="SettingCenterIpAction"
+		class="com.soc.webapp.action.systemsetting.SettingCenterIpAction"
+		scope="prototype" parent="baseAction">
+		<property name="settingManager" ref="settingManager"></property>
+		<property name="systemCenterIpManager" ref="systemCenterIpManager"></property>
+		<property name="auditManager" ref="auditManager"></property>
+	</bean>
+
+	<!-- TAR升级 -->
+	<bean id="settingUpgradeAction"
+		class="com.soc.webapp.action.systemsetting.SettingUpgradeAction"
+		scope="prototype" parent="baseAction">
+		<property name="settingManager" ref="settingManager"></property>
+		<property name="auditManager" ref="auditManager"></property>
+	</bean>
+
+	<!-- 归档 -->
+	<bean id="SettingArchiveAction"
+		class="com.soc.webapp.action.systemsetting.SettingArchiveAction"
+		scope="prototype" parent="baseAction">
+		<property name="archiveManager" ref="archiveManager"></property>
+		<property name="settingManager" ref="settingManager"></property>
+	</bean>
+
+	<!-- disk -->
+	<bean id="diskAlertAction" class="com.soc.webapp.action.systemsetting.DiskAlertAction"
+		scope="prototype" parent="baseAction">
+		<property name="settingManager" ref="settingManager"></property>
+		<property name="auditManager" ref="auditManager" />
+
+	</bean>
+
+	<!-- 平台配置 -->
+	<bean id="terraceAction"
+		class="com.soc.webapp.action.systemsetting.SettingTerraceAction"
+		scope="prototype" parent="baseAction">
+		<property name="settingManager" ref="settingManager"></property>
+		<property name="auditManager" ref="auditManager" />
+	</bean>
+
+	<!-- 网络拓扑 -->
+	<bean id="networkTopologyAction"
+		class="com.soc.webapp.action.monitor.MonitorNetworkTopologyAction"
+		scope="prototype" parent="baseAction">
+		<!-- <property name="settingManager" ref="settingManager"></property> -->
+		<!-- <property name="settingManager" ref="settingManager"></property> -->
+	</bean>
+
+	<!-- 关闭或重启服务配置 -->
+	<bean id="SettingShutdownAction"
+		class="com.soc.webapp.action.systemsetting.SettingShutdownAction"
+		scope="prototype" parent="baseAction">
+		<property name="auditManager" ref="auditManager" />
+	</bean>
+
+	<!-- 关联规则 -->
+	<bean id="AssociationRulesAction"
+		class="com.soc.webapp.action.systemsetting.rules.AssociationRulesAction"
+		scope="prototype" parent="baseAction">
+		<property name="associationManager" ref="associationManager" />
+		<property name="auditManager" ref="auditManager"></property>
+	</bean>
+
+	<!-- 解析规则 -->
+	<bean id="AnalysisRulesAction"
+		class="com.soc.webapp.action.systemsetting.rules.AnalysisRulesAction"
+		scope="prototype" parent="baseAction">
+		<property name="analysisManager" ref="analysisManager" />
+		<property name="auditManager" ref="auditManager"></property>
+		<property name="systemCenterIpManager" ref="systemCenterIpManager"></property>
+	</bean>
+	<!-- 增加解析规则 -->
+	<bean id="addRulesAction" class="com.soc.webapp.action.addrules.AddRulesAction" 
+		scope="prototype" parent="baseAction">
+		<property name="addRulesManager" ref="addRulesManager"></property>
+		<property name="auditManager" ref="auditManager"></property>
+	</bean>
+	<!-- 自定义过滤规则 -->
+	<bean id="FilteringRuleAction"
+		class="com.soc.webapp.action.systemsetting.rules.FilteringRuleAction"
+		scope="prototype" parent="baseAction">
+		<property name="assetManager" ref="assetManager" />
+		<property name="assetGroupManager" ref="assetGroupManager" />
+		<property name="filteringRuleManager" ref="filteringRuleManager" />
+		<property name="alertRuleManager" ref="alertRuleManager" />
+		<property name="auditManager" ref="auditManager"></property>
+	</bean>
+	<!-- 自定义关联规则 -->
+	<bean id="relevanceRuleAction"
+		class="com.soc.webapp.action.systemsetting.rules.RelevanceRuleAction"
+		scope="prototype" parent="baseAction">
+		<property name="assetManager" ref="assetManager" />
+		<property name="alertRuleManager" ref="alertRuleManager" />
+		<property name="relevanceRuleManager" ref="relevanceRuleManager" />
+		<property name="auditManager" ref="auditManager" />
+		<property name="relevanceRuleGroupManager" ref="relevanceRuleGroupManager" />
+	</bean>
+	<!-- 自定义关联规则组 -->
+	<bean id="relevanceRuleGroupAction"
+		class="com.soc.webapp.action.systemsetting.rules.RelevanceRuleGroupAction"
+		scope="prototype" parent="baseAction">
+		<property name="relevanceRuleGroupManager" ref="relevanceRuleGroupManager" />
+	
+	</bean>
+
+	<!-- 监控组设置 -->
+	<bean id="monitorGroupAction" class="com.soc.webapp.action.monitor.MonitorGroupAction"
+		scope="prototype" parent="baseAction">
+		<property name="monitorGroupManager" ref="monitorGroupManager"></property>
+		<property name="assetGroupManager" ref="assetGroupManager"></property>
+		<property name="assetManager" ref="assetManager"></property>
+		<property name="monitorAlarmManager" ref="monitorAlarmManager"></property>
+		<property name="auditManager" ref="auditManager"></property>
+		<property name="customTrendManager" ref="customTrendManager"></property>
+	</bean>
+	<!-- 网络拓扑-->
+	<bean id="mnitorNetworkTopologyAction" class="com.soc.webapp.action.monitor.MonitorNetworkTopologyAction"
+		scope="prototype" parent="baseAction">
+		<property name="monitorNetworkTopologyManager" ref="monitorNetworkTopologyManager"></property>
+	<property name="assetManager" ref="assetManager"></property>
+	</bean>
+	<!-- 监控管理 -->
+	<bean id="Monitor" class="com.soc.webapp.action.monitor.MonitorAction"
+		scope="prototype" parent="baseAction">
+		<property name="monitorManager" ref="monitorManager"></property>
+		<property name="monitorGroupManager" ref="monitorGroupManager"></property>
+		<property name="queryEventsManager" ref="queryEeventsManager"></property>
+		<property name="auditManager" ref="auditManager"></property>
+	</bean>
+
+	<bean id="SettingLocalCollector"
+		class="com.soc.webapp.action.systemsetting.SettingLocalCollectorAction"
+		scope="prototype" parent="baseAction">
+		<property name="settingManager" ref="settingManager"></property>
+		<property name="auditManager" ref="auditManager" />
+	</bean>
+
+	<!-- 注册采集器 -->
+	<bean id="SettingLogge" class="com.soc.webapp.action.systemsetting.SettingLoggerAction"
+		scope="prototype" parent="baseAction">
+		<property name="settingLoggerManager" ref="settingLoggerManager"></property>
+		<property name="auditManager" ref="auditManager" />
+	</bean>
+
+	<bean id="SettingStorage"
+		class="com.soc.webapp.action.systemsetting.SettingStorageAction"
+		scope="prototype" parent="baseAction">
+		<property name="settingManager" ref="settingManager"></property>
+		<property name="auditManager" ref="auditManager"></property>
+	</bean>
+
+	<!-- 告警配置 -->
+	<bean id="SettingAlertAction" class="com.soc.webapp.action.systemsetting.SettingAlertAction"
+		scope="prototype" parent="baseAction">
+		<property name="settingManager" ref="settingManager"></property>
+		<property name="auditManager" ref="auditManager"></property>
+	</bean>
+
+	<!-- 事件 -->
+	<bean id="queryEventsAction" class="com.soc.webapp.action.events.QueryEventsAction"
+		scope="prototype" parent="baseAction">
+		<property name="queryEeventsManager" ref="queryEeventsManager"></property>
+		<property name="queryEventsGroupManager" ref="queryEventsGroupManager"></property>
+		<property name="eventsManager" ref="eventsManager"></property>
+		<property name="originalLogManager" ref="originalLogManager"></property>
+		<property name="summaryEventsManager" ref="summaryEventsManager"></property>
+		<property name="eventcategoryTagManager" ref="eventCategoryTagManager"></property>
+		<property name="eventTypeTagManager" ref="eventTypeTagManager"></property>
+		<property name="assetGroupManager" ref="assetGroupManager"></property>
+		<property name="assetManager" ref="assetManager"></property>
+		<!-- <property name="collectorManager" ref="settingLoggerManager"></property> 
+			<property name="asManager" ref="assetSystemManage"></property> -->
+		<property name="userManager" ref="userManager"></property>
+		<property name="auditManager" ref="auditManager"></property>
+	</bean>
+
+	<!-- 事件树 -->
+	<bean id="eventTreeAction" class="com.soc.webapp.action.knowledgemanger.EventTreeAction"
+		parent="baseAction">
+		<property name="eventTreeService" ref="eventTreeService"></property>
+	</bean>
+	<!-- 事件库 -->
+	<bean id="eventLibraryAction"
+		class="com.soc.webapp.action.knowledgemanger.EventLibraryAction"
+		parent="baseAction" scope="prototype">
+
+		<property name="eventLibraryService" ref="eventLibraryService"></property>
+		<property name="eventTreeService" ref="eventTreeService"></property>
+	</bean>
+
+	<!-- 高等级事件 -->
+	<bean id="queryhighrankEventsAction" class="com.soc.webapp.action.events.QueryHighRankEventsAction"
+		scope="prototype">
+		<property name="queryEeventsManager" ref="queryEeventsManager"></property>
+		<property name="eventTypeTagManager" ref="eventTypeTagManager"></property>
+		<property name="assetManager" ref="assetManager" />
+	</bean>
+
+	<!-- 未解析事件 -->
+	<bean id="NotAnalyticAction" class="com.soc.webapp.action.events.NotAnalyticAction"
+		scope="prototype">
+		<property name="notAnalyticManager" ref="notAnalyticEventsManager" />
+		<property name="assetManger" ref="assetManager" />
+	</bean>
+
+	<!-- 告警规则 -->
+	<bean id="alertRuleAction" class="com.soc.webapp.action.alert.AlertRuleAction"
+		scope="prototype" parent="baseAction">
+		<property name="alertRuleManager" ref="alertRuleManager" />
+		<property name="userManager" ref="userManager" />
+		<property name="assetManager" ref="assetManager" />
+		<property name="auditManager" ref="auditManager" />
+		<property name="securityPolicyManager" ref="securityPolicyManager"/>
+	</bean>
+
+	<!--告警信息 修改注入assetManager，做权限控制.修改2：注入eventTypeTagManager，按事件类型查询 -->
+	<bean id="alertMessageAction" class="com.soc.webapp.action.alert.AlertMessageAction"
+		scope="prototype" parent="baseAction">
+		<property name="auditManager" ref="auditManager"></property>
+		<property name="alertMessageManager" ref="alertMessageManager" />
+		<property name="workOrderManager" ref="workOrderManager"></property>
+		<property name="userManager" ref="userManager"></property>
+		<property name="settingManager" ref="settingManager"></property>
+		<property name="assetManager" ref="assetManager" />
+		<property name="monitorNetworkTopologyManager" ref="monitorNetworkTopologyManager"></property>
+			<property name="deviceManageService" ref="deviceService"></property>
+		<!-- <property name="eventTypeTagManager" ref="eventTypeTagManager"/> -->
+	</bean>
+
+	<!-- 告警阀值 -->
+	<bean id="settingThresholdAction"
+		class="com.soc.webapp.action.systemsetting.SettingThresholdAction"
+		scope="prototype" parent="baseAction">
+		<property name="settingManager" ref="settingManager" />
+		<property name="auditManager" ref="auditManager" />
+	</bean>
+
+	<!-- 预警发布 -->
+	<bean id="warnAction" class="com.soc.webapp.action.warn.WarnAction"
+		scope="prototype" parent="baseAction">
+		<property name="warnManager" ref="warnManager"></property>
+		<property name="assetManager" ref="assetManager"></property>
+		<property name="auditManager" ref="auditManager" />
+		<property name="systemManager" ref="assetSystemManage" />
+	</bean>
+
+	<!-- 漏洞库 -->
+	<bean id="KnowledgeLeakAction"
+		class="com.soc.webapp.action.knowledgemanger.KnowledgeMangerLeakAction"
+		scope="prototype" parent="baseAction">
+		<property name="leakManager" ref="leakManager"></property>
+		<property name="auditManager" ref="auditManager" />
+	</bean>
+
+	<!-- 漏洞管理 -漏洞库 -->
+	<bean id="VulnerabilityAction"
+		class="com.soc.webapp.action.knowledgemanger.VulnerabilityAction"
+		scope="prototype" parent="baseAction">
+		<property name="vulnerabilityManager" ref="vulnerabilityManager"></property>
+		<property name="settingManager" ref="settingManager" />
+		<property name="auditManager" ref="auditManager" />
+	</bean>
+	<!-- 安全公告 -->
+	<bean id="securityBulletinAction"
+		class="com.soc.webapp.action.knowledgemanger.SecurityBulletinAction"
+		scope="prototype" parent="baseAction">
+		<property name="securityManager" ref="securityManager"></property>
+		<property name="auditManager" ref="auditManager" />
+		<property name="importSecurityExcel" ref="importSecurityExcel"/>
+	</bean>
+
+	<!-- 主页显示 -->
+	<bean id="home" class="com.soc.webapp.action.home.HomeAction"
+		scope="prototype" parent="baseAction">
+		<property name="alertMessageManager" ref="alertMessageManager"></property>
+		<property name="settingCollectorManager" ref="settingLoggerManager"></property>
+		<property name="eventsManager" ref="eventsManager"></property>
+		<property name="assetManager" ref="assetManager"></property>
+		<property name="homePageDivManager" ref="homePageDivManager"></property>
+		<property name="auditManager" ref="auditManager" />
+		<property name="userManager" ref="userManager" />
+		<property name="monitorAlarmManager" ref="monitorAlarmManager"></property>
+		<property name="customTrendManager" ref="customTrendManager"/>
+	</bean>
+
+	<!-- 文件上传 -->
+	<bean id="fileUploadAction" class="com.util.reportForm.struts.action.FileUploadAction"
+		scope="prototype" parent="baseAction">
+	</bean>
+	<bean id="dataSettingAction" class="com.soc.webapp.action.systemsetting.DataSettingAction"
+		scope="prototype" parent="baseAction">
+	</bean>
+
+	<!-- 工单管理 -->
+	<bean id="workOrder" class="com.soc.webapp.action.workorder.WorkOrderAction"
+		scope="prototype" parent="baseAction">
+		<property name="workOrderManager" ref="workOrderManager"></property>
+		<property name="userManager" ref="userManager" />
+		<property name="assetManager" ref="assetManager"></property>
+		<property name="alertMessageManager" ref="alertMessageManager" />
+		<property name="settingManager" ref="settingManager"></property>
+		<property name="auditManager" ref="auditManager" />
+	</bean>
+	<!-- 大屏展示 修改注入assetManager，assetGroupManager，做权限控制 -->
+	<bean id="comprehensiveAction" class="com.soc.webapp.action.screen.ScreenAction"
+		scope="prototype" parent="baseAction">
+		<property name="comprehensiveEmergeManager" ref="comprehensiveEmergeManager"></property>
+		<property name="assetManager" ref="assetManager" />
+	</bean>
+	<bean id="indexAction" class="com.soc.webapp.action.screen.IndexScreenAction"
+		scope="prototype" parent="baseAction">
+		<property name="bigScreenServiceManager" ref="bigScreenServiceManager"></property>
+		<property name="assetManager" ref="assetManager" />
+		<property name="assetGroupManager" ref="assetGroupManager" />
+	</bean>
+	<bean id="sendmsg" class="com.push.services.SendMessage"></bean>
+
+
+	<!-- 消息中心 -->
+	<bean id="messageAction"
+		class="com.soc.webapp.action.knowledgemanger.MessageCenterAction"
+		scope="prototype" parent="baseAction">
+		<property name="messageManager" ref="messageManager"></property>
+		<property name="msg" ref="sendmsg"></property>
+	</bean>
+
+
+	<!-- 资产设备 -->
+	<bean id="categoryAction" class="com.soc.webapp.action.asset.device.CategoryAction"
+		scope="prototype" parent="baseAction">
+		<property name="categoryManager" ref="categoryService"></property>
+		<property name="auditManager" ref="auditManager" />
+	</bean>
+
+	<!-- 同步Ip -->
+	<bean id="systemSettingSyncAction"
+		class="com.soc.webapp.action.systemsetting.SettingSync4AIpAction"
+		scope="prototype" parent="baseAction">
+		<property name="ssManager" ref="systemSettingManager"></property>
+		<property name="auditManager" ref="auditManager" />
+	</bean>
+
+	<!-- 同步时间 -->
+	<bean id="SettingSyncDateAction"
+		class="com.soc.webapp.action.systemsetting.SettingSyncDateAction"
+		scope="prototype" parent="baseAction">
+		<property name="syncDateManager" ref="syncDateManager"></property>
+		<property name="auditManager" ref="auditManager" />
+		<property name="assetManager" ref="assetManager"></property>
+	</bean>
+
+	<!-- 资产系统 -->
+	<bean id="assetSystemAction" class="com.soc.webapp.action.asset.system.AssetSystemAction"
+		scope="prototype" parent="baseAction">
+		<property name="asManager" ref="assetSystemManage"></property>
+		<property name="auditManager" ref="auditManager" />
+	</bean>
+<!-- 关联分析 -->
+	<bean id="relevanceEventsAction" class="com.soc.webapp.action.events.RelevanceEventsAction"
+		scope="prototype" parent="baseAction">
+		<property name="relevanceEventsManager" ref="relevanceEventsManager"></property>
+	</bean>
+	<!-- 级联节点组 -->
+	<bean id="nodeGroupAction" class="com.soc.webapp.action.systemsetting.NodeGroupAction" 
+	scope="prototype" parent="baseAction">
+	<property name="nodeGroupManager" ref="nodeGroupManager"/>
+	<property name="auditManager" ref="auditManager"/>
+	</bean>
+	<!-- 趋势分析 -->
+	<bean id="customTrendAction" class="com.soc.webapp.action.monitor.CustomTrendAction" 
+	scope="prototype" parent="baseAction">
+	<property name="customTrendManager" ref="customTrendManager"/>
+	<property name="auditManager" ref="auditManager"/>
+	<property name="assetManager" ref="assetManager"/>
+	</bean>
+	<!-- 修改OEM信息 -->
+	<bean id="settingOEMAction" class="com.soc.webapp.action.systemsetting.SettingOEM" scope="prototype"
+	parent="baseAction">
+	<property name="settingFunctionControlManager" ref="settingFunctionControlManager"/>
+	<property name="settingManager" ref="settingManager"/>
+	</bean>
+	<!-- 直播星 -->
+	<bean id="satelliteEvents" class="com.soc.webapp.action.satellite.SatelliteEventsAction" 
+	scope="prototype" parent="baseAction">
+	<property name="satelliteEventsManager" ref="satelliteEventsManager"/>
+	</bean>
+	<!--注册信息  -->
+	<bean id="serialAction" class="com.soc.webapp.action.about.SerialAction" scope="prototype" parent="baseAction"></bean>
+	<bean id="aboutAction" class="com.soc.webapp.action.about.AboutAction" scope="prototype" parent="baseAction">
+	   <property name="assetManager" ref="assetManager"></property>
+	</bean>
+	<!-- amp历史信息 -->
+	<bean id="monitorAlarmHistoryAction" class="com.soc.webapp.action.monitor.MonitorAlarmHistoryAction" parent="baseAction" scope="prototype">
+	<property name="monitorHistoryManager" ref="monitorHistoryManager"/>
+	</bean>
+		<!-- 安全策略管理 -->
+	<bean id="securityPolicyAction" class="com.soc.webapp.action.securityPolicy.SecurityPolicyAction"
+		scope="prototype" parent="baseAction">
+		<property name="securityPolicyManager" ref="securityPolicyManager" />
+		<property name="auditManager" ref="auditManager"></property>
+		<property name="msg" ref="sendmsg"></property>
+		<property name="assetManager" ref="assetManager" />
+	</bean>
+	<!-- 漏扫联动 -->
+	<bean id="scanTaskAction" class="com.soc.webapp.action.scanTask.ScanTaskAction" parent="baseAction" scope="prototype">
+		<property name="auditManager" ref="auditManager"></property>
+		<property name="scanTaskManager" ref="scanTaskManager"></property>
+	</bean>
+	<!-- 保存时限 -->
+	<bean id="SettingSaveTimeAction" class="com.soc.webapp.action.systemsetting.SettingSaveTimeAction"
+		scope="prototype" parent="baseAction">
+		<property name="settingManager" ref="settingManager"></property>
+		<property name="auditManager" ref="auditManager"></property>
+	</bean>
+	<!-- 数据库监控 -->
+	<bean id="mdtAction" class="com.soc.webapp.action.monitor.MonitorDatabaseTaskAction" scope="prototype" parent="baseAction">
+		<property name="auditManager" ref="auditManager"/>
+		<property name="mdtManager" ref="mdtManager"/>
+		<property name="userManager" ref="userManager"/>
+	</bean>
+	<!-- Tomcat监控 -->
+	<bean id="mttAction" class="com.soc.webapp.action.monitor.MonitorTomcatTaskAction" scope="prototype" parent="baseAction">
+		<property name="mttManager" ref="mttManager"/>
+		<property name="auditManager" ref="auditManager"/>
+	</bean>
+	<!-- windows监控 -->
+	<bean id="mwtAction" class="com.soc.webapp.action.monitor.MonitorWindowsTaskAction" scope="prototype" parent="baseAction">
+		<property name="mwtManager" ref="mwtManager"/>
+		<property name="auditManager" ref="auditManager"/>
+	</bean>
+</beans>

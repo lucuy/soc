@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+    <struts>
+    	<package name="docAssets" extends="struts-default" namespace="/docAssets">
+    	<!-- 添加单位信息 -->
+		
+		<!-- 查询单位信息 -->
+		<action name="query" class="docAssetsAction" method="query">
+			<result name="success">/pages/dbPage/basic/assets/docassets.jsp</result>
+		</action>	
+		<action name="kquery" class="docAssetsAction" method="queryDocAssets">
+			<result name="success">/pages/dbPage/basic/assets/docassets.jsp</result>
+		</action>
+		<action name="edit" class="docAssetsAction" method="edit">
+			<result name="success" >/pages/dbPage/basic/assets/addDocassets.jsp</result>
+		</action>
+		<action name="add" class="docAssetsAction" method="addDocAssets">
+			<result name="success"  type="redirect">/pages/dbPage/basic/assets/docassets.jsp</result>
+			
+		</action>
+		<action name="delete" class="docAssetsAction" method="delete">
+			<result name="success" type="redirect">/pages/dbPage/basic/assets/docassets.jsp</result>
+		</action> 
+		 
+			 
+		<!--查询json分页-->
+		<action name="queryAjaxDocAssets"   class="docAssetsAction" method="queryAjaxDocAssets"></action>
+		<!--高级搜索安全管理文档-->
+		<action name="extQuery"   class="docAssetsAction" method="queryExtDocAssets"></action>
+		
+    	</package>
+    </struts>

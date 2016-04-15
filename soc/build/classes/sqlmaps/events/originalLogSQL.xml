@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="ventsLogSQL">
+	 
+	<resultMap class="originalEvent" id="originalEventsResult">
+	    <result property="originalId" column="ORIGIN_LOG_IDENTIFICATION" jdbcType="bigint"/>
+	    <result property="originalContent" column="ORIGIN_LOG_MSG" jdbcType="text"/>
+	    <result property="relAssetName" column="ORIGIN_LOG_ASSET_NAME" jdbcType="varchar"/>
+	    <result property="relAssetId" column="ORIGIN_LOG_ASSET_ID" jdbcType="int"/>
+	    
+	</resultMap>
+	<insert id="pgAdmininsert.originalLog"  parameterClass="java.util.HashMap">
+		INSERT INTO $tableName$
+		(
+			"ORIGIN_LOG_IDENTIFICATION", 
+			"ORIGIN_LOG_MSG")
+		VALUES 
+		( 
+	        #identification#,
+	        #msg#
+		)
+	</insert>
+	
+	<select id="pgAdminquery.originalLog"  parameterClass="java.util.HashMap" resultClass="java.lang.String">
+	   SELECT "ORIGIN_LOG_MSG" FROM $tableName$ WHERE "ORIGIN_LOG_IDENTIFICATION" = #identification#
+	</select>
+	
+	<select id="pgAdminexists.table" parameterClass="String" resultClass="int">
+		SELECT count(*) FROM pg_tables WHERE tablename = #value#
+	</select>
+	
+	<select id="pgAdminexists.originalLogSeq" parameterClass="String" resultClass="String">
+		SELECT * FROM pg_class WHERE relkind = 'S' AND relname = #value#
+	</select>
+	
+	<statement id="pgAdmincreate.originalLogSeq" parameterClass="String">
+		CREATE SEQUENCE $seqName$
+		INCREMENT 1
+		MINVALUE 1
+		MAXVALUE 999999999999999999
+		START 1
+		CACHE 1;
+	</statement>
+	
+	<statement id="pgAdmincreate.originalLog" parameterClass="java.util.HashMap">
+		Create Table $tableName$
+		(
+			"ORIGIN_LOG_IDENTIFICATION" bigint,
+			"ORIGIN_LOG_MSG" text,
+			"ORIGIN_LOG_ASSET_ID" bigint,
+			"ORIGIN_LOG_ASSET_NAME" character varying(255)
+		)
+	</statement>
+	
+	<!-- 根据原始id查询原始事件 -->
+	<select id="pgAdminoriginal.count" parameterClass="java.util.HashMap" resultClass="int">
+	      SELECT COUNT(*) FROM  $tableName$ 
+	      WHERE 1 = 1 AND  "ORIGIN_LOG_IDENTIFICATION" = #identification#      
+	</select>
+	
+	<!-- 根据id查询原始事件列表 -->
+	<select id="pgAdminoriginal.queryList" parameterClass="java.util.HashMap" resultMap="originalEventsResult">
+	     SELECT * FROM $tableName$
+	     WHERE 1 = 1 AND "ORIGIN_LOG_IDENTIFICATION"=#identification#
+	
+	</select>
+	
+	
+	
+	
+	<!-- sqlserver -->
+	<insert id="sqlServerinsert.originalLog"  parameterClass="java.util.HashMap">
+		INSERT INTO $tableName$
+		(
+			"ORIGIN_LOG_IDENTIFICATION", 
+			"ORIGIN_LOG_MSG")
+		VALUES 
+		( 
+	        #identification#,
+	        #msg#
+		)
+	</insert>
+	
+	<select id="sqlServerquery.originalLog"  parameterClass="java.util.HashMap" resultClass="java.lang.String">
+	   SELECT "ORIGIN_LOG_MSG" FROM $tableName$ WHERE "ORIGIN_LOG_IDENTIFICATION" = #identification#
+	</select>
+	
+	 <select id="sqlServerexists.table" parameterClass="String" resultClass="int">
+		select count(*) from sys.objects where name= #value#
+	</select> 
+	
+	<select id="sqlServerexists.originalLogSeq" parameterClass="String" resultClass="String">
+		SELECT * FROM pg_class WHERE relkind = 'S' AND relname = #value#
+	</select>
+	
+	<statement id="sqlServercreate.originalLogSeq" parameterClass="String">
+		CREATE SEQUENCE $seqName$
+		INCREMENT 1
+		MINVALUE 1
+		MAXVALUE 999999999999999999
+		START 1
+		CACHE 1;
+	</statement>
+	
+	<statement id="sqlServercreate.originalLog" parameterClass="java.util.HashMap">
+		Create Table $tableName$
+		(
+			"ORIGIN_LOG_IDENTIFICATION" bigint,
+			"ORIGIN_LOG_MSG" text,
+			"ORIGIN_LOG_ASSET_ID" bigint,
+			"ORIGIN_LOG_ASSET_NAME" character varying(255)
+		)
+	</statement>
+	
+	<!-- 根据原始id查询原始事件 -->
+	<select id="sqlServeroriginal.count" parameterClass="java.util.HashMap" resultClass="int">
+	      SELECT COUNT(*) FROM  $tableName$ 
+	      WHERE 1 = 1 AND  "ORIGIN_LOG_IDENTIFICATION" = #identification#      
+	</select>
+	
+	<!-- 根据id查询原始事件列表 -->
+	<select id="sqlServeroriginal.queryList" parameterClass="java.util.HashMap" resultMap="originalEventsResult">
+	     SELECT * FROM $tableName$
+	     WHERE 1 = 1 AND "ORIGIN_LOG_IDENTIFICATION"=#identification#
+	
+	</select>
+	
+	
+
+	
+</sqlMap>

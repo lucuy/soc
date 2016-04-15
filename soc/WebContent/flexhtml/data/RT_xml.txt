@@ -1,0 +1,14 @@
+<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<data>
+	<resource groupname="/dev/mapper/VolGroup00-LogVol00" value="14" createtime="2012-07-07 15:19:10"/>
+	<resource groupname="proc" value="0" createtime="2012-07-07 15:19:10"/>
+	<resource groupname="sysfs" value="0" createtime="2012-07-07 15:19:10"/>
+	<resource groupname="devpts" value="0" createtime="2012-07-07 15:19:10"/>
+	<resource groupname="/dev/sda1" value="12" createtime="2012-07-07 15:19:10"/>
+	<resource groupname="tmpfs" value="0" createtime="2012-07-07 15:19:10"/>
+	<resource groupname="none" value="0" createtime="2012-07-07 15:19:10"/>
+	<resource groupname="sunrpc" value="0" createtime="2012-07-07 15:19:10"/>
+	<resource groupname="10.110.48.161:/vol/NPM_GIS_SWAP" value="0" createtime="2012-07-07 15:19:10"/>
+	<resource groupname="10.110.48.161:/vol/NPM_GIS_RAW01" value="0" createtime="2012-07-07 15:19:10"/>
+	<resource groupname="10.110.48.162:/vol/NPM_GIS_RAW02" value="0" createtime="2012-07-07 15:19:10"/>
+</date>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="monitorGroupSQL">
+	<resultMap id="monitorGroupResult" class="monitorGroup">
+   		<result property="monitorGroupId" 			column="MONITOR_GROUP_ID" 		    jdbcType="bigint"/>
+   		<result property="monitorGroupName"           column="MONITOR_GROUP_NAME"           jdbcType="varchar"/>
+   		<result property="monitorGroupParentId"       column="MONITOR_GROUP_PARENT_ID"             jdbcType="bigint"/>
+   		
+   		<result property="monitorGroupCreateDateTime"      column="MONITOR_GROUP_CREATE_DATE_TIME"     jdbcType="datetime"/>
+   		<result property="monitorGroupUpdateDateTime"      column="MONITOR_GROUP_UPDATE_DATE_TIME"     jdbcType="datetime"/>
+   		<result property="monitorGroupMemo"       			column="MONITOR_GROUP_MEMO"      			jdbcType="text"/>
+   		<result property="monitorGroupIsDelete"       		column="MONITOR_GROUP_IS_DELETE"      			jdbcType="smallint"/>
+   		<result property="monitorGroupCreateUserLoginName"   column="MONITOR_GROUP_CREATE_USERLOGINNAME"       jdbcType="varchar"/>
+   		<!--  <result property="assetParentsFeature" column="ASSET_PARENTS_FEATURE"  jdbcType="text"/>-->
+   		<result property="relMonitorIds"                     column="REL_MONITOR_IDS"                               jdbcType="varchar"/>
+   	</resultMap>
+   	
+   	
+   	
+   	<!-- 查询条数 -->
+	<!--  <select id="pgAdminassetGroup.count" resultClass="int" parameterClass="java.util.HashMap">
+		SELECT COUNT(*) FROM "tbl_asset_group"  WHERE 1=1 and "ASSET_GROUP_IS_DELETE" = 0
+	</select>-->
+	
+	<!-- 查询 -->
+	<!-- <select id="pgAdminassetGroup.query"  parameterClass="java.util.HashMap" resultMap="assetGroupResult" >
+		SELECT * FROM "tbl_asset_group" WHERE 1=1 and "ASSET_GROUP_IS_DELETE" = 0 ORDER BY "ASSET_GROUP_UPDATE_DATE_TIME" desc
+	</select>-->
+	
+	<!-- 查询子节点 -->
+	<!--<select id="pgAdminassetGroup.querySon"  parameterClass="java.lang.String" resultClass="java.util.HashMap" >
+		SELECT "ASSET_GROUP_ID AS" assetGroupId FROM "tbl_asset_group" WHERE 1=1 AND "ASSET_GROUP_IS_DELETE" = 0 AND "ASSET_PARENTS_FEATURE" LIKE '%$value$%'
+	</select>-->
+	
+	<!-- 按照上级Id查询 -->
+	<select id="pgAdminmonitorGroup.queryByParentId" parameterClass="java.util.HashMap" resultMap="monitorGroupResult">
+	   SELECT * FROM "tbl_monitor_group" WHERE 1=1 and "MONITOR_GROUP_IS_DELETE" = 0
+	   <isNotEmpty prepend="AND" property="monitorGroupParentId">
+	       <![CDATA[ 
+	          "MONITOR_GROUP_PARENT_ID" = #monitorGroupParentId#
+	       ]]>
+	   </isNotEmpty>
+	   ORDER BY "MONITOR_GROUP_ID" asc
+	</select>
+	
+	<!-- 根据组的id查询组 -->
+	<select id="pgAdminmonitorGroup.queryById" parameterClass="Long" resultMap="monitorGroupResult">
+	        SELECT * FROM  "tbl_monitor_group" WHERE 1=1 AND "MONITOR_GROUP_IS_DELETE" =0
+	         AND "MONITOR_GROUP_ID" = #value#
+	</select>
+	
+	<!-- 更新组对应的图表 -->
+	<update id="pgAdminmonitorGroup.updateMonitor" parameterClass="java.util.HashMap">
+	    UPDATE "tbl_monitor_group" SET "REL_MONITOR_IDS" = #ids#  WHERE "MONITOR_GROUP_ID" =#groupId#
+	</update>
+	
+	<!--查询用户自定义的所有监控组 -->
+	<select id="pgAdminmonitorGroup.queryAll" resultMap="monitorGroupResult" parameterClass="java.util.HashMap">
+	      SELECT * FROM "tbl_monitor_group" WHERE 1=1 AND "MONITOR_GROUP_IS_DELETE" =0 AND "MONITOR_GROUP_PARENT_ID" = 7
+	</select>
+	
+	<!-- 查询用户自定义组的数量 -->
+	<select id="pgAdminmonitorGroup.count" resultClass="int" parameterClass="java.util.HashMap">
+	    SELECT COUNT(*) FROM "tbl_monitor_group" WHERE 1=1 AND "MONITOR_GROUP_IS_DELETE" = 0
+        AND "MONITOR_GROUP_PARENT_ID" = 7	
+	</select>
+	
+	<!-- 添加自定义组 -->
+	<insert id="pgAdminmonitorGroup.insert" parameterClass="monitorGroup">
+	   INSERT INTO "tbl_monitor_group" ("MONITOR_GROUP_NAME","MONITOR_GROUP_PARENT_ID","MONITOR_GROUP_CREATE_DATE_TIME",
+	   "MONITOR_GROUP_UPDATE_DATE_TIME","MONITOR_GROUP_MEMO","MONITOR_GROUP_IS_DELETE","MONITOR_GROUP_CREATE_USERLOGINNAME","REL_MONITOR_IDS"
+	   )
+	   VALUES(#monitorGroupName#,#monitorGroupParentId#,#monitorGroupCreateDateTime#,#monitorGroupUpdateDateTime#,#monitorGroupMemo#,
+	   #monitorGroupIsDelete#,#monitorGroupCreateUserLoginName#,#relMonitorIds#)
+	</insert>
+	
+	<!-- 标记删除自定义的组 -->
+	<update id="pgAdminmonitorGroup.update" parameterClass="long">
+	<![CDATA[
+	   UPDATE "tbl_monitor_group"  SET  "MONITOR_GROUP_IS_DELETE" = 1  WHERE  "MONITOR_GROUP_ID" = #value#
+	   ]]>
+	</update>
+	
+	<!-- sqlserver -->
+	<!-- 按照上级Id查询 -->
+	<select id="sqlServermonitorGroup.queryByParentId" parameterClass="java.util.HashMap" resultMap="monitorGroupResult">
+	   SELECT * FROM "tbl_monitor_group" WHERE 1=1 and "MONITOR_GROUP_IS_DELETE" = 0
+	   <isNotEmpty prepend="AND" property="monitorGroupParentId">
+	       <![CDATA[ 
+	          "MONITOR_GROUP_PARENT_ID" = #monitorGroupParentId#
+	       ]]>
+	   </isNotEmpty>
+	   ORDER BY "MONITOR_GROUP_ID" asc
+	</select>
+	
+	<!-- 根据组的id查询组 -->
+	<select id="sqlServermonitorGroup.queryById" parameterClass="Long" resultMap="monitorGroupResult">
+	        SELECT * FROM  "tbl_monitor_group" WHERE 1=1 AND "MONITOR_GROUP_IS_DELETE" =0
+	         AND "MONITOR_GROUP_ID" = #value#
+	</select>
+	
+	<!-- 更新组对应的图表 -->
+	<update id="sqlServermonitorGroup.updateMonitor" parameterClass="java.util.HashMap">
+	    UPDATE "tbl_monitor_group" SET "REL_MONITOR_IDS" = #ids#  WHERE "MONITOR_GROUP_ID" =#groupId#
+	</update>
+	
+	<!--查询用户自定义的所有监控组 -->
+	<select id="sqlServermonitorGroup.queryAll" resultMap="monitorGroupResult" parameterClass="java.util.HashMap">
+	      SELECT * FROM "tbl_monitor_group" WHERE 1=1 AND "MONITOR_GROUP_IS_DELETE" =0 AND "MONITOR_GROUP_PARENT_ID" = 7
+	</select>
+	
+	<!-- 查询用户自定义组的数量 -->
+	<select id="sqlServermonitorGroup.count" resultClass="int" parameterClass="java.util.HashMap">
+	    SELECT COUNT(*) FROM "tbl_monitor_group" WHERE 1=1 AND "MONITOR_GROUP_IS_DELETE" = 0
+        AND "MONITOR_GROUP_PARENT_ID" = 7	
+	</select>
+	
+	<!-- 添加自定义组 -->
+	<insert id="sqlServermonitorGroup.insert" parameterClass="monitorGroup">
+	   INSERT INTO "tbl_monitor_group" ("MONITOR_GROUP_NAME","MONITOR_GROUP_PARENT_ID","MONITOR_GROUP_CREATE_DATE_TIME",
+	   "MONITOR_GROUP_UPDATE_DATE_TIME","MONITOR_GROUP_MEMO","MONITOR_GROUP_IS_DELETE","MONITOR_GROUP_CREATE_USERLOGINNAME","REL_MONITOR_IDS"
+	   )
+	   VALUES(#monitorGroupName#,#monitorGroupParentId#,#monitorGroupCreateDateTime#,#monitorGroupUpdateDateTime#,#monitorGroupMemo#,
+	   #monitorGroupIsDelete#,#monitorGroupCreateUserLoginName#,#relMonitorIds#)
+	</insert>
+	
+	<!-- 标记删除自定义的组 -->
+	<update id="sqlServermonitorGroup.update" parameterClass="long">
+	<![CDATA[
+	   UPDATE "tbl_monitor_group"  SET  "MONITOR_GROUP_IS_DELETE" = 1  WHERE  "MONITOR_GROUP_ID" = #value#
+	   ]]>
+	</update>
+	
+</sqlMap>

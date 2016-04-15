@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+    <struts>
+    	<package name="softUse" extends="struts-default" namespace="/softUse">
+    	
+		
+		<!-- 取消添加，查询业务应用软件信息 -->
+		 <action name="query" class="softUseAction" method="query">
+			<result name="success">/pages/dbPage/basic/assets/softassets.jsp</result>
+		</action>	
+		 <action name="queryName" class="softUseAction" method="queryName">
+			<result name="success">/pages/dbPage/basic/assets/softassets.jsp</result>
+		</action>	
+		<!-- 高级查询业务应用软件信息 -->
+		<action name="extQuery" class="softUseAction" method="extQuery">
+			<result name="success">/pages/dbPage/basic/assets/softassets.jsp</result>
+		</action>
+		<!-- 修改业务应用软件信息 -->
+		<action name="edit" class="softUseAction" method="edit">
+			<result name="success">/pages/dbPage/basic/assets/addSoftassets.jsp</result>
+		</action>
+		<!-- 分页显示业务应用软件信息 -->
+		<action name="queryAjaxSoft" class="softUseAction" method="queryAjaxSoft">
+			<result name="success">/pages/dbPage/basic/assets/softassets.jsp</result>
+		</action> 
+		<!-- 添加业务应用软件信息 -->
+		<action name="add" class="softUseAction" method="addSoftUse">
+			<result name="success" type="redirect">/pages/dbPage/basic/assets/softassets.jsp</result>
+		</action>
+		<!-- 删除业务应用软件信息 -->
+		<action name="delete" class="softUseAction" method="delete">
+			<result name="success" type="redirect">/pages/dbPage/basic/assets/softassets.jsp</result>
+		</action>
+		<!-- 查询信息系统信息 -->
+		 <action name="queryAjaxSystem" class="softUseAction" method="queryAjaxSystem">
+		</action>
+	
+		  <action name="jsonAjaxSoft" class="softUseAction" method="jsonAjaxSoft">
+		</action>  
+		
+		<!--查询json分页-->
+		<action name="queryAjaxSoftAssets"   class="softUseAction" method="queryAjaxSoftAssets"></action>
+    	</package>
+    </struts>

@@ -1,0 +1,190 @@
+/* global styles*/
+* { margin:0; padding:0;}
+body {font-family:"宋体";font-size: 13px;margin:0 auto;}
+img {border:0;}
+A {COLOR: blue; TEXT-DECORATION: none;}
+A:hover {COLOR: #blue; TEXT-DECORATION: underline;}
+hr {height:1px;border:none;border-top:1px solid Black;margin:0 0 3px 0;*margin:0 0 -11px 0;float:none;*float:left;display:block;}
+input {height:20px;}
+/* global styles*/
+
+/* util styles*/
+.hand{cursor:pointer;}
+.wrap{table-layout:fixed; word-break: break-all; overflow:hidden;}
+.clear{ clear:both;}
+.weight {font-weight:800;}
+.readonly {background:#cccccc;}
+.dotted {border-bottom: 1px dotted black;}
+.btn1{ background:url(../images/btn_back_x1.png) no-repeat; width:39px; height:30px; border:none; cursor:pointer;}
+.btn2{ background:url(../images/btn_back_x2.png) no-repeat; width:59px; height:30px; border:none; cursor:pointer;}
+.btn4{ background:url(../images/btn_back_x4.png) no-repeat; width:94px; height:30px; border:none; cursor:pointer;}
+.btn4s{ background:url(../images/btn_back_x4s.png) no-repeat; width:89px; height:30px; border:none; cursor:pointer;}
+
+.ThinInput {border:1px solid #D2E8FA;}
+.hr_g {height:1px;border:none;border-top:1px solid gray;margin:0 0 3px 0;*margin:0 0 -11px 0;float:none;*float:left;display:block;}
+
+.hr_h {height:50px;border:none;border-top:1px solid gray;margin:0 0 3px 0;*margin:0 0 -11px 0;float:none;*float:left;display:block;}
+
+.btn_list_execute
+{
+	width:45px;
+	height:25px;
+	text-align: center;
+	font-family:'Arial';
+	font-size: 13px;
+	color:#000000;
+	font-style:normal;
+	font-weight:normal;
+	text-decoration:none;
+}
+
+.btn_employee_list_sync_account
+{
+	width:80px;
+	height:25px;
+	cursor:pointer;
+}
+
+.btn_employee_list_adduser
+{
+	width:80px;
+	height:25px;
+	cursor:pointer;
+}
+.btn_list_width
+{
+	width:100px;
+	height:25px;
+	cursor:pointer;
+}
+
+.btn_detail_submit
+{
+	width:80px;
+	height:25px;
+	cursor:pointer;
+}
+
+.btn_detail_cancel
+{
+	width:80px;
+	height:25px;
+	cursor:pointer;
+}
+
+.win_div_bor{
+	margin:2px 0px 0px 5px;
+	padding:0px 0px;
+	border: 1px solid #5AA4D1;
+	float: left;
+	width:99%;
+	
+}
+.win_div{
+	margin:0px 0px 0px 0px;
+	padding:0px 0px;
+	float: left;
+	width:100%;
+}
+
+.btn_detail_add_del
+{
+	width:58px;
+	height:25px;
+	text-align: center;
+	font-family:'Arial';
+	font-size: 13px;
+	color:#000000;
+	font-style:normal;
+	font-weight:normal;
+	text-decoration:none;
+}
+
+.btn_detail_brwoser
+{
+	width:35px;
+	height:25px;
+	text-align: center;
+	font-family:'Arial';
+	font-size: 13px;
+	color:#000000;
+	font-style:normal;
+	font-weight:normal;
+	text-decoration:none;
+}
+
+.td_list_data
+{
+	word-break: break-all;
+	word-wrap:break-word;
+}
+
+.td_detail_separator
+{
+	height:10px;
+}
+
+.td_detail_title
+{
+	font-family:宋体;
+	color:#000000;
+	font-size:13px;
+}
+
+.td_employee_detail
+{
+	width: 80px;
+	font-family:宋体;
+	color:#000000;
+	font-size:13px;
+}
+.spansel{
+	background-color:#CCCCCC;
+}
+.fontStyle{
+	font-family:'Arial'; color:#000000; font-size:13px;
+	}
+
+.spanred{
+	color:red;
+}
+.r2title, .r2titler {
+    background: none repeat scroll 0 0 #5AA4D1;
+    color: #FFFFFF;
+    font-weight: bolder;
+    height: 25px;
+    line-height: 20px;
+    padding-bottom:3px;
+    padding-left: 20px;
+    text-align: left;
+}
+.r2tCont {
+    color: #7F7F7F;
+    line-height: 30px;
+    overflow-y:auto;
+    height:300px;
+    margin: 0 auto;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+.r3tCont{
+	 z-index:2;
+	 overflow-y:yes;
+	 top:360px;
+	 position:absolute; 
+	 margin-left:250px;
+	 width:80px;
+}
+
+/* util styles*/
+
+/* menu styles*/
+.MenuTable {border-top:1px solid #999999;}
+.MenuLink A{color:black; font-weight:800; TEXT-DECORATION: none;}
+.MenuLink A:hover {color:black; font-weight:800; TEXT-DECORATION: underline;}
+.MenuLinkGray A{color:gray; font-weight:800; TEXT-DECORATION: none;}
+.MenuLinkGray A:hover {color:black; font-weight:800; TEXT-DECORATION: underline;}
+.MenuSplit {color:white; font-weight:800;}
+/* menu styles*/
+/*个人设置消息提醒*/
+.news-success{width:80%;height:15px;line-height:15px;background:url(../images/content_bj.gif) repeat-x;font-family:"宋体","",tahoma,san-serif;font-size:16px;color:red;font-weight:bold;text-indent:2em}

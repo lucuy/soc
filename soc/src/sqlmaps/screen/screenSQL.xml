@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="screenSQL">
+
+        <!-- 查询事件统计Top 5 修改 根据资产id去查询-->
+   	<select id="pgAdminscreen.indexevent" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+   	      
+   	    SELECT 
+   	            "LOG_CATEGORY" AS "key",
+   	             SUM("LOG_AGGREGATED_COUNT") AS "value"
+   	    FROM 
+   	             $tableName$ WHERE 1=1
+   	            
+			<isNotEmpty prepend="AND" property="assetId">
+          <![CDATA[
+           "LOG_ASSET_ID" in ($assetId$)
+          ]]>
+		</isNotEmpty>
+   	    GROUP BY "key"
+   	    ORDER BY "value" DESC
+   	    LIMIT   5 OFFSET 0
+   	
+   	</select>
+    
+    <!-- 查询资产分布 修改 根据资产id去查询-->
+      	<select id="pgAdminscreen.queryAssets" resultClass="int" parameterClass="java.util.HashMap">
+   	    SELECT COUNT(*) FROM "tbl_asset" WHERE 1=1 and "ASSET_IS_DELETE" = 0
+   	     <isNotEmpty prepend="AND" property="assetGroupId">
+		    <![CDATA[
+		       "ASSET_ID" in (select distinct("ASSET_ID") from "tbl_asset_group_asset" where "ASSET_GROUP_ID" in ($assetGroupId$)) 
+		    ]]>
+		</isNotEmpty>
+   	</select>
+   		<select id="pgAdminscreen.queryAssetGroup" resultClass="java.lang.String" parameterClass="int">
+   	    SELECT "ASSET_GROUP_NAME"
+  		FROM tbl_asset_group  WHERE "ASSET_GROUP_ID"=#value#; 
+   		
+   	</select>
+
+
+	<!-- 查询设备事件Top10 修改 根据资产id去查询-->
+   	<select id="pgAdminscreen.all" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+   	    
+   	      SELECT 
+   	           "LOG_CUSTOMS5" AS "key",
+   	            SUM("LOG_AGGREGATED_COUNT") AS "value"
+   	      FROM  $tableName$ WHERE 1=1
+   	            
+			<isNotEmpty prepend="AND" property="assetId">
+          <![CDATA[
+           "LOG_ASSET_ID" in ($assetId$)
+          ]]>
+		</isNotEmpty>
+   	      GROUP BY "key"           
+   	      ORDER BY "value" DESC
+   	     LIMIT 10 OFFSET 0
+   	</select>
+   	
+   	<!-- 查询安全事件Top10   修改 根据资产id去查询-->
+   	<select id="pgAdminscreen.safety" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+   	    
+   	    SELECT 
+   	            "LOG_TYPE" AS "key",
+   	             SUM("LOG_AGGREGATED_COUNT") AS "value"
+   	    FROM 
+   	             $tableName$ WHERE 1=1
+   	            
+			<isNotEmpty prepend="AND" property="assetId">
+          <![CDATA[
+           "LOG_ASSET_ID" in ($assetId$)
+          ]]>
+		</isNotEmpty>
+   	    GROUP BY "key" 
+   	    ORDER BY "value" DESC
+   	    LIMIT 10 OFFSET 0
+   	</select>
+   	
+   	<!-- 获取五分钟之内的事件数量 -->
+	 <select id="pgAdminscreen.queryCountEvents" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+       SELECT 
+       		"LOG_PRIORITY" AS "key", 
+       		SUM("LOG_AGGREGATED_COUNT") AS "value" 
+       FROM  
+       		$tableName$ 
+       WHERE 
+       		"LOG_RECEPT_TIME" between CAST(#startime# AS bigint) AND CAST(#endtime# AS bigint)
+       GROUP BY "key"
+     </select>
+     
+     <!-- sqlServer用的sql语句 -->
+      <select id="sqlServerscreen.queryCountEvents" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+       SELECT 
+       		"LOG_PRIORITY" AS 'key', 
+       		SUM("LOG_AGGREGATED_COUNT") AS 'value' 
+       FROM  
+       		$tableName$ 
+       WHERE 
+       		"LOG_RECEPT_TIME" between CAST(#startime# AS bigint) AND CAST(#endtime# AS bigint)
+       GROUP BY "LOG_PRIORITY" 
+     </select>
+     
+             <!-- 查询事件统计Top 5 修改 根据资产id去查询-->
+   	<select id="sqlServerscreen.indexevent" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+   	      
+   	    SELECT  TOP 5
+   	            "LOG_CATEGORY" AS 'key',
+   	             SUM("LOG_AGGREGATED_COUNT") AS 'value'
+   	    FROM 
+   	             $tableName$ WHERE 1=1
+   	            
+			<isNotEmpty prepend="AND" property="assetId">
+          <![CDATA[
+           "LOG_ASSET_ID" in ($assetId$)
+          ]]>
+		</isNotEmpty>
+   	    GROUP BY "LOG_CATEGORY"
+   	    ORDER BY 'value' DESC
+   	
+   	</select>
+    
+    <!-- 查询资产分布 修改 根据资产id去查询-->
+      	<select id="sqlServerscreen.queryAssets" resultClass="int" parameterClass="java.util.HashMap">
+   	    SELECT COUNT(*) FROM "tbl_asset" WHERE 1=1 and "ASSET_IS_DELETE" = 0
+   	     <isNotEmpty prepend="AND" property="assetGroupId">
+		    <![CDATA[
+		       "ASSET_ID" in (select distinct("ASSET_ID") from "tbl_asset_group_asset" where "ASSET_GROUP_ID" in ($assetGroupId$)) 
+		    ]]>
+		</isNotEmpty>
+   	</select>
+   		<select id="sqlServerscreen.queryAssetGroup" resultClass="java.lang.String" parameterClass="int">
+   	    SELECT "ASSET_GROUP_NAME"
+  		FROM tbl_asset_group  WHERE "ASSET_GROUP_ID"=#value#; 
+   		
+   	</select>
+
+
+	<!-- 查询设备事件Top10 修改 根据资产id去查询-->
+   	<select id="sqlServerscreen.all" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+   	    
+   	      SELECT  TOP 10
+   	           "LOG_CUSTOMS5" AS 'key',
+   	            SUM("LOG_AGGREGATED_COUNT") AS 'value'
+   	      FROM  $tableName$ WHERE 1=1
+   	            
+			<isNotEmpty prepend="AND" property="assetId">
+          <![CDATA[
+           "LOG_ASSET_ID" in ($assetId$)
+          ]]>
+		</isNotEmpty>
+   	      GROUP BY "LOG_CUSTOMS5"           
+   	      ORDER BY 'value' DESC
+   	</select>
+   	
+   	<!-- 查询安全事件Top10   修改 根据资产id去查询-->
+   	<select id="sqlServerscreen.safety" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+   	    
+   	    SELECT TOP 10
+   	            "LOG_TYPE" AS 'key',
+   	             SUM("LOG_AGGREGATED_COUNT") AS 'value'
+   	    FROM 
+   	             $tableName$ WHERE 1=1
+   	            
+			<isNotEmpty prepend="AND" property="assetId">
+          <![CDATA[
+           "LOG_ASSET_ID" in ($assetId$)
+          ]]>
+		</isNotEmpty>
+   	    GROUP BY "LOG_TYPE"
+   	    ORDER BY 'value' DESC
+   	</select>
+
+</sqlMap>

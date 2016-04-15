@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    
+    <sqlMap>
+        <resultMap class="Msad" id="msadResult">
+           <result property="msadId" column="PK_MSAD" jdbcType="int"/>
+           <result property="msadSort" column="MSAD_Sort" jdbcType="varchar"/>
+           <result property="msadName" column="MSAD_Name" jdbcType="varchar"/>
+           <result property="msadContent" column="MSAD_Content" jdbcType="varchar"/>
+           <result property="msadFatherSort" column="MSAD_FatherSort" jdbcType="varchar"/>
+           <result property="msadListGrade" column="MSAD_ListGrade" jdbcType="varchar"/>
+           <result property="msadIsHave" column="MSAD_Ishave" jdbcType="varchar"/>
+           <result property="msadHaveIf" column="MSAD_HaveIf" jdbcType="varchar"/>
+        </resultMap>
+        <select id="pgAdminmsad.queryMsadByFatherSort" parameterClass="String" resultMap="msadResult">
+            select * from "tb_msad" where "MSAD_FatherSort"=#msadFatherSort# and "MSAD_Content" is not null  
+        </select>
+         <!-- 根据排序查询 -->
+        <!-- 根据排序查询 -->
+       <select id="pgAdminmsad.queryByMsadSort" parameterClass="java.util.HashMap" resultMap="msadResult">
+          select * from "tb_msad"
+		<![CDATA[
+			 where "MSAD_Sort"  LIKE '%2' and (length(trim("MSAD_Sort"))=8 or length(trim("MSAD_Sort"))=9) or "MSAD_Sort" IN ('11.1.1','11.1.2')
+		]]>
+		order by "PK_MSAD"
+       </select>
+        <!-- sqlserver -->
+        <select id="sqlServermsad.queryMsadByFatherSort" parameterClass="String" resultMap="msadResult">
+            select * from "tb_msad" where "MSAD_FatherSort"=#msadFatherSort# and "MSAD_Content" is not null  
+        </select>
+         <!-- 根据排序查询 -->
+        <!-- 根据排序查询 -->
+       <select id="sqlServermsad.queryByMsadSort" parameterClass="java.util.HashMap" resultMap="msadResult">
+          select * from "tb_msad"
+		<![CDATA[
+			 where "MSAD_Sort"  LIKE '%2' and (len(LTRIM(RTRIM("MSAD_Sort")))=8 or len(LTRIM(RTRIM("MSAD_Sort")))=9) or "MSAD_Sort" IN ('11.1.1','11.1.2')
+		]]>
+		order by "PK_MSAD"
+       </select>
+
+ 
+    </sqlMap>

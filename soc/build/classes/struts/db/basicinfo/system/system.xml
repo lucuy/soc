@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="system" extends="struts-default" namespace="/system">
+		<global-results>
+			<result name="input">/pages/dbPage/commons/500.jsp</result>
+		</global-results>
+		<action name="query" class="SystemAction" method="query">
+			<result name="success">
+				/pages/dbPage/basic/manager.jsp
+			</result>
+		</action>
+		<action name="insert" class="SystemAction" method="insert">
+			<!-- <result type="chain" name="success">
+				<param name="actionName">query</param>
+			</result> -->
+			<result name="success" type="redirect">/pages/dbPage/basic/manager.jsp</result>
+		</action>
+		<action name="delete" class="SystemAction" method="delete">
+			<result name="success" type="redirect"> /pages/dbPage/basic/manager.jsp</result>
+		</action>
+		<action name="queryById" class="SystemAction" method="queryById">
+			<result> /pages/dbPage/basic/viewsystem.jsp</result>
+		</action>
+		<action name="update" class="SystemAction" method="update">
+			<result name="success" type="redirect"> /pages/dbPage/basic/manager.jsp</result>
+		</action>
+		<action name="queryScore" class="SystemAction" method="queryScore">
+			<result>
+				/pages/dbPage/score/manager.jsp
+			</result>
+			<result name="updaterank">/pages/dbPage/score/updaterank.jsp</result>
+		</action>
+		<action name="queryForGoHead" class="SystemAction" method="queryForGoHead">
+			<result>/pages/dbPage/score/message.jsp</result>
+		</action>
+
+		<!--系统废止遍历信息系统信息 -->
+		<action name="querySysInfo" class="SystemAction" method="query">
+			<result name="success">/pages/dbPage/menus/abolishMenu.jsp</result>
+		</action>
+		<!-- ajax分页 -->
+		<action name="queryAjaxSystem" class="SystemAction" method="queryAjaxSystem"/>
+		<!-- 查询sysId是否存在 -->
+		<action name="queryAjaxSysId" class="SystemAction" method="queryAjaxSysId" />
+		<!-- 查询sysName是否存在 -->
+		<action name="queryAjaxSysName" class="SystemAction" method="queryByName" />
+		<!-- 高级搜索信息系统 -->
+		<action name="extQuery" class="SystemAction" method="queryExtSystem" />
+	</package>
+
+</struts>

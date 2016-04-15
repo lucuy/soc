@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="felevance" extends="struts-default"
+		namespace="/relevanceRules">
+		<!-- querylist -->
+		<action name="queryRelevanceRuleList" class="relevanceRuleAction"
+			method="queryRelevanceRuleList">
+			<result name="success">
+			/pages/systemsetting/rules/setting_relevance_rule_list.jsp
+			</result>
+		</action>
+		<!-- deleteFilterRule -->
+		<action name="deleteRelevanceRule" class="relevanceRuleAction"
+			method="deleteRelevanceRule">
+			<result name="success" type="redirectAction">
+			<param name="actionName">queryRelevanceRuleList</param>
+				<param name="namespace">/relevanceRules</param>
+				<param name="groupId">${groupId}</param>
+			</result>
+		</action>
+		<!-- insertFilterRule -->
+		<action name="insertOrUpdateRelevanceRule" class="relevanceRuleAction" method="insertOrUpdateRelevanceRule">
+			<result name="success" type="redirectAction">
+			<param name="actionName">queryRelevanceRuleList</param>
+				<param name="namespace">/relevanceRules</param>
+				<param name="groupId">${groupId}</param>
+			</result>
+		</action>
+		<!-- updateFilteringRule -->
+<!-- 		<action name="updateFilteringRule" class="FilteringRuleAction"
+			method="updateFilteringRule">
+			<result name="success" type="redirectAction">queryFilterRuleList</result>
+		</action> -->
+		<!-- selectFilterRuleById -->
+		<action name="selectRelevanceRuleById" class="relevanceRuleAction"
+			method="selectRelevanceRuleById">
+			<result name="success">/pages/systemsetting/rules/setting_new_relevance_rule.jsp
+			</result>
+		</action>
+		<action name="updateStatus" class="relevanceRuleAction"
+			method="updateStatus">
+			<result name="success" type="redirectAction">queryRelevanceRuleList</result>
+		</action>
+		<action name="toInsertRelevancePage" class="relevanceRuleAction" method="toInsertRelevancePage">
+			<result name="success" >/pages/systemsetting/rules/setting_new_relevance_rule.jsp</result>
+		</action>
+		<action name="selectRelevanceRuleById" class="relevanceRuleAction"
+			method="selectRelevanceRuleById">
+			<result name="success" >/pages/systemsetting/rules/setting_new_relevance_rule.jsp</result>
+			</action>
+	
+	</package>
+</struts>

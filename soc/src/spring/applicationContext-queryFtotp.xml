@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+         xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    
+	<!-- 定义注入的类和参数 -->
+	<bean name="QueryFtotpTaskTrigger" class="com.soc.webapp.quartz.QueryFtotp">
+	    <property name="eventsUserLogManager" ref="eventsUserLogManager"></property>
+		<property name="eManager" ref="eventsManager"></property>
+		<property name="sManager" ref="summaryEventsManager"></property>
+		<property name="aManager" ref="assetManager"></property>
+	</bean>
+	
+    <!-- 定义定时器，指定执行的类和方法 -->
+    <bean name="ftoTpTaskDetailBean" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="QueryFtotpTaskTrigger" />
+		<property name="targetMethod" value="queryFtotpAndSaveEvents"/>
+	</bean>
+
+	<bean name="ftoTpTaskTriggerBean" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+	    <property name="jobDetail" ref="ftoTpTaskDetailBean"/>
+	    <!-- 300000毫秒一个轮寻 -->
+	    <property name="repeatInterval" value="300000"/> 
+	    <!-- <property name="repeatInterval" value="5000"/>-->
+	    <property name="startDelay" value="191"/>
+    </bean>
+    
+    <!-- 关闭定时器随系统启动 -->
+    <!--   
+ <bean name="ftoTpTaskAuto" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		 <property name="triggers">
+			<list>
+				<ref bean="ftoTpTaskTriggerBean"/>
+			</list>
+		</property>
+	</bean>  
+     -->
+</beans>

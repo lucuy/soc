@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<node name="Oracle数据库" level="1">
+	<node name="表空间使用率" kpiName="ts_used_PCT_RDB" />
+	<node name="物理读" kpiName="Physical_reads_RDB"/>
+	<node name="Session总数" kpiName="Total_sessions_RDB"/>
+	<node name="Session活动数" kpiName="Active_sessions_RDB"/>
+	<node name="缓存命中率" kpiName="Buffer_Hit_RDB"/>
+	<node name="归档日志使用率" kpiName="archive_area_usage_RDB"/>
+	<node name="SQL命中率" kpiName="Library_Hit_RDB"/>
+</node>

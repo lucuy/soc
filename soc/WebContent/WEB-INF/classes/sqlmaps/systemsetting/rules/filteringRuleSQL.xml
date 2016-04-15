@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="FilteringRule">
+
+	<resultMap class="filteringRule" id="filteringRuleDetial">
+		<result property="filteringRuleId" column="FILTER_RULE_ID"
+			jdbcType="bigint" />
+		<result property="filteringRuleName" column="FILTER_RULE_NAME"
+			jdbcType="varchar" />
+		<result property="filteringRuleCreater" column="FILTER_RULE_CREATER"
+			jdbcType="varchar" />
+		<result property="filteringRuleCreateDate" column="FILTER_RULE_CREATE_DATE"
+			jdbcType="datetime" />
+		<result property="filteringRuleMender" column="FILTER_RULE_MENDER"
+			jdbcType="varchar" />
+		<result property="filteringRuleMenderDate" column="FILTER_RULE_MENDER_DATE"
+			jdbcType="datetime" />
+		<result property="filteringRuleDes" column="FILTER_RULE_DES"
+			jdbcType="varchar" />
+		<result property="filteringRuleCondition" column="FILTER_RULE_CONDITION"
+			jdbcType="text" />
+		<result property="filteringRuleType" column="FILTER_RULE_TYPE"
+			jdbcType="int" />
+		<result property="assetIds" column="FILTER_RULE_ASSET"
+			jdbcType="varchar" />
+		<result property="eventsTypeIds" column="FILTER_RULE_EVENTSTYPE"
+			jdbcType="text" />
+		<result property="eventsCategoryIds" column="FILTER_RULE_EVENTSCATEGORY"
+			jdbcType="varchar" />
+		<result property="priorityIds" column="FILTER_RULE_PRIORITY"
+			jdbcType="varchar" />
+		<result property="targetAddr" column="FILTER_RULE_TARGETADDR"
+			jdbcType="varchar" />
+		<result property="sourceAddr" column="FILTER_RULE_SOURCEADDR"
+			jdbcType="varchar" />
+		<result property="targetPort" column="FILTER_RULE_TARGETPORT"
+			jdbcType="varchar" />
+		<result property="sourcePort" column="FILTER_RULE_SOURCEPORT"
+			jdbcType="varchar" />
+	
+
+			
+			
+			
+			
+			
+			
+	</resultMap>
+
+
+	<resultMap class="filteringRule" id="filteringRuleList">
+		<result property="filteringRuleId" column="FILTER_RULE_ID"
+			jdbcType="bigint" />
+		<result property="filteringRuleName" column="FILTER_RULE_NAME"
+			jdbcType="varchar" />
+		<result property="filteringRuleType" column="FILTER_RULE_TYPE"
+			jdbcType="smilint" />
+		<result property="filteringRuleMenderDate" column="FILTER_RULE_MENDER_DATE"
+			jdbcType="date" />
+	</resultMap>
+
+
+
+	<!-- queryFilteringRule -->
+	<select id="pgAdminFilteringRule.queryFilteringRuleList"
+		parameterClass="java.util.HashMap" resultClass="filteringRule"
+		resultMap="filteringRuleList">
+		select
+		"FILTER_RULE_ID","FILTER_RULE_NAME","FILTER_RULE_TYPE","FILTER_RULE_MENDER_DATE"
+		from
+		"tbl_filtering_rule"
+
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="keyword">
+			<![CDATA[
+		  ("FILTER_RULE_NAME") like '%$keyword$%'
+			  ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="filteringRuleName">
+			<![CDATA[
+				"FILTER_RULE_NAME" LIKE '%$filteringRuleName$%'
+			]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="filteringRuleType">
+			<![CDATA[
+				"FILTER_RULE_TYPE" = #filteringRuleType#
+			]]>
+			</isNotEmpty>
+		</dynamic>
+		order by  "FILTER_RULE_MENDER_DATE" desc
+	</select>
+	<!-- deleteFilteringRule -->
+	<delete id="pgAdminFilteringRule.deleteFilteringRule" parameterClass="long">
+		delete
+		from "tbl_filtering_rule" where "FILTER_RULE_ID" =
+		#filteringRuleId#
+	</delete>
+	<!-- addFilteringRule -->
+	<insert id="pgAdminFilteringRule.addFilteringRule" parameterClass="filteringRule">
+
+		insert into
+		"tbl_filtering_rule"
+		("FILTER_RULE_NAME","FILTER_RULE_CREATER","FILTER_RULE_CREATE_DATE","FILTER_RULE_MENDER","FILTER_RULE_MENDER_DATE","FILTER_RULE_DES","FILTER_RULE_CONDITION","FILTER_RULE_TYPE","FILTER_RULE_ASSET","FILTER_RULE_EVENTSTYPE","FILTER_RULE_EVENTSCATEGORY","FILTER_RULE_PRIORITY","FILTER_RULE_TARGETADDR","FILTER_RULE_SOURCEADDR","FILTER_RULE_TARGETPORT","FILTER_RULE_SOURCEPORT")
+		values
+		(#filteringRuleName#,#filteringRuleCreater#,#filteringRuleCreateDate#,#filteringRuleMender#,#filteringRuleMenderDate#,#filteringRuleDes#,#filteringRuleCondition#,#filteringRuleType#,#assetIds#,#eventsTypeIds#,#eventsCategoryIds#,#priorityIds#,#targetAddr#,#sourceAddr#,#targetPort#,#sourcePort#)
+		
+		<selectKey resultClass="long" keyProperty="filteringRuleId">
+			SELECT
+			currval('tbl_filtering_rule_seq'::regclass) AS FILTER_RULE_ID
+		</selectKey>
+	</insert>
+	<!-- count -->
+	<select id="pgAdminFilteringRule.count" parameterClass="java.util.HashMap"
+		resultClass="int">
+		select count(*) from "tbl_filtering_rule"
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="keyword">
+			<![CDATA[
+		  ("FILTER_RULE_NAME") like '%$keyword$%'
+			  ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="filteringRuleName">
+			<![CDATA[
+				"FILTER_RULE_NAME" LIKE '%$filteringRuleName$%'
+			]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="filteringRuleType">
+			<![CDATA[
+				"FILTER_RULE_TYPE" = #filteringRuleType#
+			]]>
+			</isNotEmpty>
+		</dynamic>
+
+
+	</select>
+	<!-- updateFilteringRule -->
+	<update id="pgAdminFilteringRule.updateFilteringRule" parameterClass="filteringRule">
+		update
+		"tbl_filtering_rule"
+		set		
+		"FILTER_RULE_NAME"=#filteringRuleName#,
+		"FILTER_RULE_MENDER"=#filteringRuleMender#,
+		"FILTER_RULE_MENDER_DATE"=#filteringRuleMenderDate#,
+		"FILTER_RULE_DES"=#filteringRuleDes#,
+		"FILTER_RULE_TYPE"=#filteringRuleType#,
+		"FILTER_RULE_ASSET"=#assetIds#,
+		"FILTER_RULE_EVENTSTYPE"=#eventsTypeIds#,
+		"FILTER_RULE_EVENTSCATEGORY"=#eventsCategoryIds#,
+		"FILTER_RULE_PRIORITY"=#priorityIds#,
+		"FILTER_RULE_TARGETADDR"=#targetAddr#,
+		"FILTER_RULE_SOURCEADDR"=#sourceAddr#,
+		"FILTER_RULE_TARGETPORT"=#targetPort#,
+		"FILTER_RULE_SOURCEPORT"=#sourcePort#
+
+		where "FILTER_RULE_ID" =
+		#filteringRuleId#
+	</update>
+	<!-- queryFilteringRuleById -->
+	<select id="pgAdminFilteringRule.queryFilteringRuleById"
+		parameterClass="long" resultClass="filteringRule" resultMap="filteringRuleDetial">
+		select *
+		from "tbl_filtering_rule" where
+		"FILTER_RULE_ID" = #filteringRuleId#
+	</select>
+	<!-- 更新启用状态 -->
+	<update id="pgAdminFilteringRule.updateStatus" parameterClass="filteringRule">
+		update
+		"tbl_filtering_rule"
+		set
+		"FILTER_RULE_TYPE"
+		=#filteringRuleType#
+		where
+		"FILTER_RULE_ID" =
+		#filteringRuleId#
+	</update>
+
+
+<select id="pgAdminFilteringRule.queryFilteringRuleByType"  resultClass="filteringRule" resultMap="filteringRuleDetial">
+		select *
+		from "tbl_filtering_rule" where
+		"FILTER_RULE_TYPE" = 0
+	</select>
+<!-- sqlServer -->
+<!-- queryFilteringRule -->
+	<select id="sqlServerFilteringRule.queryFilteringRuleList"
+		parameterClass="java.util.HashMap" resultClass="filteringRule"
+		resultMap="filteringRuleList">
+		select
+		"FILTER_RULE_ID","FILTER_RULE_NAME","FILTER_RULE_TYPE","FILTER_RULE_MENDER_DATE"
+		from
+		"tbl_filtering_rule"
+
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="keyword">
+			<![CDATA[
+		  ("FILTER_RULE_NAME") like '%$keyword$%'
+			  ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="filteringRuleName">
+			<![CDATA[
+				"FILTER_RULE_NAME" LIKE '%$filteringRuleName$%'
+			]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="filteringRuleType">
+			<![CDATA[
+				"FILTER_RULE_TYPE" = #filteringRuleType#
+			]]>
+			</isNotEmpty>
+		</dynamic>
+		order by  "FILTER_RULE_MENDER_DATE" desc
+	</select>
+	<!-- deleteFilteringRule -->
+	<delete id="sqlServerFilteringRule.deleteFilteringRule" parameterClass="long">
+		delete
+		from "tbl_filtering_rule" where "FILTER_RULE_ID" =
+		#filteringRuleId#
+	</delete>
+	<!-- addFilteringRule -->
+	<insert id="sqlServerFilteringRule.addFilteringRule" parameterClass="filteringRule">
+
+		insert into
+		"tbl_filtering_rule"
+		("FILTER_RULE_NAME","FILTER_RULE_CREATER","FILTER_RULE_CREATE_DATE","FILTER_RULE_MENDER","FILTER_RULE_MENDER_DATE","FILTER_RULE_DES","FILTER_RULE_CONDITION","FILTER_RULE_TYPE","FILTER_RULE_ASSET","FILTER_RULE_EVENTSTYPE","FILTER_RULE_EVENTSCATEGORY","FILTER_RULE_PRIORITY","FILTER_RULE_TARGETADDR","FILTER_RULE_SOURCEADDR","FILTER_RULE_TARGETPORT","FILTER_RULE_SOURCEPORT")
+		values
+		(#filteringRuleName#,#filteringRuleCreater#,#filteringRuleCreateDate#,#filteringRuleMender#,#filteringRuleMenderDate#,#filteringRuleDes#,#filteringRuleCondition#,#filteringRuleType#,#assetIds#,#eventsTypeIds#,#eventsCategoryIds#,#priorityIds#,#targetAddr#,#sourceAddr#,#targetPort#,#sourcePort#)
+		
+		<!-- <selectKey resultClass="long" keyProperty="filteringRuleId">
+			SELECT
+	SELECT @@IDENTITY AS filteringRuleId
+
+		</selectKey> -->
+	</insert>
+	<!-- count -->
+	<select id="sqlServerFilteringRule.count" parameterClass="java.util.HashMap"
+		resultClass="int">
+		select count(*) from "tbl_filtering_rule"
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="keyword">
+			<![CDATA[
+		  ("FILTER_RULE_NAME") like '%$keyword$%'
+			  ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="filteringRuleName">
+			<![CDATA[
+				"FILTER_RULE_NAME" LIKE '%$filteringRuleName$%'
+			]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="filteringRuleType">
+			<![CDATA[
+				"FILTER_RULE_TYPE" = #filteringRuleType#
+			]]>
+			</isNotEmpty>
+		</dynamic>
+
+
+	</select>
+	<!-- updateFilteringRule -->
+	<update id="sqlServerFilteringRule.updateFilteringRule" parameterClass="filteringRule">
+		update
+		"tbl_filtering_rule"
+		set		
+		"FILTER_RULE_NAME"=#filteringRuleName#,
+		"FILTER_RULE_MENDER"=#filteringRuleMender#,
+		"FILTER_RULE_MENDER_DATE"=#filteringRuleMenderDate#,
+		"FILTER_RULE_DES"=#filteringRuleDes#,
+		"FILTER_RULE_TYPE"=#filteringRuleType#,
+		"FILTER_RULE_ASSET"=#assetIds#,
+		"FILTER_RULE_EVENTSTYPE"=#eventsTypeIds#,
+		"FILTER_RULE_EVENTSCATEGORY"=#eventsCategoryIds#,
+		"FILTER_RULE_PRIORITY"=#priorityIds#,
+		"FILTER_RULE_TARGETADDR"=#targetAddr#,
+		"FILTER_RULE_SOURCEADDR"=#sourceAddr#,
+		"FILTER_RULE_TARGETPORT"=#targetPort#,
+		"FILTER_RULE_SOURCEPORT"=#sourcePort#
+
+		where "FILTER_RULE_ID" =
+		#filteringRuleId#
+	</update>
+	<!-- queryFilteringRuleById -->
+	<select id="sqlServerFilteringRule.queryFilteringRuleById"
+		parameterClass="long" resultClass="filteringRule" resultMap="filteringRuleDetial">
+		select *
+		from "tbl_filtering_rule" where
+		"FILTER_RULE_ID" = #filteringRuleId#
+	</select>
+	<!-- 更新启用状态 -->
+	<update id="sqlServerFilteringRule.updateStatus" parameterClass="filteringRule">
+		update
+		"tbl_filtering_rule"
+		set
+		"FILTER_RULE_TYPE"
+		=#filteringRuleType#
+		where
+		"FILTER_RULE_ID" =
+		#filteringRuleId#
+	</update>
+
+
+<select id="sqlServerFilteringRule.queryFilteringRuleByType"  resultClass="filteringRule" resultMap="filteringRuleDetial">
+		select *
+		from "tbl_filtering_rule" where
+		"FILTER_RULE_TYPE" = 0
+	</select>
+
+
+
+
+</sqlMap>

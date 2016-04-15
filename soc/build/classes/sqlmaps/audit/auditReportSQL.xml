@@ -1,0 +1,813 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="auditReportSQL">
+	<resultMap id="auditReportResult" class="auditReport">
+		<result property="auditReportId" column="REPORT_ID" jdbcType="bigint" />
+		<result property="auditReportName" column="REPORT_NAME"
+			jdbcType="varchar" />
+		<result property="auditReportParentId" column="REPORT_PARENT_ID"
+			jdbcType="bigint" />
+	</resultMap>
+<select id="pgAdminauditReportSQL.queryByParentId" resultClass="auditReport"
+		resultMap="auditReportResult" parameterClass="java.util.HashMap">
+		select * from "tbl_audit_report" where "ISMASK"=0
+		<isNotEmpty prepend="and" property="auditReportParentId">
+			"REPORT_PARENT_ID" =
+			#auditReportParentId#
+
+		</isNotEmpty>
+order by "REPORT_ID"
+	</select>
+
+	<select id="pgAdminauditReportSQL.queryEquipmentDetailList" parameterClass="java.util.HashMap" resultClass="java.util.HashMap" >
+		select
+		"LOG_SENDTIME" as "receptTime","LOG_CUSTOMS5" as "devName","LOG_DADDR" as "dAddr","LOG_PRIORITY" as "priority" from
+		$table$   where 1=1
+		<isNotEmpty prepend="AND" property="assetId">
+          <![CDATA[
+            "LOG_ASSET_ID" in ($assetId$) 
+          ]]>
+		</isNotEmpty>
+		
+		ORDER BY "LOG_SENDTIME"  DESC
+	</select>
+	<select id="pgAdminauditReportSQL.report2Table1" resultClass="java.util.HashMap"
+		parameterClass="java.lang.String">
+		select
+		max(case e.type when 1 then e.sum else 0 end) as
+		"priority1",
+		max(case e.type when 2 then e.sum else 0 end) as
+		"priority2",
+		max(case e.type when 3 then e.sum else 0 end) as
+		"priority3",
+		max(case e.type when 4 then e.sum else 0 end) as
+		"priority4",
+		max(case e.type when 5 then e.sum else 0 end) as
+		"priority5"
+		from ($tableName$) e
+	</select>
+	<select id="pgAdminauditReportSQL.report2Table12" resultClass="java.util.HashMap"
+		parameterClass="java.lang.String">
+		select
+		max(case e.type when 1 then e.sum else 0 end) as
+		"priority6",
+		max(case e.type when 2 then e.sum else 0 end) as
+		"priority7",
+		max(case e.type when 3 then e.sum else 0 end) as
+		"priority8",
+		max(case e.type when 4 then e.sum else 0 end) as
+		"priority9",
+		max(case e.type when 5 then e.sum else 0 end) as
+		"priority10"
+		from ($tableName$) e
+	</select>
+	<select id="pgAdminauditReportSQL.report2Table2" resultClass="java.util.HashMap"
+		parameterClass="java.lang.String">
+		select COALESCE("ASSET_GROUP_NAME",'未分组') as asset,
+		max(case e.type when 1 then e.sum else 0 end) as "priority1",
+		max(case
+		e.type when 2 then e.sum else 0 end) as "priority2",
+		max(case e.type
+		when 3 then e.sum else 0 end) as "priority3",
+		max(case e.type when 4
+		then e.sum else 0 end) as "priority4",
+		max(case e.type when 5 then
+		e.sum else 0 end) as "priority5"
+		from ($tableName$) e left join
+		tbl_asset a on e.asset = a."ASSET_NAME" group by a."ASSET_GROUP_NAME"
+	</select>
+	<select id="pgAdminauditReportSQL.report2Table3" resultClass="java.util.HashMap"
+		parameterClass="java.lang.String">
+		select e.asset as asset,
+		max(case e.type when 1 then
+		e.sum else 0 end) as
+		"priority1",
+		max(case e.type
+		when 2 then e.sum else
+		0 end) as
+		"priority2",
+		max(case e.type when 3
+		then e.sum else 0 end) as
+		"priority3",
+		max(case e.type when 4 then e.sum
+		else 0 end) as
+		"priority4",
+		max(case e.type when 5 then e.sum else 0
+		end) as
+		"priority5"
+		from ($tableName$) e group by asset
+	</select>
+	<select id="pgAdminauditReportSQL.report2Table4" resultClass="java.util.HashMap"
+		parameterClass="java.lang.String">
+		select e.asset as asset,
+		max(case e.type when 1 then
+		e.sum else 0 end) as
+		"priority1",
+		max(case e.type
+		when 2 then e.sum else
+		0 end) as
+		"priority2",
+		max(case e.type when 3
+		then e.sum else 0 end) as
+		"priority3",
+		max(case e.type when 4 then e.sum
+		else 0 end) as
+		"priority4",
+		max(case e.type when 5 then e.sum else 0
+		end) as
+		"priority5"
+		from ($tableName$) e group by asset
+	</select>
+	<select id="pgAdminauditReportSQL.report2Table5" resultClass="java.util.HashMap"
+		parameterClass="java.lang.String">
+		select type, priority, devaddr,name, c as c from
+		($tableName$) e group by e.c , type, priority, name, devaddr order
+		by
+		sum(e.sum) desc
+	</select>
+	<select id="pgAdminauditReportSQL.report2Table6" resultClass="java.util.HashMap"
+		parameterClass="java.lang.String">
+		select type, priority,name, c as c ,sum(e.sum) as sum
+		from
+		($tableName$) e where e.priority=1 group by e.c , type, priority,
+		name order by sum desc
+	</select>
+	<select id="pgAdminauditReportSQL.report2Table7" resultClass="java.util.HashMap"
+		parameterClass="java.lang.String">
+		select type, priority,name, c as c ,sum(e.sum) as sum
+		from
+		($tableName$) e where e.priority=2 group by e.c , type, priority,
+		name order by sum desc
+	</select>
+	<select id="pgAdminauditReportSQL.report2Table8" resultClass="java.util.HashMap"
+		parameterClass="java.lang.String">
+		select type, priority,name, c as c ,sum(e.sum) as sum
+		from
+		($tableName$) e where e.priority=3 group by e.c , type, priority,
+		name order by sum desc
+	</select>
+	<select id="pgAdminauditReportSQL.report2Table9" resultClass="java.util.HashMap"
+		parameterClass="java.lang.String">
+		select type, priority,name, c as c ,sum(e.sum) as sum
+		from
+		($tableName$) e where e.priority=4 group by e.c , type, priority,
+		name order by sum desc
+	</select>
+	<select id="pgAdminauditReportSQL.report2Table10" resultClass="java.util.HashMap"
+		parameterClass="java.lang.String">
+		select type, priority,name, c as c ,sum(e.sum) as sum
+		from
+		($tableName$) e where e.priority=5 group by e.c , type, priority,
+		name order by sum desc
+	</select>
+	<select id="pgAdminauditReportSQL.report6Table1" resultClass="java.util.HashMap"
+		parameterClass="java.lang.String">
+		select priority as priority , sum(e.sum) as count from
+		($tableName$) e group by priority
+
+	</select>
+	<select id="pgAdminauditReportSQL.report6Table2" resultClass="java.util.HashMap"
+		parameterClass="java.lang.String">
+		select type as type , sum(e.sum) as count from
+		($tableName$) e group by type
+	</select>
+	<select id="pgAdminauditReportSQL.report6Table3" resultClass="java.util.HashMap"
+		parameterClass="java.lang.String">
+		select type as type , sum(e.sum) as count from
+		($tableName$) e group by type
+	</select>
+	<select id="pgAdminauditReportSQL.report6Table4" resultClass="java.util.HashMap"
+		parameterClass="java.lang.String">
+		select type as type , sum(e.sum) as count from
+		($tableName$) e group by type order by count desc
+	</select>
+	<select id="pgAdminauditReportSQL.report6Table5" resultClass="java.util.HashMap"
+		parameterClass="java.lang.String">
+		select type as type , sum(e.sum) as count from
+		($tableName$) e group by type order by count desc
+	</select>
+	<select id="pgAdminauditReportSQL.report7Table1" resultClass="java.util.HashMap"
+		parameterClass="java.lang.String">
+		select "ASSET_NAME" as name,"ASSET_SECRET_VALUE" as secret,
+		"ASSET_INTEGRITY_VALUE" as integrity ,"ASSET_USABILITY_VALUE" as usability from tbl_asset
+	</select>
+	<select id="pgAdminauditReportSQL.report8Table1" resultClass="java.util.HashMap"
+		parameterClass="java.lang.String">
+		select e.priority as priority ,sum(e.sum) as sum from
+		($tableName$)e
+		group by e.priority
+	</select>
+	<select id="pgAdminauditReportSQL.report8Table3" resultClass="java.util.HashMap"
+		parameterClass="java.lang.String">
+		select e.asset as asset,
+		max(case e.type when 1 then
+		e.sum else 0 end) as
+		"priority1",
+		max(case e.type
+		when 2 then e.sum else
+		0 end) as
+		"priority2",
+		max(case e.type when 3
+		then e.sum else 0 end) as
+		"priority3",
+		max(case e.type when 4 then e.sum
+		else 0 end) as
+		"priority4",
+		max(case e.type when 5 then e.sum else 0
+		end) as
+		"priority5"
+		from ($tableName$) e group by asset
+	</select>
+	<select id="pgAdminauditReportSQL.report8Table4" resultClass="java.util.HashMap"
+		parameterClass="java.lang.String">
+		select type as type , sum(e.sum) as count from
+		($tableName$) e group by type order by count desc
+	</select>
+	<select id="pgAdminauditReportSQL.report8Table5" resultClass="java.util.HashMap"
+		parameterClass="java.lang.String">
+		select type as type , sum(e.sum) as count from
+		($tableName$) e group by type order by count desc
+	</select>
+	<select id="pgAdminauditReportSQL.report9Table1" resultClass="java.util.HashMap"
+		parameterClass="java.util.HashMap">
+		select "ASSET_GROUP_NAME" as name,"ASSET_MEMO" as desc
+		from "tbl_asset_group" where "ASSET_GROUP_IS_DELETE"=0 and "ASSET_GROUP_ID" >1 
+		<isNotEmpty prepend="AND" property="groupid">
+            "ASSET_GROUP_ID" =#groupid# 
+		or "ASSET_GROUP_PARENT_ID" =#groupid#
+          </isNotEmpty>
+	</select>
+	<select id="pgAdminauditReportSQL.report9Table1Count" parameterClass="java.util.HashMap" resultClass="int">
+		select count(*) as count from "tbl_asset_group" where "ASSET_GROUP_IS_DELETE"=0 and "ASSET_GROUP_ID" >1
+		<isNotEmpty prepend="AND" property="groupid">
+            "ASSET_GROUP_ID" =#groupid# 
+		or "ASSET_GROUP_PARENT_ID" =#groupid#
+          </isNotEmpty>
+	</select>
+	<select id="pgAdminauditReportSQL.report9Table2" resultClass="java.util.HashMap"
+		parameterClass="java.util.HashMap">
+		
+		select count(a."ASSET_ID") as count, g."ASSET_GROUP_NAME" as name from "tbl_asset_group" 
+		g left join "tbl_asset_group_asset" a on a."ASSET_GROUP_ID" = g."ASSET_GROUP_ID" 
+		where  g."ASSET_GROUP_IS_DELETE"=0 and g."ASSET_GROUP_ID" >1
+		<isNotEmpty prepend="AND" property="groupid">
+            g."ASSET_GROUP_ID" =#groupid# 
+		or g."ASSET_GROUP_PARENT_ID" =#groupid#
+          </isNotEmpty>
+		 group by g."ASSET_GROUP_NAME"		
+	</select>
+	<!--  根据资产组id去查询资产组名称-->
+	<select id="pgAdminauditReportSQL.queryAssetGroup" resultClass="java.lang.String" parameterClass="long">
+   	    SELECT "ASSET_GROUP_NAME"
+  		FROM tbl_asset_group  WHERE "ASSET_GROUP_ID"=#value#; 
+   	</select>
+   	
+   	 <!-- 查询资产分布 修改 根据资产id去查询-->
+      	<select id="pgAdminauditReportSQL.queryAssets" resultClass="int" parameterClass="java.util.HashMap">
+   	    SELECT COUNT(*) FROM "tbl_asset" WHERE 1=1 and "ASSET_IS_DELETE" = 0
+   	     <isNotEmpty prepend="AND" property="assetGroupId">
+		    <![CDATA[
+		       "ASSET_ID" in (select distinct("ASSET_ID") from "tbl_asset_group_asset" where "ASSET_GROUP_ID" in ($assetGroupId$)) 
+		    ]]>
+		</isNotEmpty>
+   	</select>
+	<select id="pgAdminauditReportSQL.report9Table2Count" parameterClass="java.util.HashMap" resultClass="int">
+	select count(*) as count from "tbl_asset" where "ASSET_IS_DELETE"=0 
+	 <isNotEmpty prepend="AND" property="aasetId">
+		    <![CDATA[
+		       "ASSET_ID" in ($aasetId$) 
+		    ]]>
+		</isNotEmpty>
+	</select>
+	<select id="pgAdminauditReportSQL.existsTable" parameterClass="String"
+		resultClass="int">
+		SELECT count(*) FROM pg_tables WHERE tablename =
+		#tableName#
+	</select>
+	<select id="pgAdminauditReportSQL.report12Table3" resultClass="java.util.HashMap"
+		parameterClass="java.util.HashMap">
+		select "ALARM_ASSET_NAME" as name,count("ALARM_ASSET_NAME") as count from "tbl_alarm" where 1=1
+		<isNotEmpty prepend= "AND"  property="start" >
+			<![CDATA[
+				"MESSAGE_OPERATE_DATE" between #start# and #end#
+			]]>
+		</isNotEmpty>
+				<isNotEmpty prepend= "AND"  property="alarmRank" >
+			<![CDATA[
+				"ALARM_RANK" = #alarmRank#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="alertAssetId">
+             "ALARM_ASSET_ID" in  ($alertAssetId$)
+          </isNotEmpty>
+		group by name order BY count desc
+	</select>
+	<!-- 陕西台日报 -->
+	<select id="auditReportSQL.report13Table1" resultClass="java.util.HashMap"
+		parameterClass="java.util.HashMap">
+		SELECT
+	A ."ALARM_ID" AS alarmId,
+	"ALARM_ASSET_NAME" AS alarmAssetName,
+	C ."ASSET_GROUP_NAME" AS groupName,
+	"ALARM_CREATE_DATETIME" AS createDate,
+	"ALARM_SEND_WAY" AS sendWay
+FROM
+	soc."tbl_alarm" A
+JOIN soc."tbl_asset_group_asset" b ON b."ASSET_ID" = A ."ALARM_ASSET_ID"
+LEFT JOIN soc."tbl_asset_group" C ON b."ASSET_GROUP_ID" = C ."ASSET_GROUP_ID"
+WHERE
+	A ."ALARM_CREATE_DATETIME" BETWEEN #start#
+AND #end#
+AND A ."ALARM_RANK" = 5
+
+AND A ."ALARM_ASSET_ID" IN (
+	SELECT
+		"ASSET_ID"
+	FROM
+		soc."tbl_asset"
+	
+)
+<isNotEmpty prepend="AND" property="alertAssetId">
+             A."ALARM_ASSET_ID" in  ($alertAssetId$)
+          </isNotEmpty>
+
+
+ORDER BY
+	"ALARM_CREATE_DATETIME"
+		</select>
+		<!-- 陕西台日报 -->
+	<select id="auditReportSQL.report13Table2" resultClass="java.util.HashMap"
+		parameterClass="java.util.HashMap">
+ 
+SELECT
+	A ."MONITOR_ALARM_CONTENT" AS alarmcontent,
+	d."ASSET_NAME" AS assetName,
+	C ."ASSET_GROUP_NAME" AS groupName,
+	"MONITOR_ALARM_TIME" AS createDate,
+	"MONITOR_ALARM_INDEX" AS alarmindex,
+	"MONITOR_ALARM_THRESHOLD" AS alarmthreshold,
+	"MONITOR_ALARM_CURRENT_VALUE" AS alarmcurrentvalue
+FROM
+	soc."tbl_monitor_alarm" A
+JOIN soc."tbl_asset_group_asset" b ON b."ASSET_ID" = A ."MONITOR_ALARM_ASSET_ID"
+LEFT JOIN soc."tbl_asset_group" C ON b."ASSET_GROUP_ID" = C ."ASSET_GROUP_ID"
+LEFT JOIN soc."tbl_asset" d ON d."ASSET_ID" = A ."MONITOR_ALARM_ASSET_ID"
+WHERE A."MONITOR_ALARM_TIME" BETWEEN '$start$' AND '$end$'  
+<isNotEmpty prepend="AND" property="alertAssetId">
+             A."MONITOR_ALARM_ASSET_ID" in  ($alertAssetId$)
+          </isNotEmpty>
+	</select>
+	<!-- 陕西周报事件 -->
+	<select id="auditReportSQL.report14Table1" resultClass="java.util.HashMap"
+		parameterClass="java.util.HashMap">
+SELECT
+	"EVENT_CATEGORY_KEY"as category,
+	b. SUM as seriousEventsLastWeek,
+	C . SUM as seriousEventsThisWeek,
+	d. SUM as IntermediateEventsLastWeek,
+	e. SUM as IntermediateEventsThisWeek
+FROM
+	soc."tbl_eventCategory_define" A
+LEFT JOIN (
+select SUM(SUM) , TYPE from (
+$seriousEventsLastWeek$
+)   f  group by f.TYPE
+) b ON A ."EVENT_CATEGORY_KEY" = b. TYPE
+LEFT JOIN (
+select SUM(SUM) , TYPE  from (
+	$seriousEventsThisWeek$
+	)  g group by g.TYPE
+) C ON A ."EVENT_CATEGORY_KEY" = C . TYPE
+LEFT JOIN (
+select SUM(SUM)  , TYPE from (
+	$IntermediateEventsLastWeek$
+	)  h group by h.TYPE
+) d ON A ."EVENT_CATEGORY_KEY" = d. TYPE
+LEFT JOIN (
+select SUM(SUM)  , TYPE from (
+	$IntermediateEventsThisWeek$
+	)  l group by l.TYPE
+) e ON A ."EVENT_CATEGORY_KEY" = e. TYPE
+	</select>
+	
+	<!-- 陕西周报关联事件 -->
+	<!-- 上周高级 -->
+	<select id="auditReportSQL.report14Table2Col1" resultClass="java.util.HashMap"
+		parameterClass="java.util.HashMap">
+select   sum("LOG_AGGREGATED_COUNT") as seriousEventsLastWeek  from soc."tbl_relevance_events" 
+ where "LOG_PRIORITY"  = 5  and  "LOG_SEND"  between  #lastWeekstart# and #lastWeekend # 
+ <isNotEmpty prepend="and" property="assetId">
+ 	"LOG_ASSET_ID" in ($assetId$)
+ </isNotEmpty>
+	</select>
+	<!-- 本周高级 -->
+		<select id="auditReportSQL.report14Table2Col2" resultClass="java.util.HashMap"
+		parameterClass="java.util.HashMap">
+select   sum("LOG_AGGREGATED_COUNT") as seriousEventsThistWeek  from soc."tbl_relevance_events" 
+ where "LOG_PRIORITY"  = 5  and  "LOG_SEND"   between #thisWeekstart# and #thisWeekend #
+  <isNotEmpty prepend="and" property="assetId">
+ 	"LOG_ASSET_ID" in ($assetId$)
+ </isNotEmpty>
+	</select>
+		<!-- 上周中高级 -->
+	<select id="auditReportSQL.report14Table2Col3" resultClass="java.util.HashMap"
+		parameterClass="java.util.HashMap">
+select   sum("LOG_AGGREGATED_COUNT") as IntermediateEventsLastWeek  from soc."tbl_relevance_events" 
+ where "LOG_PRIORITY"  in (3,4) and  "LOG_SEND"  between  #lastWeekstart# and #lastWeekend #
+  <isNotEmpty prepend="and" property="assetId">
+ 	"LOG_ASSET_ID" in ($assetId$)
+ </isNotEmpty>
+	</select>
+	<!-- 本周中高级 -->
+		<select id="auditReportSQL.report14Table2Col4" resultClass="java.util.HashMap"
+		parameterClass="java.util.HashMap">
+select   sum("LOG_AGGREGATED_COUNT") as IntermediateEventsThisWeek  from soc."tbl_relevance_events" 
+ where "LOG_PRIORITY"   in (3,4) and  "LOG_SEND"  between #thisWeekstart# and #thisWeekend #
+  <isNotEmpty prepend="and" property="assetId">
+ 	"LOG_ASSET_ID" in ($assetId$)
+ </isNotEmpty>
+	</select>
+		<!-- 陕西台周报teble2 -->
+		<select id="auditReportSQL.report14Table2" resultClass="java.util.HashMap"
+		parameterClass="java.lang.String">
+select d."ASSET_NAME" as assetname, d."ASSET_MAC"   as assetip, c."ASSET_GROUP_NAME"  as groupname from
+	($tableName$) a 
+		left 
+JOIN soc."tbl_asset_group_asset" b ON b."ASSET_ID" = A .assetId
+LEFT JOIN soc."tbl_asset_group" C ON b."ASSET_GROUP_ID" = C ."ASSET_GROUP_ID"
+LEFT JOIN soc."tbl_asset" d ON d."ASSET_ID" = A .assetId 
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+<!-- sqlserver -->
+	<select id="sqlServerauditReportSQL.queryByParentId" resultClass="auditReport"
+		resultMap="auditReportResult" parameterClass="java.util.HashMap">
+		select * from "tbl_audit_report" where "ISMASK"=0
+		<isNotEmpty prepend="and" property="auditReportParentId">
+			"REPORT_PARENT_ID" =
+			#auditReportParentId#
+
+		</isNotEmpty>
+order by "REPORT_ID"
+	</select>
+
+	<select id="sqlServerauditReportSQL.queryEquipmentDetailList" parameterClass="java.util.HashMap" resultClass="java.util.HashMap" >
+		select
+		"LOG_SENDTIME" as "receptTime","LOG_CUSTOMS5" as "devName","LOG_DADDR" as "dAddr","LOG_PRIORITY" as "priority" from
+		$table$   where 1=1
+		<isNotEmpty prepend="AND" property="assetId">
+          <![CDATA[
+            "LOG_ASSET_ID" in ($assetId$) 
+          ]]>
+		</isNotEmpty>
+		ORDER BY "LOG_SENDTIME"  DESC
+	</select>
+	<select id="sqlServerauditReportSQL.report2Table1" resultClass="java.util.HashMap"
+		parameterClass="java.lang.String">
+		select
+		max(case e.type when 1 then e.sum else 0 end) as
+		"priority1",
+		max(case e.type when 2 then e.sum else 0 end) as
+		"priority2",
+		max(case e.type when 3 then e.sum else 0 end) as
+		"priority3",
+		max(case e.type when 4 then e.sum else 0 end) as
+		"priority4",
+		max(case e.type when 5 then e.sum else 0 end) as
+		"priority5"
+		from ($tableName$) e
+	</select>
+	<select id="sqlServerauditReportSQL.report2Table12" resultClass="java.util.HashMap"
+		parameterClass="java.lang.String">
+		select
+		max(case e.type when 1 then e.sum else 0 end) as
+		"priority6",
+		max(case e.type when 2 then e.sum else 0 end) as
+		"priority7",
+		max(case e.type when 3 then e.sum else 0 end) as
+		"priority8",
+		max(case e.type when 4 then e.sum else 0 end) as
+		"priority9",
+		max(case e.type when 5 then e.sum else 0 end) as
+		"priority10"
+		from ($tableName$) e
+	</select>
+	<select id="sqlServerauditReportSQL.report2Table2" resultClass="java.util.HashMap"
+		parameterClass="java.lang.String">
+		select COALESCE("ASSET_GROUP_NAME",'未分组') as asset,
+		max(case e.type when 1 then e.sum else 0 end) as "priority1",
+		max(case
+		e.type when 2 then e.sum else 0 end) as "priority2",
+		max(case e.type
+		when 3 then e.sum else 0 end) as "priority3",
+		max(case e.type when 4
+		then e.sum else 0 end) as "priority4",
+		max(case e.type when 5 then
+		e.sum else 0 end) as "priority5"
+		from ($tableName$) e left join
+		tbl_asset a on e.asset = a."ASSET_NAME" group by a."ASSET_GROUP_NAME"
+	</select>
+	<select id="sqlServerauditReportSQL.report2Table3" resultClass="java.util.HashMap"
+		parameterClass="java.lang.String">
+		select e.asset as asset,
+		max(case e.type when 1 then
+		e.sum else 0 end) as
+		"priority1",
+		max(case e.type
+		when 2 then e.sum else
+		0 end) as
+		"priority2",
+		max(case e.type when 3
+		then e.sum else 0 end) as
+		"priority3",
+		max(case e.type when 4 then e.sum
+		else 0 end) as
+		"priority4",
+		max(case e.type when 5 then e.sum else 0
+		end) as
+		"priority5"
+		from ($tableName$) e group by asset
+	</select>
+	<select id="sqlServerauditReportSQL.report2Table4" resultClass="java.util.HashMap"
+		parameterClass="java.lang.String">
+		select e.asset as asset,
+		max(case e.type when 1 then
+		e.sum else 0 end) as
+		"priority1",
+		max(case e.type
+		when 2 then e.sum else
+		0 end) as
+		"priority2",
+		max(case e.type when 3
+		then e.sum else 0 end) as
+		"priority3",
+		max(case e.type when 4 then e.sum
+		else 0 end) as
+		"priority4",
+		max(case e.type when 5 then e.sum else 0
+		end) as
+		"priority5"
+		from ($tableName$) e group by asset
+	</select>
+	<select id="sqlServerauditReportSQL.report2Table5" resultClass="java.util.HashMap"
+		parameterClass="java.lang.String">
+		select type, priority, devaddr,name, c as c from
+		($tableName$) e group by e.c , type, priority, name, devaddr order
+		by
+		sum(e.sum) desc
+	</select>
+	<select id="sqlServerauditReportSQL.report2Table6" resultClass="java.util.HashMap"
+		parameterClass="java.lang.String">
+		select type, priority,name, c as c ,sum(e.sum) as sum
+		from
+		($tableName$) e where e.priority=1 group by e.c , type, priority,
+		name order by sum desc
+	</select>
+	<select id="sqlServerauditReportSQL.report2Table7" resultClass="java.util.HashMap"
+		parameterClass="java.lang.String">
+		select type, priority,name, c as c ,sum(e.sum) as sum
+		from
+		($tableName$) e where e.priority=2 group by e.c , type, priority,
+		name order by sum desc
+	</select>
+	<select id="sqlServerauditReportSQL.report2Table8" resultClass="java.util.HashMap"
+		parameterClass="java.lang.String">
+		select type, priority,name, c as c ,sum(e.sum) as sum
+		from
+		($tableName$) e where e.priority=3 group by e.c , type, priority,
+		name order by sum desc
+	</select>
+	<select id="sqlServerauditReportSQL.report2Table9" resultClass="java.util.HashMap"
+		parameterClass="java.lang.String">
+		select type, priority,name, c as c ,sum(e.sum) as sum
+		from
+		($tableName$) e where e.priority=4 group by e.c , type, priority,
+		name order by sum desc
+	</select>
+	<select id="sqlServerauditReportSQL.report2Table10" resultClass="java.util.HashMap"
+		parameterClass="java.lang.String">
+		select type, priority,name, c as c ,sum(e.sum) as sum
+		from
+		($tableName$) e where e.priority=5 group by e.c , type, priority,
+		name order by sum desc
+	</select>
+	<select id="sqlServerauditReportSQL.report6Table1" resultClass="java.util.HashMap"
+		parameterClass="java.lang.String">
+		select priority as priority , sum(e.sum) as count from
+		($tableName$) e group by priority
+
+	</select>
+	<select id="sqlServerauditReportSQL.report6Table2" resultClass="java.util.HashMap"
+		parameterClass="java.lang.String">
+		select type as type , sum(e.sum) as count from
+		($tableName$) e group by type
+	</select>
+	<select id="sqlServerauditReportSQL.report6Table3" resultClass="java.util.HashMap"
+		parameterClass="java.lang.String">
+		select type as type , sum(e.sum) as count from
+		($tableName$) e group by type
+	</select>
+	<select id="sqlServerauditReportSQL.report6Table4" resultClass="java.util.HashMap"
+		parameterClass="java.lang.String">
+		select type as type , sum(e.sum) as count from
+		($tableName$) e group by type
+	</select>
+	<select id="sqlServerauditReportSQL.report6Table5" resultClass="java.util.HashMap"
+		parameterClass="java.lang.String">
+		select type as type , sum(e.sum) as count from
+		($tableName$) e group by type order by count desc
+	</select>
+	<select id="sqlServerauditReportSQL.report7Table1" resultClass="java.util.HashMap"
+		parameterClass="java.lang.String">
+		select "ASSET_NAME" as name,"ASSET_SECRET_VALUE" as secret,
+		"ASSET_INTEGRITY_VALUE" as integrity ,"ASSET_USABILITY_VALUE" as usability from tbl_asset
+	</select>
+	<select id="sqlServerauditReportSQL.report8Table1" resultClass="java.util.HashMap"
+		parameterClass="java.lang.String">
+		select e.priority as priority ,sum(e.sum) as sum from
+		($tableName$)e
+		group by e.priority
+	</select>
+	<select id="sqlServerauditReportSQL.report8Table3" resultClass="java.util.HashMap"
+		parameterClass="java.lang.String">
+		select e.asset as asset,
+		max(case e.type when 1 then
+		e.sum else 0 end) as
+		"priority1",
+		max(case e.type
+		when 2 then e.sum else
+		0 end) as
+		"priority2",
+		max(case e.type when 3
+		then e.sum else 0 end) as
+		"priority3",
+		max(case e.type when 4 then e.sum
+		else 0 end) as
+		"priority4",
+		max(case e.type when 5 then e.sum else 0
+		end) as
+		"priority5"
+		from ($tableName$) e group by asset
+	</select>
+	<select id="sqlServerauditReportSQL.report8Table4" resultClass="java.util.HashMap"
+		parameterClass="java.lang.String">
+		select type as type , sum(e.sum) as count from
+		($tableName$) e group by type order by count desc
+	</select>
+	<select id="sqlServerauditReportSQL.report8Table5" resultClass="java.util.HashMap"
+		parameterClass="java.lang.String">
+		select type as type , sum(e.sum) as count from
+		($tableName$) e group by type order by count desc
+	</select>
+	<select id="sqlServerauditReportSQL.report9Table1" resultClass="java.util.HashMap"
+		parameterClass="java.util.HashMap">
+		select "ASSET_GROUP_NAME" as 'name',"ASSET_MEMO" as 'desc'
+		from "tbl_asset_group" where "ASSET_GROUP_IS_DELETE"=0 and "ASSET_GROUP_ID" >1
+			<isNotEmpty prepend="AND" property="groupid">
+            "ASSET_GROUP_ID" =#groupid# 
+		or "ASSET_GROUP_PARENT_ID" =#groupid#
+          </isNotEmpty>
+	</select>
+	<select id="sqlServerauditReportSQL.report9Table1Count"  parameterClass="java.util.HashMap" resultClass="int">
+		select count(*) as count from "tbl_asset_group" where "ASSET_GROUP_IS_DELETE"=0 and "ASSET_GROUP_ID" >1
+			<isNotEmpty prepend="AND" property="groupid">
+            "ASSET_GROUP_ID" =#groupid# 
+		or "ASSET_GROUP_PARENT_ID" =#groupid#
+          </isNotEmpty>
+	</select>
+	<select id="sqlServerauditReportSQL.report9Table2" resultClass="java.util.HashMap"
+		parameterClass="java.util.HashMap">
+		
+		select count(a."ASSET_ID") as count, g."ASSET_GROUP_NAME" as name from "tbl_asset_group" 
+		g left join "tbl_asset_group_asset" a on a."ASSET_GROUP_ID" = g."ASSET_GROUP_ID" 
+		where  g."ASSET_GROUP_IS_DELETE"=0 and g."ASSET_GROUP_ID" >1
+		<isNotEmpty prepend="AND" property="groupid">
+            g."ASSET_GROUP_ID" =#groupid# 
+		or g."ASSET_GROUP_PARENT_ID" =#groupid#
+          </isNotEmpty>
+			
+		 group by g."ASSET_GROUP_NAME"		
+	</select>
+	<!--  根据资产组id去查询资产组名称-->
+	<select id="sqlServerauditReportSQL.queryAssetGroup" resultClass="java.lang.String" parameterClass="long">
+   	    SELECT "ASSET_GROUP_NAME"
+  		FROM tbl_asset_group  WHERE "ASSET_GROUP_ID"=#value#; 
+   	</select>
+   	
+   	 <!-- 查询资产分布 修改 根据资产id去查询-->
+      	<select id="sqlServerauditReportSQL.queryAssets" resultClass="int" parameterClass="java.util.HashMap">
+   	    SELECT COUNT(*) FROM "tbl_asset" WHERE 1=1 and "ASSET_IS_DELETE" = 0
+   	     <isNotEmpty prepend="AND" property="assetGroupId">
+		    <![CDATA[
+		       "ASSET_ID" in (select distinct("ASSET_ID") from "tbl_asset_group_asset" where "ASSET_GROUP_ID" in ($assetGroupId$)) 
+		    ]]>
+		</isNotEmpty>
+   	</select>
+	<select id="sqlServerauditReportSQL.report9Table2Count" parameterClass="java.util.HashMap" resultClass="int">
+	select count(*) as count from "tbl_asset" where "ASSET_IS_DELETE"=0
+	<isNotEmpty prepend="AND" property="aasetId">
+		    <![CDATA[
+		       "ASSET_ID" in ($aasetId$) 
+		    ]]>
+		</isNotEmpty>
+	</select>
+	<select id="sqlServerauditReportSQL.existsTable" parameterClass="String"
+		resultClass="int">
+		SELECT count(*) FROM sys.objects WHERE name =
+		#tableName#
+	</select>
+	<select id="auditReportSQL.report10Table1" resultClass="java.util.HashMap"
+		parameterClass="java.util.HashMap">
+		select "EVENTS_DEVPRODUCT" as name,count(*) as count from "tbl_firewall_events" where 1=1
+		<isNotEmpty prepend= "AND"  property="start" >
+			<![CDATA[
+				"EVENTS_PUTTIME" between #start# and #end#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="assetId" >
+			<![CDATA[
+				"REL_ASSET_ID" in ($assetId$)
+			]]>
+		</isNotEmpty>
+		group by "EVENTS_DEVPRODUCT" order BY count desc
+		
+	</select>
+	<select id="auditReportSQL.report12Table1" resultClass="java.util.HashMap"
+		parameterClass="java.util.HashMap">
+		select "REL_EVENT_TYPE" as type,count(*) as count from "tbl_alarm" where 1=1
+		<isNotEmpty prepend= "AND"  property="start" >
+			<![CDATA[
+				"MESSAGE_OPERATE_DATE" between #start# and #end#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="alertAssetId">
+             "ALARM_ASSET_ID" in  ($alertAssetId$)
+          </isNotEmpty>
+		group by "REL_EVENT_TYPE" order BY count desc
+	</select>
+	
+	<select id="auditReportSQL.report12Table2Count" resultClass="int"
+		parameterClass="java.util.HashMap">
+		select COUNT(*) from "tbl_alarm" where 1=1
+		<isNotEmpty prepend="AND" property="timeHour">
+	        <![CDATA[
+	            "ALARM_CREATE_DATETIME" BETWEEN #timeHour# AND #endTime#
+	        ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="alertAssetId">
+	        <![CDATA[
+	            "ALARM_ASSET_ID" in ($alertAssetId$)
+	        ]]>
+		</isNotEmpty>
+	</select>
+	
+    <select id="auditReportSQL.report12Table2" resultClass="java.util.HashMap"
+		parameterClass="java.util.HashMap">
+		select "ALARM_RANK" as rank,count(*) as count from "tbl_alarm" where 1=1
+		
+		<isNotEmpty prepend="AND" property="timeHour">
+	        <![CDATA[
+	            "ALARM_CREATE_DATETIME" BETWEEN #timeHour# AND #endTime#
+	        ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="alertAssetId">
+	        <![CDATA[
+	            "ALARM_ASSET_ID" in ($alertAssetId$)
+	        ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="start" >
+			<![CDATA[
+				"MESSAGE_OPERATE_DATE" between #start# and #end#
+			]]>
+		</isNotEmpty>
+		group by "ALARM_RANK" order BY count desc
+	</select>
+	
+	<select id="sqlServerauditReportSQL.report12Table3" resultClass="java.util.HashMap"
+		parameterClass="java.util.HashMap">
+		select "ALARM_ASSET_NAME" as name,count("ALARM_ASSET_NAME") as count from "tbl_alarm" where 1=1
+		<isNotEmpty prepend= "AND"  property="start" >
+			<![CDATA[
+				"MESSAGE_OPERATE_DATE" between #start# and #end#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="alertAssetId">
+	        <![CDATA[
+	            "ALARM_ASSET_ID" in ($alertAssetId$)
+	        ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="alarmRank" >
+			<![CDATA[
+				"ALARM_RANK" = #alarmRank#
+			]]>
+		</isNotEmpty>
+		group by "ALARM_ASSET_NAME" order BY count desc
+	</select>
+</sqlMap>

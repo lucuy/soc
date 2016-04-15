@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="device" extends="struts-default" namespace="/device">
+		<!-- 查询所有的设备列表 -->
+		<action name="queryAllDevice" class="deviceAction" method="queryAllDevice">
+			<result>/pages/topoPage/device/device_list.jsp</result>
+		</action>
+		<!-- 删除设备信息 -->
+		<action name="deleteDevice" class="deviceAction" method="deleteDevice">
+			<result name="success" type="chain">
+		        <param name="namespace">/device</param>
+				<param name="actionName">queryAllDevice</param>
+		   </result>
+		</action>
+		<!-- 编辑设备信息 -->
+		<action name="editDevice" class="deviceAction" method="addDevice">
+			<!-- <interceptor-ref name="defaultStack"> 
+					 渲染页面前刷新model在ValueStack的root的引用 
+					 <param name="modelDriven.refreshModelBeforeResult"> 
+					 	true 
+					 </param> 
+ 			</interceptor-ref> -->
+			<result name="success">/pages/topoPage/device/addDevice.jsp</result>  
+		</action>
+		<!-- 更新设备信息 -->
+		<action name="updateDevice" class="deviceAction" method="updateDevice">
+			<result name="success" type="chain">
+				 <param name="namespace">/device</param>
+				<param name="actionName">queryAllDevice</param>
+			</result>
+		</action>
+		<!-- 关联设备需要的数据 -->
+		<action name="queryAjaxAllDevice" class="deviceAction" method="queryAjaxAllDevice">
+		</action>
+		<!-- 查找设备是否有关联设备 -->
+		<action name="queryAssociationDevice" class="deviceAction" method="queryAssociationDevice">
+		</action>
+		<!-- 检测设备的状态 -->
+		<action name="queryDeviceStatus" class="deviceAction" method="queryDeviceStatus"></action>
+		<!-- 内部拓扑xml-->
+		<action name="loadBirdeyeData" class="deviceAction" method="loadBirdeyeData"></action>
+		<!-- 外部（soc间）拓扑 -->
+		<action name="loadOutData" class="deviceAction" method="loadOutData"></action>
+		<!-- 选择设备的位置加载不同的关联设备 -->
+		<action name="queryAssociationDevices" class="deviceAction" method="queryAssociationDevices"></action>
+			<!--区域展示栏保存操作 -->
+		<action name="saveBackGround" class="deviceAction" method="saveBackGround"></action>
+		
+		
+		<!--初始化区域展示栏 -->
+		<action name="loadRoundrectInfo" class="deviceAction" method="loadRoundrectInfo"></action>
+
+			<!--区域展示栏保存操作内网 -->
+		<action name="saveBackGroundBM" class="deviceAction" method="saveBackGroundBM"></action>
+		
+		
+		<!--初始化区域展示栏 内网-->
+		<action name="loadRoundrectInfoBM" class="deviceAction" method="loadRoundrectInfoBM"></action>
+
+		
+		<!-- 更新区域展示栏 -->
+		<action name="updateRoundrectInfoById" class="deviceAction" method="updateRoundrectInfoById"></action>
+		
+		<!-- 删除区域展示栏 -->
+		<action name="delBackGroundById" class="deviceAction" method="delBackGroundById"></action>
+
+		<!-- 释放图片后，调用 -->
+		<action name="editDeviceMoveOut" class="deviceAction" method="editDeviceMoveOut">
+		</action>
+
+		<!--选择网络拓扑背景的图片-->
+		<action name="selectBackgroundPicture" class="deviceAction" method="selectBackgroundPicture"></action>
+		
+		<!--snmp信息采集-->
+		<action name="execSnmpCommand" class="deviceAction" method="execSnmpCommand"></action>
+		
+		
+	
+	</package>
+</struts>

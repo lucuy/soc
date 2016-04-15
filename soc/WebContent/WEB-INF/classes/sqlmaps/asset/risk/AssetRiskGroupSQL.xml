@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="AssetRiskGroupSQL">
+
+	<resultMap id="RiskGroup" class="AssetRiskGroup">
+   		<result property="riskGroupId" 			column="RISKGROUP_ID" 		    	jdbcType="bigint"/>
+   		<result property="riskGroupName"         column="RISKGROUP_NAME"           	jdbcType="varchar"/>
+   	</resultMap>
+   	
+   	<select id="pgAdminquery.riskGroupByName" parameterClass="java.lang.String" resultMap="RiskGroup">
+	   SELECT * FROM "tbl_risk_group" WHERE "RISKGROUP_NAME" = #riskGroupName#
+	</select>
+   	<select id="sqlServerquery.riskGroupByName" parameterClass="java.lang.String" resultMap="RiskGroup">
+	   SELECT * FROM "tbl_risk_group" WHERE "RISKGROUP_NAME" = #riskGroupName#
+	</select>
+   	
+</sqlMap>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	
+	<package name="addressPolicy" extends="struts-default" namespace="/addressPolicy">
+	    <!-- 查询用 -->
+		<action name="query" class="addressPolicyAction" method="query">
+			<result name="success">/pages/policy/addresspolicy/address_policy_list.jsp</result>     	
+		</action>
+		<!-- 更新地址策略状态 -->
+		<action name="updatePolicyStatus" class="addressPolicyAction" method="updateStatus">
+		    <result name="success" type="chain">
+		      <param name="namespace">/addressPolicy</param>
+		      <param name="actionName">query</param>
+		    </result>
+	    </action>
+	    <!-- 标记删除地址策略 -->
+	    <action name="deleteaddressPolicy" class="addressPolicyAction" method="deleteaddressPolicy">
+	         <result name="success" type="chain">
+		      <param name="namespace">/addressPolicy</param>
+		      <param name="actionName">query</param>
+		    </result>
+	    </action>
+	    <!-- 跳转到添加或者更改页面 -->
+		<action name="edit" class="addressPolicyAction" method="editAddressPolicy">
+			<result name="success">/pages/policy/addresspolicy/address_policy_info.jsp</result>  
+		</action>
+		<!-- 更新地址策略 -->
+		<action name="updateAddress" class="addressPolicyAction" method="updateAddressPolicy">
+			<interceptor-ref name="defaultStack"/><!-- 需要注意拦截器栈的配置顺序-->  
+            <interceptor-ref name="token"/><!-- 这就是用来防止表单重复提交的拦截器-->  
+            <result name="invalid.token" type="redirectAction">
+            <param name="namespace">/addressPolicy</param>
+		       <param name="actionName">query</param>
+            
+            </result><!-- 需要注意的是名字必须为invalid.token-->  
+			 <result name="success" type="chain">
+		      <param name="namespace">/addressPolicy</param>
+		      <param name="actionName">query</param>
+		    </result>
+		</action>
+		<!-- 验证地址策略是否存在 -->
+		<action name="checkaddressPolicyName" class="addressPolicyAction" method="checkaddressPolicyName">
+		</action>
+		<!-- 排序 -->
+		<action name="sort" class="addressPolicyAction" method="sort">
+		  <result name="success">/pages/policy/addresspolicy/address_policy_list.jsp</result> 
+		</action>
+		
+		
+	</package>
+	
+</struts>	

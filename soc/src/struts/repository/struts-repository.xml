@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+	<package name="warn" extends="json-default" namespace="/warn">
+		
+		<!-- 添加新的预警 -->
+		<action name="insertWarn" class="warnAction" method="insertWarn">
+		
+			 <result name="success" type="chain">
+		    	<param name="namespace">/warn</param>
+		    	<param name="actionName">query</param>
+		    </result>
+		</action>
+		
+		<!-- 查看详细信息 -->
+		<action name="queryById" class="warnAction" method="queryById">
+			<result name="success">/pages/repository/warn_settinginfo.jsp</result>	
+		</action>
+		
+		<!-- 删除预警 -->
+		<action name="deleteById" class="warnAction" method="deleteById">
+		    <result name="success" type="chain">
+		    	<param name="namespace">/warn</param>
+		    	<param name="actionName">query</param>
+		    </result>
+		</action>
+		
+		<!-- 修改预警 -->
+		<action name="updateById" class="warnAction" method="updateById">
+			 <result name="success" type="chain">
+		    	<param name="namespace">/warn</param>
+		    	<param name="actionName">query</param>
+		    </result>	
+		</action>
+		
+		<!-- 根据不同条件查询 -->
+		<action name="query" class="warnAction" method="query">
+			<result name="success">/pages/repository/warn_list.jsp</result>
+		</action>
+		
+		<!-- 排序 -->
+		<action name="sort" class="warnAction" method="sort">
+		    <result name="success">/pages/repository/warn_list.jsp</result>
+		</action>
+		
+		 <!-- 查找对应预警信息的资产信息 -->
+		<action name="getData" class="warnAction" method="queryAjaxByWarn">
+	        <result name="success" type="json">
+	           <param name="root">
+	               assetList
+	           </param>
+	        </result>
+	    </action>
+	</package>
+</struts>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="psadroomfireInfo" extends="struts-default" namespace="/psadroomfireInfo">
+		<action name="psadroomfireAction" class="com.compliance.webapp.action.psad.PsadRoomFireAction" method="queryRoomFireByFatherSort">
+			<result name="success">/pages/dbPage/psad/psadRoomFire.jsp</result>
+		</action>
+	</package>
+</struts>

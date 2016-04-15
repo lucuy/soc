@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<node name="SQLServer数据库" level="1">
+	<node name="空间空闲率" kpiName="data_free_PCT_SSR"/>
+	<node name="日志空闲率" kpiName="LOG_free_PCT_SSR"/>
+	<node name="缓存命中率" kpiName="Cache_Hit_SSR"/>
+	<node name="表使用空间大小" kpiName="Space_Used_SSR"/>
+	<node name="锁总数" kpiName="Total_Locks_SSR"/>
+	<node name="当前周期任务失败" kpiName="Jobs_Failed_Current_Interval_SSR"/>
+</node>

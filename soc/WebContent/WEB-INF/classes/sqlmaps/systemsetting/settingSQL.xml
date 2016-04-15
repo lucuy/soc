@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="settingSQL">
+	
+	<resultMap id="settingResult" class="setting">
+   		<result property="id" 				column="SYSTEM_SETTING_ID" 					jdbcType="long"/>
+   		<result property="key" 				column="SYSTEM_SETTING_KEY" 				jdbcType="varchar"/>
+   		<result property="value" 			column="SYSTEM_SETTING_VALUE"				jdbcType="varchar"/>
+   		<result property="memo" 			column="SYSTEM_SETTING_MEMO" 				jdbcType="txt"/>
+   	</resultMap>
+	
+	
+	
+	<!-- 查询 -->
+	<select id="pgAdminsetting.query"  parameterClass="java.util.HashMap" resultMap="settingResult">
+		SELECT * FROM "tbl_system_setting" WHERE 1=1
+		<isNotEmpty prepend= "AND"  property="key">
+			<![CDATA[
+				"SYSTEM_SETTING_KEY" = #key# 
+			]]>
+		</isNotEmpty> 
+		<isNotEmpty prepend= "AND"  property="memo">
+			<![CDATA[
+				"SYSTEM_SETTING_KEY" LIKE '%$memo$%' 
+			]]>
+		</isNotEmpty> 
+	</select>
+	
+	<!-- 得到key值相似的网卡设置 -->
+	<select id="pgAdminsetting.queryByConIP"  parameterClass="java.util.HashMap" resultMap="settingResult">
+		SELECT * FROM "tbl_system_setting" WHERE 1=1 
+		<isNotEmpty prepend= "AND"  property="key">
+			<![CDATA[
+			"SYSTEM_SETTING_KEY" LIKE '%$key$%' 
+			]]>
+		</isNotEmpty> 
+		ORDER BY "SYSTEM_SETTING_VALUE" DESC
+	</select>
+	
+	<!-- 根据ID查询 -->
+	<select id="pgAdminsetting.queryById"  parameterClass="int" resultMap="settingResult">
+		<![CDATA[
+			SELECT * FROM "tbl_system_setting" WHERE "SYSTEM_SETTING_ID" = #id#
+		]]>
+	</select>
+	
+	<!-- 根据key查询 -->
+	<select id="pgAdminsetting.queryBykey" parameterClass="String" resultMap="settingResult">
+	   <![CDATA[
+			SELECT * FROM "tbl_system_setting" WHERE "SYSTEM_SETTING_KEY" = #value#
+		]]>
+	</select>
+	
+	<!-- 根据Key更新数据 -->
+	<select id="pgAdminsetting.updateByKey"  parameterClass="String" resultClass="int">
+		<![CDATA[
+			SELECT count("SYSTEM_SETTING_KEY") AS cardKey FROM "tbl_system_setting" WHERE "SYSTEM_SETTING_KEY" = #key#
+		]]>
+	</select>
+	
+	<!-- 根据Key查询数据 -->
+	<select id="pgAdminsetting.queryByKey"  parameterClass="String" resultClass="String">
+		<![CDATA[
+			SELECT "SYSTEM_SETTING_VALUE" FROM "tbl_system_setting" WHERE "SYSTEM_SETTING_KEY" = #key#;
+		]]>
+	</select>
+	
+	<!-- 新增 -->
+	<insert id="pgAdminsetting.insert" parameterClass="setting">
+		INSERT INTO "tbl_system_setting" 
+				( "SYSTEM_SETTING_KEY", 
+				  "SYSTEM_SETTING_VALUE", 
+				  "SYSTEM_SETTING_MEMO" )		 
+		VALUES 
+				( #key#, 
+				  #value#, 
+				  #memo# )
+		<selectKey resultClass="java.lang.Integer" keyProperty="id">
+            SELECT currval('tbl_system_setting_seq'::regclass) AS "SYSTEM_SETTING_ID"
+      	</selectKey>
+	</insert>
+	
+	<!-- 更新 -->
+	<update id="pgAdminsetting.update" parameterClass="setting">
+		<![CDATA[
+			UPDATE "tbl_system_setting"
+			 SET 
+				  "SYSTEM_SETTING_VALUE"	=	#value# 
+			WHERE 
+			      "SYSTEM_SETTING_KEY" = #key#
+		]]>
+	</update>
+	
+	<!-- 通过ID更新 -->
+	<update id="pgAdminsetting.updateById" parameterClass="setting">
+		<![CDATA[
+			UPDATE "tbl_system_setting" 
+			SET 
+				   "SYSTEM_SETTING_KEY"	=	#key#,
+				   "SYSTEM_SETTING_VALUE"	=	#value#,
+				   "SYSTEM_SETTING_MEMO"	=	#memo# 
+			WHERE 
+			       "SYSTEM_SETTING_ID" = #id#
+		]]>
+	</update>
+	
+	<!-- 删除 -->
+	<delete id="pgAdminsetting.delete" parameterClass="int">
+		<![CDATA[
+			DELETE FROM "tbl_system_setting" WHERE "SYSTEM_SETTING_ID" = #id#
+		]]>
+	</delete>
+	
+	<!-- 通过ID删除 -->
+	<delete id="pgAdminsetting.deleteById" parameterClass="String">
+		<![CDATA[
+			DELETE FROM "tbl_system_setting" WHERE "SYSTEM_SETTING_KEY" LIKE '%$key$%'
+		]]>
+	</delete>
+	
+	
+		<!-- 根据Key查询数据 -->
+	<select id="pgAdminsetting.queryByKeyMap"  resultClass="String">
+		<![CDATA[
+			SELECT "SYSTEM_SETTING_VALUE" FROM "tbl_system_setting" WHERE "SYSTEM_SETTING_KEY" = 'syncIp';
+		]]>
+	</select>
+		<!-- 更新 -->
+	<update id="pgAdminsetting.updateMap" parameterClass="String">
+		<![CDATA[
+			UPDATE "tbl_system_setting"
+			 SET 
+				  "SYSTEM_SETTING_VALUE" =	#value# 
+			WHERE 
+			      "SYSTEM_SETTING_KEY" = 'syncIp'
+		]]>
+	</update>
+	
+	<!-- 新增 -->
+	<insert id="pgAdminsetting.insertMap" parameterClass="String"  >
+		INSERT INTO "tbl_system_setting" 
+				( "SYSTEM_SETTING_KEY", 
+				  "SYSTEM_SETTING_VALUE"
+				)		 
+		VALUES 
+				( 'syncIp', 
+				  #value#
+				 )
+		
+	</insert>
+	
+	<!-- sqlServer用的sql -->
+	
+	<!-- 查询 -->
+	<select id="sqlServersetting.query"  parameterClass="java.util.HashMap" resultMap="settingResult">
+		SELECT * FROM "tbl_system_setting" WHERE 1=1
+		<isNotEmpty prepend= "AND"  property="key">
+			<![CDATA[
+				"SYSTEM_SETTING_KEY" = #key# 
+			]]>
+		</isNotEmpty> 
+		<isNotEmpty prepend= "AND"  property="memo">
+			<![CDATA[
+				"SYSTEM_SETTING_KEY" LIKE '%$memo$%' 
+			]]>
+		</isNotEmpty> 
+	</select>
+	
+	<!-- 得到key值相似的网卡设置 -->
+	<select id="sqlServersetting.queryByConIP"  parameterClass="java.util.HashMap" resultMap="settingResult">
+		SELECT * FROM "tbl_system_setting" WHERE 1=1 
+		<isNotEmpty prepend= "AND"  property="key">
+			<![CDATA[
+			"SYSTEM_SETTING_KEY" LIKE '%$key$%' 
+			]]>
+		</isNotEmpty> 
+	</select>
+	
+	<!-- 根据ID查询 -->
+	<select id="sqlServersetting.queryById"  parameterClass="int" resultMap="settingResult">
+		<![CDATA[
+			SELECT * FROM "tbl_system_setting" WHERE "SYSTEM_SETTING_ID" = #id#
+		]]>
+	</select>
+	
+	<!-- 根据key查询 -->
+	<select id="sqlServersetting.queryBykey" parameterClass="String" resultMap="settingResult">
+	   <![CDATA[
+			SELECT * FROM "tbl_system_setting" WHERE "SYSTEM_SETTING_KEY" = #value#
+		]]>
+	</select>
+	
+	<!-- 根据Key更新数据 -->
+	<select id="sqlServersetting.updateByKey"  parameterClass="String" resultClass="int">
+		<![CDATA[
+			SELECT count("SYSTEM_SETTING_KEY") AS cardKey FROM "tbl_system_setting" WHERE "SYSTEM_SETTING_KEY" = #key#
+		]]>
+	</select>
+	
+	<!-- 根据Key查询数据 -->
+	<select id="sqlServersetting.queryByKey"  parameterClass="String" resultClass="String">
+		<![CDATA[
+			SELECT "SYSTEM_SETTING_VALUE" FROM "tbl_system_setting" WHERE "SYSTEM_SETTING_KEY" = #key#;
+		]]>
+	</select>
+	
+	<!-- 新增 -->
+	<insert id="sqlServersetting.insert" parameterClass="setting">
+		INSERT INTO "tbl_system_setting" 
+				( "SYSTEM_SETTING_KEY", 
+				  "SYSTEM_SETTING_VALUE", 
+				  "SYSTEM_SETTING_MEMO" )		 
+		VALUES 
+				( #key#, 
+				  #value#, 
+				  #memo# )
+	</insert>
+	
+	<!-- 更新 -->
+	<update id="sqlServersetting.update" parameterClass="setting">
+		<![CDATA[
+			UPDATE "tbl_system_setting"
+			 SET 
+				  "SYSTEM_SETTING_VALUE"	=	#value# 
+			WHERE 
+			      "SYSTEM_SETTING_KEY" = #key#
+		]]>
+	</update>
+	
+	<!-- 通过ID更新 -->
+	<update id="sqlServersetting.updateById" parameterClass="setting">
+		<![CDATA[
+			UPDATE "tbl_system_setting" 
+			SET 
+				   "SYSTEM_SETTING_KEY"	=	#key#,
+				   "SYSTEM_SETTING_VALUE"	=	#value#,
+				   "SYSTEM_SETTING_MEMO"	=	#memo# 
+			WHERE 
+			       "SYSTEM_SETTING_ID" = #id#
+		]]>
+	</update>
+	
+	<!-- 删除 -->
+	<delete id="sqlServersetting.delete" parameterClass="int">
+		<![CDATA[
+			DELETE FROM "tbl_system_setting" WHERE "SYSTEM_SETTING_ID" = #id#
+		]]>
+	</delete>
+	
+	<!-- 通过ID删除 -->
+	<delete id="sqlServersetting.deleteById" parameterClass="String">
+		<![CDATA[
+			DELETE FROM "tbl_system_setting" WHERE "SYSTEM_SETTING_KEY" LIKE '%$key$%'
+		]]>
+	</delete>
+	
+	
+		<!-- 根据Key查询数据 -->
+	<select id="sqlServersetting.queryByKeyMap"  resultClass="String">
+		<![CDATA[
+			SELECT "SYSTEM_SETTING_VALUE" FROM "tbl_system_setting" WHERE "SYSTEM_SETTING_KEY" = 'syncIp';
+		]]>
+	</select>
+		<!-- 更新 -->
+	<update id="sqlServersetting.updateMap" parameterClass="String">
+		<![CDATA[
+			UPDATE "tbl_system_setting"
+			 SET 
+				  "SYSTEM_SETTING_VALUE" =	#value# 
+			WHERE 
+			      "SYSTEM_SETTING_KEY" = 'syncIp'
+		]]>
+	</update>
+	
+	<!-- 新增 -->
+	<insert id="sqlServersetting.insertMap" parameterClass="String"  >
+		INSERT INTO "tbl_system_setting" 
+				( "SYSTEM_SETTING_KEY", 
+				  "SYSTEM_SETTING_VALUE"
+				)		 
+		VALUES 
+				( 'syncIp', 
+				  #value#
+				 )
+		
+	</insert>
+	
+</sqlMap>

@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="assetRiskEvaluation">
+	<typeAlias alias="assetRiskEvaluation" type="com.soc.model.risk.AssetRiskEvaluation" />
+   	<resultMap id="assetRiskEvaluationResult" class="assetRiskEvaluation">
+        <result property="assetRiskEvaluationId"    column="ASSET_VALUE_ID"         	jdbcType="bigint"/>
+        <result property="assetName"     			column="ASSET_NAME"     			jdbcType="varchar"/>
+        <result property="assetSecretValue"       	column="ASSET_SECRET_VALUE"       	jdbcType="smallint"/>
+        <result property="assetIntegrityValue"     	column="ASSET_INTEGRITY_VALUE"     	jdbcType="smallint"/>
+        <result property="assetUsabilityValue"     	column="ASSET_USABILITY_VALUE"     	jdbcType="smallint"/>
+        <result property="assetAssetValue"     		column="ASSET_ASSET_VALUE"     		jdbcType="smallint"/>
+        <result property="relAssetId"               column="REL_ASSET_ID"               jdbcType="bigint"/>
+        <result property="assetValueUpdateTime"     column="ASSET_VALUE_UPDATE_TIME"    jdbcType="datetime"/>
+   		<result property="isdelete" column="IS_DELETE" jdbcType="bigint"/>
+    </resultMap>
+   	
+   	<!--  -->
+   	<insert id="pgAdmininsert.assetRiskEvaluation" parameterClass="assetRiskEvaluation">
+		INSERT INTO "tbl_asset_value"(
+             "ASSET_SECRET_VALUE"
+            , "ASSET_INTEGRITY_VALUE","ASSET_USABILITY_VALUE"
+            , "ASSET_ASSET_VALUE","ASSET_NAME","REL_ASSET_ID","ASSET_VALUE_UPDATE_TIME","IS_DELETE")
+       VALUES (#assetSecretValue#
+    		, #assetIntegrityValue#, #assetUsabilityValue#
+    		, #assetAssetValue#,#assetName#,#relAssetId#,#assetValueUpdateTime#,1)
+	</insert>
+   	
+   	<!-- 查询条数 -->
+	<select id="pgAdminassetRiskEvaluation.count" resultClass="int" parameterClass="java.util.HashMap">
+		SELECT COUNT(*) FROM "tbl_asset_value" WHERE 1=1 and "IS_DELETE"=1
+		
+		<isNotEmpty prepend="AND" property="keyword">
+		    <![CDATA[ 
+		     "ASSET_NAME" LIKE '%$keyword$%'
+		    ]]>
+		</isNotEmpty>	
+		<isNotEmpty prepend= "AND"  property="assetName">
+			<![CDATA[
+				"ASSET_NAME" LIKE '%$assetName$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="assetRiskEvaluationId">
+			<![CDATA[
+				"ASSET_VALUE_ID" = #assetRiskEvaluationId#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="assetSecretValue">
+			<![CDATA[
+				"ASSET_SECRET_VALUE" = #assetSecretValue#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="assetIntegrityValue">
+			<![CDATA[
+				"ASSET_INTEGRITY_VALUE" = #assetIntegrityValue#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="assetUsabilityValue">
+			<![CDATA[
+				"ASSET_USABILITY_VALUE" = #assetUsabilityValue#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="assetAssetValue">
+			<![CDATA[
+				"ASSET_ASSET_VALUE" = #assetAssetValue#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="assetGroupId">
+		    <![CDATA[
+		       "REL_ASSET_ID" in(SELECT "ASSET_ID"  FROM "tbl_asset" WHERE "ASSET_ID" in (select distinct("ASSET_ID") from "tbl_asset_group_asset" where "ASSET_GROUP_ID" in ($assetGroupId$)))
+		    ]]>
+		</isNotEmpty>
+	</select>
+	<!-- 查询 (默认不显示系统内置用户)-->
+	<select id="pgAdminquery.assetRiskEvaluation"  parameterClass="java.util.HashMap" resultMap="assetRiskEvaluationResult" >
+		SELECT * FROM "tbl_asset_value" WHERE 1=1 and "IS_DELETE"=1
+		
+		<isNotEmpty prepend="AND" property="keyword">
+		    <![CDATA[ 
+		     "ASSET_NAME" LIKE '%$keyword$%'
+		    ]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend= "AND"  property="assetName">
+			<![CDATA[
+				"ASSET_NAME" LIKE '%$assetName$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="assetRiskEvaluationId">
+			<![CDATA[
+				"ASSET_VALUE_ID" = #assetRiskEvaluationId#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="assetSecretValue">
+			<![CDATA[
+				"ASSET_SECRET_VALUE" = #assetSecretValue#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="assetIntegrityValue">
+			<![CDATA[
+				"ASSET_INTEGRITY_VALUE" = #assetIntegrityValue#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="assetUsabilityValue">
+			<![CDATA[
+				"ASSET_USABILITY_VALUE" = #assetUsabilityValue#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="assetAssetValue">
+			<![CDATA[
+				"ASSET_ASSET_VALUE" = #assetAssetValue#
+			]]>
+		</isNotEmpty>
+			<isNotEmpty prepend="AND" property="assetGroupId">
+		    <![CDATA[
+		       "REL_ASSET_ID" in(SELECT "ASSET_ID"  FROM "tbl_asset" WHERE "ASSET_ID" in (select distinct("ASSET_ID") from "tbl_asset_group_asset" where "ASSET_GROUP_ID" in ($assetGroupId$)))
+		    ]]>
+		</isNotEmpty>
+		 ORDER BY "ASSET_VALUE_UPDATE_TIME" desc 
+	</select>
+    
+   
+    <select id="pgAdminquery.assetRiskEvaluationByID" parameterClass="long" resultMap="assetRiskEvaluationResult">
+      SELECT * FROM "tbl_asset_value" WHERE "ASSET_VALUE_ID" = #value#
+    </select>
+   
+	<update id="pgAdminupdate.assetRiskEvaluation" parameterClass="assetRiskEvaluation">
+		UPDATE "tbl_asset_value" SET 
+		"ASSET_SECRET_VALUE"=#assetSecretValue#,
+    	"ASSET_INTEGRITY_VALUE"=#assetIntegrityValue#,
+    	"ASSET_USABILITY_VALUE"=#assetUsabilityValue#, 
+    	"ASSET_ASSET_VALUE"=#assetAssetValue#,
+    	 "ASSET_VALUE_UPDATE_TIME" = #assetValueUpdateTime#
+    	 WHERE "ASSET_VALUE_ID" =#assetRiskEvaluationId#
+	</update>
+	
+	<delete id="pgAdmindelete.assetRiskEvaluation" parameterClass="java.util.HashMap" >
+		DELETE FROM "tbl_asset_value" WHERE "ASSET_VALUE_ID" in($assetRiskEvaluationId$);
+	</delete>
+	<!-- 根据资产id修改关联的风险值值状态 -->
+	<update id="pgAdminupdate.assetRiskEvaluationStates" parameterClass="java.util.HashMap">
+		UPDATE "tbl_asset_value" SET 
+		 "IS_DELETE" = #assetStatus#
+    	 WHERE 
+    	 "REL_ASSET_ID" =#assetId#
+	</update>
+    <!-- sqlServer -->
+    <!--  -->
+   	<insert id="sqlServerinsert.assetRiskEvaluation" parameterClass="assetRiskEvaluation">
+		INSERT INTO "tbl_asset_value"(
+             "ASSET_SECRET_VALUE"
+            , "ASSET_INTEGRITY_VALUE","ASSET_USABILITY_VALUE"
+            , "ASSET_ASSET_VALUE","ASSET_NAME","REL_ASSET_ID","ASSET_VALUE_UPDATE_TIME","IS_DELETE")
+       VALUES (#assetSecretValue#
+    		, #assetIntegrityValue#, #assetUsabilityValue#
+    		, #assetAssetValue#,#assetName#,#relAssetId#,#assetValueUpdateTime#,1)
+	</insert>
+   	
+   	<!-- 查询条数 -->
+	<select id="sqlServerassetRiskEvaluation.count" resultClass="int" parameterClass="java.util.HashMap">
+		SELECT COUNT(*) FROM "tbl_asset_value" WHERE 1=1 and "IS_DELETE"=1
+		
+		<isNotEmpty prepend="AND" property="keyword">
+		    <![CDATA[ 
+		     "ASSET_NAME" LIKE '%$keyword$%'
+		    ]]>
+		</isNotEmpty>	
+		<isNotEmpty prepend= "AND"  property="assetName">
+			<![CDATA[
+				"ASSET_NAME" LIKE '%$assetName$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="assetRiskEvaluationId">
+			<![CDATA[
+				"ASSET_VALUE_ID" = #assetRiskEvaluationId#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="assetSecretValue">
+			<![CDATA[
+				"ASSET_SECRET_VALUE" = #assetSecretValue#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="assetIntegrityValue">
+			<![CDATA[
+				"ASSET_INTEGRITY_VALUE" = #assetIntegrityValue#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="assetUsabilityValue">
+			<![CDATA[
+				"ASSET_USABILITY_VALUE" = #assetUsabilityValue#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="assetAssetValue">
+			<![CDATA[
+				"ASSET_ASSET_VALUE" = #assetAssetValue#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="assetGroupId">
+		    <![CDATA[
+		       "REL_ASSET_ID" in(SELECT "ASSET_ID"  FROM "tbl_asset" WHERE "ASSET_ID" in (select distinct("ASSET_ID") from "tbl_asset_group_asset" where "ASSET_GROUP_ID" in ($assetGroupId$)))
+		    ]]>
+		</isNotEmpty>
+	</select>
+	<!-- 查询 (默认不显示系统内置用户)-->
+	<select id="sqlServerquery.assetRiskEvaluation"  parameterClass="java.util.HashMap" resultMap="assetRiskEvaluationResult" >
+		SELECT * FROM "tbl_asset_value" WHERE 1=1 and "IS_DELETE"=1
+		
+		<isNotEmpty prepend="AND" property="keyword">
+		    <![CDATA[ 
+		     "ASSET_NAME" LIKE '%$keyword$%'
+		    ]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend= "AND"  property="assetName">
+			<![CDATA[
+				"ASSET_NAME" LIKE '%$assetName$%'
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="assetRiskEvaluationId">
+			<![CDATA[
+				"ASSET_VALUE_ID" = #assetRiskEvaluationId#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="assetSecretValue">
+			<![CDATA[
+				"ASSET_SECRET_VALUE" = #assetSecretValue#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="assetIntegrityValue">
+			<![CDATA[
+				"ASSET_INTEGRITY_VALUE" = #assetIntegrityValue#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="assetUsabilityValue">
+			<![CDATA[
+				"ASSET_USABILITY_VALUE" = #assetUsabilityValue#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend= "AND"  property="assetAssetValue">
+			<![CDATA[
+				"ASSET_ASSET_VALUE" = #assetAssetValue#
+			]]>
+		</isNotEmpty>
+			<isNotEmpty prepend="AND" property="assetGroupId">
+		    <![CDATA[
+		       "REL_ASSET_ID" in(SELECT "ASSET_ID"  FROM "tbl_asset" WHERE "ASSET_ID" in (select distinct("ASSET_ID") from "tbl_asset_group_asset" where "ASSET_GROUP_ID" in ($assetGroupId$)))
+		    ]]>
+		</isNotEmpty>
+		 ORDER BY "ASSET_VALUE_UPDATE_TIME" desc 
+	</select>
+    
+   
+    <select id="sqlServerquery.assetRiskEvaluationByID" parameterClass="long" resultMap="assetRiskEvaluationResult">
+      SELECT * FROM "tbl_asset_value" WHERE "ASSET_VALUE_ID" = #value#
+    </select>
+   
+	<update id="sqlServerupdate.assetRiskEvaluation" parameterClass="assetRiskEvaluation">
+		UPDATE "tbl_asset_value" SET 
+		"ASSET_SECRET_VALUE"=#assetSecretValue#,
+    	"ASSET_INTEGRITY_VALUE"=#assetIntegrityValue#,
+    	"ASSET_USABILITY_VALUE"=#assetUsabilityValue#, 
+    	"ASSET_ASSET_VALUE"=#assetAssetValue#,
+    	 "ASSET_VALUE_UPDATE_TIME" = #assetValueUpdateTime#
+    	 WHERE "ASSET_VALUE_ID" =#assetRiskEvaluationId#
+	</update>
+	
+	<delete id="sqlServerdelete.assetRiskEvaluation" parameterClass="java.util.HashMap" >
+		DELETE FROM "tbl_asset_value" WHERE "ASSET_VALUE_ID" in($assetRiskEvaluationId$);
+	</delete>
+	<!-- 根据资产id修改关联的风险值值状态 -->
+	<update id="sqlServerupdate.assetRiskEvaluationStates" parameterClass="java.util.HashMap">
+		UPDATE "tbl_asset_value" SET 
+		 "IS_DELETE" = #assetStatus#
+    	 WHERE 
+    	 "REL_ASSET_ID" =#assetId#
+	</update>
+</sqlMap>

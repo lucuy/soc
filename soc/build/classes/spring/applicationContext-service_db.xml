@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+			http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+            http://www.springframework.org/schema/aop 
+            http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+            http://www.springframework.org/schema/tx 
+            http://www.springframework.org/schema/tx/spring-tx-2.0.xsd"
+	default-lazy-init="true">
+
+	<!-- baseservice 所有service都继承此类 -->
+	<bean id="baseService1" class="com.compliance.service.impl.BaseServiceImpl" />
+
+	<!--基础数据++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+	<!--用户管理 -->
+	<!-- <bean id="employeeService" class="com.compliance.service.basicinfo.employee.impl.EmployeeServiceImpl" parent="baseService1">
+	 <property name="employeeDao" ref="employeeDao"></property> 
+		</bean> -->
+	<!--组织部门 -->
+	<bean id="divisionService" class="com.compliance.service.basicinfo.division.ibatis.DivisionServiceImpl" parent="baseService1">
+		<property name="divisionDao" ref="divisionDao"></property>
+	</bean>
+	<!-- 单位信息 -->
+	<bean id="unitInfoService" class="com.compliance.service.basicinfo.unitinfo.impl.UnitInfoServiceImpl" parent="baseService1">
+		<property name="unitInfoDao" ref="unitInfoDao"></property>
+	</bean>
+	<!-- 信息系统 -->
+	<bean id="systemService" class="com.compliance.service.basicinfo.system.impl.SystemServiceImpl" parent="baseService1">
+		<property name="systemDao" ref="systemDao"></property>
+	</bean>
+	<!-- 信息资产:业务应用软件 -->
+	<bean id="softUseService" class="com.compliance.service.basicinfo.assets.impl.SoftUseServiceImpl" parent="baseService1">
+		<property name="softUseDao" ref="softUseDao"></property>
+	</bean>
+	<!-- 信息资产:关键数据类别 -->
+	<bean id="dataAssetsService" class="com.compliance.service.basicinfo.assets.impl.DataAssetsServiceImpl" parent="baseService1">
+		<property name="dataAssetsDao" ref="dataAssetsDao"></property>
+	</bean>
+	<!-- 信息资产:主机存储设备 -->
+	<bean id="compAssetsService" class="com.compliance.service.basicinfo.assets.impl.CompAssetsServiceImpl" parent="baseService1">
+		<property name="compAssetsDao" ref="compAssetsDao"></property>
+	</bean>
+	<!-- 信息资产:安全设备 -->
+	<bean id="devAssetsService" class="com.compliance.service.basicinfo.assets.impl.DevAssetsServiceImpl" parent="baseService1">
+		<property name="devAssetsDao" ref="devAssetsDao"></property>
+	</bean>
+	<!-- 信息资产:网络互连设备 -->
+	<bean id="netAssetsService" class="com.compliance.service.basicinfo.assets.impl.NetAssetsServiceImpl" parent="baseService1">
+		<property name="netAssetsDao" ref="netAssetsDao"></property>
+	</bean>
+	<!-- 信息资产:安全相关人员 -->
+	<bean id="empAssetsService" class="com.compliance.service.basicinfo.assets.impl.EmpAssetsServiceImpl" parent="baseService1">
+		<property name="empAssetsDao" ref="empAssetsDao"></property>
+	</bean>
+	<!-- 信息资产:安全文档管理 -->
+	<bean id="docAssetsService" class="com.compliance.service.basicinfo.assets.impl.DocAssetsServiceImpl" parent="baseService1">
+		<property name="docAssetsDao" ref="docAssetsDao"></property>
+	</bean>
+	<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+	<!--定级备案 ———————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————— -->
+	<!-- 定级信息信息 -->
+	<bean id="rankService" class="com.compliance.service.rank.impl.RankServiceImpl" parent="baseService1">
+		<property name="rankDao" ref="rankDao"></property>
+	</bean>
+	<!-- 备案 -->
+	<bean id="recordService" class="com.compliance.service.rank.impl.RecordServiceImpl" parent="baseService1">
+		<property name="recordDao" ref="recordDao"></property>
+	</bean>
+	<!--备案历史 -->
+	<bean id="recordHistoryService" class="com.compliance.service.rank.impl.RecordHistoryServiceImpl" parent="baseService1">
+		<property name="recordHistoryDao" ref="recordHistoryDao"></property>
+	</bean>
+
+
+	<!--备案集 -->
+	<bean id="recordDocListService" class="com.compliance.service.rank.impl.RecordDocListServiceImpl" parent="baseService1">
+		<property name="recordDocListDao" ref="recordDocListDao"></property>
+	</bean>
+	<!--系统废止 -->
+	<bean id="sysAbolishService" class="com.compliance.service.rank.impl.SysAbolishServiceImpl" parent="baseService1">
+		<property name="sysAbolishDao" ref="sysAbolishDao"></property>
+	</bean>
+	<!-- 统计报表 -->
+	<bean id="rankReportService" class="com.compliance.service.rank.impl.RankReportServiceImpl" parent="baseService1">
+		<property name="rankReportDao" ref="rankReportDao"></property>
+	</bean>
+	<!-- —————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————— -->
+
+	<!--合规管理 =========================================================================================================================== -->
+
+
+	<!--技术差距分析》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》 -->
+	<!-- 技术差距分析 -->
+	<bean id="technologyService" class="com.compliance.service.cpManage.technology.impl.TechnologyServiceImpl" parent="baseService1">
+		<property name="technologyDao" ref="technologyDao"></property>
+	</bean>
+
+	<!-- 通用物理管理里 -->
+	<bean id="psadService" class="com.compliance.service.psad.Impl.PsadServiceImpl" parent="baseService1">
+		<property name="psadDao" ref="psadDao"></property>
+	</bean>
+	<!-- 通用物理评估 -->
+	<bean id="psaService" class="com.compliance.service.psad.Impl.PsaServiceImpl" parent="baseService1">
+		<property name="psaDao" ref="psaDao"></property>
+	</bean>
+
+	<!-- 通用管理 -->
+	<bean id="msadService" class="com.compliance.service.msad.Impl.MsadServiceImpl" parent="baseService1">
+		<property name="msadDao" ref="msadDao"></property>
+	</bean>
+	<!-- 通用管理评估 -->
+	<bean id="msaAppService" class="com.compliance.service.msad.Impl.MsaAppServiceImpl" parent="baseService1">
+		<property name="msaAppDao" ref="msaAppDao"></property>
+	</bean>
+
+	<!--技术差距评估 -->
+	<!-- <bean id="assessResultService" class="com.compliance.service.cpManage.assessResult.impl.AssessResultServiceImpl" parent="baseService1"> <property name="assessResultDao" 
+		ref="assessResultDao"></property> </bean> -->
+
+	<!--根据排序查询js算法 -->
+	<bean id="arithmeticService" class="com.compliance.service.cpManage.demand.impl.ArithmeticServiceImpl" parent="baseService1">
+		<property name="arithmeticDao" ref="arithmeticDao"></property>
+	</bean>
+	<!-- 评估结果 -->
+	<bean id="assessResultService" class="com.compliance.service.cpManage.assessResult.impl.AssessResultServiceImpl" parent="baseService1">
+		<property name="assessResultDao" ref="assessResultDao"></property>
+	</bean>
+	<!--整改需求汇总 -->
+	<bean id="demandColletService" class="com.compliance.service.cpManage.demand.impl.DemandColletServiceImpl" parent="baseService1">
+		<property name="demandColletDao" ref="demandColletDao"></property>
+		<property name="assessResultDao" ref="assessResultDao"></property>
+	</bean>
+
+	<!-- 通用管理 -->
+	<bean id="psadChooseService" class="com.compliance.service.psad.Impl.PsadChooseServiceImpl" parent="baseService1">
+		<property name="psadChooseDao" ref="psadChooseDao"></property>
+	</bean>
+
+	<!-- 通用审核和检查 -->
+	<!-- <bean id="msadInspectService" class="com.compliance.service.msadInspect.Impl.MsadInspectServiceImpl" parent="baseService1"> -->
+	<!-- <property name="msadInspectDao" ref="msadInspectDao"></property> -->
+	<!-- </bean> -->
+
+	<!--技术差距评估 -->
+	<!-- <bean id="assessResultService" class="com.compliance.service.cpManage.assessResult.impl.AssessResultServiceImpl" parent="baseService1"> <property name="assessResultDao" 
+		ref="assessResultDao"></property> </bean> -->
+	<!-- 技术差距分析结束》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》 -->
+	<!--整改建议 -->
+	<bean id="rectificationProposalService" class="com.compliance.service.cpManage.rectificationProposal.impl.RectificationProposalServiceImpl" parent="baseService1">
+		<property name="rectificationProposalDao" ref="rectificationProposalDao"></property>
+		<property name="demandColletDao" ref="demandColletDao"></property>
+		<property name="assessResultDao" ref="assessResultDao"></property>
+	</bean>
+	<!--通用物理整改建议 -->
+	<bean id="gpaRectService" class="com.compliance.service.cpManage.gpaShow.impl.GpaRectServiceImpl" parent="baseService1">
+		<property name="gpaRectDao" ref="gpaRectDao"></property>
+	</bean>
+	<!-- 差距分析报告 -->
+	<!-- 差距分析进度 -->
+	<bean id="gapScheduleService" class="com.compliance.service.cpManage.gapAnalysisSchedule.impl.GapScheduleServiceImpl" parent="baseService1">
+		<property name="gapScheduleDao" ref="gapScheduleDao"></property>
+
+	</bean>
+
+	<!-- 差距分析报告导出文档 -->
+	<bean id="gapReportDocumentService" class="com.compliance.service.cpManage.gapReportDocument.impl.GapReportDocumentServiceImpl" parent="baseService1">
+		<property name="gapReportDocumentDao" ref="gapReportDocumentDao"></property>
+
+	</bean>
+
+	<bean id="generalPhysicalService" class="com.compliance.service.cpManage.generalPhysical.impl.GeneralPhysicalServiceImpl" parent="baseService1">
+		<property name="generalPhysicalDao" ref="generalPhysicalDao"></property>
+
+	</bean>
+
+	<bean id="securityTableService" class="com.compliance.service.cpManage.securityTable.impl.SecurityTableServiceImpl" parent="baseService1">
+		<property name="securityTableDao" ref="securityTableDao"></property>
+	</bean>
+
+
+	<bean id="gapStatisticsUnitService" class="com.compliance.service.cpManage.gapStatisticsUnit.impl.GapStatisticsUnitServiceImpl" parent="baseService1">
+		<property name="gapStatisticsUnitDao" ref="gapStatisticsUnitDao"></property>
+	</bean>
+	<!--整改简历历史对比 -->
+	<bean id="contrastSrivice" class="com.compliance.service.cpManage.contrastRectification.impl.ContrastServiceImpl" parent="baseService1">
+		<property name="contrastDao" ref="contrastDao"></property>
+	</bean>
+	<!-- 汇总分析 -->
+	<!-- 安全差距分析 -->
+	<bean id="securityGapService" class="com.compliance.service.cpManage.summaryAnalysis.impl.SecurityGapServiceImpl" parent="baseService1">
+		<property name="securityGapDao" ref="securityGapDao"></property>
+	</bean>
+	<!--安全控制分析报告 -->
+	<bean id="securityControlService" class="com.compliance.service.cpManage.securityControl.impl.SecurityControlServiceImpl" parent="baseService1">
+		<property name="securityControlDao" ref="securityControlDao"></property>
+	</bean>
+
+	<!--通用管理测评 -->
+	<bean id="msaService" class="com.compliance.service.cpManage.msaShow.impl.MsaServiceImpl" parent="baseService1">
+		<property name="msaDao" ref="msaDao"></property>
+	</bean>
+	<!--通用管理测评汇总 -->
+	<bean id="msaShowService" class="com.compliance.service.cpManage.msaShow.impl.MsaShowServiceImpl" parent="baseService1">
+		<property name="msaShowDao" ref="msaShowDao"></property>
+	</bean>
+	<!--通用物理测评 -->
+	<bean id="gpaService" class="com.compliance.service.cpManage.gpaShow.impl.GpaServiceImpl" parent="baseService1">
+		<property name="gpaDao" ref="gpaDao"></property>
+	</bean>
+	<!--通用管理测评 -->
+	<bean id="msaRectService" class="com.compliance.service.cpManage.msaShow.impl.MsaRectServiceImpl" parent="baseService1">
+		<property name="msaRectDao" ref="msaRectDao"></property>
+	</bean>
+	<!--通用物理测评汇总 -->
+	<bean id="gpaShowService" class="com.compliance.service.cpManage.gpaShow.impl.GpaShowServiceImpl" parent="baseService1">
+		<property name="gpaShowDao" ref="gpaShowDao"></property>
+	</bean>
+
+	<!-- 审计模块 -->
+	<!-- <bean id="auditService" class="com.compliance.service.audit.impl.AuditServiceImpl" parent="baseService1"> <property name="auditDao" ref="auditDao"></property> </bean> -->
+	<!-- 文件下载 -->
+	<bean id="filesService"
+		class="com.compliance.service.files.impl.FilesServiceImpl"
+		parent="baseService1">
+		<property name="filedao" ref="filesDao"></property>
+	</bean>
+
+</beans>

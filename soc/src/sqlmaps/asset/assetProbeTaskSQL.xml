@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="assetProbeTaskSQL">
+	<resultMap id="assetProbeTaskResult" class="assetProbeTask">
+		<result property="taskId" column="ASSET_TASK_ID" jdbcType="int" />
+		<result property="taskName" column="ASSET_TASK_NAME" jdbcType="varchar" />
+		<result property="collectorName" column="ASSET_COLLECTOR_NAME"
+			jdbcType="varchar" />
+		<result property="collectorMac" column="ASSET_COLLECTOR_MAC"
+			jdbcType="varchar" />
+		<result property="beginIp" column="ASSET_TASK_BEGINIP"
+			jdbcType="varchar" />
+
+		<result property="endIp" column="ASSET_TASK_ENDIP" jdbcType="varchar" />
+		<result property="medo" column="ASSET_TASK_MEDO" jdbcType="text" />
+	</resultMap>
+	<!-- 查询 -->
+	<select id="pgAdminassetProbeTask.query" parameterClass="java.util.List"
+		resultMap="assetProbeTaskResult">
+		SELECT * FROM "tbl_asset_probe_task"
+	</select>
+	
+	<!-- 查询条数 -->
+	<select id="pgAdminassetProbeTask.count" resultClass="int">
+	   SELECT COUNT(*) FROM "tbl_asset_probe_task" WHERE 1=1
+	   
+	</select>
+	
+	<!-- 查询left join -->
+	<select id="pgAdminassetProbeTask.queryTaskLeftJoin" parameterClass="java.util.List"
+		resultClass="java.util.HashMap">
+		SELECT a."ASSET_TASK_ID" as "taskId", "ASSET_TASK_NAME" as "taskName", "ASSET_COLLECTOR_NAME" as "collectorName", a."ASSET_COLLECTOR_MAC" as "collectorMac", 
+       "ASSET_TASK_BEGINIP" as "beginIp", "ASSET_TASK_ENDIP" as "endIp", "ASSET_TASK_MEDO" as "medo","ASSET_ERROR" as "error", "ASSET_RESULT" as "result" 
+        FROM "tbl_asset_probe_task" a LEFT JOIN "tbl_probe_state" b on a."ASSET_TASK_ID" = b."ASSET_TASK_ID" ORDER BY b."ASSET_RESULT" ASC
+	</select>	
+	
+	<!-- 查询时的count -->
+	<select id="pgAdminassetProbeTask.queryNameOfCount" parameterClass="String"
+		resultClass="int">
+	   	   SELECT count(*) FROM "tbl_asset_probe_task" a LEFT JOIN "tbl_probe_state" b on a."ASSET_TASK_ID" = b."ASSET_TASK_ID" WHERE 1=1 AND a."ASSET_TASK_NAME" LIKE '%$keyword$%'
+	</select>
+	
+	<!-- 快速查询探测任务 -->
+	<select id="pgAdminassetProbeTask.queryName" parameterClass="String"
+		resultClass="java.util.HashMap">
+ 		SELECT a."ASSET_TASK_ID" as "taskId", "ASSET_TASK_NAME" as "taskName", "ASSET_COLLECTOR_NAME" as "collectorName", a."ASSET_COLLECTOR_MAC" as "collectorMac", 
+       "ASSET_TASK_BEGINIP" as "beginIp", "ASSET_TASK_ENDIP" as "endIp", "ASSET_TASK_MEDO" as "medo","ASSET_ERROR" as "error", "ASSET_RESULT" as "result" 
+        FROM "tbl_asset_probe_task" a LEFT JOIN "tbl_probe_state" b on a."ASSET_TASK_ID" = b."ASSET_TASK_ID" WHERE a."ASSET_TASK_NAME" LIKE '%$keyword$%' ORDER BY b."ASSET_RESULT" ASC
+	</select>
+	<!-- 添加资产组信息 -->
+	<insert id="pgAdminassetProbeTask.insert" parameterClass="assetProbeTask">
+		INSERT INTO "tbl_asset_probe_task"
+		(
+		"ASSET_TASK_NAME",
+		"ASSET_COLLECTOR_NAME",
+		"ASSET_COLLECTOR_MAC",
+		"ASSET_TASK_BEGINIP",
+		"ASSET_TASK_ENDIP",
+		"ASSET_TASK_MEDO"
+		)
+		VALUES
+		(
+		#taskName#,
+		#collectorName#,
+		#collectorMac#,
+		#beginIp#,
+		#endIp#,
+		#medo#
+		)
+		<selectKey resultClass="int" keyProperty="taskId">
+			SELECT
+			currval('asset_probe_task_seq'::regclass) AS taskId
+		</selectKey>
+	</insert>
+	<!-- 根据ID查询对应探测任务信息 -->
+	<select id="pgAdminassetProbeTask.queryById" parameterClass="int"
+		resultMap="assetProbeTaskResult">
+		SELECT * FROM "tbl_asset_probe_task" where
+		"ASSET_TASK_ID"=#taskId#
+	</select>
+	<!-- 根据ID更新探测任务信息 -->
+	<update id="pgAdminassetProbeTask.update" parameterClass="assetProbeTask">
+		UPDATE
+		"tbl_asset_probe_task"
+		SET "ASSET_TASK_NAME" = #taskName#,
+		"ASSET_COLLECTOR_NAME" =
+		#collectorName#,
+		"ASSET_COLLECTOR_MAC" =
+		#collectorMac#,
+		"ASSET_TASK_BEGINIP" = #beginIp#,
+		"ASSET_TASK_ENDIP" =
+		#endIp#,
+		"ASSET_TASK_MEDO" = #medo#
+		WHERE
+		"ASSET_TASK_ID"=#taskId#
+	</update>
+	<!-- 根据ID删除探测任务 -->
+	<delete id="pgAdminassetProbeTask.delete" parameterClass="int">
+		<![CDATA[
+			DELETE FROM "tbl_asset_probe_task" WHERE "ASSET_TASK_ID"=#taskId#
+		]]>
+	</delete>
+	
+	<!-- 高级查询条数 -->
+	<select id="pgAdminassetProbeTask.queryCountPro" parameterClass="java.util.HashMap" resultClass="int">
+	      SELECT count(*) FROM "tbl_asset_probe_task" a LEFT JOIN 
+	      "tbl_probe_state" b on a."ASSET_TASK_ID" = b."ASSET_TASK_ID" WHERE 1=1
+	      <isNotEmpty property="taskName" prepend="AND">
+	         <![CDATA[
+                	 a."ASSET_TASK_NAME" LIKE '%$taskName$%'       
+	         ]]>
+	      </isNotEmpty>
+	      <isEqual prepend="AND" property="taskState" compareValue="未探测">
+	          <![CDATA[ 
+	                 b."ASSET_RESULT" IS NULL
+	          ]]>
+	      </isEqual>
+	      <isEqual prepend="AND" property="taskState" compareValue="探测完成">
+	           <![CDATA[
+	                 b."ASSET_RESULT" = 0
+	           ]]> 
+	      </isEqual>
+	      <isEqual prepend="AND" property="taskState" compareValue="正在探测">
+	           <![CDATA[
+	                 b."ASSET_RESULT" = 1
+	           ]]> 
+	      </isEqual>
+	      
+	</select>
+	<!-- 高级查询 -->
+	<select id="pgAdminassetProbeTask.queryPro" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	       SELECT a."ASSET_TASK_ID" as "taskId", "ASSET_TASK_NAME" as "taskName", "ASSET_COLLECTOR_NAME" as "collectorName", a."ASSET_COLLECTOR_MAC" as "collectorMac", 
+           "ASSET_TASK_BEGINIP" as "beginIp", "ASSET_TASK_ENDIP" as "endIp", "ASSET_TASK_MEDO" as "medo","ASSET_ERROR" as "error", "ASSET_RESULT" as "result" 
+	       FROM "tbl_asset_probe_task" a LEFT JOIN 
+	      "tbl_probe_state" b on a."ASSET_TASK_ID" = b."ASSET_TASK_ID" WHERE 1=1
+	      <isNotEmpty property="taskName" prepend="AND">
+	         <![CDATA[
+                	 a."ASSET_TASK_NAME" LIKE '%$taskName$%'       
+	         ]]>
+	      </isNotEmpty>
+	      <isEqual prepend="AND" property="taskState" compareValue="未探测">
+	          <![CDATA[ 
+	                 b."ASSET_RESULT" IS NULL
+	          ]]>
+	      </isEqual>
+	      <isEqual prepend="AND" property="taskState" compareValue="探测完成">
+	           <![CDATA[
+	                 b."ASSET_RESULT" = 0
+	           ]]> 
+	      </isEqual>
+	      <isEqual prepend="AND" property="taskState" compareValue="正在探测">
+	           <![CDATA[
+	                 b."ASSET_RESULT" = 1
+	           ]]> 
+	      </isEqual>
+	</select>
+	
+<!-- sqlserver -->
+
+	<!-- 查询 -->
+	<select id="sqlServerassetProbeTask.query" parameterClass="java.util.List"
+		resultMap="assetProbeTaskResult">
+		SELECT * FROM "tbl_asset_probe_task"
+	</select>
+	
+	<!-- 查询条数 -->
+	<select id="sqlServerassetProbeTask.count" resultClass="int">
+	   SELECT COUNT(*) FROM "tbl_asset_probe_task" WHERE 1=1
+	   
+	</select>
+	
+	<!-- 查询left join -->
+	<select id="sqlServerassetProbeTask.queryTaskLeftJoin" parameterClass="java.util.List"
+		resultClass="java.util.HashMap">
+		SELECT a."ASSET_TASK_ID" as "taskId", "ASSET_TASK_NAME" as "taskName", "ASSET_COLLECTOR_NAME" as "collectorName", a."ASSET_COLLECTOR_MAC" as "collectorMac", 
+       "ASSET_TASK_BEGINIP" as "beginIp", "ASSET_TASK_ENDIP" as "endIp", "ASSET_TASK_MEDO" as "medo","ASSET_ERROR" as "error", "ASSET_RESULT" as "result" 
+        FROM "tbl_asset_probe_task" a LEFT JOIN "tbl_probe_state" b on a."ASSET_TASK_ID" = b."ASSET_TASK_ID" ORDER BY b."ASSET_RESULT" ASC
+	</select>	
+	
+	<!-- 查询时的count -->
+	<select id="sqlServerassetProbeTask.queryNameOfCount" parameterClass="String"
+		resultClass="int">
+	   	   SELECT count(*) FROM "tbl_asset_probe_task" a LEFT JOIN "tbl_probe_state" b on a."ASSET_TASK_ID" = b."ASSET_TASK_ID" WHERE 1=1 AND a."ASSET_TASK_NAME" LIKE '%$keyword$%'
+	</select>
+	
+	<!-- 快速查询探测任务 -->
+	<select id="sqlServerassetProbeTask.queryName" parameterClass="String"
+		resultClass="java.util.HashMap">
+ 		SELECT a."ASSET_TASK_ID" as "taskId", "ASSET_TASK_NAME" as "taskName", "ASSET_COLLECTOR_NAME" as "collectorName", a."ASSET_COLLECTOR_MAC" as "collectorMac", 
+       "ASSET_TASK_BEGINIP" as "beginIp", "ASSET_TASK_ENDIP" as "endIp", "ASSET_TASK_MEDO" as "medo","ASSET_ERROR" as "error", "ASSET_RESULT" as "result" 
+        FROM "tbl_asset_probe_task" a LEFT JOIN "tbl_probe_state" b on a."ASSET_TASK_ID" = b."ASSET_TASK_ID" WHERE a."ASSET_TASK_NAME" LIKE '%$keyword$%' ORDER BY b."ASSET_RESULT" ASC
+	</select>
+	<!-- 添加资产组信息 -->
+	<insert id="sqlServerassetProbeTask.insert" parameterClass="assetProbeTask">
+		INSERT INTO "tbl_asset_probe_task"
+		(
+		"ASSET_TASK_NAME",
+		"ASSET_COLLECTOR_NAME",
+		"ASSET_COLLECTOR_MAC",
+		"ASSET_TASK_BEGINIP",
+		"ASSET_TASK_ENDIP",
+		"ASSET_TASK_MEDO"
+		)
+		VALUES
+		(
+		#taskName#,
+		#collectorName#,
+		#collectorMac#,
+		#beginIp#,
+		#endIp#,
+		#medo#
+		)
+		<selectKey resultClass="int" keyProperty="taskId">
+			SELECT @@IDENTITY AS taskId
+		</selectKey>
+	</insert>
+	<!-- 根据ID查询对应探测任务信息 -->
+	<select id="sqlServerassetProbeTask.queryById" parameterClass="int"
+		resultMap="assetProbeTaskResult">
+		SELECT * FROM "tbl_asset_probe_task" where
+		"ASSET_TASK_ID"=#taskId#
+	</select>
+	<!-- 根据ID更新探测任务信息 -->
+	<update id="sqlServerassetProbeTask.update" parameterClass="assetProbeTask">
+		UPDATE
+		"tbl_asset_probe_task"
+		SET "ASSET_TASK_NAME" = #taskName#,
+		"ASSET_COLLECTOR_NAME" =
+		#collectorName#,
+		"ASSET_COLLECTOR_MAC" =
+		#collectorMac#,
+		"ASSET_TASK_BEGINIP" = #beginIp#,
+		"ASSET_TASK_ENDIP" =
+		#endIp#,
+		"ASSET_TASK_MEDO" = #medo#
+		WHERE
+		"ASSET_TASK_ID"=#taskId#
+	</update>
+	<!-- 根据ID删除探测任务 -->
+	<delete id="sqlServerassetProbeTask.delete" parameterClass="int">
+		<![CDATA[
+			DELETE FROM "tbl_asset_probe_task" WHERE "ASSET_TASK_ID"=#taskId#
+		]]>
+	</delete>
+	
+	<!-- 高级查询条数 -->
+	<select id="sqlServerassetProbeTask.queryCountPro" parameterClass="java.util.HashMap" resultClass="int">
+	      SELECT count(*) FROM "tbl_asset_probe_task" a LEFT JOIN 
+	      "tbl_probe_state" b on a."ASSET_TASK_ID" = b."ASSET_TASK_ID" WHERE 1=1
+	      <isNotEmpty property="taskName" prepend="AND">
+	         <![CDATA[
+                	 a."ASSET_TASK_NAME" LIKE '%$taskName$%'       
+	         ]]>
+	      </isNotEmpty>
+	      <isEqual prepend="AND" property="taskState" compareValue="未探测">
+	          <![CDATA[ 
+	                 b."ASSET_RESULT" IS NULL
+	          ]]>
+	      </isEqual>
+	      <isEqual prepend="AND" property="taskState" compareValue="探测完成">
+	           <![CDATA[
+	                 b."ASSET_RESULT" = 0
+	           ]]> 
+	      </isEqual>
+	      <isEqual prepend="AND" property="taskState" compareValue="正在探测">
+	           <![CDATA[
+	                 b."ASSET_RESULT" = 1
+	           ]]> 
+	      </isEqual>
+	      
+	</select>
+	<!-- 高级查询 -->
+	<select id="sqlServerassetProbeTask.queryPro" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	       SELECT a."ASSET_TASK_ID" as "taskId", "ASSET_TASK_NAME" as "taskName", "ASSET_COLLECTOR_NAME" as "collectorName", a."ASSET_COLLECTOR_MAC" as "collectorMac", 
+           "ASSET_TASK_BEGINIP" as "beginIp", "ASSET_TASK_ENDIP" as "endIp", "ASSET_TASK_MEDO" as "medo","ASSET_ERROR" as "error", "ASSET_RESULT" as "result" 
+	       FROM "tbl_asset_probe_task" a LEFT JOIN 
+	      "tbl_probe_state" b on a."ASSET_TASK_ID" = b."ASSET_TASK_ID" WHERE 1=1
+	      <isNotEmpty property="taskName" prepend="AND">
+	         <![CDATA[
+                	 a."ASSET_TASK_NAME" LIKE '%$taskName$%'       
+	         ]]>
+	      </isNotEmpty>
+	      <isEqual prepend="AND" property="taskState" compareValue="未探测">
+	          <![CDATA[ 
+	                 b."ASSET_RESULT" IS NULL
+	          ]]>
+	      </isEqual>
+	      <isEqual prepend="AND" property="taskState" compareValue="探测完成">
+	           <![CDATA[
+	                 b."ASSET_RESULT" = 0
+	           ]]> 
+	      </isEqual>
+	      <isEqual prepend="AND" property="taskState" compareValue="正在探测">
+	           <![CDATA[
+	                 b."ASSET_RESULT" = 1
+	           ]]> 
+	      </isEqual>
+	</select>
+	
+	
+</sqlMap>

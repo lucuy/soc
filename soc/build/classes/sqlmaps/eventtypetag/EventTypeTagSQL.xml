@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="eventtypetagSQL">
+
+	<resultMap id="eventtypetagId" class="eventtypetag">
+   		<result property="eventtypetagId" 				column="ID" 		    		jdbcType="bigint"/>
+   		<result property="eventtypetagName"       		column="NAME"       	    	jdbcType="varchar"/>
+   		<result property="eventtypetagType"       		column="TYPE"       	    	jdbcType="bigint"/>
+   		
+   	</resultMap>
+   	
+   	<select id="pgAdminquery.eventtypetag" resultMap="eventtypetagId">
+   	
+	   SELECT * FROM "tbl_event_definition"
+	   
+	</select>
+	
+	<select id="pgAdminquery.eventTypeByKeys" resultMap="eventtypetagId" parameterClass="java.lang.String">
+	    SELECT * FROM  "tbl_event_definition" WHERE "ID" IN  $value$
+	</select>
+	
+	<select id="pgAdminquery.eventTypeIdByName" resultClass="int" parameterClass="java.lang.String">
+	   SELECT "ID" FROM "tbl_event_definition" WHERE "NAME" = '$value$'
+	</select>
+	
+	<!-- sqlServer用的数据库 -->
+	<select id="sqlServerquery.eventtypetag" resultMap="eventtypetagId">
+   	
+	   SELECT * FROM "tbl_event_definition"
+	   
+	</select>
+	
+	<select id="sqlServerquery.eventTypeByKeys" resultMap="eventtypetagId" parameterClass="java.lang.String">
+	    SELECT * FROM  "tbl_event_definition" WHERE "ID" IN  $value$
+	</select>
+	
+	<select id="sqlServerquery.eventTypeIdByName" resultClass="int" parameterClass="java.lang.String">
+	   SELECT "ID" FROM "tbl_event_definition" WHERE "NAME" = '$value$'
+	</select>
+	
+</sqlMap>

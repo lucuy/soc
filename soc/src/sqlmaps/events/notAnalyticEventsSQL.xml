@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="notAnalyticEventsSQL">
+	<resultMap id="notAnalyticEventsResult" class="notAnalyticEvents">
+		<result property="notAnalyticEventsId" column="NOT_ANALYTIC_EVENT_ID" />
+		<result property="identification" column="NOT_ANALYTIC_IDENTIFICATION" />
+		<result property="notAnalyticEventsContent" column="NOT_ANALYTIC_EVENT_CONTENT" />
+		<result property="notAnalyticEventsAssetId" column="NOT_ANALYTIC_EVENT_ASSET_ID" />
+		<result property="notAnalyticEventsAssetName" column="NOT_ANALYTIC_EVENT_ASSET_NAME" />
+		<result property="notAnalyticEventsCollectorId" column="NOT_ANALYTIC_EVENT_COLLECTOR_ID" />
+		<result property="notAnalyticEventsCollectorName" column="NOT_ANALYTIC_EVENT_COLLECTOR_NAME" />
+	</resultMap>
+	
+	<resultMap id="assetResult" class="asset">
+		<result property="assetId" column="ASSET_ID" jdbcType="bigint" />
+		<result property="assetName" column="ASSET_NAME" jdbcType="varchar" />
+		<result property="assetIp" column="ASSET_IP" jdbcType="bigint" />
+		<result property="assetGateWay" column="ASSET_GATEWAY"
+			jdbcType="bigint" />
+		<result property="assetSegMent" column="ASSET_IP_SEGMENT"
+			jdbcType="bigint" />
+	
+		<result property="assetImportance" column="ASSET_IMPORTANCE" nullValue="0"
+			jdbcType="tinyint" />
+		<result property="assetHostName" column="ASSET_HOST_NAME"
+			jdbcType="varchar" />
+		<result property="assetAliasName" column="ASSET_ALIAS_NAME"
+			jdbcType="varchar" />
+		<result property="assetWorkIdent" column="ASSER_WORK_IDENT"
+			jdbcType="varchar" />
+
+		<result property="assetMac" column="ASSET_MAC" jdbcType="varchar" />
+
+		<result property="assetCreateDateTime" column="ASSET_CREATE_DATE_TIME"
+			jdbcType="datetime" />
+
+		<result property="assetUpdateDateTime" column="ASSET_UPDATE_DATE_TIME"
+			jdbcType="datetime" />
+
+		<result property="assetUserLoginName" column="ASSET_USER_LOGIN_NAME"
+			jdbcType="varchar" />
+
+		<result property="assetNodeId" column="ASSET_NODE_ID" jdbcType="bigint" />
+
+		<result property="assetIsDelete" column="ASSET_IS_DELETE"
+			jdbcType="tinyint" />
+		<result property="assetMemo" column="ASSET_MEMO" jdbcType="text" />
+		<result property="assetGroupName" column="ASSET_GROUP_NAME"
+			jdbcType="varchar" />
+		<result property="assetGroupFeature" column="ASSET_GROUP_FEATRUE"
+			jdbcType="text" />
+		<result property="assetUnName" column="NOTSURE" jdbcType="int" nullValue="0"/>
+		<result property="organizationName" column="ASSET_ORGANIZATION_NAME"
+			jdbcType="varchar" />
+		<result property="version" column="ASSET_VERSION" jdbcType="varchar" />
+		<result property="directorise" column="ASSET_MONITOR_DIRECTORIES"
+			jdbcType="varchar" />
+		<result property="file" column="ASSET_MONITOR_FILE" jdbcType="varchar" />
+		<result property="assetCollectorName" column="ASSET_COLLECTOR_NAME"
+			jdbcType="varchar" />
+		<result property="assetCollectorMac" column="ASSET_COLLECTOR_MAC"
+			jdbcType="varchar" />
+		<result property="assetCollectType" column="ASSET_COLLECT_TYPE"
+			jdbcType="varchar" />
+		<result property="assetDeviceType" column="ASSET_DEVICE_TYPE"
+			jdbcType="varchar" />
+		<result property="assetSupportDevice" column="ASSET_SUPPORT_DEVICE"
+			jdbcType="varchar" />
+		<result property="assetDeviceTypeId" column="ASSET_DEVICE_TYPE_ID"
+			jdbcType="bigint" />
+		<result property="assetSupportDeviceId" column="ASSET_SUPPORT_DEVICE_ID"
+			jdbcType="bigint" />
+		<result property="assetPrivilegeCommand" column="ASSET_PRIVILEGE_COMMAND"
+			jdbcType="varchar" />
+		<result property="assetCollectorId" column="ASSET_COLLECTOR_ID"
+			jdbcType="bigint" />
+		<result property="assetStatus" column="ASSET_STATUS" jdbcType="smallint"></result>
+		<result property="assetDeviceTypeCode" column="ASSET_DEVICE_CATEGORY_CODE"
+			jdbcType="varchar" />
+		<result property="assetSupportDeviceTypeCode" column="ASSET_SUPPORT_DEVICE_CATEGORY_CODE"
+			jdbcType="varchar" />
+		<result property="assetDeviceRules" column="ASSET_DEVICES_REL_RULES" jdbcType="varchar"></result>
+		<result property="assetPort" column="ASSET_PORT" jdbcType="smallint"></result>
+		<result property="assetLog" column="ASSET_LOG" jdbcType="smallint"></result>
+		<result property="assetAPM" column="ASSET_APM" jdbcType="smallint"></result>
+		<result property="assetAPMMonitor" column="ASSET_APM_MONITOR" jdbcType="smallint"></result>
+		<result property="secretValue" column="ASSET_SECRET_VALUE" jdbcType="smallint"></result>
+		<result property="integrityValue" column="ASSET_INTEGRITY_VALUE" jdbcType="smallint"></result>
+		<result property="usabilityValue" column="ASSET_USABILITY_VALUE" jdbcType="smallint"></result>
+		<result property="assetValue"  column="ASSET_ASSET_VALUE" jdbcType="double"/>
+		<result property="riskThreatValue" column="RISK_THREATVALUE" jdbcType="double"></result>
+		<result property="vAVulnerabilityValue"  column="VAVULNERABILITYVALUE" jdbcType="double"/>
+		<result property="assetIssued" column="ASSET_ISSUED" jdbcType="smallint" />
+		<result property="asset_answer_user_id"  column="ASSET_ANSER_USER_ID" jdbcType="bigint"/>
+		<result property="asset_pessponsibility_user_id"  column="ASSET_RESPONSIBILITY_USER_ID" jdbcType="bigint"/>
+		<result property="asset_system_id"  column="ASSET_SYSTEM_ID" jdbcType="bigint"/>
+		<result property="asset_system_version"  column="ASSET_SYSTEM_VERSION" jdbcType="varchar"/>
+		<result property="asset_system_versionno"  column="ASSET_SYSTEM_VERSIONNO" jdbcType="varchar"/>
+		<result property="asset_system_brand"  column="ASSET_SYSTEM_BRAND" jdbcType="varchar"/>
+		
+		<result property="assetProperty1"  		column="ASSET_PROPERTY1" 		jdbcType="varchar"/>
+		<result property="assetPropertyValue1"  column="ASSET_PROPERTY_VALUE1"  jdbcType="varchar"/>
+		<result property="assetProperty2"  		column="ASSET_PROPERTY2" 		jdbcType="varchar"/>
+		<result property="assetPropertyValue2"  column="ASSET_PROPERTY_VALUE2"  jdbcType="varchar"/>
+		<result property="assetProperty3"  		column="ASSET_PROPERTY3" 		jdbcType="varchar"/>
+		<result property="assetPropertyValue3"  column="ASSET_PROPERTY_VALUE3" 	jdbcType="bigint"/>
+		<result property="assetProperty4"  		column="ASSET_PROPERTY4" 		jdbcType="varchar"/>
+		<result property="assetPropertyValue4"  column="ASSET_PROPERTY_VALUE4" 	jdbcType="datetime"/>
+		<result property="assetProperty5"  		column="ASSET_PROPERTY5" 		jdbcType="varchar"/>
+		<result property="assetPropertyValue5"  column="ASSET_PROPERTY_VALUE5" 	jdbcType="datetime"/>
+		<result property="assetGrouplistt"  		column="ASSET_ID" 				select="sqlServerquery.assetGroupByAssetId"/>
+	
+	 	<result property="asset_answer_userName" 			column="ASSET_ANSER_USER_NAME"  			jdbcType="varchar" />
+		<result property="asset_pessonsibility_userName" 	column="ASSET_RESPONSIBILITY_USER_NAME"  	jdbcType="varchar" />
+		<result property="asset_system_name" 				column="ASSET_SYSTEM_NAME"  				jdbcType="varchar" />
+		<result property="asset_system_version_name" 		column="ASSET_SYSTEM_VERSION_NAME"  			jdbcType="varchar" />
+		<result property="asset_system_versionno_name" 		column="ASSET_SYSTEM_VERSIONNO_NAME"  		jdbcType="varchar" />
+		<result property="asset_system_brand_name" 			column="ASSET_SYSTEM_BRAND_NAME"  			jdbcType="varchar" /> 
+	</resultMap>
+	<insert id="pgAdmininsert.notAnalyticEvents" parameterClass="notAnalyticEvents">
+		INSERT INTO
+		$tableName$
+		(
+		"NOT_ANALYTIC_EVENT_CONTENT",
+		"NOT_ANALYTIC_IDENTIFICATION",
+		"NOT_ANALYTIC_EVENT_ASSET_ID",
+		"NOT_ANALYTIC_EVENT_ASSET_NAME",
+		"NOT_ANALYTIC_EVENT_COLLECTOR_ID",
+		"NOT_ANALYTIC_EVENT_COLLECTOR_NAME"
+		)
+		VALUES
+		(
+		#notAnalyticEventsContent#,
+		#identification#,
+		#notAnalyticEventsAssetId#,
+		#notAnalyticEventsAssetName#,
+		#notAnalyticEventsCollectorId#,
+		#notAnalyticEventsCollectorName#
+		);
+	</insert>
+
+	<select id="pgAdminquery.notAnalyticEvent" resultMap="notAnalyticEventsResult"
+		parameterClass="java.util.HashMap">
+		SELECT * FROM $tableName$ WHERE "NOT_ANALYTIC_IDENTIFICATION" = #identification#
+	</select>
+
+
+	<!-- 查询一天里的未解析事件ID -->
+	<select id="pgAdminquery.queryListOfAssetID" parameterClass="java.util.HashMap" resultClass="java.lang.Integer">
+		SELECT "LOG_ASSET_ID" FROM $tableName$ where 1=1  
+		<isNotEmpty prepend="AND" property="assetId">
+          <![CDATA[
+            "LOG_ASSET_ID" in ($assetId$) 
+          ]]>
+		</isNotEmpty>
+		group by "LOG_ASSET_ID"
+	</select>
+	
+	<!-- 查询未采集信息的资产的list -->
+	<select id="pgAdminquery.assetList" resultMap="assetResult" parameterClass="java.util.HashMap">
+		$sql$
+	</select>
+	
+	<!-- 查询未采集信息的资产数量 -->
+	<select id="pgAdminquery.countOfAsset" resultClass="java.lang.Integer" parameterClass="java.util.HashMap">
+		$sql$
+	</select>
+	<!-- 高级查询 -->
+		<select id="pgAdminquery.notAnalysEventsLists" resultMap="notAnalyticEventsResult" parameterClass="java.util.HashMap">
+		 $sql$
+	</select>
+	<!-- 高级查询 条数-->
+		<select id="pgAdminquery.notAnalysEventsCount" resultClass="java.lang.Integer" parameterClass="java.util.HashMap">
+		$sql$
+	</select>
+	<!-- 查询未解析事件的列表展示 -->
+	<select id="pgAdminquery.notAnalysEventsList" resultMap="notAnalyticEventsResult"
+		parameterClass="java.util.HashMap">
+		SELECT * FROM $tableName$ 
+		WHERE 1=1
+		
+		<isNotEmpty prepend="AND" property="keyword"> 
+		    	<![CDATA[
+				("NOT_ANALYTIC_EVENT_ASSET_NAME" LIKE '%$keyword$%' OR "NOT_ANALYTIC_EVENT_COLLECTOR_NAME" LIKE '%$keyword$%' OR "NOT_ANALYTIC_EVENT_CONTENT" LIKE '%$keyword$%') 
+			    ]]>
+		</isNotEmpty>
+		and "NOT_ANALYTIC_EVENT_ASSET_ID" in($assetId$)
+		ORDER BY "NOT_ANALYTIC_EVENT_ID" DESC
+	</select>
+
+	<!-- 查询未解析事件的数量 -->
+	<select id="pgAdminquery.countAnalys" resultClass="int" parameterClass="java.util.HashMap">
+		SELECT COUNT("NOT_ANALYTIC_EVENT_ID") FROM $tableName$ 
+		 WHERE 1= 1
+		
+		<isNotEmpty prepend="AND" property="keyword"> 
+		    	<![CDATA[
+				("NOT_ANALYTIC_EVENT_ASSET_NAME" LIKE '%$keyword$%' OR "NOT_ANALYTIC_EVENT_COLLECTOR_NAME" LIKE '%$keyword$%' OR "NOT_ANALYTIC_EVENT_CONTENT" LIKE '%$keyword$%') 
+			    ]]>
+		</isNotEmpty>
+		and "NOT_ANALYTIC_EVENT_ASSET_ID" in($assetId$)
+	</select>
+
+	<select id="pgAdminexists.notAnalyticEvent" parameterClass="String"
+		resultClass="int">
+		SELECT count(*) FROM pg_tables WHERE tablename = #value#
+	</select>
+
+	<select id="pgAdminexists.notAnalyticEventSeq" parameterClass="String"
+		resultClass="String">
+		SELECT * FROM pg_class WHERE relkind = 'S' AND relname =
+		#value#
+	</select>
+
+	<statement id="pgAdmincreate.notAnalyticEventSeq" parameterClass="String">
+		CREATE SEQUENCE $seqName$
+		INCREMENT 1
+		MINVALUE 1
+		MAXVALUE
+		999999999999999999
+		START 1
+		CACHE 1;
+	</statement>
+
+	<statement id="pgAdmincreate.notAnalyticEvent" parameterClass="java.util.HashMap">
+		CREATE TABLE $tableName$
+		(
+		"NOT_ANALYTIC_EVENT_ID" bigint NOT NULL
+		DEFAULT nextval('$seqName$'::regclass),
+		"NOT_ANALYTIC_IDENTIFICATION"
+		bigint,
+		"NOT_ANALYTIC_EVENT_CONTENT" text,
+		"NOT_ANALYTIC_EVENT_ASSET_ID" bigint,
+		"NOT_ANALYTIC_EVENT_ASSET_NAME"
+		character varying(30),
+		"NOT_ANALYTIC_EVENT_COLLECTOR_ID" bigint,
+		"NOT_ANALYTIC_EVENT_COLLECTOR_NAME" character varying,
+		CONSTRAINT
+		"$primaryKey$" PRIMARY KEY ("NOT_ANALYTIC_EVENT_ID")
+		)
+	</statement>
+	
+
+<!-- sqlserver -->
+	<insert id="sqlServerinsert.notAnalyticEvents" parameterClass="notAnalyticEvents">
+		INSERT INTO
+		$tableName$
+		(
+		"NOT_ANALYTIC_EVENT_CONTENT",
+		"NOT_ANALYTIC_IDENTIFICATION",
+		"NOT_ANALYTIC_EVENT_ASSET_ID",
+		"NOT_ANALYTIC_EVENT_ASSET_NAME",
+		"NOT_ANALYTIC_EVENT_COLLECTOR_ID",
+		"NOT_ANALYTIC_EVENT_COLLECTOR_NAME"
+		)
+		VALUES
+		(
+		#notAnalyticEventsContent#,
+		#identification#,
+		#notAnalyticEventsAssetId#,
+		#notAnalyticEventsAssetName#,
+		#notAnalyticEventsCollectorId#,
+		#notAnalyticEventsCollectorName#
+		);
+	</insert>
+
+	<select id="sqlServerquery.notAnalyticEvent" resultMap="notAnalyticEventsResult"
+		parameterClass="java.util.HashMap">
+		SELECT * FROM $tableName$ WHERE "NOT_ANALYTIC_IDENTIFICATION" = #identification#
+	</select>
+
+
+	<!-- 查询一天里的未解析事件ID -->
+	<select id="sqlServerquery.queryListOfAssetID" parameterClass="java.util.HashMap" resultClass="java.lang.Integer">
+		SELECT "LOG_ASSET_ID" FROM $tableName$ where 1=1  
+		<isNotEmpty prepend="AND" property="assetId">
+          <![CDATA[
+            "LOG_ASSET_ID" in ($assetId$) 
+          ]]>
+		</isNotEmpty>
+		group by "LOG_ASSET_ID"
+	</select>
+	
+	<!-- 查询未采集信息的资产的list -->
+	<select id="sqlServerquery.assetList" resultMap="assetResult" parameterClass="java.util.HashMap">
+		$sql$
+	</select>
+	
+	<!-- 查询未采集信息的资产数量 -->
+	<select id="sqlServerquery.countOfAsset" resultClass="java.lang.Integer" parameterClass="java.util.HashMap">
+		$sql$
+	</select>
+	<!-- 高级查询 -->
+		<select id="sqlServerquery.notAnalysEventsLists" resultMap="notAnalyticEventsResult" parameterClass="java.util.HashMap">
+		 $sql$
+	</select>
+	<!-- 高级查询 条数-->
+		<select id="sqlServerquery.notAnalysEventsCount" resultClass="java.lang.Integer" parameterClass="java.util.HashMap">
+		$sql$
+	</select>
+	<!-- 查询未解析事件的列表展示 -->
+	<select id="sqlServerquery.notAnalysEventsList" resultMap="notAnalyticEventsResult"
+		parameterClass="java.util.HashMap">
+		SELECT * FROM $tableName$ WHERE "NOT_ANALYTIC_EVENT_ID" >((SELECT
+		MAX("NOT_ANALYTIC_EVENT_ID") - 1000 AS "ID"
+		FROM $tableName$ WHERE 1=1
+	
+		<isNotEmpty prepend="AND" property="keyword"> 
+		    	<![CDATA[
+				("NOT_ANALYTIC_EVENT_ASSET_NAME" LIKE '%$keyword$%' OR "NOT_ANALYTIC_EVENT_COLLECTOR_NAME" LIKE '%$keyword$%' OR "NOT_ANALYTIC_EVENT_CONTENT" LIKE '%$keyword$%') 
+			    ]]>
+		</isNotEmpty>
+		and "NOT_ANALYTIC_EVENT_ASSET_ID" in($assetId$)
+		ORDER BY "NOT_ANALYTIC_EVENT_ID" DESC
+	</select>
+
+	<!-- 查询未解析事件的数量 -->
+	<select id="sqlServerquery.countAnalys" resultClass="int" parameterClass="java.util.HashMap">
+		SELECT COUNT("NOT_ANALYTIC_EVENT_ID") FROM $tableName$ WHERE
+		 WHERE 1= 1
+	
+		<isNotEmpty prepend="AND" property="keyword"> 
+		    	<![CDATA[
+				("NOT_ANALYTIC_EVENT_ASSET_NAME" LIKE '%$keyword$%' OR "NOT_ANALYTIC_EVENT_COLLECTOR_NAME" LIKE '%$keyword$%' OR "NOT_ANALYTIC_EVENT_CONTENT" LIKE '%$keyword$%') 
+			    ]]>
+		</isNotEmpty>
+		and "NOT_ANALYTIC_EVENT_ASSET_ID" in($assetId$)
+	</select>
+
+	<select id="sqlServerexists.notAnalyticEvent" parameterClass="String"
+		resultClass="int">
+		select count(*) from sys.objects where name= #value#
+	</select>
+
+	<select id="sqlServerexists.notAnalyticEventSeq" parameterClass="String"
+		resultClass="String">
+		SELECT * FROM pg_class WHERE relkind = 'S' AND relname =
+		#value#
+	</select>
+
+	<statement id="sqlServercreate.notAnalyticEventSeq" parameterClass="String">
+		CREATE SEQUENCE $seqName$
+		INCREMENT 1
+		MINVALUE 1
+		MAXVALUE
+		999999999999999999
+		START 1
+		CACHE 1;
+	</statement>
+
+	<statement id="sqlServercreate.notAnalyticEvent" parameterClass="java.util.HashMap">
+		CREATE TABLE $tableName$
+		(
+		"NOT_ANALYTIC_EVENT_ID" bigint NOT NULL PRIMARY KEY IDENTITY(1,1),
+		"NOT_ANALYTIC_IDENTIFICATION" bigint,
+		"NOT_ANALYTIC_EVENT_CONTENT" text,
+		"NOT_ANALYTIC_EVENT_ASSET_ID" bigint,
+		"NOT_ANALYTIC_EVENT_ASSET_NAME" character varying(100),
+		"NOT_ANALYTIC_EVENT_COLLECTOR_ID" bigint,
+		"NOT_ANALYTIC_EVENT_COLLECTOR_NAME" character varying(200),
+		)
+	</statement>
+
+
+</sqlMap>

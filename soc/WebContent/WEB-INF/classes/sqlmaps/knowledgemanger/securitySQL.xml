@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="securitySQL">
+	<resultMap class="security" id="securityResultAll">
+		<result property="securityId" column="SECURITY_ID" jdbcType="bigint" />
+		<result property="securityTitle" column="SECURITY_TITLE"
+			jdbcType="varchar" />
+		<result property="securityDetails" column="SECURITY_DETAILS"
+			jdbcType="text" />
+		<result property="source" column="SECURITY_SOURCE" jdbcType="varchar" />
+		<result property="securityDate" column="SECURITY_DATE"
+			jdbcType="date" />
+		<result property="securityCreateDate" column="SECURITY_CREATEDATE"
+			jdbcType="date" />
+		<result property="publisher" column="SECURITY_PUBLISHER"
+			jdbcType="varchar" />
+	</resultMap>
+	<resultMap class="security" id="securityResult">
+		<result property="securityId" column="SECURITY_ID" jdbcType="integer" />
+		<result property="securityTitle" column="SECURITY_TITLE"
+			jdbcType="varchar" />
+		<result property="source" column="SECURITY_SOURCE" jdbcType="varchar" />
+		<result property="securityDate" column="SECURITY_DATE"
+			jdbcType="bigint" />
+		<result property="securityCreateDate" column="SECURITY_CREATEDATE"
+			jdbcType="date" />
+		<result property="publisher" column="SECURITY_PUBLISHER"
+			jdbcType="varchar" />
+	</resultMap>
+
+
+	<!-- querySecurity -->
+	<select id="pgAdminsecuritySQL.querySecurity" parameterClass="java.util.HashMap"
+		resultClass="security" resultMap="securityResultAll">
+		select
+		"SECURITY_ID","SECURITY_TITLE","SECURITY_DATE","SECURITY_PUBLISHER","SECURITY_SOURCE","SECURITY_CREATEDATE","SECURITY_DETAILS"
+		from
+		"tbl_security"
+		<dynamic prepend="where">
+		
+			<isNotEmpty prepend="and" property="keyword">
+			<![CDATA[
+		  (to_char("SECURITY_ID",'999999999') like '%$keyword$%' OR "SECURITY_TITLE" like '%$keyword$%' OR to_char("SECURITY_DATE",'YYYY-mm-dd') like '%$keyword$%' OR "SECURITY_PUBLISHER" like '%$keyword$%' OR "SECURITY_SOURCE" like '%$keyword$%' OR to_char("SECURITY_CREATEDATE",'YYYY-mm-dd') like '%$keyword$%')
+			  ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="messageSecurityId">
+			<![CDATA[
+		  (to_char("SECURITY_ID",'999999999') like '%$messageSecurityId$%')
+			  ]]>
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="and" property="messageSecurityTitle">
+			<![CDATA[
+		  ("SECURITY_TITLE" like '%$messageSecurityTitle$%')
+			  ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="messagePublisher">
+			<![CDATA[
+		  ("SECURITY_PUBLISHER" like '%$messagePublisher$%')
+			  ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="messageSecurityDate">
+			<![CDATA[
+		  (to_char("SECURITY_DATE",'YYYY-mm-dd') like '%$messageSecurityDate$%')
+			  ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="messageSource">
+			<![CDATA[
+		  ("SECURITY_SOURCE" like '%$messageSource$%')
+			  ]]>
+			</isNotEmpty>
+			
+		</dynamic>
+		order by "SECURITY_ID" desc
+	</select>
+	<!-- deleteSecurity -->
+	<delete id="pgAdminsecuritySQL.deleteSecurity" parameterClass="int" >
+		delete
+		from "tbl_security" where "SECURITY_ID" = #id#
+	</delete>
+	<!-- insertSecuity -->
+	<insert id="pgAdminsecuritySQL.insert" parameterClass="security">
+
+		insert into
+		"tbl_security"
+		("SECURITY_TITLE","SECURITY_DATE","SECURITY_PUBLISHER","SECURITY_DETAILS","SECURITY_SOURCE","SECURITY_CREATEDATE")
+		values
+		(#securityTitle#,#securityDate#,#publisher#,#securityDetails#,#source#,#securityCreateDate#)
+		<selectKey resultClass="int" keyProperty="securityId">
+			SELECT
+			currval('tbl_security_seq'::regclass) AS SECURITY_ID
+		</selectKey>
+	</insert>
+	<!-- count -->
+	<select id="pgAdminsecuritySQL.count" parameterClass="java.util.HashMap"
+		resultClass="int" >
+		select count(*) from "tbl_security"
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="keyword">
+			<![CDATA[
+		  (to_char("SECURITY_ID",'999999999') like '%$keyword$%' OR "SECURITY_TITLE" like '%$keyword$%' OR to_char("SECURITY_DATE",'YYYY-mm-dd') like '%$keyword$%' OR "SECURITY_PUBLISHER" like '%$keyword$%' OR "SECURITY_SOURCE" like '%$keyword$%' OR to_char("SECURITY_CREATEDATE",'YYYY-mm-dd') like '%$keyword$%')
+			  ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="messageSecurityId">
+			<![CDATA[
+		  (to_char("SECURITY_ID",'999999999') like '%$messageSecurityId$%')
+			  ]]>
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="and" property="messageSecurityTitle">
+			<![CDATA[
+		  ("SECURITY_TITLE" like '%$messageSecurityTitle$%')
+			  ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="messagePublisher">
+			<![CDATA[
+		  ("SECURITY_PUBLISHER" like '%$messagePublisher$%')
+			  ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="messageSecurityDate">
+			<![CDATA[
+		  (to_char("SECURITY_DATE",'YYYY-mm-dd') like '%$messageSecurityDate$%')
+			  ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="messageSource">
+			<![CDATA[
+		  ("SECURITY_SOURCE" like '%$messageSource$%')
+			  ]]>
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	<!-- updateSecurity -->
+	<update id="pgAdminsecuritySQL.update" parameterClass="security">
+		update
+		"tbl_security"
+		set
+		"SECURITY_TITLE" =#securityTitle#,
+		"SECURITY_DATE"
+		=#securityDate#,
+		"SECURITY_PUBLISHER"
+		=#publisher#,
+		"SECURITY_DETAILS"
+		=#securityDetails#,
+		"SECURITY_SOURCE"
+		=#source#
+		where "SECURITY_ID" =
+		#securityId#
+
+	</update>
+	<!-- selectSecurityByid -->
+	<select id="pgAdminsecuritySQL.selectSecurityByid" parameterClass="int"
+		resultClass="security" resultMap="securityResultAll">
+		select * from "tbl_security" where
+		"SECURITY_ID" = #securityId#
+	</select>
+	
+	<select id="pgAdminsecuritySQL.sort" resultMap="securityResult" parameterClass="java.lang.String">
+	      SELECT * FROM tbl_security ORDER BY $str$
+	</select>
+
+
+	
+	<select id="pgAdminsecuritySQL.export" resultClass="java.util.HashMap" parameterClass="java.util.HashMap">
+	      SELECT * FROM tbl_security where 1=1
+	      	<isNotEmpty prepend= "AND"  property="ids">
+				"SECURITY_ID" in($ids$)
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="and" property="keyword">
+			<![CDATA[
+		  (to_char("SECURITY_ID",'999999999') like '%$keyword$%' OR "SECURITY_TITLE" like '%$keyword$%' OR to_char("SECURITY_DATE",'YYYY-mm-dd') like '%$keyword$%' OR "SECURITY_PUBLISHER" like '%$keyword$%' OR "SECURITY_SOURCE" like '%$keyword$%' OR to_char("SECURITY_CREATEDATE",'YYYY-mm-dd') like '%$keyword$%')
+			  ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="messageSecurityId">
+			<![CDATA[
+		  (to_char("SECURITY_ID",'999999999') like '%$messageSecurityId$%')
+			  ]]>
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="and" property="messageSecurityTitle">
+			<![CDATA[
+		  ("SECURITY_TITLE" like '%$messageSecurityTitle$%')
+			  ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="messagePublisher">
+			<![CDATA[
+		  ("SECURITY_PUBLISHER" like '%$messagePublisher$%')
+			  ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="messageSecurityDate">
+			<![CDATA[
+		  (to_char("SECURITY_DATE",'YYYY-mm-dd') like '%$messageSecurityDate$%')
+			  ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="messageSource">
+			<![CDATA[
+		  ("SECURITY_SOURCE" like '%$messageSource$%')
+			  ]]>
+			</isNotEmpty>
+	</select>
+
+	<!-- queryAllSecurity -->
+	<select id="pgAdminsecuritySQL.queryAllSecurity" parameterClass="java.util.HashMap"
+		resultClass="security" resultMap="securityResult">
+		select
+		"SECURITY_ID","SECURITY_TITLE","SECURITY_DATE","SECURITY_PUBLISHER","SECURITY_SOURCE","SECURITY_CREATEDATE"
+		from
+		"tbl_security"
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="keyword">
+			<![CDATA[
+		  ("SECURITY_TITLE") = '$keyword$'
+			  ]]>
+			</isNotEmpty>
+		
+		</dynamic>
+	</select>
+
+	<select id="pgAdminsecuritySQL.forExport" resultClass="security" resultMap="securityResultAll" parameterClass="java.util.HashMap">
+	      SELECT * FROM tbl_security where 1=1
+	      	<isNotEmpty prepend= "AND"  property="ids">
+				"SECURITY_ID" in($ids$)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="keyword">
+			<![CDATA[
+		  (to_char("SECURITY_ID",'999999999') like '%$keyword$%' OR "SECURITY_TITLE" like '%$keyword$%' OR to_char("SECURITY_DATE",'YYYY-mm-dd') like '%$keyword$%' OR "SECURITY_PUBLISHER" like '%$keyword$%' OR "SECURITY_SOURCE" like '%$keyword$%' OR to_char("SECURITY_CREATEDATE",'YYYY-mm-dd') like '%$keyword$%')
+			  ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="messageSecurityId">
+			<![CDATA[
+		  (to_char("SECURITY_ID",'999999999') like '%$messageSecurityId$%')
+			  ]]>
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="and" property="messageSecurityTitle">
+			<![CDATA[
+		  ("SECURITY_TITLE" like '%$messageSecurityTitle$%')
+			  ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="messagePublisher">
+			<![CDATA[
+		  ("SECURITY_PUBLISHER" like '%$messagePublisher$%')
+			  ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="messageSecurityDate">
+			<![CDATA[
+		  (to_char("SECURITY_DATE",'YYYY-mm-dd') like '%$messageSecurityDate$%')
+			  ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="messageSource">
+			<![CDATA[
+		  ("SECURITY_SOURCE" like '%$messageSource$%')
+			  ]]>
+			</isNotEmpty>
+	</select>
+<!-- sqlserver -->
+<!-- querySecurity -->
+	<select id="sqlServersecuritySQL.querySecurity" parameterClass="java.util.HashMap"
+		resultClass="security" resultMap="securityResultAll">
+		select
+		"SECURITY_ID","SECURITY_TITLE","SECURITY_DATE","SECURITY_PUBLISHER","SECURITY_SOURCE","SECURITY_CREATEDATE","SECURITY_DETAILS"
+		from
+		"tbl_security"
+		<dynamic prepend="where">
+		
+			<isNotEmpty prepend="and" property="keyword">
+			<![CDATA[
+		  (cast("SECURITY_ID" as varchar(8)) like '%$keyword$%' OR "SECURITY_TITLE" like '%$keyword$%' OR CONVERT(varchar,"SECURITY_DATE",120) like '%$keyword$%' OR "SECURITY_PUBLISHER" like '%$keyword$%' OR "SECURITY_SOURCE" like '%$keyword$%' OR CONVERT(varchar,"SECURITY_CREATEDATE",120) like '%$keyword$%' OR "SECURITY_DETAILS" like '%$keyword$%')
+			  ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="messageSecurityId">
+			<![CDATA[
+		  (cast("SECURITY_ID" as varchar(8)) like '%$messageSecurityId$%')
+			  ]]>
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="and" property="messageSecurityTitle">
+			<![CDATA[
+		  ("SECURITY_TITLE" like '%$messageSecurityTitle$%')
+			  ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="messagePublisher">
+			<![CDATA[
+		  ("SECURITY_PUBLISHER" like '%$messagePublisher$%')
+			  ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="messageSecurityDate">
+			<![CDATA[
+		  (CONVERT(varchar,"SECURITY_DATE",120) like '%$messageSecurityDate$%')
+			  ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="messageSource">
+			<![CDATA[
+		  ("SECURITY_SOURCE" like '%$messageSource$%')
+			  ]]>
+			</isNotEmpty>
+			
+		</dynamic>
+		order by "SECURITY_ID" desc
+	</select>
+	<!-- deleteSecurity -->
+	<delete id="sqlServersecuritySQL.deleteSecurity" parameterClass="int" >
+		delete
+		from "tbl_security" where "SECURITY_ID" = #id#
+	</delete>
+	<!-- insertSecuity -->
+	<insert id="sqlServersecuritySQL.insert" parameterClass="security">
+
+		insert into
+		"tbl_security"
+		("SECURITY_TITLE","SECURITY_DATE","SECURITY_PUBLISHER","SECURITY_DETAILS","SECURITY_SOURCE","SECURITY_CREATEDATE")
+		values
+		(#securityTitle#,#securityDate#,#publisher#,#securityDetails#,#source#,#securityCreateDate#)
+		<!-- <selectKey resultClass="int" keyProperty="securityId">
+			SELECT
+			currval('tbl_security_seq'::regclass) AS SECURITY_ID
+		</selectKey> -->
+	</insert>
+	<!-- count -->
+	<select id="sqlServersecuritySQL.count" parameterClass="java.util.HashMap"
+		resultClass="int" >
+		select count(*) from "tbl_security"
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="keyword">
+			<![CDATA[
+		  (cast("SECURITY_ID" as varchar(8)) like '%$keyword$%' OR "SECURITY_TITLE" like '%$keyword$%' OR CONVERT(varchar,"SECURITY_DATE",120) like '%$keyword$%' OR "SECURITY_PUBLISHER" like '%$keyword$%' OR "SECURITY_SOURCE" like '%$keyword$%' OR CONVERT(varchar,"SECURITY_CREATEDATE",120) like '%$keyword$%' OR "SECURITY_DETAILS" like '%$keyword$%')
+			  ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="messageSecurityId">
+			<![CDATA[
+		  (cast("SECURITY_ID" as varchar(8)) like '%$messageSecurityId$%')
+			  ]]>
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="and" property="messageSecurityTitle">
+			<![CDATA[
+		  ("SECURITY_TITLE" like '%$messageSecurityTitle$%')
+			  ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="messagePublisher">
+			<![CDATA[
+		  ("SECURITY_PUBLISHER" like '%$messagePublisher$%')
+			  ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="messageSecurityDate">
+			<![CDATA[
+		  (CONVERT(varchar,"SECURITY_DATE",120) like '%$messageSecurityDate$%')
+			  ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="messageSource">
+			<![CDATA[
+		  ("SECURITY_SOURCE" like '%$messageSource$%')
+			  ]]>
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	<!-- updateSecurity -->
+	<update id="sqlServersecuritySQL.update" parameterClass="security">
+		update
+		"tbl_security"
+		set
+		"SECURITY_TITLE" =#securityTitle#,
+		"SECURITY_DATE"
+		=#securityDate#,
+		"SECURITY_PUBLISHER"
+		=#publisher#,
+		"SECURITY_DETAILS"
+		=#securityDetails#,
+		"SECURITY_SOURCE"
+		=#source#
+		where "SECURITY_ID" =
+		#securityId#
+
+	</update>
+	<!-- selectSecurityByid -->
+	<select id="sqlServersecuritySQL.selectSecurityByid" parameterClass="int"
+		resultClass="security" resultMap="securityResultAll">
+		select * from "tbl_security" where
+		"SECURITY_ID" = #securityId#
+	</select>
+	
+	<select id="sqlServersecuritySQL.sort" resultMap="securityResult" parameterClass="java.lang.String">
+	      SELECT * FROM tbl_security ORDER BY $str$
+	</select>
+
+
+	
+	<select id="sqlServersecuritySQL.export" resultClass="java.util.HashMap" parameterClass="java.util.HashMap">
+	      SELECT * FROM tbl_security where 1=1
+	      	<isNotEmpty prepend= "AND"  property="ids">
+				"SECURITY_ID" in($ids$)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="keyword">
+			<![CDATA[
+		  (cast("SECURITY_ID" as varchar(8)) like '%$keyword$%' OR "SECURITY_TITLE" like '%$keyword$%' OR CONVERT(varchar,"SECURITY_DATE",120) like '%$keyword$%' OR "SECURITY_PUBLISHER" like '%$keyword$%' OR "SECURITY_SOURCE" like '%$keyword$%' OR CONVERT(varchar,"SECURITY_CREATEDATE",120) like '%$keyword$%' OR "SECURITY_DETAILS" like '%$keyword$%')
+			  ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="messageSecurityId">
+			<![CDATA[
+		  (cast("SECURITY_ID" as varchar(8)) like '%$messageSecurityId$%')
+			  ]]>
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="and" property="messageSecurityTitle">
+			<![CDATA[
+		  ("SECURITY_TITLE" like '%$messageSecurityTitle$%')
+			  ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="messagePublisher">
+			<![CDATA[
+		  ("SECURITY_PUBLISHER" like '%$messagePublisher$%')
+			  ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="messageSecurityDate">
+			<![CDATA[
+		  (CONVERT(varchar,"SECURITY_DATE",120) like '%$messageSecurityDate$%')
+			  ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="messageSource">
+			<![CDATA[
+		  ("SECURITY_SOURCE" like '%$messageSource$%')
+			  ]]>
+			</isNotEmpty>
+	</select>
+
+	<!-- queryAllSecurity -->
+	<select id="sqlServersecuritySQL.queryAllSecurity" parameterClass="java.util.HashMap"
+		resultClass="security" resultMap="securityResult">
+		select
+		"SECURITY_ID","SECURITY_TITLE","SECURITY_DATE","SECURITY_PUBLISHER","SECURITY_SOURCE","SECURITY_CREATEDATE"
+		from
+		"tbl_security"
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="keyword">
+			<![CDATA[
+		  ("SECURITY_TITLE") = '$keyword$'
+			  ]]>
+			</isNotEmpty>
+		
+		</dynamic>
+	</select>
+
+	<select id="sqlServersecuritySQL.forExport" resultClass="security" resultMap="securityResultAll" parameterClass="java.util.HashMap">
+	      SELECT * FROM tbl_security where 1=1
+	      	<isNotEmpty prepend= "AND"  property="ids">
+				"SECURITY_ID" in($ids$)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="keyword">
+			<![CDATA[
+		  (cast("SECURITY_ID" as varchar(8)) like '%$keyword$%' OR "SECURITY_TITLE" like '%$keyword$%' OR CONVERT(varchar,"SECURITY_DATE",120) like '%$keyword$%' OR "SECURITY_PUBLISHER" like '%$keyword$%' OR "SECURITY_SOURCE" like '%$keyword$%' OR CONVERT(varchar,"SECURITY_CREATEDATE",120) like '%$keyword$%' OR "SECURITY_DETAILS" like '%$keyword$%')
+			  ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="messageSecurityId">
+			<![CDATA[
+		  (cast("SECURITY_ID" as varchar(8)) like '%$messageSecurityId$%')
+			  ]]>
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="and" property="messageSecurityTitle">
+			<![CDATA[
+		  ("SECURITY_TITLE" like '%$messageSecurityTitle$%')
+			  ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="messagePublisher">
+			<![CDATA[
+		  ("SECURITY_PUBLISHER" like '%$messagePublisher$%')
+			  ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="messageSecurityDate">
+			<![CDATA[
+		  (CONVERT(varchar,"SECURITY_DATE",120) like '%$messageSecurityDate$%')
+			  ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="messageSource">
+			<![CDATA[
+		  ("SECURITY_SOURCE" like '%$messageSource$%')
+			  ]]>
+			</isNotEmpty>
+	</select>
+
+
+
+</sqlMap>

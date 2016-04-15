@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="monitorDatabaseTaskSQL">
+	<resultMap class="dbTask" id="dbTaskResult">
+		<result property="taskId"  		column="TASK_ID"  			jdbcType="bigint"/>
+		<result property="taskName"  	column="TASK_NAME"  		jdbcType="varchar"/>
+		<result property="dbIp"  		column="DATABASE_IP"  		jdbcType="varchar"/>
+		<result property="dbCategory"  	column="DATABASE_CATEGORY"  jdbcType="varchar"/>
+		<result property="monType"  	column="MONITOR_TYPE"  		jdbcType="varchar"/>
+		<result property="dbUserName"  	column="DATABASE_USER_NAME" jdbcType="varchar"/>
+		<result property="dbPWD"  		column="DATABASE_PASSWORD"  jdbcType="varchar"/>
+		<result property="db2iupdt"  	column="DATABASE_DB2IUPDT"  jdbcType="varchar"/>
+		<result property="dbContasts"  	column="DATABASE_CONTASTS"  jdbcType="varchar"/>
+		<result property="dbAddr"  		column="DATABASE_ADDRESS"  	jdbcType="varchar"/>
+		<result property="dbUrl"  		column="DATABASE_URL"  		jdbcType="varchar"/>
+		<result property="taskDESC"  	column="TASK_DESCRIPTION"  	jdbcType="text"/>
+		<result property="dbOnline"  	column="DATABASE_ONLINE"  	jdbcType="int"/>
+		<result property="taskStatus"  	column="TASK_STATUS"  		jdbcType="int"/>
+		<result property="dbType"  		column="DATABASE_TYPE"  	jdbcType="int"/>
+		<result property="dbPort"  		column="DATABASE_PORT"  	jdbcType="int"/>
+		<result property="updateTime"   column="UPDATE_TIME"        jdbcType="datetime"/>
+	</resultMap>
+	<!-- 查询所有的 -->
+	<select id="pgAdminmdt.queryAllDB" resultMap="dbTaskResult" >
+		select * from "tbl_monitor_database_task" where "TASK_STATUS" = 1;
+		</select>
+	<!-- 根据条件查询数据库监控 列表-->
+	<select id="pgAdminmdt.queryAll" resultMap="dbTaskResult" parameterClass="java.util.HashMap">
+		select * from "tbl_monitor_database_task" where 1=1
+		<isNotEmpty prepend="AND" property="keyword">
+	<![CDATA[
+		"TASK_NAME" like '%$keyword$%' OR "DATABASE_IP" like '%$keyword$%' 
+	]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="taskName">
+			<![CDATA[
+				"TASK_NAME" = #taskName#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="dbIp">
+			<![CDATA[
+				"DATABASE_IP" = #dbIp#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="dbType">
+			<![CDATA[
+				"DATABASE_TYPE" = #dbType#
+			]]>
+		</isNotEmpty>
+		ORDER BY "UPDATE_TIME" desc
+	</select>
+	<!-- 根据条件查询数据库监控总数 -->
+	<select id="pgAdminmdt.count" resultClass="int" parameterClass="java.util.HashMap">
+		select count("TASK_ID") from "tbl_monitor_database_task" where 1=1
+		<isNotEmpty prepend="AND" property="keyword">
+	<![CDATA[
+		"TASK_NAME" like '%$keyword$%' OR "DATABASE_IP" like '%$keyword$%' 
+	]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="taskName">
+			<![CDATA[
+				"TASK_NAME" = #taskName#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="dbIp">
+			<![CDATA[
+				"DATABASE_IP" = #dbIp#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="dbType">
+			<![CDATA[
+				"DATABASE_TYPE" = #dbType#
+			]]>
+		</isNotEmpty>
+	</select>
+	<!-- 新增数据库监控 -->
+		<insert id="pgAdminmdt.insert" parameterClass="dbTask" >
+			INSERT INTO "tbl_monitor_database_task"
+			(
+             "TASK_NAME", "DATABASE_IP", "DATABASE_CATEGORY", 
+            "MONITOR_TYPE", "DATABASE_USER_NAME", "DATABASE_PASSWORD", 
+            "DATABASE_DB2IUPDT", "DATABASE_CONTASTS", "DATABASE_ADDRESS", 
+            "TASK_DESCRIPTION", "DATABASE_ONLINE", "TASK_STATUS", "DATABASE_TYPE", 
+            "DATABASE_URL", "UPDATE_TIME","DATABASE_PORT")
+    VALUES ( #taskName#, #dbIp#, #dbCategory#, 
+            #monType#, #dbUserName#, #dbPWD#, 
+            #db2iupdt#, #dbContasts#, #dbAddr#, 
+            #taskDESC#, #dbOnline#, 1, #dbType#, 
+            #dbUrl#, #updateTime#,#dbPort#)
+		
+		<selectKey resultClass="java.lang.Long" keyProperty="taskId" >
+            SELECT currval('tbl_monitor_database_task_seq'::regclass) AS taskId
+      	</selectKey>
+		</insert>
+	<!-- 修改数据库监控 -->
+	<update id="pgAdminmdt.update" parameterClass="dbTask">
+	UPDATE tbl_monitor_database_task
+   		SET "DATABASE_IP"=#dbIp#, "DATABASE_CATEGORY"=#dbCategory#, 
+       "MONITOR_TYPE"=#monType#, "DATABASE_USER_NAME"=#dbUserName#, "DATABASE_PASSWORD"=#dbPWD#, 
+       "DATABASE_DB2IUPDT"=#db2iupdt#, "DATABASE_CONTASTS"=#dbContasts#, "DATABASE_ADDRESS"=#dbAddr#, 
+       "TASK_DESCRIPTION"=#taskDESC#, "DATABASE_ONLINE"=#dbOnline#,  
+       "DATABASE_TYPE"=#dbType#, "DATABASE_URL"=#dbUrl#, "UPDATE_TIME"=#updateTime#, "DATABASE_PORT"=#dbPort#
+ WHERE "TASK_ID" = #taskId#
+	</update>
+	<!-- 删除数据库监控 -->
+	<delete id="pgAdminmdt.delete" parameterClass="long">
+		DELETE FROM "tbl_monitor_database_task"
+ WHERE "TASK_ID" = #taskId#
+	</delete>
+	<!-- 根据id查询数据库监控 -->
+	<select id="pgAdminmdt.queryDetailById" resultMap="dbTaskResult" parameterClass="long">
+		select * from "tbl_monitor_database_task" where "TASK_ID" = #taskId#
+	</select>
+	<!-- 根据任务名称查询数据库监控 -->
+	<select id="pgAdminmdt.queryDetailByName" resultClass="java.lang.String" parameterClass="java.lang.String">
+		select "TASK_NAME" from "tbl_monitor_database_task" where "TASK_NAME" = #taskName#
+	</select>
+	<!-- 启停数据库监控 -->
+	<update id="pgAdminmdt.updateStatus" parameterClass="java.util.HashMap">
+	UPDATE tbl_monitor_database_task
+   		SET 
+   		"TASK_STATUS" = #taskStatus#
+ 		WHERE "TASK_ID" = #taskId#
+	</update>
+	<!-- 启停数据库监控 -->
+	<update id="pgAdminmdt.updateOnline" parameterClass="java.util.HashMap">
+	UPDATE tbl_monitor_database_task
+   		SET 
+   		"DATABASE_ONLINE" = #dbOnline#
+ 		WHERE "TASK_ID" = #taskId#
+	</update>
+</sqlMap>

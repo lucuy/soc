@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="assetRisk" extends="struts-default" namespace="/assetRisk">
+	   <!-- 查询资产 -->
+	   <action name="queryRisk" class="assetRisk"  method="query">
+	      <result name="success">/pages/risk/asset_riskInfo.jsp</result>
+	   </action> 
+	   
+	   <action name="importRisk" class="assetRisk"  method="importRisk">
+	      <result name="success" type="chain">
+	       	<param name="namespace">/assetRisk</param>
+	       	<param name="actionName">queryRisk</param>
+	      </result>
+	   </action> 
+	   
+	</package>
+	
+</struts>	

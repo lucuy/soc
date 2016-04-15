@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 定义注入的类和参数 -->
+	<bean name="createLogTableTaskTrigger" class="com.soc.webapp.quartz.CreateLogTableTrigger">
+		<property name="eventsManager" ref="eventsManager"></property>
+		<property name="archiveManager" ref="archiveManager"></property>
+		<property name="notAnalyticEventsManager" ref="notAnalyticEventsManager"></property>
+		<property name="originalLogManager" ref="originalLogManager"></property>
+		<property name="relevanceRuleGroupManager" ref="relevanceRuleGroupManager" />
+		<property name="settingManager" ref="settingManager"></property>
+	</bean>
+
+	<!-- 定义定时器，指定执行的类和方法 -->
+	<bean name="createLogTableTaskDetailBean"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="createLogTableTaskTrigger" />
+		<property name="targetMethod" value="createTableTask" />
+	</bean>
+
+
+
+	<bean id="createLogTableBean" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail">
+			<ref bean="createLogTableTaskDetailBean" />
+		</property>
+		<property name="cronExpression">
+			<value> 0 0 0 * * ?</value>
+		</property>
+	</bean>
+
+	<bean name="createLogTableFactoryBean"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		 <property name="triggers">
+			<list>
+				<ref bean="createLogTableBean" />
+			</list>
+		</property> 
+	</bean>
+</beans>

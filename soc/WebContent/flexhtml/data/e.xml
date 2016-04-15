@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<items id="oracle" name="Oracle数据库">
+		<node name="表空间使用率" kpiName="ts_used_PCT_RDB"        kpiIndex="1" dbItem="table_space_name_RDB"		  isNum="0"   data24="table_space_used_H_RDB"  dataweek="table_space_used_W_RDB" datamonth="table_space_used_M_RDB" dataday="table_space_used_D_RDB" parameter="3" />
+		<node name="物理读" kpiName="Physical_reads_RDB"           kpiIndex="1" dbItem="session_id_RDB"               isNum="0"   data24="physical_reads_H_RDB"  dataweek="physical_reads_W_RDB" datamonth="physical_reads_M_RDB" dataday="physical_reads_D_RDB" parameter="3"/>
+		<node name="Session总数" kpiName="Total_sessions_RDB"      kpiIndex="1" dbItem="sssion_instance_id_RDB"       isNum="1"   data24="session_H_RDB"  dataweek="session_W_RDB" datamonth="session_M_RDB" dataday="session_D_RDB" parameter="3"/>
+		<node name="Session活动数" kpiName="Active_sessions_RDB"   kpiIndex="2" dbItem="session_instance_id_RDB"      isNum="1"   data24="session_H_RDB"  dataweek="session_W_RDB" datamonth="session_M_RDB" dataday="session_D_RDB" parameter="3"/>
+		<node name="缓存命中率" kpiName="Buffer_Hit_RDB"           kpiIndex="1" dbItem="buffer_hit_instance_id_RDB"   isNum="1"   data24="buffer_hit_H_RDB"  dataweek="buffer_hit_W_RDB" datamonth="buffer_hit_M_RDB" dataday="buffer_hit_D_RDB" parameter="3"/>
+		<node name="归档日志使用率" kpiName="archive_area_usage_RDB" kpiIndex="1" dbItem="archive_area_RDB"           isNum="0"   data24="archive_area_usage_H_RDB"  dataweek="archive_area_usage_W_RDB" datamonth="archive_area_usage_M_RDB" dataday="archive_area_usage_D_RDB" parameter="2"/>
+		<node name="SQL命中率" kpiName="Library_Hit"               kpiIndex="1" dbItem="library_hit_instance_id_RDB"  isNum="1"   data24="library_hit_H_RDB"  dataweek="library_hit_W_RDB" datamonth="library_hit_M_RDB" dataday="library_hit_D_RDB" parameter="3"/>
+	</items>
+	
+	<items id="sqlserver" name="SQLServer数据库">
+		<node name="空间空闲率" kpiName="data_free_PCT_SSR"  kpiIndex="1" dbItem="data_freespace_SSR"  isNum="0"   data24="data_freespace_percent_H_SSR"  dataweek="data_freespace_percent_W_SSR" datamonth="data_freespace_percent_M_SSR" dataday="data_freespace_percent_D_SSR" parameter="2"/>
+		<node name="日志空闲率" kpiName="LOG_free_PCT_SSR"  kpiIndex="1" dbItem="log_freespace_percent_SSR"  isNum="0"    data24="log_freespace_percent_H_SSR"  dataweek="log_freespace_percent_W_SSR" datamonth="log_freespace_percent_M_SSR" dataday="log_freespace_percent_D_SSR" parameter="3"/>
+		<node name="缓存命中率" kpiName="Cache_Hit_SSR"  kpiIndex="1" dbItem="cache_hit_SSR"  isNum="1"   data24="cache_hit_ratio_H_SSR"  dataweek="cache_hit_ratio_W_SSR" datamonth="cache_hit_ratio_M_SSR" dataday="cache_hit_ratio_D_SSR" parameter="2"/>
+		<node name="表使用空间大小" kpiName="Space_Used_SSR"  kpiIndex="2" dbItem="space_SSR"  isNum="0"   data24="space_used_H_SSR"  dataweek="space_used_W_SSR" datamonth="space_used_M_SSR" dataday="space_used_D_SSR" parameter="3"/>
+		<node name="锁总数" kpiName="Total_Locks_SSR"  kpiIndex="1" dbItem="total_locks_SSR"  isNum="0"   data24="total_locks_H_SSR"  dataweek="total_locks_W_SSR" datamonth="total_locks_M_SSR" dataday="total_locks_D_SSR" parameter="2"/>
+		<node name="当前周期的任务失败数" kpiName="Jobs_Failed_Current_Interval_SSR"  kpiIndex="1" dbItem="jobs_SSR"  isNum="0"   data24="jobs_failed_current_interval_H_SSR"  dataweek="jobs_failed_current_interval_W_SSR" datamonth="jobs_failed_current_interval_M_SSR" dataday="jobs_failed_current_interval_D_SSR" parameter="2"/>
+	</items>
+	<items id="windows" name="Windows系统">
+		<node name="CPU使用率" kpiName="CPU_PCT_NT"  kpiIndex="1" dbItem="cpu_name"  isNum="1"   data24="CPU_PCT_H_NT"  dataweek="CPU_PCT_W_NT" datamonth="CPU_PCT_M_NT" dataday="CPU_PCT_D_NT" parameter="2"/>
+		<node name="内存使用率" kpiName="MEM_PCT_NT"  kpiIndex="1" dbItem="memory_name"  isNum="0"   data24="MEM_PCT_H_NT"  dataweek="MEM_PCT_W_NT" datamonth="MEM_PCT_M_NT" dataday="MEM_PCT_D_NT" parameter="2"/>
+		<node name="交换页数" kpiName="TOTAL_PAGE_USAGE_NT"  kpiIndex="2" dbItem="memory_name"  isNum="0"  data24="MEM_PCT_H_NT"  dataweek="MEM_PCT_W_NT" datamonth="MEM_PCT_M_NT" dataday="MEM_PCT_D_NT" parameter="2"/>
+		<node name="进程CPU使用率" kpiName="ps_cpu_pct_NT"  kpiIndex="1" dbItem=""  isNum="0"   data24=""  dataweek="" datamonth="" dataday="" parameter=""/>
+		<node name="进程内存使用率" kpiName="ps_mem_pct_NT"  kpiIndex="2" dbItem=""  isNum="0"   data24=""  dataweek="" datamonth="" dataday="" parameter=""/>
+		<node name="进程IO读速率" kpiName="ps_io_read_NT"  kpiIndex="3" dbItem=""  isNum="0"   data24=""  dataweek="" datamonth="" dataday="" parameter=""/>
+		<node name="进程IO写速率" kpiName="ps_io_write_NT"  kpiIndex="4" dbItem=""  isNum="0"   data24=""  dataweek="" datamonth="" dataday="" parameter=""/>
+		<node name="磁盘使用率" kpiName="disk_used_NT"  kpiIndex="3" dbItem="disk_name_NT"  isNum="0"   data24="DISK_H_NT"  dataweek="DISK_W_NT" datamonth="DISK_M_NT" dataday="DISK_D_NT" parameter="3"/>
+		<node name="磁盘空闲率" kpiName="disk_free_NT"  kpiIndex="4" dbItem="disk_name_NT"  isNum="0"   data24="DISK_H_NT"  dataweek="DISK_W_NT" datamonth="DISK_M_NT" dataday="DISK_D_NT" parameter="3"/>	
+		<node name="磁盘读速率" kpiName="DISK_READ_RATE_NT"  kpiIndex="1" dbItem="disk_name_NT"  isNum="0"  data24="DISK_H_NT"  dataweek="DISK_W_NT" datamonth="DISK_M_NT" dataday="DISK_D_NT" parameter="3"/>
+		<node name="磁盘写速率" kpiName="DISK_WRITE_RATE_NT"  kpiIndex="2" dbItem="disk_name_NT"  isNum="0" data24="DISK_H_NT"  dataweek="DISK_W_NT" datamonth="DISK_M_NT" dataday="DISK_D_NT" parameter="3"/>
+	</items>
+	<items id="linux"  name="Linux系统">
+		<node name="系统CPU使用率" kpiName="SYSTEM_CPU_PCT_LZ"  kpiIndex="1" dbItem="cpu_id_KLZ"  isNum="1"   data24="CPU_H_LZ"  dataweek="CPU_W_LZ" datamonth="CPU_M_LZ" dataday="CPU_D_LZ" parameter="3" />
+		<node name="用户CPU使用率" kpiName="USER_CPU_PCT_LZ"    kpiIndex="2" dbItem="cpu_id_KLZ"  isNum="1"   data24="CPU_H_LZ"  dataweek="CPU_W_LZ" datamonth="CPU_M_LZ" dataday="CPU_D_LZ" parameter="3" />
+		<node name="I/O等待" kpiName="IO_WAIT_CPU_PCT_LZ"       kpiIndex="3" dbItem="cpu_id_KLZ"  isNum="1"   data24="CPU_H_LZ"  dataweek="CPU_W_LZ" datamonth="CPU_M_LZ" dataday="CPU_D_LZ" parameter="3" />
+		<node name="内存使用率" kpiName="MEM_PCT_LZ"  kpiIndex="1" dbItem="memory_name"  isNum="0"   data24="MEM_PCT_H_LZ"  dataweek="MEM_PCT_W_LZ" datamonth="MEM_PCT_M_LZ" dataday="MEM_PCT_D_LZ" parameter="2"/>
+		<node name="文件系统使用率" kpiName="fs_used_pct_LZ"  kpiIndex="1" dbItem="file_system_KLZ"  isNum="0"   data24="FILE_SYSTEM_H_LZ"  dataweek="FILE_SYSTEM_W_LZ" datamonth="FILE_SYSTEM_M_LZ" dataday="FILE_SYSTEM_D_LZ" parameter="3"/>
+		<node name="进程CPU使用率" kpiName="ps_cpu_pct_LZ"  kpiIndex="1" dbItem=""  isNum="0"   data24=""  dataweek="" datamonth="" dataday="" parameter=""/>
+		<node name="进程内存使用率" kpiName="ps_mem_pct_LZ"  kpiIndex="2" dbItem=""  isNum="0"   data24=""  dataweek="" datamonth="" dataday="" parameter=""/>
+		<node name="磁盘读速率" kpiName="disk_read_rate_LZ"  kpiIndex="1" dbItem="disk_name_KLZ"  isNum="0"   data24="DISK_H_LZ"  dataweek="DISK_W_LZ" datamonth="DISK_M_LZ" dataday="DISK_D_LZ" parameter="3"/>
+		<node name="磁盘写速率" kpiName="disk_write_rate_LZ"  kpiIndex="2" dbItem="disk_name_KLZ"  isNum="0"   data24="DISK_H_LZ"  dataweek="DISK_W_LZ" datamonth="DISK_M_LZ" dataday="DISK_D_LZ" parameter="3"/>
+		<node name="网络入流量" kpiName="net_flow_in_LZ"  kpiIndex="1" dbItem="net_work_KLZ"  isNum="0"   data24="NETWORK_H_LZ"  dataweek="NETWORK_W_LZ" datamonth="NETWORK_M_LZ" dataday="NETWORK_D_LZ" parameter="3"/>
+		<node name="网络出流量" kpiName="net_flow_out_LZ"  kpiIndex="2" dbItem="net_work_KLZ"  isNum="0"  data24="NETWORK_H_LZ"  dataweek="NETWORK_W_LZ" datamonth="NETWORK_M_LZ" dataday="NETWORK_D_LZ" parameter="3"/>
+	</items>
+	<items id="unix"  name="Unix系统">
+		<node name="系统CPU使用率" kpiName="SYSTEM_CPU_PCT_KUX"  kpiIndex="1" dbItem="cpu_name"  isNum="1"   data24="CPU_PCT_H_KUX"  dataweek="CPU_PCT_W_KUX" datamonth="CPU_PCT_M_KUX" dataday="CPU_PCT_D_KUX" parameter="2"/>
+		<node name="用户CPU使用率" kpiName="USER_CPU_PCT_KUX"  kpiIndex="2" dbItem="cpu_name"  isNum="1"     data24="CPU_PCT_H_KUX"  dataweek="CPU_PCT_W_KUX" datamonth="CPU_PCT_M_KUX" dataday="CPU_PCT_D_KUX" parameter="2"/>
+		<node name="I/O等待"       kpiName="IO_WAIT_CPU_PCT_KUX"  kpiIndex="3" dbItem="cpu_name"  isNum="1"  data24="CPU_PCT_H_KUX"  dataweek="CPU_PCT_W_KUX" datamonth="CPU_PCT_M_KUX" dataday="CPU_PCT_D_KUX" parameter="2"/>
+		<node name="内存使用率"    kpiName="MEM_PCT_KUX"  kpiIndex="1" dbItem="memory_name"  isNum="0"   data24="MEM_PCT_H_KUX"  dataweek="MEM_PCT_W_KUX" datamonth="MEM_PCT_M_KUX" dataday="MEM_PCT_D_KUX" parameter="2"/>
+		<node name="文件系统使用率" kpiName="fs_used_pct_KUX" kpiIndex="1" dbItem="file_system_KUX"  isNum="0"   data24="FILE_SYSTEM_H_KUX"  dataweek="FILE_SYSTEM_W_KUX" datamonth="FILE_SYSTEM_M_KUX" dataday="FILE_SYSTEM_D_KUX" parameter="3"/>
+		<node name="进程CPU使用率"  kpiName="ps_cpu_pct_KUX" kpiIndex="1" dbItem=""  isNum="0"   data24=""  dataweek="" datamonth="" dataday="" parameter=""/>
+		<node name="进程内存使用率" kpiName="ps_mem_pct_KUX" kpiIndex="2" dbItem=""  isNum="0"   data24=""  dataweek="" datamonth="" dataday="" parameter=""/> 
+		<node name="磁盘读速率"     kpiName="disk_read_rate_KUX" kpiIndex="1" dbItem="disk_name_KUX"  isNum="0"    data24="DISK_H_KUX"  dataweek="DISK_W_KUX" datamonth="DISK_M_KUX" dataday="DISK_D_KUX" parameter="3"/>
+		<node name="磁盘写速率"     kpiName="disk_write_rate_KUX" kpiIndex="2" dbItem="disk_name_KUX"  isNum="0"   data24="DISK_H_KUX"  dataweek="DISK_W_KUX" datamonth="DISK_M_KUX" dataday="DISK_D_KUX" parameter="3"/>
+		<node name="网络入流量"      kpiName="net_flow_in_KUX" kpiIndex="1" dbItem="net_work_KUX"  isNum="0"   data24="NETWORK_H_KUX"  dataweek="NETWORK_W_KUX" datamonth="NETWORK_M_KUX" dataday="NETWORK_D_KUX" parameter="3"/>
+		<node name="网络出流量"      kpiName="net_flow_out_KUX" kpiIndex="2" dbItem="net_work_KUX"  isNum="0"  data24="NETWORK_H_KUX"  dataweek="NETWORK_W_KUX" datamonth="NETWORK_M_KUX" dataday="NETWORK_D_KUX" parameter="3"/>
+	</items>
+	<items id="websphere"  name="中间件">
+		<node name="WebSphere状态" kpiName="status_WS" kpiIndex="" dbItem=""  isNum="0"   data24=""  dataweek="" datamonth="" dataday="" parameter=""/>
+		<node name="Session数" kpiName="session_number_WS" kpiIndex="" dbItem=""  isNum="0"   data24=""  dataweek="" datamonth="" dataday="" parameter=""/>
+		<node name="JVM内存使用率" kpiName="JVM_memory_usage_WS" kpiIndex="" dbItem=""  isNum="0"   data24=""  dataweek="" datamonth="" dataday="" parameter=""/>
+		<node name="线程池使用率" kpiName="thread_pool_usage_WS" kpiIndex="" dbItem=""  isNum="0"   data24=""  dataweek="" datamonth="" dataday="" parameter=""/>
+		<node name="数据库连接池使用率" kpiName="db_conn_pool_usage_WS" kpiIndex="" dbItem=""  isNum="0"   data24=""  dataweek="" datamonth="" dataday="" parameter=""/>
+	</items>
+</root>

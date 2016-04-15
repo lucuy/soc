@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+	<package name="events" extends="json-default" namespace="/events">
+		<action name="queryOriginalEvent" class="queryEventsAction"
+			method="queryOriginalEvent">
+			<result name="success">/pages/events/original_events.jsp</result>
+		</action>
+		<action name="queryEventsTrre" class="queryEventsAction"
+			method="TreeMethod">
+			<result name="success">/pages/events/events_menu.jsp</result>
+		</action>
+
+
+		<action name="queryEvents" class="queryEventsAction" method="QueryEvents">
+			<result name="success">/pages/events/events_list.jsp</result>
+		</action>
+
+		<action name="editCustom" class="queryEventsAction" method="EditCustom">
+			<!-- <result name="success">/pages/events/custom_info.jsp</result> -->
+			 <result name="success" type="chain">
+			   <param name="namespace">/events</param>
+			   <param name="actionName">insertCustom</param>
+			   <param name="fresh">${fresh}</param>
+			 </result>
+	          <result name="query" type="chain">
+	            <param name="namespace">/events</param>
+	            <param name="actionName">queryCustonRule</param>
+	            <param name="conditions">${conditions}</param>
+	            <param name="identification">${identification}</param>
+	        </result>
+		</action>
+
+		<action name="insertCustom" class="queryEventsAction" method="InsertCustom">
+			<result name="success">/pages/events/custom_info.jsp</result>
+		</action>
+		
+		<action name="updateEventsConditions" class="queryEventsAction" method="updateEventsConditions">
+			<result name="success" type="chain">
+				<param name="namespace">/events</param>
+				<param name="actionName">queryRelevanceAnalysis</param>
+				<param name="queryEventsId">${queryEventsId}</param>
+				<param name="queryEventsType">${queryEventsType}</param>
+			</result>
+		</action>
+		 <!-- <result type="redirectAction">
+	     		<param name="actionName">queryAsset</param>
+				<param name="namespace">/asset</param>
+				<param name="collectorId">${colId}</param>
+				<param name="assetSegMent">${assetSeg}</param>
+	      </result> -->
+		<action name="queryCustonRule" class="queryEventsAction"
+			method="QueryCustonRule">
+			<result name="success">/pages/events/queryRelevanceAnalysis_list.jsp
+			</result>
+			<result name="chart">
+			     /pages/events/queryRelevanceAnalysis_ForChart_list.jsp
+			</result>
+			
+		</action>
+
+		<action name="delCustom" class="queryEventsAction" method="DelCustom">
+		    <result name="success" type="chain">
+		    	<param name="namespace">/events</param>
+		    	<param name="actionName">insertCustom</param>
+		    	<param name="fresh">${fresh}</param>
+		    </result>
+		</action>
+
+		<action name="eventsDetails" class="queryEventsAction" method="queryEventsDetails">
+		</action>
+		
+		<action name="eventsDetail" class="queryEventsAction" method="queryEventsDetail">
+		</action>
+
+		<action name="queryRelevanceAnalysis" class="queryEventsAction"
+			method="QueryRelevanceAnalysis">
+			<result name="success">/pages/events/relevanceAnalysis_list.jsp</result>
+		</action>
+
+		<action name="queryProtocol" class="queryEventsAction" method="queryProtocol">
+		</action>
+
+		<action name="queryEventDefinition" class="queryEventsAction"
+			method="queryEventDefinition">
+		</action>
+
+		<action name="queryAnalysisFailed" class="queryEventsAction"
+			method="queryNotAnalysis">
+			<result name="success">/pages/events/notAnalysis_list.jsp</result>
+		</action>
+
+		<action name="queryEventScreen" class="queryEventsAction"
+			method="queryEventScreen">
+
+		</action>
+
+		<!-- 近期事件的action -->
+		<action name="queryRecentEvents" class="queryEventsAction"
+			method="queryRecentEvents">
+			<result name="success">/pages/events/recentevents_list.jsp</result>
+		</action>
+
+		<!-- 当天的未定义事件查看 -->
+		<action name="queryUndefined" class="queryEventsAction" method="queryUndefinedEvents">
+			<result name="success">/pages/events/undefinedEvents_list.jsp</result>
+		</action>
+		<!-- 修改自定义查询条件 -->
+		<action name="queryEventsConditionsStr" class="queryEventsAction"
+			method="queryEventsConditionsStr">
+			<result name="success">/pages/events/update_custom_info.jsp</result>
+		</action>
+		
+		<!-- 导出doc -->
+		<action name="exportEvent" class="queryEventsAction" method="exportEvent"></action>
+		
+		<!-- 导出excel -->
+		<action name="exportEventExcel" class="queryEventsAction" method="exportEventExcel"></action>
+
+		<!-- 显示左侧事件树  -->
+		
+		<action name="queryTreeAction" class="eventTreeAction"
+			method="queryTree">
+			<result name="success">/pages/vulnerability/knowledge_menu.jsp</result>
+		</action>
+		
+		<!-- 显示左侧事件树对应库   -->
+		<action name="queryEventLibraryList" class="eventLibraryAction"
+			method="queryList">
+			<result name="success">/pages/vulnerability/event_library_list.jsp</result>
+			<result name="detail">/pages/vulnerability/event_library_list_detail.jsp</result>
+		</action>
+		<action name="deleteEventLibraryList" class="eventLibraryAction"
+			method="deleteLibrary">
+			<result name="success">/pages/vulnerability/event_library_list.jsp</result>
+		</action>
+
+		
+		
+		<action name="queryALLAsset" class="queryEventsAction" method="queryRelAssets">
+		   <result name="success">/pages/events/event_Rel_assetList.jsp</result>
+		</action>
+		
+		 <!-- 根据资产查询事件 -->
+	   <action name="queryByAssetEvents" class="queryEventsAction" method="queryByAssetEvents">
+           <result name="success" type="chain"> 
+                <param name="namespace">/events</param>
+                <param name="actionName">queryEventsContitons</param>
+                <param name="conditions">${conditions}</param>
+           </result> 
+           <!--  <result type="chain"> 
+                <param name="actionName">/queryEventsContitons.action?conditions=${conditions}</param> 
+             </result>  -->
+	   </action>
+	   
+	   <!-- 真正查询方法 -->
+	   <action name="queryEventsContitons" class="queryEventsAction" method="queryByConditionEvents">
+	       <result name="success">/pages/events/rel_asset_eventList.jsp</result>
+	   </action>
+	   
+	    <!-- 进入高级搜索的界面 -->
+	   <action name="events_assetquery" class="queryEventsAction" method="events_assetquery">
+	       <result name="success">/pages/events/events_asset_query_page.jsp</result>
+	   </action>
+	   <!-- 查询用户根据Id -->
+	   <action name="queryUserByUserId" class="queryEventsAction" method="queryUserById">
+	        <result type="json" name="success">
+	          <param name="root">user</param>
+	        </result>
+	   </action>
+	   <!-- 修改用户需要隐藏的字段 -->
+	   <action name="updateFaild" class="queryEventsAction" method="updateFaild">
+	        <result type="json" name="success">
+	          <param name="root">user</param>
+	        </result>
+	   </action>
+	   
+	   <action name="queryKeyByCategoryName" class="queryEventsAction" method="queryKeyByCategoryName">
+	           <result type="json" name="success">
+	              <param name="root">categoryKey</param>
+	           </result>
+	   </action>
+	   
+	   <action name="queryEventIdByCategoryName" class="queryEventsAction" method="queryTypeIdByName">
+	           <result type="json" name="success">
+	               <param name="root">protocol</param>
+	           </result>
+	   </action>
+	   
+	   <action name="queryEventToQueryPage" class="queryEventsAction" method="queryEventToQueryPage">
+	           <result name="success">
+	                 /pages/events/queryRelevanceAnalysis_ForChart_list.jsp
+	           </result>
+ 	   </action>
+	
+	   
+
+  <!-- 分页查询关联后事件 -->
+		<action name="queryRelevanceEvents" class="relevanceEventsAction"
+			method="queryRelevanceEvents">
+			<result name="success">/pages/events/relevance_events_list.jsp</result>
+		</action>
+		<!-- 查询关联后事件的解析事件 -->
+		<action name="queryAtnalyticEvents" class="relevanceEventsAction"
+			method="queryAtnalyticEvents">
+			<result name="success">/pages/events/relevance_atnalytic_events_list.jsp</result>
+		</action>
+	</package>
+	   
+
+</struts>	

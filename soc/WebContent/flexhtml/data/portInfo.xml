@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml>
+  <port bandWidth="40000"  wPackRate="2000" lPackRate="3000" />
+</xml>

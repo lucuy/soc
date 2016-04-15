@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+<constant name="struts.i18n.encoding" value="GBK"></constant>
+   <package name="files" extends="struts-default" namespace="/files">
+      
+       <action name="filesshow" class="FilesDownAction" method="queryFilesByType">
+       <result name="success">/pages/dbPage/files/filesDownload.jsp</result>
+       </action>
+       <action name="downloadfile" class="FilesDownAction" method="downfiles">
+       <param name="inputpath">/uploadFiles/safetyfiles/</param>
+       <param name="inputpath2">/uploadFiles/frank/</param>
+       <param name="inputpath3">/uploadFiles/rankfiles/</param>
+       <param name="inputpath4">/uploadFiles/topfiles/</param>
+       <param name="inputpath5">/uploadFiles/sysmanfiles/</param>
+       <param name="inputpath6">/uploadFiles/sysplanfiles/</param>
+       <param name="inputpath7">/uploadFiles/syssafetyfiles/</param>
+       <param name="inputpath8">/uploadFiles/sysreportfiles/</param>
+       <param name="inputpath9">/uploadFiles/sysprofessionalfiles/</param>
+       <param name="inputpath10">/uploadFiles/syssuperiorfiles/</param>
+       <param name="inputpath11">/uploadFiles/infosysabolish/</param>
+       <param name="inputpath12">/uploadFiles/devsysabolish/</param>
+       <param name="inputpath13">/uploadFiles/storesysabolish/</param>
+       <!--
+         	<result type="stream">
+                 <param name="contentType">application/octet-stream</param>
+                 <param name="inputName">InputStream</param>
+                 <param name="contentDisposition">attachment;filename="${filename}"</param>
+                 <param name="bufferSize">4096</param>
+           </result>
+            -->
+       </action>
+   </package>
+</struts>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="assetProbeTask" extends="json-default"
+		namespace="/assetProbeTask">
+		<!-- 添加资产任务 -->
+		<action name="addTask" class="assetProbeTaskAction" method="addTask">
+		    <result name="success" type="chain">
+		    	<param name="namespace">/assetProbeTask</param>
+		    	<param name="actionName">queryTask</param>
+		    </result>
+		</action>
+		<!-- 查询所有探测任务 -->
+		<action name="queryTask" class="assetProbeTaskAction" method="queryTask">
+			<result name="success">/pages/asset/asset_probe_list.jsp</result>
+			<result name="input">/pages/asset/asset_probe_list.jsp</result>
+		</action>
+		<!-- 快速查询探测任务 -->
+		<action name="queryName" class="assetProbeTaskAction" method="queryName">
+			<result name="success">/pages/asset/asset_probe_list.jsp</result>
+			<result name="input">/pages/asset/asset_probe_list.jsp</result>
+		</action>
+		<!-- 删除选定探测任务 -->
+		<action name="deleteTask" class="assetProbeTaskAction" method="deleteTask">
+
+		</action>
+		<!-- 根据ID查询探测任务信息 -->
+		<action name="editAssetTask" class="assetProbeTaskAction"
+			method="editAssetTask">
+			<result name="success">/pages/asset/asset_probe_task.jsp</result>
+		</action>
+		<!-- 进入编辑或者添加页面 -->
+		<action name="editAsset" class="assetAction" method="editAsset">
+			<result name="success">/pages/asset/asset_probe_task.jsp</result>
+		</action>
+		<!-- 生产探测任务xml文件 -->
+		<action name="exportXml" class="assetProbeTaskAction" method="exportXml">
+			<result name="success" type="chain">testResult</result>
+			 <result name="error" type="chain">
+		    	<param name="namespace">/assetProbeTask</param>
+		    	<param name="actionName">queryTask</param>
+		    </result>
+		     <result name="input" type="chain">
+		    	<param name="namespace">/assetProbeTask</param>
+		    	<param name="actionName">queryTask</param>
+		    </result>
+		</action>
+		<!-- 生产探测任务xml文件 -->
+		<action name="testResult" class="assetProbeTaskAction" method="testResult">
+		    <result name="error" type="chain">
+		    	<param name="namespace">/assetProbeTask</param>
+		    	<param name="actionName">queryTask</param>
+		    </result>
+		     <result name="input" type="chain">
+		    	<param name="namespace">/assetProbeTask</param>
+		    	<param name="actionName">queryTask</param>
+		    </result>
+		     <result name="none" type="chain">
+		    	<param name="namespace">/assetProbeTask</param>
+		    	<param name="actionName">queryTask</param>
+		    </result>
+			
+			<result name="success">/pages/asset/asset_probe.jsp</result>
+			
+		<!-- <result name="input">/pages/asset/asset_update_probe.jsp?ids=${ids}</result> -->	
+		</action>
+				<!-- 传值给编辑页面 -->
+		<action name="byValue" class="assetProbeTaskAction" method="byValue">
+			<result name="success">/pages/asset/asset_probe_info.jsp</result>
+		</action>
+		<!-- 执行添加或者编辑操作 -->
+		<action name="updateAsset" class="assetAction" method="updateAsset">
+			<!-- <result type="redirectAction">queryAsset</result> -->
+		</action>
+			<!-- 查看mac对应的probeAsset -->
+		<action name="queryProbeAsset" class="assetProbeAction" method="queryProbeAssetByMac">
+		    <result name="success" type="json">
+		       <param name="root">assetProbeList</param>
+		    </result>
+		</action>
+		    <!-- 根据任务的id查看对应的探测资产的信息 -->
+		<action name="queryProbeAssetById" class="assetProbeAction" method="queryProbeAssetById">
+		    <result name="success" type="json">
+		        <param name="root">assetProbeList</param>
+		    </result>
+		</action>
+		
+		<action name="proQuery" class="assetProbeTaskAction" method="proQuery">
+		    <result name="success">/pages/asset/asset_probe_list.jsp</result>
+			<result name="input">/pages/asset/asset_probe_list.jsp</result>
+		</action>
+		
+	</package>
+</struts>	

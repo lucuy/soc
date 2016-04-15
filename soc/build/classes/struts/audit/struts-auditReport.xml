@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="auditReport" extends="json-default" namespace="/auditReport">
+		<action name="displayLeftManageTree" class="auditReportAction"
+			method="displayLeftManagetree">
+
+			<result name="success">/pages/audit/audit_menu.jsp</result>
+		</action>
+		<action name="queryReportByAuditReportId" class="auditReportAction"
+			method="queryReportByAuditReportId">
+			<result name="success">/pages/audit/audit_report.jsp</result>
+		</action>
+		<action name="ExportReport" class="auditReportAction" method="ExportReport">
+		</action>
+		<action name="reportFileIsExist" class="auditReportAction"
+			method="reportFileIsExist">
+			<result name="success" type="json">
+				<param name="root">exist</param>
+			</result>
+		</action>
+		<action name="customs" class="auditReportAction"  method="customs">
+	      <result name="success">/pages/audit/customs.jsp</result>
+	   </action>
+	</package>
+</struts>

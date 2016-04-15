@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+         xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    
+	<!-- 定义注入的类和参数 -->
+	<bean name="diskAlertTaskTrigger" class="com.soc.webapp.quartz.DiskAlertTrigger">
+		<property name="settingManager" ref="settingManager"></property>
+	</bean>
+	
+    <!-- 定义定时器，指定执行的类和方法 -->
+    <bean name="diskAlertTaskDetailBean" 
+    		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="diskAlertTaskTrigger" />
+		<property name="targetMethod" value="diskAlertTask"/>
+	</bean>
+
+	<bean name="diskAlertTaskTriggerBean" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+	    <property name="jobDetail" ref="diskAlertTaskDetailBean"/>
+	    <property name="repeatInterval" value="360000"/>
+	<!--  <property name="repeatInterval" value="5000"/> -->
+	   <property name="startDelay" value="5000"/>
+    </bean>
+    
+    <!--
+    <bean id="cronTriggerBean"
+        class="org.springframework.scheduling.quartz.CronTriggerBean">  
+        <property name="jobDetail">  
+            <ref bean="jobTask" />  
+        </property>  
+        <property name="cronExpression">  
+            <value> 0 0/1 * * * ?</value>  
+        </property>  
+    </bean>
+	-->
+  <bean name="diskAlertFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		 <property name="triggers">
+			<list>
+				<ref bean="diskAlertTaskTriggerBean"/>
+			</list>
+		</property> 
+	</bean>
+</beans>

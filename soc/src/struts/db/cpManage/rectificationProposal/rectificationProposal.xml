@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+    <package name="proposal" extends="struts-default" namespace="/proposal">
+	  <!--整改需求汇总左侧导航栏-->
+	 	<action name="queryTree" class="rectificationProposalAction" method="queryTree" />
+	  <!--整改需求汇总列表-->
+	   <action name="queryProposal" class="rectificationProposalAction" method="query">
+	     <result name="success">/pages/dbPage/cpManage/demand/rectificationProposal/proposalList.jsp</result>
+	   </action>
+	   <!-- 整改需求汇总列表搜索 -->
+	   <action name="queryAjaxProposal" class="rectificationProposalAction" method="queryAjaxProposal"></action>
+       <!--添加整改建议-->
+       <action name="insterProposal" class="rectificationProposalAction" method="insterProposal">
+        <result name="success" type="redirectAction" >
+		   	    <param name="actionName">queryProposal</param>
+				<param name="CIA_AssessResult">${cia_assessResultparam}</param>
+				 <param name="FK_CA">${fkcaparam}</param> 
+			    <param name="sysname">${sysnameparam}</param> 
+			</result> 
+       </action>
+       <!--修改整改建议-->
+      <action name="updataProposal" class="rectificationProposalAction" method="updataProposal">
+           <result name="success" type="redirectAction" >
+		   	    <param name="actionName">queryProposal</param>
+				<param name="CIA_AssessResult">${cia_assessResultUpdata}</param>
+				 <param name="FK_CA">${fkcaUpdata}</param> 
+			    <param name="sysname">${sysnameUpdata}</param> 
+			</result> 
+      </action>
+      <!--删除整改建议-->
+      <action name="deleteProposal" class="rectificationProposalAction" method="deleteProposal">
+           <result name="success" type="redirectAction" >
+		   	    <param name="actionName">queryProposal</param>
+				<param name="CIA_AssessResult">${cia_assessResultDelete}</param>
+				 <param name="FK_CA">${fkcaDelete}</param> 
+			    <param name="sysname">${sysnameDelete}</param> 
+			</result> 
+      </action>
+      <!--导出报告-->
+      <action name="proposalRectDocCreate" class="rectificationProposalAction" method="proposalRectDocCreate">
+      </action>
+      
+  </package>
+
+</struts>

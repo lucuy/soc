@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="settingMemory">
+	<resultMap id="settingResult" class="settingMemory">
+   		<result property="systemMemoryId" 				column="SYSTEM_MEMORY_ID" 					jdbcType="long"/>
+   		<result property="systemMemoryEmploy" 			column="SYSTEM_MEMORY_EMPLOY" 				jdbcType="varchar"/>
+   		<result property="systemMemoryTotal" 			column="SYSTEM_MEMORY_TOTAL"				jdbcType="varchar"/>
+   		<result property="systemMemoryPercent" 		column="SYSTEM_MEMORY_PERCENT" 				jdbcType="varchar"/>
+   		<result property="systemMemoryRemain" 			column="SYSTEM_MEMORY_REMAIN" 				jdbcType="varchar"/>
+   		<result property="systemMemoryDate" 			column="SYSTEM_MEMORY_DATE" 				jdbcType="datetime"/>
+   	</resultMap>
+   	
+   	<!-- 新增 -->
+   		<insert id="pgAdminsettingMemory.insert" parameterClass="settingMemory">
+		INSERT INTO "tbl_system_memory"
+				( 
+				  "SYSTEM_MEMORY_EMPLOY", 
+				  "SYSTEM_MEMORY_TOTAL", 
+				  "SYSTEM_MEMORY_PERCENT",
+				  "SYSTEM_MEMORY_REMAIN",
+				  "SYSTEM_MEMORY_DATE" )		 
+		VALUES 
+				( 
+				  #systemMemoryEmploy#, 
+				  #systemMemoryTotal#, 
+				  #systemMemoryPercent#, 
+				  #systemMemoryRemain#, 
+				  #systemMemoryDate# )
+	</insert>
+	
+   	<!-- 查询 -->
+   	<select id="pgAdminmemorycount.query"  parameterClass="java.util.HashMap" resultClass="int">
+		SELECT COUNT(*) FROM "tbl_system_memory" order by "SYSTEM_MEMORY_DATE" desc
+	</select>
+   	
+   	<select id="pgAdminsettingMemory.query"  parameterClass="java.util.HashMap" resultMap="settingResult">
+		SELECT * FROM "tbl_system_memory" order by "SYSTEM_MEMORY_DATE" desc
+	</select>
+	<select id="pgAdminquery.memory"  parameterClass="java.util.HashMap" resultMap="settingResult">
+		SELECT * FROM "tbl_system_memory" ORDER BY "SYSTEM_MEMORY_DATE" DESC LIMIT 10
+	</select>
+	<select id="pgAdminqueryone.memory"  parameterClass="java.util.HashMap" resultMap="settingResult">
+		SELECT * FROM "tbl_system_memory" ORDER BY "SYSTEM_MEMORY_DATE" DESC LIMIT 1
+	</select>
+	<!-- sqlServer -->
+		<!-- 新增 -->
+   		<insert id="sqlServersettingMemory.insert" parameterClass="settingMemory">
+		INSERT INTO "tbl_system_memory"
+				( 
+				  "SYSTEM_MEMORY_EMPLOY", 
+				  "SYSTEM_MEMORY_TOTAL", 
+				  "SYSTEM_MEMORY_PERCENT",
+				  "SYSTEM_MEMORY_REMAIN",
+				  "SYSTEM_MEMORY_DATE" )		 
+		VALUES 
+				( 
+				  #systemMemoryEmploy#, 
+				  #systemMemoryTotal#, 
+				  #systemMemoryPercent#, 
+				  #systemMemoryRemain#, 
+				  #systemMemoryDate# )
+	</insert>
+	
+   	<!-- 查询 -->
+   	<select id="sqlServermemorycount.query"  parameterClass="java.util.HashMap" resultClass="int">
+		SELECT COUNT(*) FROM "tbl_system_memory" order by "SYSTEM_MEMORY_DATE" desc
+	</select>
+   	
+   	<select id="sqlServersettingMemory.query"  parameterClass="java.util.HashMap" resultMap="settingResult">
+		SELECT * FROM "tbl_system_memory" order by "SYSTEM_MEMORY_DATE" desc
+	</select>
+	<select id="sqlServerquery.memory"  parameterClass="java.util.HashMap" resultMap="settingResult">
+		SELECT * FROM "tbl_system_memory" ORDER BY "SYSTEM_MEMORY_DATE" DESC LIMIT 10
+	</select>
+	<select id="sqlServerqueryone.memory"  parameterClass="java.util.HashMap" resultMap="settingResult">
+		SELECT * FROM "tbl_system_memory" ORDER BY "SYSTEM_MEMORY_DATE" DESC LIMIT 1
+	</select>
+</sqlMap>

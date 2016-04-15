@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="relevanceRuleGroup">
+	<resultMap id="relevanceRuleGroupResult" class="relevanceRuleGroup">
+		<result property="id" column="ID" jdbcType="int" />
+		<result property="name" column="NAME"
+			jdbcType="varchar" />
+		<result property="parentId" column="PARENT_ID"
+			jdbcType="int" />
+		<result property="creater" column="CREATER"
+			jdbcType="varchar" />
+					<result property="status" column="STATUS"
+			jdbcType="int" />
+	<result property="desc" column="DES"
+			jdbcType="varchar" />
+	<result property="time" column="TIME"
+			jdbcType="datetime" />
+	</resultMap>
+	<insert id="pgAdminrelevanceRuleGroupSQL.addGroup" parameterClass="relevanceRuleGroup">
+
+		insert into
+		"tbl_relevance_rule_group"
+		("NAME","TIME","CREATER","DES","PARENT_ID","STATUS")
+		values
+		(#name#,#time#,#creater#,#desc#,#parentId#,#status#)
+
+		<selectKey resultClass="int" keyProperty="id">
+			SELECT
+			currval('tbl_relevance_rule_group_seq'::regclass) AS ID
+		</selectKey>
+	</insert>
+
+	<select id="pgAdminrelevanceRuleGroupSQL.queryByParentId" resultClass="relevanceRuleGroup"
+		resultMap="relevanceRuleGroupResult" parameterClass="java.util.HashMap">
+		select * from "tbl_relevance_rule_group" where 1=1
+		<isNotEmpty prepend="and" property="parentId">
+			"PARENT_ID" =
+			#parentId#
+			</isNotEmpty>
+		<isNotEmpty prepend="and" property="status">
+			"STATUS" = 1
+		</isNotEmpty>
+	<isNotEmpty prepend="and" property="keyword">
+			"NAME" like '%$keyword$%'
+		</isNotEmpty>
+order by "ID" asc
+	</select>
+
+	<select id="pgAdminrelevanceRuleGroupSQL.count" resultClass="Integer" >
+		select count(*) from "tbl_relevance_rule_group" where "PARENT_ID" =1
+			<isNotEmpty prepend="and" property="keyword">
+			"NAME" like '%$keyword$%'
+		</isNotEmpty>
+	</select>
+	<delete id="pgAdminrelevanceRuleGroupSQL.deleteGroup" parameterClass="java.util.HashMap">
+	delete from  "tbl_relevance_rule_group" where 1=1
+		<isNotEmpty prepend="and" property="ids">
+			"ID" in ($ids$)		
+		</isNotEmpty>
+	</delete>
+	<update id="pgAdminrelevanceRuleGroupSQL.updateStatus" parameterClass="java.util.HashMap">
+	update "tbl_relevance_rule_group" set "STATUS" = #status# where "ID" in ($ids$)
+	</update>
+	
+	<!-- sql Server用的sql -->
+	<insert id="sqlServerrelevanceRuleGroupSQL.addGroup" parameterClass="relevanceRuleGroup">
+
+		insert into
+		"tbl_relevance_rule_group"
+		("NAME","TIME","CREATER","DES","PARENT_ID","STATUS")
+		values
+		(#name#,#time#,#creater#,#desc#,#parentId#,#status#)
+	</insert>
+
+	<select id="sqlServerrelevanceRuleGroupSQL.queryByParentId" resultClass="relevanceRuleGroup"
+		resultMap="relevanceRuleGroupResult" parameterClass="java.util.HashMap">
+		select * from "tbl_relevance_rule_group" where 1=1
+		<isNotEmpty prepend="and" property="parentId">
+			"PARENT_ID" =
+			#parentId#
+			</isNotEmpty>
+		<isNotEmpty prepend="and" property="status">
+			"STATUS" = 1
+		</isNotEmpty>
+	<isNotEmpty prepend="and" property="keyword">
+			"NAME" like '%$keyword$%'
+		</isNotEmpty>
+order by "ID" asc
+	</select>
+
+	<select id="sqlServerrelevanceRuleGroupSQL.count" resultClass="Integer" >
+		select count(*) from "tbl_relevance_rule_group" where "PARENT_ID" =1
+			<isNotEmpty prepend="and" property="keyword">
+			"NAME" like '%$keyword$%'
+		</isNotEmpty>
+	</select>
+	<delete id="sqlServerrelevanceRuleGroupSQL.deleteGroup" parameterClass="java.util.HashMap">
+	delete from  "tbl_relevance_rule_group" where 1=1
+		<isNotEmpty prepend="and" property="ids">
+			"ID" in ($ids$)		
+		</isNotEmpty>
+	</delete>
+	<update id="sqlServerrelevanceRuleGroupSQL.updateStatus" parameterClass="java.util.HashMap">
+	update "tbl_relevance_rule_group" set "STATUS" = #status# where "ID" in ($ids$)
+	</update>
+	
+</sqlMap>

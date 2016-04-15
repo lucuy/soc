@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+
+<!-- //导出差距分析报告
+//合规管理
+//差距分析报告
+//导出差距分析报告 -->
+<select id="pgAdmingetSecurityControl.showCIA_AInOneAndZore" resultClass="int"
+		parameterClass="lineAndSort">
+		SELECT  COUNT("CIA_A") FROM "tb_cia" WHERE "CIA_A" in('1','0') AND "CIA_Sort"
+		LIKE #sort# and "FK_CA"=#pkca#
+	</select>
+
+	<select id="pgAdmingetSecurityControl.showCIA_BInOneAndZore" resultClass="int"
+		parameterClass="lineAndSort">
+		SELECT COUNT("CIA_B") FROM "tb_cia" WHERE "CIA_B"  in('1','0') AND "CIA_Sort"
+		LIKE #sort# and "FK_CA"=#pkca#
+	</select>
+
+	<select id="pgAdmingetSecurityControl.showCIA_CInOneAndZore" resultClass="int"
+		parameterClass="lineAndSort">
+		SELECT COUNT("CIA_C") FROM "tb_cia" WHERE "CIA_C" in('1','0') AND "CIA_Sort"
+		LIKE #sort# and "FK_CA"=#pkca#
+	</select>
+
+	<select id="pgAdmingetSecurityControl.showCIA_DInOneAndZore" resultClass="int"
+		parameterClass="lineAndSort">
+		SELECT COUNT("CIA_D") FROM "tb_cia" WHERE "CIA_D" in('1','0') AND "CIA_Sort"
+		LIKE #sort# and "FK_CA"=#pkca#
+	</select>
+
+	<select id="pgAdmingetSecurityControl.showCIA_EInOneAndZore" resultClass="int"
+		parameterClass="lineAndSort">
+		SELECT COUNT("CIA_E") FROM "tb_cia" WHERE "CIA_E" in('1','0') AND "CIA_Sort"
+		LIKE #sort# and "FK_CA"=#pkca#
+	</select>
+
+	<select id="pgAdmingetSecurityControl.showCIA_FInOneAndZore" resultClass="int"
+		parameterClass="lineAndSort">
+		SELECT COUNT("CIA_F") FROM "tb_cia" WHERE "CIA_F" in('1','0') AND "CIA_Sort"
+		LIKE #sort# and "FK_CA"=#pkca#
+	</select>
+
+	<select id="pgAdmingetSecurityControl.showCIA_GInOneAndZore" resultClass="int"
+		parameterClass="lineAndSort">
+		SELECT COUNT("CIA_G") FROM "tb_cia" WHERE "CIA_G" in('1','0') AND "CIA_Sort"
+		LIKE #sort# and "FK_CA"=#pkca#
+	</select>
+
+	<select id="pgAdmingetSecurityControl.showCIA_HInOneAndZore" resultClass="int"
+		parameterClass="lineAndSort">
+		SELECT COUNT("CIA_H") FROM "tb_cia" WHERE "CIA_H" in('1','0') AND "CIA_Sort"
+		LIKE #sort# and "FK_CA"=#pkca#
+	</select>
+
+	<select id="pgAdmingetSecurityControl.showCIA_IInOneAndZore" resultClass="int"
+		parameterClass="lineAndSort">
+		SELECT COUNT("CIA_I") FROM "tb_cia" WHERE "CIA_I" in('1','0') AND "CIA_Sort"
+		LIKE #sort# and "FK_CA"=#pkca#
+	</select>
+	<select id="pgAdmingetSecurityControl.showCIA_JInOneAndZore" resultClass="int"
+		parameterClass="lineAndSort">
+		SELECT COUNT("CIA_J") FROM "tb_cia" WHERE "CIA_J" in('1','0') AND "CIA_Sort"
+		LIKE #sort# and "FK_CA"=#pkca#
+	</select>
+<!-- sqlserver -->
+	<select id="sqlServergetSecurityControl.showCIA_AInOneAndZore" resultClass="int"
+		parameterClass="lineAndSort">
+		SELECT  COUNT("CIA_A") FROM "tb_cia" WHERE "CIA_A" in('1','0') AND "CIA_Sort"
+		LIKE #sort# and "FK_CA"=#pkca#
+	</select>
+
+	<select id="sqlServergetSecurityControl.showCIA_BInOneAndZore" resultClass="int"
+		parameterClass="lineAndSort">
+		SELECT COUNT("CIA_B") FROM "tb_cia" WHERE "CIA_B"  in('1','0') AND "CIA_Sort"
+		LIKE #sort# and "FK_CA"=#pkca#
+	</select>
+
+	<select id="sqlServergetSecurityControl.showCIA_CInOneAndZore" resultClass="int"
+		parameterClass="lineAndSort">
+		SELECT COUNT("CIA_C") FROM "tb_cia" WHERE "CIA_C" in('1','0') AND "CIA_Sort"
+		LIKE #sort# and "FK_CA"=#pkca#
+	</select>
+
+	<select id="sqlServergetSecurityControl.showCIA_DInOneAndZore" resultClass="int"
+		parameterClass="lineAndSort">
+		SELECT COUNT("CIA_D") FROM "tb_cia" WHERE "CIA_D" in('1','0') AND "CIA_Sort"
+		LIKE #sort# and "FK_CA"=#pkca#
+	</select>
+
+	<select id="sqlServergetSecurityControl.showCIA_EInOneAndZore" resultClass="int"
+		parameterClass="lineAndSort">
+		SELECT COUNT("CIA_E") FROM "tb_cia" WHERE "CIA_E" in('1','0') AND "CIA_Sort"
+		LIKE #sort# and "FK_CA"=#pkca#
+	</select>
+
+	<select id="sqlServergetSecurityControl.showCIA_FInOneAndZore" resultClass="int"
+		parameterClass="lineAndSort">
+		SELECT COUNT("CIA_F") FROM "tb_cia" WHERE "CIA_F" in('1','0') AND "CIA_Sort"
+		LIKE #sort# and "FK_CA"=#pkca#
+	</select>
+
+	<select id="sqlServergetSecurityControl.showCIA_GInOneAndZore" resultClass="int"
+		parameterClass="lineAndSort">
+		SELECT COUNT("CIA_G") FROM "tb_cia" WHERE "CIA_G" in('1','0') AND "CIA_Sort"
+		LIKE #sort# and "FK_CA"=#pkca#
+	</select>
+
+	<select id="sqlServergetSecurityControl.showCIA_HInOneAndZore" resultClass="int"
+		parameterClass="lineAndSort">
+		SELECT COUNT("CIA_H") FROM "tb_cia" WHERE "CIA_H" in('1','0') AND "CIA_Sort"
+		LIKE #sort# and "FK_CA"=#pkca#
+	</select>
+
+	<select id="sqlServergetSecurityControl.showCIA_IInOneAndZore" resultClass="int"
+		parameterClass="lineAndSort">
+		SELECT COUNT("CIA_I") FROM "tb_cia" WHERE "CIA_I" in('1','0') AND "CIA_Sort"
+		LIKE #sort# and "FK_CA"=#pkca#
+	</select>
+	<select id="sqlServergetSecurityControl.showCIA_JInOneAndZore" resultClass="int"
+		parameterClass="lineAndSort">
+		SELECT COUNT("CIA_J") FROM "tb_cia" WHERE "CIA_J" in('1','0') AND "CIA_Sort"
+		LIKE #sort# and "FK_CA"=#pkca#
+	</select>
+</sqlMap>

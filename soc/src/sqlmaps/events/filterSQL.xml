@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="filterSQL">
+
+	<resultMap id="filterResult" class="filter">
+   		<result property="filterId" 			column="FILTER_ID" 		    	jdbcType="varchar"/>
+   		<result property="filterName"           column="FILTER_NAME"           	jdbcType="varchar"/>
+   		<result property="filterCondition"      column="FILTER_CONDITION"       jdbcType="varchar"/>
+   		<result property="filterDescription"    column="FILTER_DESCRIPTION"     jdbcType="text"/>
+   		<result property="filterCreateTime"     column="FILTER_CREATE_TIME"     jdbcType="datetime"/>
+   		<result property="filterCreator"     	column="FILTER_CREATOR"     	jdbcType="varchar"/>
+   		<result property="filterUpdateTime"     column="FILTER_UPDATE_TIME"     jdbcType="datetime"/>
+   	</resultMap>
+   		<select id="pgAdminquery.filter" resultMap="filterResult">
+	   SELECT * FROM "tbl_filter"
+	</select>
+	
+	<select id="pgAdminquery.filterById" parameterClass="java.lang.String" resultMap="filterResult">
+	   SELECT * FROM "tbl_filter" WHERE "FILTER_ID" = #value#
+	</select>
+	
+	<select id="pgAdminquery.tableNameByFilterId" parameterClass="java.lang.String" resultClass="java.lang.String">
+	   SELECT "TABLE_NAME" AS tbleName FROM "tbl_mapping" WHERE "FILTER_ID" = #value#
+	</select>
+   	<!-- sqlserver -->
+   	<select id="sqlServerquery.filter" resultMap="filterResult">
+	   SELECT * FROM "tbl_filter"
+	</select>
+	
+	<select id="sqlServerquery.filterById" parameterClass="java.lang.String" resultMap="filterResult">
+	   SELECT * FROM "tbl_filter" WHERE "FILTER_ID" = #value#
+	</select>
+	
+	<select id="sqlServerquery.tableNameByFilterId" parameterClass="java.lang.String" resultClass="java.lang.String">
+	   SELECT "TABLE_NAME" AS tbleName FROM "tbl_mapping" WHERE "FILTER_ID" = #value#
+	</select>
+   	
+</sqlMap>

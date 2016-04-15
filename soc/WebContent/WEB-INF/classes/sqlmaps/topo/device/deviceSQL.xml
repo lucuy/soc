@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="deviceSQL">
+
+		<resultMap class="netBackGround" id="netBackGroundResult">
+       		<result property="id" column="id" jdbcType="int"/>
+       		<result property="treeId" column="treeId" jdbcType="int"/>
+       		<result property="panelType" column="panelType" jdbcType="int"/>
+       		<result property="title" column="title" jdbcType="varchar"/>
+       		<result property="fontSize" column="fontSize" jdbcType="int"/>
+       		<result property="positionX" column="positionX" jdbcType="float"/>
+        	<result property="positionY" column="positionY" jdbcType="float"/>
+      		<result property="width" column="width" jdbcType="float"/>
+            <result property="height" column="height" jdbcType="float"/>
+            <result property="color" column="color" jdbcType="varchar"/>
+            <result property="type" column="type" jdbcType="int"/>
+       </resultMap>
+
+       <resultMap class="device" id="deviceResult">
+       		<result property="device_id" column="DEVICE_ID" jdbcType="long"/>
+       		<result property="device_name" column="DEVICE_NAME" jdbcType="varchar"/>
+       		<result property="device_ip" column="DEVICE_IP" jdbcType="varchar"/>
+       		<result property="device_mac" column="DEVICE_MAC" jdbcType="varchar"/>
+       		<result property="device_status" column="DEVICE_STATUS" jdbcType="int"/>
+       		<result property="device_describe" column="DEVICE_DESCRIBE" jdbcType="varchar"/>
+       		<result property="device_locationX" column="DEVICE_LOCATIONX" jdbcType="varchar"/>
+       		<result property="device_locationY" column="DEVICE_LOCATIONY" jdbcType="varchar"/>
+       		<result property="device_association_id" column="DEVICE_ASSOCIATION_ID" jdbcType="varchar"/>
+       	    <!-- <result property="device_deviceCategory_name" column="DEVICE_DEVICECATEGORY_NAME" jdbcType="varchar"/> --> 
+       		<result property="device_mark" column="DEVICE_MARK" jdbcType="long"/>
+       		<result property="device_asset_id" column="DEVICE_ASSET_ID" jdbcType="long" />
+       		<result property="device_loginName" column="DEVICE_LOGINNAME" jdbcType="varchar" />
+       		<result property="device_community_name" column="DEVICE_COMMUNITY_NAME" jdbcType="varchar" />
+       		 <!-- <result property="deviceCategory" column="DEVICE_DEVICECATEGORY_NAME" select="queryDeciceCategoryById"/> --> 
+       		 <result property="deviceCategory" column="DEVICE_DEVICECATEGORY_ID" select="queryDeviceCategoryById"/>
+       </resultMap>
+		 <resultMap class="deviceCategory" id="deviceCategoryResult">
+       		<result property="deviceCategory_id" column="DEVICECATEGORY_ID" jdbcType="long"/>
+       		<result property="deviceCategory_name" column="DEVICECATEGORY_NAME" jdbcType="varchar"/>
+       		<result property="deviceCategory_photo" column="DEVICECATEGORY_PHOTO" jdbcType="text"/>
+       		<result property="deviceCategory_describe" column="DEVICECATEGORY_DESCRIBE" jdbcType="varchar"/>
+       </resultMap>
+       <!-- 外网拓扑用的（添加了一个告警数量的字段） -->
+       <resultMap class="device" id="deviceResultUseOut">
+       		<result property="device_id" column="DEVICE_ID" jdbcType="long"/>
+       		<result property="device_name" column="DEVICE_NAME" jdbcType="varchar"/>
+       		<result property="device_ip" column="DEVICE_IP" jdbcType="varchar"/>
+       		<result property="device_mac" column="DEVICE_MAC" jdbcType="varchar"/>
+       		<result property="device_status" column="DEVICE_STATUS" jdbcType="int"/>
+       		<result property="device_describe" column="DEVICE_DESCRIBE" jdbcType="varchar"/>
+       		<result property="device_locationX" column="DEVICE_LOCATIONX" jdbcType="varchar"/>
+       		<result property="device_locationY" column="DEVICE_LOCATIONY" jdbcType="varchar"/>
+       		<result property="device_association_id" column="DEVICE_ASSOCIATION_ID" jdbcType="varchar"/>
+       	    <!-- <result property="device_deviceCategory_name" column="DEVICE_DEVICECATEGORY_NAME" jdbcType="varchar"/> --> 
+       		<result property="device_mark" column="DEVICE_MARK" jdbcType="long"/>
+       		<result property="device_asset_id" column="DEVICE_ASSET_ID" jdbcType="long" />
+       		<result property="device_loginName" column="DEVICE_LOGINNAME" jdbcType="varchar" />
+       		<result property="device_community_name" column="DEVICE_COMMUNITY_NAME" jdbcType="varchar" />
+       		 <!-- <result property="deviceCategory" column="DEVICE_DEVICECATEGORY_NAME" select="queryDeciceCategoryById"/> --> 
+       		 <result property="deviceCategory" column="DEVICE_DEVICECATEGORY_ID" select="queryDeviceCategoryById"/>
+       		 <result property="alertAcount" column="ALERTCOUNT_COUNT" jdbcType="varchar"/>
+       </resultMap>
+    <!-- 根据设备名称查找设备类型 -->
+    <select id="queryDeciceCategoryById" parameterClass="String" resultMap="deviceCategoryResult">
+    	 select * from "tbl_devicecategory" where "DEVICECATEGORY_NAME"= (select "DEVICE_DEVICECATEGORY_NAME" from "tbl_device" where "DEVICE_DEVICECATEGORY_NAME"=#deviceCateogryName# )
+    	<!-- select * from "tbl_devicecategory" where "DEVICECATEGORY_NAME"= #value# --> 
+    </select>
+	<!-- 添加 -->
+	<insert id="addDevice" parameterClass="device">
+		insert into "tbl_device"("DEVICE_NAME", "DEVICE_DEVICECATEGORY_ID", "DEVICE_IP", "DEVICE_MAC", "DEVICE_STATUS", "DEVICE_DESCRIBE","DEVICE_LOCATIONX","DEVICE_LOCATIONY","DEVICE_ASSOCIATION_ID","DEVICE_MARK","DEVICE_ASSET_ID","DEVICE_LOGINNAME","DEVICE_COMMUNITY_NAME")
+		values(#device_name#, #deviceCategory.deviceCategory_id#, #device_ip#, #device_mac#, #device_status#, #device_describe#,#device_locationX#,#device_locationY#,#device_association_id#,#device_mark#,#device_asset_id#,#device_loginName#,#device_community_name#)
+	</insert>
+	<!-- 根据设备ID删除，一次可以删多个也可以删一个 -->
+	
+	<delete id="deleteDeviceByIds">
+    	delete from "tbl_device" where "DEVICE_ID" in ( <iterate conjunction=",">#[]#</iterate>)
+    </delete>
+    <!-- 根据资产ID删除，一次可以删多个也可以删一个 -->
+	
+	<delete id="deleteDeviceByAssetIds">
+    	delete from "tbl_device" where "DEVICE_ASSET_ID" in ( <iterate conjunction=",">#[]#</iterate>)
+    </delete>
+	<!-- 更新 根据设备ID-->
+	<update id="editDevice" parameterClass="device">
+		update "tbl_device" set 
+		"DEVICE_NAME"=#device_name#,
+		"DEVICE_DEVICECATEGORY_ID"=#deviceCategory.deviceCategory_id#,
+		"DEVICE_IP"=#device_ip#,
+		"DEVICE_MAC"=#device_mac#,
+		"DEVICE_STATUS"=#device_status#,
+		"DEVICE_DESCRIBE"=#device_describe#,
+		"DEVICE_LOCATIONX"=#device_locationX#,
+		"DEVICE_LOCATIONY"=#device_locationY#,
+		"DEVICE_ASSOCIATION_ID"=#device_association_id#,
+		"DEVICE_MARK"=#device_mark#,
+		"DEVICE_ASSET_ID"=#device_asset_id#,
+		"DEVICE_LOGINNAME"=#device_loginName#,
+		"DEVICE_COMMUNITY_NAME"=#device_community_name#
+		where "DEVICE_ID"=#device_id#
+	</update>
+	<!-- 更新 根据资产ID-->
+	<update id="editDeviceByAssetId" parameterClass="device">
+		update "tbl_device" set 
+		"DEVICE_NAME"=#device_name#,
+		"DEVICE_DEVICECATEGORY_ID"=#deviceCategory.deviceCategory_id#,
+		"DEVICE_ASSET_ID"=#device_asset_id#,
+		"DEVICE_MAC"=#device_mac#,
+		"DEVICE_STATUS"=#device_status#,
+		"DEVICE_DESCRIBE"=#device_describe#,
+		"DEVICE_LOCATIONX"=#device_locationX#,
+		"DEVICE_LOCATIONY"=#device_locationY#,
+		"DEVICE_ASSOCIATION_ID"=#device_association_id#,
+		"DEVICE_MARK"=#device_mark#,
+		"DEVICE_LOGINNAME"=#device_loginName#,
+		"DEVICE_COMMUNITY_NAME"=#device_community_name#
+		where "DEVICE_IP"=#device_ip#
+	</update>
+	<!-- 更新（根据ping的结果改变设备的状态） -->
+	<update id="updateDeviceStatusByPing" parameterClass="device">
+		update "tbl_device" set 
+		"DEVICE_STATUS"=#device_status#
+		where "DEVICE_ID"=#device_id#
+	</update>
+	<!-- 更新（根据资产的启用状态改变设备的状态） -->
+	<update id="updateDeviceStatusByAssetStatus" parameterClass="device">
+		update "tbl_device" set 
+		"DEVICE_STATUS"=#device_status#
+		where "DEVICE_ASSET_ID"=#device_asset_id#
+	</update>
+	<!-- 更新（临时设备表中的数据来更新设备表中的数据时调用） -->
+	<update id="updateDeviceByTempDevice" parameterClass="device">
+		update "tbl_device" set 
+		"DEVICE_LOCATIONX"=#device_locationX#,
+		"DEVICE_LOCATIONY"=#device_locationY#
+		where "DEVICE_ID"=#device_id#
+	</update>
+	<!-- 更新（根据设备Ip更新设备的告警状态） -->
+	<update id="updateDeviceStatusByIp" parameterClass="device">
+		update "tbl_device" set 
+		"DEVICE_STATUS"=#device_status#
+		where "DEVICE_IP"=#device_ip#
+	</update>
+	<!-- 查询所有内网的设备信息 -->
+	<select id="deviceAll" resultMap="deviceResult" parameterClass="java.util.HashMap">
+		select * from "tbl_device" where "DEVICE_MARK"=0 
+		<!-- 李长红修改，根据用户关联的资产组，查询资产然后显示数据 -->
+		<isNotEmpty prepend="and" property="alertAssetId">
+		"DEVICE_ASSET_ID" in ($alertAssetId$)
+		</isNotEmpty>
+		
+		order by "DEVICE_ID" DESC  
+	</select>
+	<!-- 查询所有soc间的设备信息 -->
+	<select id="deviceAllDeviceOut" resultMap="deviceResultUseOut">
+		<!-- select * from "tbl_device" where "DEVICE_MARK"=1 order by "DEVICE_ID" DESC --> 
+		select d.*,dac."ALERTCOUNT_COUNT" as "ALERTCOUNT_COUNT" from "tbl_device" d left join "tbl_devicealertcount" dac on d."DEVICE_IP"=dac."ALERTCOUNT_IP" where d."DEVICE_MARK" = 1
+		<!--这个sql也可以，只是感觉没有上面一个好 select d.*,dac."ALERTCOUNT_COUNT" as "ALERTCOUNT_COUNT" from (select * from "tbl_device" where "DEVICE_MARK" = 1 order by "DEVICE_ID" DESC)d left join "tbl_devicealertcount" dac on d."DEVICE_IP"=dac."ALERTCOUNT_IP" -->
+	</select>
+	<!-- 查询所有的设备信息 -->
+	<select id="deviceAllInfo" resultMap="deviceResult">
+		select * from "tbl_device" order by "DEVICE_ID" DESC 
+	</select>
+	<!-- 根据设备ID查询设备信息 -->
+	<select id="queryDeviceById" parameterClass="long" resultMap="deviceResult">
+		select * from "tbl_device" where  "DEVICE_ID"=#device_id#
+	</select>
+	<!-- 根据设备ID查找是否有关联的设备 -->
+	<select id="queryAssociationDeviceByID" parameterClass="String" resultMap="deviceResult">
+		select * from "tbl_device" where  "DEVICE_ASSOCIATION_ID" in (#device_id#);
+	</select>
+	<!-- 根据设备Ip查询 -->
+	<select id="queryDeviceByIp" parameterClass="java.util.HashMap" resultMap="deviceResult">
+		select * from "tbl_device" where "DEVICE_IP"=#device_ip#
+		<isNotEmpty prepend=" and " property="netMark">
+			"DEVICE_MARK"=#netMark#
+		</isNotEmpty>
+		<isNotEmpty prepend=" and " property="outMark">
+			"DEVICE_MARK"=#outMark#
+		</isNotEmpty>
+	</select>
+	<!-- 查询设备总记录数 -->
+	<select id="deviceCount" parameterClass="java.util.HashMap" resultClass="int">
+		select count(1) from "tbl_device" where 1=1
+		<isNotEmpty prepend="and" property="keyword">
+			("DEVICE_NAME" like '%$keyword$%')
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="deviceName">
+			"DEVICE_NAME" like '%$deviceName$%'
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="deviceIp">
+			"DEVICE_IP" like '%$deviceIp$%'
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="deviceMac">
+			"DEVICE_MAC" like '%$deviceMac$%'
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="deviceStatus">
+			"DEVICE_STATUS" =#deviceStatus#
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="deviceMark">
+			"DEVICE_MARK" = #deviceMark#
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="deviceCategoryID">
+			"DEVICE_DEVICECATEGORY_ID" =#deviceCategoryID#
+		</isNotEmpty>
+		<!-- 李长红修改，根据用户关联的资产组，查询资产然后显示数据 -->
+		<isNotEmpty prepend="and" property="alertAssetId">
+		"DEVICE_ASSET_ID" in ($alertAssetId$)
+		</isNotEmpty>
+	</select>
+	<!-- 用来分页查询 -->
+	<select id="queryAllDeviceUseFenYe" parameterClass="java.util.HashMap" resultMap="deviceResult">
+		select * from "tbl_device" where 1=1
+		<isNotEmpty prepend="and" property="keyword">
+			("DEVICE_NAME" like '%$keyword$%')
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="deviceName">
+			"DEVICE_NAME" like '%$deviceName$%'
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="deviceIp">
+			"DEVICE_IP" like '%$deviceIp$%'
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="deviceMac">
+			"DEVICE_MAC" like '%$deviceMac$%'
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="deviceStatus">
+			"DEVICE_STATUS" =#deviceStatus#
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="deviceMark">
+			"DEVICE_MARK" = #deviceMark#
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="deviceCategoryID">
+			"DEVICE_DEVICECATEGORY_ID" =#deviceCategoryID#
+		</isNotEmpty>
+		<!-- 李长红修改，根据用户关联的资产组，查询资产然后显示数据 -->
+		<isNotEmpty prepend="and" property="alertAssetId">
+		"DEVICE_ASSET_ID" in ($alertAssetId$)
+		</isNotEmpty>
+		order by "DEVICE_ID" DESC
+	</select>
+	<!-- 根据资产ID查询设备信息 -->
+	<select id="queryDeviceByAssetId" parameterClass="long" resultMap="deviceResult">
+		select * from "tbl_device" where "DEVICE_ASSET_ID"=#device_asset_id#
+	</select>
+	<!-- 根据设备类型ID查询设备信息 -->
+	<select id="queryDeviceByDeviceCategoryID" parameterClass="long" resultClass="int">
+		select count(*) from "tbl_device" where "DEVICE_DEVICECATEGORY_ID" = #deviceCategory_id#
+	</select>
+	
+		<!-- 添加 -->
+	<insert id="addBackGround" parameterClass="netBackGround">
+		insert into "tbl_netbackground"("treeId", "panelType", "title", "fontSize", "positionX","positionY","width","height","color","type")
+		values(#treeId#, #panelType#, #title#,#fontSize#,#positionX#,#positionY#,#width#,#height#,#color#,#type#)
+	</insert>
+	
+	
+	<!-- 查询所有的区域框 -->
+	<select id="loadAllRoundrectInfo" resultMap="netBackGroundResult">
+	select * from "tbl_netbackground" where "type" =0
+	
+	</select>
+	
+	
+	<!-- 更新某一个的区域框 -->
+	<update id="updateRoundrectInfoById" parameterClass="java.util.HashMap">
+		update "tbl_netbackground" set 
+		"positionX"=#positionX#,
+		"positionY"=#positionY#,
+		"width"=#width#,
+		"height"=#height#
+		where "id"=#id#
+	</update>
+	
+	<delete id="delBackGroundById" parameterClass="int">
+    	delete from "tbl_netbackground" where "id" =#id#
+    </delete>
+	
+	
+	
+	<!-- 查询所有的区域框 -->
+	<select id="loadAllRoundrectInfoBM" resultMap="netBackGroundResult">
+	select * from "tbl_netbackground" where "type" =1
+	
+	</select>
+	
+	
+</sqlMap>

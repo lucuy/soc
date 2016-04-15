@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="eventTree">
+	<typeAlias alias="eventTree" type="com.soc.model.events.EventTree" />
+   	<resultMap id="eventTreeMap" class="eventTree">
+        <result property="id"         column="ID"         jdbcType="bigint"/>
+        <result property="name"       column="NAME"       jdbcType="varchar"/>
+        <result property="parent"     column="PARENT"     jdbcType="bigint"/>
+        <result property="action"     column="ACTION"     jdbcType="int"/>
+    </resultMap>
+    <insert id="pgAdmininsert.eventTree" parameterClass="eventTree">
+		INSERT INTO soc.tbl_event_tree("NAME", "PARENT", "ACTION") VALUES (#name#, #parent#, #action#);
+	</insert>
+   	
+   	<select id="pgAdminquery.eventTree" resultClass="eventTree"  parameterClass="java.util.HashMap" >
+        SELECT "ID", "NAME", "PARENT","ACTION" FROM tbl_event_tree WHERE 1=1
+        <isNotEmpty prepend= "AND"  property="id">
+			<![CDATA[
+				"ACTION" = '$id$' 
+			]]>
+		</isNotEmpty>
+        ORDER BY "PARENT" , "ID" 
+    </select>
+
+	<update id="pgAdminupdate.eventTree" parameterClass="eventTree">
+		UPDATE soc.tbl_event_tree SET "NAME"=#name#, "PARENT"=#parent#, "ACTION"=#action# WHERE "ID"=#id#;
+	</update>
+	
+	<delete id="pgAdmindelete.eventTree" parameterClass="java.util.HashMap" >
+		DELETE FROM soc.tbl_event_tree WHERE "ID" in($id$);
+	</delete>
+    
+   	<!-- sqlserver -->
+   	<insert id="sqlServerinsert.eventTree" parameterClass="eventTree">
+		INSERT INTO soc.tbl_event_tree("NAME", "PARENT", "ACTION") VALUES (#name#, #parent#, #action#);
+	</insert>
+   	
+   	<select id="sqlServerquery.eventTree" resultClass="eventTree"  parameterClass="java.util.HashMap" >
+        SELECT "ID", "NAME", "PARENT","ACTION" FROM tbl_event_tree WHERE 1=1
+        <isNotEmpty prepend= "AND"  property="id">
+			<![CDATA[
+				"ACTION" = '$id$' 
+			]]>
+		</isNotEmpty>
+        ORDER BY "PARENT" , "ID" 
+    </select>
+
+	<update id="sqlServerupdate.eventTree" parameterClass="eventTree">
+		UPDATE soc.tbl_event_tree SET "NAME"=#name#, "PARENT"=#parent#, "ACTION"=#action# WHERE "ID"=#id#;
+	</update>
+	
+	<delete id="sqlServerdelete.eventTree" parameterClass="java.util.HashMap" >
+		DELETE FROM soc.tbl_event_tree WHERE "ID" in($id$);
+	</delete>
+    
+</sqlMap>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="showSysInfo" extends="struts-default" namespace="/showSysInfo">
+		<action name="getSysInfo" class="settinginfoAction" method="getSysStatus">
+			<result name="success">/pages/systemsetting/Syssetting_info.jsp</result>
+		</action>
+		<action name="sysTimeSetting" class="settinginfoAction"  method="sysTimeSetting">
+			<result name="success" type="chain">
+				<param name="namespace">/login</param>
+				<param name="actionName">logout</param>
+			</result>
+		</action>
+		<action name="update" class="diskAlertAction"  method="update">
+		</action>
+		<action name="display" class="diskAlertAction"  method="display">
+		</action>
+		
+		<action name="query" class="settinginfoAction" method="query">
+			<result name="success">/pages/systemsetting/setting_cpu.jsp</result>
+		</action>
+		
+		<action name="memoryQuery" class="settinginfoAction" method="memoryQuery">
+			<result name="success">/pages/systemsetting/setting_memory.jsp</result>
+		</action>
+		
+		<action name="queryMemory" class="settinginfoAction" method="queryMemory">
+			<result name="success">/pages/systemsetting/Syssetting_info.jsp</result>
+		</action>
+		<action name="upCpuChart" class="settinginfoAction" method="upCpuChart">
+			<result name="success">/pages/systemsetting/Syssetting_info.jsp</result>
+		</action>
+		
+		<action name="queryNetwork" class="settinginfoAction" method="queryNetwork">
+			<result name="success">/pages/systemsetting/System_network.jsp</result>
+		</action>
+		
+		<action name="UpdateNetwork" class="settinginfoAction" method="UpdateNetwork">
+			<result name="success">/pages/systemsetting/System_network.jsp</result>
+		</action>
+		<!-- ajax获取CPU峰值 -->
+		<action name="showCpuInfo" class="settinginfoAction" method="showCpuInfo"></action>
+		<action name="getMemoryInfo" class="settinginfoAction" method="getMemorys"></action>
+		<action name="getSysDiskInfo" class="settinginfoAction" method="getSysDiskInfo"></action>
+	</package>
+</struts>

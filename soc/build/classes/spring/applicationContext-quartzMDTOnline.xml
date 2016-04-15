@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 定义注入的类和参数 -->
+	<!-- 本来打算后台定时器来查看数据库是否在线，现在不要求长期实时监控，所以此定时器不执行。留着后期做扩展使用 -->
+	<bean name="mdtUpdateOnlneTaskTrigger" class="com.soc.webapp.quartz.MonitorDatabaseChangeOnline">
+		<property name="mdtManager" ref="mdtManager"></property>
+	</bean>
+
+	<!-- 定义定时器，指定执行的类和方法 -->
+	<bean name="mdtUpdateOnlneTaskDetailBean"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="mdtUpdateOnlneTaskTrigger" />
+		<property name="targetMethod" value="checkOnlie" />
+
+	</bean>
+
+	<bean name="mdtUpdateOnlneStateBean"
+		class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		<property name="jobDetail" ref="scanUpdateStateTaskDetailBean" />
+		<property name="repeatInterval" value="300000" />
+		<property name="startDelay" value="30000" /><!-- 启动延时30秒启动 -->
+	</bean>
+
+	<bean name="mdtUpdateOnlneBeanFactoryBean"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<!-- <ref bean="mdtUpdateOnlneStateBean" /> -->
+			</list>
+		</property>
+	</bean>
+</beans>

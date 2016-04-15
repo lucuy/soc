@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+
+<sqlMapConfig>
+	<settings cacheModelsEnabled="true" enhancementEnabled="true"
+		maxTransactions="12" maxRequests="128" maxSessions="64" />
+
+	<!-- 基础信息模块开始 -->
+	<!-- 用户管理 -->
+	<!-- <typeAlias alias="employee"
+		type="com.compliance.model.basicinfo.employee.Employee" /> -->
+	<!-- 组织部门 -->
+	<typeAlias alias="Division"
+		type="com.compliance.model.basicinfo.division.Division" />
+	<!-- 单位信息 -->
+	<typeAlias alias="unitInfo"
+		type="com.compliance.model.basicinfo.unitinfo.UnitInfo" />
+	<!-- 信息系统 -->
+	<typeAlias alias="Sys_info"
+		type="com.compliance.model.basicinfo.system.SystemManager" />
+	<!--信息资产:业务应用软件 -->
+	<typeAlias alias="businesssoft"
+		type="com.compliance.model.basicinfo.assets.BusinessAssets"></typeAlias>
+	<!--信息资产:关键数据类别 -->
+	<typeAlias alias="dataAssets"
+		type="com.compliance.model.basicinfo.assets.DataAssets"></typeAlias>
+	<!--信息资产:主机存储设备 -->
+	<typeAlias alias="compAssets"
+		type="com.compliance.model.basicinfo.assets.CompAssets"></typeAlias>
+	<!-- 网络互连设备 -->
+	<typeAlias alias="netAssets"
+		type="com.compliance.model.basicinfo.assets.NetAssets"></typeAlias>
+	<!--信息资产:安全设备 -->
+	<typeAlias alias="devAssets"
+		type="com.compliance.model.basicinfo.assets.DevAssets"></typeAlias>
+	<!--信息资产:安全相关人员 -->
+	<typeAlias alias="empAssets"
+		type="com.compliance.model.basicinfo.assets.EmpAssets"></typeAlias>
+	<!--信息资产:安全文档 -->
+	<typeAlias alias="docAssets"
+		type="com.compliance.model.basicinfo.assets.DocAssets"></typeAlias>
+	<!-- 基础信息模块结束 -->
+
+	<!-- —————————————————————————————————————————————————————————————————————————————————————————————————————————————— -->
+
+	<!-- 定级备案模块开始 -->
+	<!--系统定级 -->
+	<typeAlias alias="Rank" type="com.compliance.model.rank.Rank" />
+	<!--备案 -->
+	<typeAlias alias="Record" type="com.compliance.model.rank.Record" />
+	<!--备案历史 -->
+	<typeAlias alias="RecordHistory" type="com.compliance.model.rank.RecordHistory" />
+	<!--备案集 -->
+	<typeAlias alias="RecordDocList" type="com.compliance.model.rank.RecordDocList" />
+	<!-- 系统废止 -->
+	<typeAlias alias="SysAbolish" type="com.compliance.model.rank.SysAbolish" />
+	<!-- 统计报表 -->
+	<typeAlias alias="rankReport" type="com.compliance.model.rank.RankReport" />
+	<!-- 定级备案模块结束 -->
+
+	<!-- ———————————————————————————————————————————————————————————————————————————————————————————————————————————————————————— -->
+	<!-- 差距分析报告 -->
+	<!-- 差距分析进度 -->
+	<typeAlias alias="gapschedule"
+		type="com.compliance.model.cpManage.gapAnalysisSchedule.GapSchedule" />
+	<!--合规管理开始 -->
+	<!-- 技术差距分析 -->
+	<typeAlias alias="technology"
+		type="com.compliance.model.cpManage.technology.Technology" />
+	<!--技术差距评估 -->
+	<typeAlias alias="assessResult"
+		type="com.compliance.model.cpManage.assessResult.AssessResult" />
+	<!--根据排序查找js算法 -->
+	<typeAlias alias="arithmetic"
+		type="com.compliance.model.cpManage.demand.Arithmetic" />
+	<!-- 通用物理 -->
+	<typeAlias alias="Psad" type="com.compliance.model.psad.Psad" />
+	<!-- 通用物理评估 -->
+	<typeAlias alias="Psa" type="com.compliance.model.psad.Psa" />
+	<!-- 通用管理 -->
+	<typeAlias alias="Msad" type="com.compliance.model.msad.Msad" />
+	<!--通用管理 -->
+	<typeAlias alias="MsaApp" type="com.compliance.model.msad.MsaApp" />
+	<!--整改需求汇总 -->
+	<typeAlias alias="demandCollet"
+		type="com.compliance.model.cpManage.demand.DemandCollet" />
+	<!--整改建议 -->
+	<typeAlias alias="rectificationProposal"
+		type="com.compliance.model.cpManage.rectificationProposal.RectificationProposal" />
+	<!--通用物理整改建议 -->
+	<typeAlias alias="GpaRect"
+		type="com.compliance.model.cpManage.gpaShow.GpaRect" />
+	<!--通用管理整改建议 -->
+	<typeAlias alias="MsaRect"
+		type="com.compliance.model.cpManage.msaShow.MsaRect" />
+
+
+
+	<!--整改建议历史对比 -->
+	<typeAlias alias="contrast"
+		type="com.compliance.model.cpManage.rectificationProposal.RectificationProposal" />
+
+	<!-- 汇总分析 -->
+	<typeAlias alias="rectificationProposal"
+		type="com.compliance.model.cpManage.rectificationProposal.RectificationProposal" />
+	<typeAlias alias="securityGap"
+		type="com.compliance.model.cpManage.summaryAnalysis.SecurityGap" />
+
+	<!--安全控制分析报告 -->
+	<typeAlias alias="lineAndSort"
+		type="com.compliance.model.cpManage.securityControl.LineAndSort" />
+	<typeAlias alias="controlTask"
+		type="com.compliance.model.cpManage.securityControl.ControlTask" />
+
+	<!--这是什么看到请表明注释 -->
+	<typeAlias alias="projectShowcase"
+		type="com.compliance.model.cpManage.summaryAnalysis.ProjectShowcase" />
+
+	<!--通用管理安全测评实体 -->
+	<typeAlias alias="Msa" type="com.compliance.model.cpManage.msaShow.Msa" />
+	<!--通用管理安全测评整改需求汇总 -->
+	<typeAlias alias="MsaShow"
+		type="com.compliance.model.cpManage.msaShow.MsaShow" />
+	<!--通用物理测评实体 -->
+	<typeAlias alias="Gpa" type="com.compliance.model.cpManage.gpaShow.Gpa" />
+	<!--通用物理测评整改需求汇总 -->
+	<typeAlias alias="GpaShow" type="com.compliance.model.cpManage.gpaShow.GpaShow" />
+	<!--合规管理结束 -->
+	
+	<!-- 审计模块 -->
+	<!-- <typeAlias alias="audit" type="com.compliance.model.audit.Audit" /> -->
+
+
+	<!-- ======================================================================================================================== -->
+
+	<!-- 基础信息开始 -->
+
+ 
+	<!-- 组织部门 -->
+	<sqlMap resource="sqlmaps/db/basicinfo/division/divisionSQL.xml" />
+	<!-- 单位信息 -->
+	<sqlMap resource="sqlmaps/db/basicinfo/unitinfo/unitInfoSQL.xml" />
+	<!-- 信息系统管理 -->
+	<sqlMap resource="sqlmaps/db/basicinfo/system/systemSQL.xml" />
+	<!-- 信息资产:业务应用软件 -->
+	<sqlMap resource="sqlmaps/db/basicinfo/assets/BusinessAssetsSQL.xml" />
+	<!-- 信息资产:关键数据类别 -->
+	<sqlMap resource="sqlmaps/db/basicinfo/assets/dataAssetsSQL.xml" />
+	<!-- 信息资产:主机存储设备 -->
+	<sqlMap resource="sqlmaps/db/basicinfo/assets/compAssetsSQL.xml" />
+	<!-- 信息资产:网络互连设备 -->
+	<sqlMap resource="sqlmaps/db/basicinfo/assets/netAssetsSQL.xml" />
+	<!-- 信息资产:安全设备 -->
+	<sqlMap resource="sqlmaps/db/basicinfo/assets/devAssetsSQL.xml" />
+	<!-- 信息资产:安全相关人员 -->
+	<sqlMap resource="sqlmaps/db/basicinfo/assets/empAssetsSQL.xml" />
+	<!-- 信息资产:安全管理文档 -->
+	<sqlMap resource="sqlmaps/db/basicinfo/assets/docAssetsSQL.xml" />
+	<!--基础信息结束 -->
+	<!-- ________________________________________________________________________________________________________________________ -->
+	<!-- 定级备案开始 -->
+	<!-- 系统定级 -->
+	<sqlMap resource="sqlmaps/db/rank/RankSQL.xml" />
+	<!-- 备案 -->
+	<sqlMap resource="sqlmaps/db/rank/RecordSQL.xml" />
+	<!-- 备案 历史 -->
+	<sqlMap resource="sqlmaps/db/rank/RecordHistorySQL.xml" />
+	<!-- 整改建议 -->
+	<!--通用物理整改建议 -->
+	<sqlMap resource="sqlmaps/db/cpManage/gpaShow/GpaRectSQL.xml" />
+	<!--通用管理整改建议 -->
+	<sqlMap resource="sqlmaps/db/cpManage/msaShow/MsaRectSQL.xml" />
+	<sqlMap
+		resource="sqlmaps/db/cpManage/rectificationProposal/rectificationProposal.xml" />
+	<!-- 备案集 -->
+	<sqlMap resource="sqlmaps/db/rank/RecordDocListSQL.xml" />
+	<!-- 系统废止 -->
+	<sqlMap resource="sqlmaps/db/rank/AbolishSQL.xml" />
+	<!--统计报表 -->
+	<sqlMap resource="sqlmaps/db/rank/rankReportSQL.xml" />
+	<!-- 定级备案结束 -->
+	<!-- ________________________________________________________________________________________________________________________ -->
+
+	<!-- 合规管理开始 -->
+	<!-- 差距分析报告 -->
+	<!-- 差距分析进度 -->
+	<sqlMap resource="sqlmaps/db/cpManage/gapAnalysisSchedule/GapAnalysisSchedule.xml" />
+	<!-- 差距分析报告导出 -->
+	<sqlMap resource="sqlmaps/db/cpManage/gapReportDocument/GapReportDocument.xml" />
+	<sqlMap resource="sqlmaps/db/cpManage/generalPhysical/GeneralPhysical.xml" />
+	<sqlMap resource="sqlmaps/db/cpManage/securityTable/SecurityTable.xml" />
+	<sqlMap resource="sqlmaps/db/cpManage/gapStatisticsUnit/GapStatisticsUnit.xml" />
+	<!-- 技术差距分析 -->
+	<sqlMap resource="sqlmaps/db/cpManage/technology/technologySQL.xml" />
+	<!--技术差距评估 -->
+	<sqlMap resource="sqlmaps/db/cpManage/assessResult/assessResult.xml" />
+	<!--根据排序查找js算法 -->
+	<sqlMap resource="sqlmaps/db/cpManage/demand/arithmetic.xml" />
+
+	<!-- 通用物理 -->
+	<sqlMap resource="sqlmaps/db/psad/PsadSQL.xml" />
+	<!-- 通用物理评估 -->
+	<sqlMap resource="sqlmaps/db/psad/PsaSQL.xml" />
+	<!-- 通用管理 -->
+	<sqlMap resource="sqlmaps/db/msad/MsadSQL.xml" />
+	<!-- 通用管理 -->
+	<sqlMap resource="sqlmaps/db/msad/MsaSQL.xml" />
+	<!--整改需求汇总 -->
+	<sqlMap resource="sqlmaps/db/cpManage/demand/demandCollet.xml" />
+	<!--整改建议历史对比 -->
+	<sqlMap resource="sqlmaps/db/cpManage/contrastRectification/contrast.xml" />
+	<!-- 汇总分析 -->
+	<!-- 通用管理安全测评 -->
+	<sqlMap resource="sqlmaps/db/cpManage/msaShow/MsaSQL.xml" />
+	<!-- 通用管理安全测评整改需求汇总 -->
+	<sqlMap resource="sqlmaps/db/cpManage/msaShow/MsaShowSQL.xml" />
+	<!-- 通用物理测评 -->
+	<sqlMap resource="sqlmaps/db/cpManage/gpaShow/GpaSQL.xml" />
+	<!-- 通用物理测评整改需求汇总 -->
+	<sqlMap resource="sqlmaps/db/cpManage/gpaShow/GpaShowSQL.xml" />
+	<!-- 汇总分析 -->
+	<!-- 安全差距分析 -->
+	<sqlMap resource="sqlmaps/db/cpManage/summaryanalysis/summaryanalysis.xml" />
+	<!--安全控制分析报告 -->
+	<sqlMap resource="sqlmaps/db/cpManage/securityControl/securityControl.xml" />
+	<!-- 合规管理结束 -->
+	
+	<!-- 审计模块 -->
+   <!--   <sqlMap resource="sqlmap/audit/audit.xml" /> -->
+	<!-- 文件下载 -->
+	<sqlMap resource="sqlmaps/db/files/files.xml" />
+</sqlMapConfig>
+
